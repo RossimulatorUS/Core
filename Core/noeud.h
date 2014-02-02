@@ -3,8 +3,12 @@
 
 class Noeud
 {
-public:
-    Noeud();
+    // Position du noeud
+    double x_;
+    double y_;
+
+    public:
+        Noeud();
 };
 
 #endif // NOEUD_H
