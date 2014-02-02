@@ -1,11 +1,15 @@
 #ifndef INTERSECTION_H
 #define INTERSECTION_H
 
+#include <vector>
 #include "noeud.h"
+#include "route.h"
+
+using std::vector;
 
 class Intersection : public Noeud
 {
-    int routes;
+    vector<Route> routes_;
     public:
         Intersection();
 };

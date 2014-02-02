@@ -20,13 +20,15 @@ SOURCES += main.cpp\
     route.cpp \
     intersection.cpp \
     puit.cpp \
-    source.cpp
+    source.cpp \
+    voie.cpp
 
 HEADERS  += mainwindow.h \
     noeud.h \
     route.h \
     intersection.h \
     puit.h \
-    source.h
+    source.h \
+    voie.h
 
 FORMS    += mainwindow.ui
