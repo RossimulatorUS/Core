@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     intersection.cpp \
     puit.cpp \
     source.cpp \
-    voie.cpp
+    voie.cpp \
+    vehicule.cpp \
+    utilisateur.cpp
 
 HEADERS  += mainwindow.h \
     noeud.h \
@@ -29,6 +31,8 @@ HEADERS  += mainwindow.h \
     intersection.h \
     puit.h \
     source.h \
-    voie.h
+    voie.h \
+    vehicule.h \
+    utilisateur.h
 
 FORMS    += mainwindow.ui

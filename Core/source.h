@@ -5,8 +5,12 @@
 
 class Source : public Noeud
 {
-public:
-    Source();
+    double coefficient_poisson_;
+
+    public:
+        Source();
+        Source(double);
+        int generer_trafic();
 };
 
 #endif // SOURCE_H
