@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     source.cpp \
     voie.cpp \
     vehicule.cpp \
-    utilisateur.cpp
+    utilisateur.cpp \
+    distributeur.cpp \
+    carte.cpp
 
 HEADERS  += mainwindow.h \
     noeud.h \
@@ -33,6 +35,8 @@ HEADERS  += mainwindow.h \
     source.h \
     voie.h \
     vehicule.h \
-    utilisateur.h
+    utilisateur.h \
+    distributeur.h \
+    carte.h
 
 FORMS    += mainwindow.ui
