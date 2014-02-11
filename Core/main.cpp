@@ -1,19 +1,16 @@
-#include "mainwindow.h"
-#include "source.h"
-#include "distributeur.h"
+#include "window.h"
 #include <QApplication>
+#include <QDesktopWidget>
+#include <myglwidget.h>
 
-int main(int argc, char *argv[])
+
+int main(int argc, char **argv)
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    QApplication app(argc, argv);
 
-    Source test;
-    //test.generer_trafic();
+    Window window;
 
-    Distributeur::get_distributeur().increment();
-    Distributeur::get_distributeur().afficher();
-
-    return a.exec();
+    window.setWindowTitle("OpenGL with Qt");
+    window.show();
+    return app.exec();
 }

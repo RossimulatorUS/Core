@@ -1,14 +1,16 @@
-#ifndef NOEUD_H
-#define NOEUD_H
+#ifndef POINT_H
+#define POINT_H
+
+#include <QGLWidget>
 
 class Noeud
 {
-    // Position du noeud
-    double x_;
-    double y_;
+public:
+    Noeud();
+    Noeud(GLfloat x, GLfloat y);
 
-    public:
-        Noeud();
+    GLfloat _x;
+    GLfloat _y;
 };
 
-#endif // NOEUD_H
+#endif // POINT_H
