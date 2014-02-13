@@ -1,14 +1,21 @@
 #ifndef VEHICULE_H
 #define VEHICULE_H
 
-#include "voie.h"
+#include "noeud.h"
+#include <QGLWidget>
 
 class Vehicule
 {
-    Voie* voie_actuelle_; // Mettre route au lieu?
+    Noeud noeudArrive_;
 
-    public:
-        Vehicule();
+public:
+    Vehicule();
+    Vehicule(Noeud depart, Noeud arrive);
+
+    Noeud noeudDepart_;
+
+    GLfloat x_;
+    GLfloat y_;
 };
 
 #endif // VEHICULE_H
