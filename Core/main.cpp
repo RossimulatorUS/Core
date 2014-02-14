@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 
     Window window;
 
-    window.setWindowTitle("OpenGL with Qt");
+    window.setWindowTitle("RossimulatorUS");
     window.show();
     return app.exec();
 }

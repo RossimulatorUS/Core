@@ -1,20 +1,15 @@
 #ifndef VEHICULETHREAD_H
 #define VEHICULETHREAD_H
 
-#include <QThread>
 #include "vehicule.h"
 
-class VehiculeThread : public QThread
+class VehiculeThread
 {
-    Q_OBJECT
-private:
-    void run();
-
-
+     Vehicule *vehicule;
+     void run();
 public:
-    Vehicule *vehicule;
 
-    VehiculeThread(QObject *parent = 0);
+    VehiculeThread();
 };
 
 #endif // VEHICULETHREAD_H

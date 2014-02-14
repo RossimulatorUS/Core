@@ -14,11 +14,8 @@ class Distributeur
     typedef unsigned int numero_thread;
     unsigned int nombre_vehicules;
 
-    Distributeur();
-
 public:
-    Distributeur& get();
-
+    Distributeur(std::vector<VehiculeThread>*);
     numero_thread ajouter_vehicule(Vehicule*);
     numero_thread ajouter_thread(VehiculeThread*);
 };

@@ -1,10 +1,12 @@
 #include <QtWidgets>
 #include <QtOpenGL>
+#include <iostream>
 
 #include "myglwidget.h"
-#include "noeud.h"
-#include "route.h"
-#include "vehicule.h"
+#include "noeud.h" // Utile?
+#include "route.h" // Utile?
+#include "vehicule.h" // Utile?
+#include "cortex.h"
 #include "vehiculethread.h"
 #include "glutility.h"
 #include "window.h"
@@ -105,12 +107,14 @@ void MyGLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
     //glOrtho(0,height,width,0,0,1);
 #ifdef QT_OPENGL_ES_1
     glOrthof(-2, +2, -2, +2, 1.0, 15.0);
 #else
     glOrtho(-2, +2, -2, +2, 1.0, 15.0);
 #endif
+
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -386,8 +390,17 @@ void MyGLWidget::DrawRoadPressed()
     isDrawNodePressed_ = false;
 }
 
-void MyGLWidget::StartSimulation()
+void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton
 {
+    // Creer le Cortex
+    std::cout << "Creation du cortex" << std::endl;
+    Cortex cortex(&allNodes_);
+
+    // Transformer bouton start en bouton end
+
+
+    // Tout se fait dans le cortex
+    /*
     Noeud noeudA = Noeud(0,1.6);
     Noeud noeudB = Noeud(0,-1.6);
 
@@ -398,6 +411,7 @@ void MyGLWidget::StartSimulation()
     VehiculeThread thread;
     thread.vehicule = vehicule;
     thread.start();
+    */
 
     updateGL();
 }

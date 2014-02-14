@@ -58,8 +58,7 @@ SOURCES       = ../Core/main.cpp \
 		../Core/cortex.cpp \
 		../Core/poissoneur.cpp \
 		../Core/distributeur.cpp moc_window.cpp \
-		moc_myglwidget.cpp \
-		moc_vehiculethread.cpp
+		moc_myglwidget.cpp
 OBJECTS       = main.o \
 		window.o \
 		myglwidget.o \
@@ -74,8 +73,7 @@ OBJECTS       = main.o \
 		poissoneur.o \
 		distributeur.o \
 		moc_window.o \
-		moc_myglwidget.o \
-		moc_vehiculethread.o
+		moc_myglwidget.o
 DIST          = ../../../../Qt/5.2.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.2.0/gcc_64/mkspecs/common/shell-unix.conf \
 		../../../../Qt/5.2.0/gcc_64/mkspecs/common/unix.conf \
@@ -464,9 +462,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_window.cpp moc_myglwidget.cpp moc_vehiculethread.cpp
+compiler_moc_header_make_all: moc_window.cpp moc_myglwidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_window.cpp moc_myglwidget.cpp moc_vehiculethread.cpp
+	-$(DEL_FILE) moc_window.cpp moc_myglwidget.cpp
 moc_window.cpp: ../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QWidget \
 		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
@@ -706,134 +704,6 @@ moc_myglwidget.cpp: ../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
 		../Core/vehicule.h \
 		../Core/myglwidget.h
 	/home/olivier/Qt/5.2.0/gcc_64/bin/moc $(DEFINES) $(INCPATH) ../Core/myglwidget.h -o moc_myglwidget.cpp
-
-moc_vehiculethread.cpp: ../../../../Qt/5.2.0/gcc_64/include/QtCore/QThread \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobal.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qconfig.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfeatures.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsystemdetection.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qprocessordetection.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobalstatic.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbasicatomic.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qgenericatomic.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_integrity.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qoldbasicatomic.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_vxworks.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_power.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_alpha.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_bfin.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_mips.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_s390.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_sh4a.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_sparc.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_x86.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_unix.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmutex.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlogging.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qflags.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypeinfo.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypetraits.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsysinfo.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstring.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qchar.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbytearray.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrefcount.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qarraydata.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringbuilder.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlist.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qalgorithms.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qiterator.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcoreevent.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qscopedpointer.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmetatype.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qisenum.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject_impl.h \
-		../Core/vehicule.h \
-		../Core/noeud.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qt_windows.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengles2ext.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopenglext.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmargins.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrect.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsize.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qpoint.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpalette.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qcolor.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qrgb.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringlist.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qdatastream.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qiodevice.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qpair.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qregexp.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qbrush.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvector.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qmatrix.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpolygon.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qregion.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qline.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtransform.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qimage.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpixmap.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qshareddata.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qhash.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfont.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfontmetrics.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfontinfo.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qcursor.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qkeysequence.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qevent.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvariant.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmap.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qdebug.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtextstream.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlocale.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qset.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qurl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qurlquery.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfile.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfiledevice.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qvector2d.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtouchdevice.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpaintengine.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpainter.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtextoption.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpen.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qglcolormap.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qtopenglglobal.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/QSurfaceFormat \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qsurfaceformat.h \
-		../Core/vehiculethread.h
-	/home/olivier/Qt/5.2.0/gcc_64/bin/moc $(DEFINES) $(INCPATH) ../Core/vehiculethread.h -o moc_vehiculethread.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1557,22 +1427,7 @@ window.o: ../Core/window.cpp ../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QtWid
 		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qtwidgetsversion.h \
 		../Core/window.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QWidget \
-		ui_window.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QAction \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QPushButton \
-		../Core/myglwidget.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qglcolormap.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qtopenglglobal.h \
-		../Core/noeud.h \
-		../Core/route.h \
-		../Core/voie.h \
-		../Core/formule.h \
-		../Core/vehicule.h
+		ui_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o window.o ../Core/window.cpp
 
 myglwidget.o: ../Core/myglwidget.cpp ../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QtWidgets \
@@ -2029,17 +1884,12 @@ myglwidget.o: ../Core/myglwidget.cpp ../../../../Qt/5.2.0/gcc_64/include/QtWidge
 		../Core/voie.h \
 		../Core/formule.h \
 		../Core/vehicule.h \
+		../Core/cortex.h \
 		../Core/vehiculethread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/QThread \
 		../Core/glutility.h \
 		../Core/window.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QWidget \
-		ui_window.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QAction \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QApplication \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QButtonGroup \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/QPushButton
+		ui_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o myglwidget.o ../Core/myglwidget.cpp
 
 voie.o: ../Core/voie.cpp ../Core/voie.h
@@ -2296,11 +2146,11 @@ vehicule.o: ../Core/vehicule.cpp ../Core/vehicule.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o vehicule.o ../Core/vehicule.cpp
 
 vehiculethread.o: ../Core/vehiculethread.cpp ../Core/vehiculethread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/QThread \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
+		../Core/vehicule.h \
+		../Core/noeud.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengl.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobal.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qconfig.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfeatures.h \
@@ -2337,7 +2187,16 @@ vehiculethread.o: ../Core/vehiculethread.cpp ../Core/vehiculethread.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypeinfo.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypetraits.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qt_windows.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengles2ext.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopenglext.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstring.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qchar.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbytearray.h \
@@ -2354,17 +2213,6 @@ vehiculethread.o: ../Core/vehiculethread.cpp ../Core/vehiculethread.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qisenum.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject_impl.h \
-		../Core/vehicule.h \
-		../Core/noeud.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
-		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengl.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qt_windows.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengles2ext.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopenglext.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs_win.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmargins.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrect.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsize.h \
@@ -2683,19 +2531,13 @@ route.o: ../Core/route.cpp ../Core/route.h \
 		../Core/formule.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o route.o ../Core/route.cpp
 
-cortex.o: ../Core/cortex.cpp ../Core/cortex.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cortex.o ../Core/cortex.cpp
-
-poissoneur.o: ../Core/poissoneur.cpp ../Core/poissoneur.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o poissoneur.o ../Core/poissoneur.cpp
-
-distributeur.o: ../Core/distributeur.cpp ../Core/distributeur.h \
+cortex.o: ../Core/cortex.cpp ../Core/cortex.h \
 		../Core/vehiculethread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/QThread \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qthread.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
+		../Core/vehicule.h \
+		../Core/noeud.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengl.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobal.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qconfig.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfeatures.h \
@@ -2732,7 +2574,16 @@ distributeur.o: ../Core/distributeur.cpp ../Core/distributeur.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypeinfo.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypetraits.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qt_windows.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengles2ext.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopenglext.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstring.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qchar.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbytearray.h \
@@ -2749,17 +2600,136 @@ distributeur.o: ../Core/distributeur.cpp ../Core/distributeur.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontainerfwd.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qisenum.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmargins.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrect.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsize.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qpoint.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpalette.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qcolor.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qrgb.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringlist.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qdatastream.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qiodevice.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qpair.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qregexp.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qbrush.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvector.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qmatrix.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpolygon.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qregion.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qline.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtransform.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpainterpath.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qimage.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpixmap.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qshareddata.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfont.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qcursor.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qevent.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qset.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qurl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qurlquery.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfile.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qvector2d.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpaintengine.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpainter.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qtextoption.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qpen.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qglcolormap.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qtopenglglobal.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/QSurfaceFormat \
+		../../../../Qt/5.2.0/gcc_64/include/QtGui/qsurfaceformat.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cortex.o ../Core/cortex.cpp
+
+poissoneur.o: ../Core/poissoneur.cpp ../Core/poissoneur.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o poissoneur.o ../Core/poissoneur.cpp
+
+distributeur.o: ../Core/distributeur.cpp ../Core/distributeur.h \
+		../Core/vehiculethread.h \
 		../Core/vehicule.h \
 		../Core/noeud.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/QGLWidget \
 		../../../../Qt/5.2.0/gcc_64/include/QtOpenGL/qgl.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengl.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobal.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qconfig.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qfeatures.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_integrity.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qoldbasicatomic.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_vxworks.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_power.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_alpha.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_bfin.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_s390.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_sh4a.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_sparc.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmutex.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlogging.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qflags.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsysinfo.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qt_windows.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopengles2ext.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qopenglext.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtWidgets/qwidget.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qnamespace.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstring.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qchar.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qbytearray.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrefcount.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qarraydata.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qlist.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qalgorithms.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qiterator.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmetatype.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qisenum.h \
+		../../../../Qt/5.2.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qmargins.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qrect.h \
 		../../../../Qt/5.2.0/gcc_64/include/QtCore/qsize.h \
@@ -2823,9 +2793,6 @@ moc_window.o: moc_window.cpp
 
 moc_myglwidget.o: moc_myglwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_myglwidget.o moc_myglwidget.cpp
-
-moc_vehiculethread.o: moc_vehiculethread.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_vehiculethread.o moc_vehiculethread.cpp
 
 ####### Install
 

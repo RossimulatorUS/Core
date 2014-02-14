@@ -1,13 +1,8 @@
 #include "distributeur.h"
 
-Distributeur::Distributeur()
+Distributeur::Distributeur(std::vector<VehiculeThread> *)
 {
-}
 
-Distributeur& Distributeur::get()
-{
-    static Distributeur singleton;
-    return singleton;
 }
 
 Distributeur::numero_thread Distributeur::ajouter_vehicule(Vehicule*)

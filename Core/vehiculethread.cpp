@@ -1,8 +1,7 @@
 #include "vehiculethread.h"
 #include <QDebug>
 
-VehiculeThread::VehiculeThread(QObject *parent) :
-    QThread(parent)
+VehiculeThread::VehiculeThread()
 {
 }
 
