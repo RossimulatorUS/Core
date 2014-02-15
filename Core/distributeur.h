@@ -10,14 +10,20 @@
 
 class Distributeur
 {
-    //std::vector<VehiculeThread*> threads_;
-    typedef unsigned int numero_thread;
-    unsigned int nombre_vehicules;
+    // Vehicules en attente d'etre distribues
+    std::vector<Vehicule> vehicules_;
+
+    // Threads du cortex qui sont utilisables
+    std::vector<VehiculeThread>* threads_;
+
+    bool terminer;
 
 public:
     Distributeur(std::vector<VehiculeThread>*);
-    numero_thread ajouter_vehicule(Vehicule*);
-    numero_thread ajouter_thread(VehiculeThread*);
+    void ajouter_vehicule(Vehicule);
+
+    void distribuer();
+    void termine();
 };
 
 #endif // DISTRIBUTEUR_H

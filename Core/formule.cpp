@@ -4,8 +4,8 @@ Formule::Formule(){}
 
 Formule::Formule(Noeud noeudA, Noeud noeudB)
 {
-    a = DeterminerPente(noeudA._x, noeudB._x, noeudA._y, noeudB._y);
-    b = DeterminerB(noeudA._x, noeudA._y);
+    a = DeterminerPente(noeudA.x_, noeudB.x_, noeudA.y_, noeudB.y_);
+    b = DeterminerB(noeudA.x_, noeudA.y_);
 }
 
 void Formule::DeterminerFormule()

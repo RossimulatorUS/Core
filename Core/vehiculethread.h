@@ -1,15 +1,25 @@
 #ifndef VEHICULETHREAD_H
 #define VEHICULETHREAD_H
 
+#include <thread>
+#include <vector>
 #include "vehicule.h"
 
 class VehiculeThread
 {
-     Vehicule *vehicule;
-     void run();
+     std::vector<Vehicule> vehicules_;
+     void traitement();
+     bool terminer;
+
+     std::thread execution_;
+
 public:
 
-    VehiculeThread();
+     VehiculeThread();
+     void ajouter_vehicule(Vehicule);
+
+     void termine();
+
 };
 
 #endif // VEHICULETHREAD_H

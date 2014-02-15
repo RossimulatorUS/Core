@@ -1,17 +1,23 @@
 #include "distributeur.h"
 
-Distributeur::Distributeur(std::vector<VehiculeThread> *)
+Distributeur::Distributeur(std::vector<VehiculeThread>* threads)
+    : threads_(threads), terminer(true)
 {
 
 }
 
-Distributeur::numero_thread Distributeur::ajouter_vehicule(Vehicule*)
+void Distributeur::ajouter_vehicule(Vehicule vehicule)
 {
-    ++nombre_vehicules;
-    return 0;
+    vehicules_.push_back(vehicule);
 }
 
-Distributeur::numero_thread Distributeur::ajouter_thread(VehiculeThread*)
+void Distributeur::distribuer()
 {
-    return 0;
+    terminer = false;
+    // min(foreach vehiculethread.size())
+}
+
+void Distributeur::termine()
+{
+    terminer = true;
 }

@@ -7,13 +7,13 @@
 #include "route.h" // Utile?
 #include "vehicule.h" // Utile?
 #include "cortex.h"
-#include "vehiculethread.h"
+#include "vehiculethread.h" // Utile?
 #include "glutility.h"
 #include "window.h"
 #include "ui_window.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
-    :QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
     glDisable(GL_DEPTH_TEST);
     setMouseTracking(true);
@@ -23,6 +23,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
 
 MyGLWidget::~MyGLWidget()
 {
+
 }
 
 /*QSize MyGLWidget::minimumSizeHint() const
@@ -187,7 +188,7 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
     Noeud associatedNode = FindAssociatedNode(node);
 
     //if (ClickPressedNode != NULL)
-    if (associatedNode._x != 10.0f)
+    if (associatedNode.x_ != 10.0f)
         allRoads_.push_back(Route(ClickPressedNode, associatedNode));
 }
 
@@ -206,13 +207,13 @@ Noeud MyGLWidget::FindAssociatedNode(Noeud noeud)
 {
     for (unsigned int i = 0; i < allNodes_.size(); ++i)
     {
-        float ErrorXPos = allNodes_[i]._x + ClickErrorTollerence;
-        float ErrorXNeg = allNodes_[i]._x - ClickErrorTollerence;
-        float ErrorYPos = allNodes_[i]._y + ClickErrorTollerence;
-        float ErrorYNeg = allNodes_[i]._y - ClickErrorTollerence;
+        float ErrorXPos = allNodes_[i].x_ + ClickErrorTollerence;
+        float ErrorXNeg = allNodes_[i].x_ - ClickErrorTollerence;
+        float ErrorYPos = allNodes_[i].y_ + ClickErrorTollerence;
+        float ErrorYNeg = allNodes_[i].y_ - ClickErrorTollerence;
 
-        if ((noeud._x > ErrorXNeg && noeud._x < ErrorXPos) &&
-            (noeud._y > ErrorYNeg && noeud._y < ErrorYPos))
+        if ((noeud.x_ > ErrorXNeg && noeud.x_ < ErrorXPos) &&
+            (noeud.y_ > ErrorYNeg && noeud.y_ < ErrorYPos))
             return allNodes_[i];
     }
     //invalid node laid a revoir
@@ -394,7 +395,7 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
 {
     // Creer le Cortex
     std::cout << "Creation du cortex" << std::endl;
-    Cortex cortex(&allNodes_);
+    Cortex cortex(allNodes_);
 
     // Transformer bouton start en bouton end
 
@@ -437,7 +438,7 @@ void MyGLWidget::draw()
         qglColor(Qt::green);
         glColor3f(1,0,0);
         glBegin(GL_POINTS);
-            glVertex2f(allNodes_[i]._x,allNodes_[i]._y);
+            glVertex2f(allNodes_[i].x_,allNodes_[i].y_);
         glEnd();
     }
 
@@ -448,8 +449,8 @@ void MyGLWidget::draw()
         qglColor(Qt::green);
         glColor3f(1,0,0);
         glBegin(GL_LINES);
-            glVertex2f(allRoads_[i].PointDepart_._x, allRoads_[i].PointDepart_._y);
-            glVertex2f(allRoads_[i].PointArrive_._x, allRoads_[i].PointArrive_._y);
+            glVertex2f(allRoads_[i].PointDepart_.x_, allRoads_[i].PointDepart_.y_);
+            glVertex2f(allRoads_[i].PointArrive_.x_, allRoads_[i].PointArrive_.y_);
         glEnd();
     }
 

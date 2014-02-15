@@ -2,13 +2,18 @@
 #define POISSONEUR_H
 
 #include <vector>
+#include "distributeur.h"
 #include "noeud.h"
 
 class Poissoneur
 {
-    std::vector<Noeud>* noeuds_;
+    Distributeur* distributeur_;
+    std::vector<Noeud> noeuds_;
+
 public:
-    Poissoneur(std::vector<Noeud>*);
+    Poissoneur(std::vector<Noeud>, Distributeur*);
+    void verifier_generation_vehicule();
+
 };
 
 #endif // POISSONEUR_H
