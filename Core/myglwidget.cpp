@@ -394,7 +394,6 @@ void MyGLWidget::DrawRoadPressed()
 void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton
 {
     // Creer le Cortex
-    std::cout << "Creation du cortex" << std::endl;
     Cortex cortex(allNodes_);
 
     // Transformer bouton start en bouton end
@@ -414,7 +413,7 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
     thread.start();
     */
 
-    updateGL();
+    // updateGL();
 }
 
 void MyGLWidget::moveCar()

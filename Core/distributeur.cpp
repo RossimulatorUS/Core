@@ -1,9 +1,10 @@
+#include <iostream>
 #include "distributeur.h"
 
 Distributeur::Distributeur(std::vector<VehiculeThread>* threads)
-    : threads_(threads), terminer(true)
+    : threads_(threads), execution_(&Distributeur::distribuer, this), terminer(true)
 {
-
+    std::cout << "Construction du distributeur" << std::endl;
 }
 
 void Distributeur::ajouter_vehicule(Vehicule vehicule)
@@ -13,8 +14,12 @@ void Distributeur::ajouter_vehicule(Vehicule vehicule)
 
 void Distributeur::distribuer()
 {
-    terminer = false;
-    // min(foreach vehiculethread.size())
+    if(!vehicules_.size())
+        sleep(1); // Une seconde -> devrait etre en fonction du temps de calcul
+
+    // Trouver un thread libre
+
+    // Distribuer
 }
 
 void Distributeur::termine()

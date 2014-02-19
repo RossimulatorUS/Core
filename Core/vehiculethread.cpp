@@ -1,24 +1,19 @@
 #include "vehiculethread.h"
 #include <QDebug>
+#include <iostream>
 
-VehiculeThread::VehiculeThread()
-    : terminer(true), execution_(&VehiculeThread::traitement, this)
+VehiculeThread::VehiculeThread(unsigned int id)
+    : terminer(false), execution_(&VehiculeThread::demarrer_traitement, this), id_(id)
 {
 
 }
 
-void VehiculeThread::traitement()
+void VehiculeThread::demarrer_traitement()
 {
-    while(true)
+    while(!terminer)
     {
-        /*if (vehicules_ == NULL)
-            qDebug() << "VEHICULE IS NULL";
-        else
-            vehicules_->y_-=0.01;
-        */
-
-        // S'il faut donner du temps a un autre fil d'execution
         if(terminer) break;
+        std::cout << "Thread " << id_ << ", " << std::flush;
     }
 }
 

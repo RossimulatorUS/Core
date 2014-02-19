@@ -8,19 +8,29 @@
 
 class Cortex
 {
+
     // Informations du systeme pour optimiser nombre de threads
     // et les autres facteurs
 
-    enum {NB_THREADS_DE_BASE = 4};
+    // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
+    enum {NB_THREADS_DE_BASE = 4, COEF_MULT_PHYSIQUE = 3};
 
+    // Temps de calcul alloue a chaque module
+    unsigned int pourcentage_temps_calcul_poissoneur_;
+    unsigned int pourcentage_temps_calcul_distributeur_;
+    std::vector<unsigned int> pourcentage_temps_calcul_deplaceurs_;
+    unsigned int pourcentage_temps_calcul_signaleur_;
+    unsigned int pourcentage_temps_calcul_OpenGL_;
+
+    // Fonctions d'initialisation
     void load_informations();
     void reserve_ressources();
-    void deplacement(size_t);
     unsigned int get_physical_threads();
 
-    unsigned int physical_threads; // Threads de la machines
-    unsigned int nombre_threads; // Threads disponibles dans la simulation
+    // Materiel disponible pour l'execution
+    unsigned int physical_threads_;
 
+    // Threads qui commencent a travailler sur leurs donnees a la construction
     std::vector<VehiculeThread> threads_vehicule_;
 
     Distributeur distributeur_;

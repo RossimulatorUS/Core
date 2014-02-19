@@ -7,19 +7,20 @@
 
 class VehiculeThread
 {
-     std::vector<Vehicule> vehicules_;
-     void traitement();
-     bool terminer;
+    // Materiel
+    std::vector<Vehicule> vehicules_;
+    std::thread execution_;
+    bool terminer;
+    unsigned int id_;
 
-     std::thread execution_;
+    // Fonction d'initialisation
+    void demarrer_traitement();
 
 public:
 
-     VehiculeThread();
+     VehiculeThread(unsigned int);
      void ajouter_vehicule(Vehicule);
-
      void termine();
-
 };
 
 #endif // VEHICULETHREAD_H
