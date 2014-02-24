@@ -1,22 +1,24 @@
 #ifndef POISSONEUR_H
 #define POISSONEUR_H
 
-#include <thread>
 #include <vector>
+
 #include "distributeur.h"
+#include "module.h"
 #include "noeud.h"
 
-class Poissoneur
-{
-    Distributeur* distributeur_;
-    std::vector<Noeud> noeuds_;
-    std::thread execution_;
+// Singleton
+// TODO : Heritage d'une classe incopiable
 
-    // Fonction d'initialisation
-    void verifier_generation_vehicule();
+class Poissoneur : public Module
+{
+    std::vector<Noeud> noeuds_;
+    Distributeur* distributeur_;
+
+    void initialiser();
 
 public:
-    Poissoneur(std::vector<Noeud>, Distributeur*);
+    Poissoneur(std::vector<Noeud>, Distributeur*, bool*, bool*);
 
 };
 

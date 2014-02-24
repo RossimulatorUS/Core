@@ -1,15 +1,24 @@
 #include <iostream>
+#include <string>
 #include <thread>
 #include "cortex.h"
 
 Cortex::Cortex(std::vector<Noeud> noeuds)
-    : distributeur_(&threads_vehicule_), poissoneur_(noeuds, &distributeur_)
+    : analyste_(&fin_simulation, &attente_analyste_),
+      distributeur_(&threads_vehicule_, &fin_simulation, &attente_distributeur_),
+      poissoneur_(noeuds, &distributeur_, &fin_simulation, &attente_poissoneur_),
+      fin_simulation(false)
 {
+
+    /*
+     * Ajouter variable a la construction
+     * pour savoir si les temps d'attente
+     * et nombre d'iterations sont decides par algortihmes
+     * automatiquement, semi-automatiquement ou manuellement
+     */
+
     load_informations();
     reserve_ressources();
-
-    std::cout << "Construction du cortex " << std::endl;
-    std::cout << "Quantite de noeuds : " << noeuds.size() << std::endl;
 }
 
 void Cortex::load_informations()
@@ -39,7 +48,34 @@ unsigned int Cortex::get_physical_threads()
     return std::thread::hardware_concurrency();
 }
 
+// Commande de l'interpreteur
 void Cortex::ajouter_thread()
 {
     threads_vehicule_.push_back(VehiculeThread(threads_vehicule_.size()));
+}
+
+// Commande de l'interpreteur
+void Cortex::terminer()
+{
+    // Sauvegarder statistiques
+
+    // Sauvegarder etat simulation?
+
+    // termienr threads
+    fin_simulation = true;
+
+}
+
+// API -> communique avec cortex, distributeur, poissoneur, signaleur
+void Cortex::interpreter()
+{
+    std::string commande;
+    while(commande != "exit")
+    {
+        std::cout << "RossimulatorUS >> : " << std::flush;
+        std::cin >> commande;
+        std::cout << commande << "\n" << std::flush;
+
+        // Switch
+    }
 }

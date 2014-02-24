@@ -6,13 +6,12 @@
 
 class Vehicule
 {
+    Noeud noeudDepart_;
     Noeud noeudArrive_;
 
 public:
     Vehicule();
     Vehicule(Noeud depart, Noeud arrive);
-
-    Noeud noeudDepart_;
 
     GLfloat x_;
     GLfloat y_;

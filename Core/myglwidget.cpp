@@ -395,6 +395,8 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
 {
     // Creer le Cortex
     Cortex cortex(allNodes_);
+    std::cout << "ici" << std::flush;
+    cortex.interpreter();
 
     // Transformer bouton start en bouton end
 

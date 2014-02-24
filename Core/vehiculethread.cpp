@@ -3,7 +3,7 @@
 #include <iostream>
 
 VehiculeThread::VehiculeThread(unsigned int id)
-    : terminer(false), execution_(&VehiculeThread::demarrer_traitement, this), id_(id)
+    : execution_(&VehiculeThread::demarrer_traitement, this), terminer(false), id_(id)
 {
 
 }
@@ -13,7 +13,6 @@ void VehiculeThread::demarrer_traitement()
     while(!terminer)
     {
         if(terminer) break;
-        std::cout << "Thread " << id_ << ", " << std::flush;
     }
 }
 

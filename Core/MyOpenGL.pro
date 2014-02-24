@@ -26,7 +26,10 @@ SOURCES += main.cpp\
     route.cpp \
     cortex.cpp \
     poissoneur.cpp \
-    distributeur.cpp
+    distributeur.cpp \
+    signaleur.cpp \
+    module.cpp \
+    analyseur.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -39,6 +42,9 @@ HEADERS  += window.h \
     route.h \
     cortex.h \
     distributeur.h \
-    poissoneur.h
+    poissoneur.h \
+    signaleur.h \
+    module.h \
+    analyseur.h
 
 FORMS    += window.ui

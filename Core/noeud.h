@@ -8,7 +8,7 @@ class Noeud
     bool est_source_;
 
 public:
-    Noeud(){} // Necessaire pour une raison obscure
+    Noeud(){}
 
     Noeud(bool est_source);
     Noeud(GLfloat x, GLfloat y);
@@ -18,6 +18,7 @@ public:
 
     bool est_source();
     bool est_du();
+
 };
 
 #endif // POINT_H

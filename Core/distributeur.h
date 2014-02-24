@@ -1,15 +1,16 @@
 #ifndef DISTRIBUTEUR_H
 #define DISTRIBUTEUR_H
 
-#include <thread>
 #include <vector>
+
 #include <vehiculethread.h>
 #include <vehicule.h>
+#include "module.h"
 
 // Singleton
 // TODO : Heritage d'une classe incopiable
 
-class Distributeur
+class Distributeur : public Module
 {
     // Vehicules en attente d'etre distribues
     std::vector<Vehicule> vehicules_;
@@ -17,19 +18,12 @@ class Distributeur
     // Threads du cortex qui sont utilisables pour calcul des deplacements
     std::vector<VehiculeThread>* threads_;
 
-    // Thread du Distributeur
-    std::thread execution_;
-
-    // Fonction d'initialisation
-    void distribuer();
-
-    bool terminer;
+    void initialiser();
 
 public:
-    Distributeur(std::vector<VehiculeThread>*);
+    Distributeur(std::vector<VehiculeThread>*, bool*, bool*);
     void ajouter_vehicule(Vehicule);
 
-    void termine();
 };
 
 #endif // DISTRIBUTEUR_H

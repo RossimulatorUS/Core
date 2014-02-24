@@ -1,10 +1,25 @@
 #include <iostream>
 #include "distributeur.h"
 
-Distributeur::Distributeur(std::vector<VehiculeThread>* threads)
-    : threads_(threads), execution_(&Distributeur::distribuer, this), terminer(true)
+Distributeur::Distributeur(std::vector<VehiculeThread>* threads, bool* terminer, bool* attendre)
+    : threads_(threads),
+      terminer_(terminer),
+      attendre_(attendre),
+      execution_(&Distributeur::initialiser, this)
+{}
+
+void Distributeur::initialiser()
 {
-    std::cout << "Construction du distributeur" << std::endl;
+    while(!terminer)
+   {
+        if(!vehicules_.size())
+            std::cout << "RossimulatorUS >> : " << std::flush; // Une seconde -> devrait etre en fonction du temps de calcul
+
+    // Trouver un thread libre
+
+    // Distribuer
+
+    }
 }
 
 void Distributeur::ajouter_vehicule(Vehicule vehicule)
@@ -12,17 +27,3 @@ void Distributeur::ajouter_vehicule(Vehicule vehicule)
     vehicules_.push_back(vehicule);
 }
 
-void Distributeur::distribuer()
-{
-    if(!vehicules_.size())
-        sleep(1); // Une seconde -> devrait etre en fonction du temps de calcul
-
-    // Trouver un thread libre
-
-    // Distribuer
-}
-
-void Distributeur::termine()
-{
-    terminer = true;
-}
