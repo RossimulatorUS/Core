@@ -1,9 +1,8 @@
-#include <iostream>
 #include <string>
 #include <thread>
 #include "cortex.h"
 
-Cortex::Cortex(std::vector<Noeud> noeuds)
+Cortex::Cortex(std::vector<Noeud> noeuds, std::vector<Vehicule*>* vehicules)
     : //attente_analyste_(false),
       //attente_distributeur_(false),
       attente_poissoneur_(false),
@@ -16,7 +15,7 @@ Cortex::Cortex(std::vector<Noeud> noeuds)
      * automatiquement, semi-automatiquement ou manuellement
      */
 
-    vehicules_ = new std::vector<Vehicule*>();
+    vehicules_ = vehicules;
     threads_vehicule_ = new std::vector<VehiculeThread*>();
 
     load_informations();
@@ -25,8 +24,6 @@ Cortex::Cortex(std::vector<Noeud> noeuds)
     analyste_ = new Analyseur(&fin_simulation, &attente_analyste_);
     distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
     poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
-
-    std::cout << "fin construction cortex" << std::endl;
 }
 
 void Cortex::load_informations()

@@ -68,7 +68,7 @@ class Cortex
     bool fin_simulation;
 
 public:
-    Cortex(std::vector<Noeud>);
+    Cortex(std::vector<Noeud>, std::vector<Vehicule*>*);
 
     // API -> Commandes interpretees
     void interpreter();

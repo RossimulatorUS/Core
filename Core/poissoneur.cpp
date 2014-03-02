@@ -40,7 +40,6 @@ void Poissoneur::initialiser()
         if(iterateur->est_du() && i < 10)
         {
             Vehicule* vec = new Vehicule(noeuds_[0], noeuds_[1], route);
-            std::cout << vec->id() << std::endl;
             all_vehicules_->emplace_back(vec);
             distributeur_->ajouter_vehicule(vec);
             ++i;
