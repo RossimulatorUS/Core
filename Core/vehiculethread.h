@@ -8,18 +8,18 @@
 class VehiculeThread
 {
     // Materiel
-    std::vector<Vehicule> vehicules_;
+    std::vector<Vehicule*> vehicules_;
     std::thread execution_;
     bool terminer;
+    static unsigned int id_a_date_;
     unsigned int id_;
 
     // Fonction d'initialisation
-    void demarrer_traitement();
+    void demarrer_traitement(VehiculeThread *vt);
 
 public:
-
-     VehiculeThread(unsigned int);
-     void ajouter_vehicule(Vehicule);
+     VehiculeThread();
+     void ajouter_vehicule(Vehicule*);
      void termine();
 };
 

@@ -12,11 +12,8 @@
 class Cortex
 {
 
-    // Informations du systeme pour optimiser nombre de threads
-    // et les autres facteurs
-
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
-    enum {NB_THREADS_DE_BASE = 4, COEF_MULT_PHYSIQUE = 3};
+    enum {NB_THREADS_DE_BASE = 1, COEF_MULT_PHYSIQUE = 3};
     enum mode_execution {MANUEL = 0, SEMI = 1, AUTO = 2};
 
     // Temps de « sleep » entre chaque serie d'iteration
@@ -37,8 +34,8 @@ class Cortex
 
     // Mettre un module en attente
     bool attente_analyste_;
-    bool attente_poissoneur_;
     bool attente_distributeur_;
+    bool attente_poissoneur_;
     bool attente_deplaceurs_;
     bool attente_signaleur_;
     bool attente_OpenGL_;
@@ -51,18 +48,21 @@ class Cortex
     // Materiel disponible pour l'execution
     unsigned int physical_threads_;
 
-    // Threads qui commencent a travailler sur leurs donnees a la construction
-    std::vector<VehiculeThread> threads_vehicule_;
-
     // Commandes
     void ajouter_thread();
     void terminer();
 
+    // Threads qui commencent a travailler sur leurs donnees a la construction
+    std::vector<VehiculeThread*>* threads_vehicule_;
+
     // Modules
-    Analyseur analyste_;
-    Distributeur distributeur_;
-    Poissoneur poissoneur_;
-    Signaleur signaleur_;
+    Analyseur* analyste_;
+    Distributeur* distributeur_;
+    Poissoneur* poissoneur_;
+    Signaleur* signaleur_;
+
+    // Vehicules se deplacant dans le reseau routier
+    std::vector<Vehicule*>* vehicules_;
 
     // Fin de la simulation
     bool fin_simulation;

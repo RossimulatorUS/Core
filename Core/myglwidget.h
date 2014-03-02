@@ -79,7 +79,7 @@ private:
 
     std::vector<Noeud> allNodes_;
     std::vector<Route> allRoads_;
-    std::vector<Vehicule> allVehicules_;
+    std::vector<Vehicule*> allVehicules_;
 
     Noeud ClickPressedNode;
 };

@@ -19,7 +19,7 @@
      <x>90</x>
      <y>10</y>
      <width>691</width>
-     <height>371</height>
+     <height>531</height>
     </rect>
    </property>
   </widget>
@@ -108,7 +108,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>270</y>
+     <y>230</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -143,6 +143,32 @@
     <string>Clear</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="m_Resetbutton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>260</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Reset</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>280</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -165,6 +191,7 @@
     <slot>DrawNodePressed()</slot>
     <slot>DrawRoadPressed()</slot>
     <slot>ClearWidget()</slot>
+    <slot>ResetPressed()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -258,7 +285,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>62</x>
-     <y>282</y>
+     <y>242</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -311,6 +338,22 @@
     <hint type="destinationlabel">
      <x>143</x>
      <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_Resetbutton</sender>
+   <signal>pressed()</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>ResetPressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>68</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>103</x>
+     <y>269</y>
     </hint>
    </hints>
   </connection>

@@ -1,31 +1,46 @@
+#include <QDebug>
+
 #include "poissoneur.h"
 
-Poissoneur::Poissoneur(std::vector<Noeud> noeuds, Distributeur* distributeur, bool* terminer, bool* attendre)
+Poissoneur::Poissoneur(std::vector<Vehicule*>* all_vehicules, std::vector<Noeud> noeuds, Distributeur* distributeur, bool* terminer, bool* attendre)
     : noeuds_(noeuds),
       distributeur_(distributeur),
-      terminer_(terminer),
-      attendre_(attendre),
-      execution_(&Poissoneur::initialiser, this)
+      all_vehicules_(all_vehicules)
+
 {
     // On garde seulement les noeuds qui sont des sources dans le poissoneur
-    for(auto i(std::begin(noeuds_)); i != std::end(noeuds_); ++i)
+    /*for(auto i(std::begin(noeuds_)); i != std::end(noeuds_); ++i)
         if(!i->est_source())
             noeuds_.erase(i);
+    */
+
+    terminer_ = terminer;
+    attendre_ = attendre;
+    execution_ = std::thread(&Poissoneur::initialiser, this);
 }
 
 void Poissoneur::initialiser()
 {
     std::vector<Noeud>::iterator iterateur(std::begin(noeuds_));
 
+    Route* route = new Route(*iterateur, *(iterateur+1));
+    int i = 0;
     // Pour chaque noeud source
     while(!(*attendre_))
     {
         // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
-        if(iterateur->est_du())
-            distributeur_->ajouter_vehicule(Vehicule(*iterateur, *(iterateur+1))); // Trouver une facon de definir le noeud d'arrivee
+        if(iterateur->est_du() && i < 1)
+        {
+            Vehicule* vec = new Vehicule(noeuds_[0], noeuds_[1], route);
+            qDebug() << vec;
+            all_vehicules_->emplace_back(vec);
+            distributeur_->ajouter_vehicule(vec);
+            ++i;
+            //sleep(1);
+        }
 
-        if(iterateur == end(noeuds_))
-            iterateur = begin(noeuds_);
+        //if(iterateur == end(noeuds_))
+          //  iterateur = begin(noeuds_);
     }
 
     /*

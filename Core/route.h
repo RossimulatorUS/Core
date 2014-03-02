@@ -22,9 +22,12 @@ class Route
 
 public:
     Route(Noeud depart, Noeud arrive);
+    Route();
 
     Noeud PointDepart_;
     Noeud PointArrive_;
+
+    Formule getFormuleDroite();
 
 };
 

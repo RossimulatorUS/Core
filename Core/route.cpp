@@ -6,3 +6,11 @@ Route::Route(Noeud depart, Noeud arrive)
 {
     formuleDroite = Formule(PointDepart_, PointArrive_);
 }
+
+Route::Route()
+{}
+
+Formule Route::getFormuleDroite()
+{
+    return formuleDroite;
+}

@@ -3,8 +3,9 @@
 
 #include <vector>
 
-#include "distributeur.h"
 #include "module.h"
+#include "distributeur.h"
+
 #include "noeud.h"
 
 // Singleton
@@ -13,12 +14,12 @@
 class Poissoneur : public Module
 {
     std::vector<Noeud> noeuds_;
+    std::vector<Vehicule*>* all_vehicules_;
     Distributeur* distributeur_;
-
     void initialiser();
 
 public:
-    Poissoneur(std::vector<Noeud>, Distributeur*, bool*, bool*);
+    Poissoneur(std::vector<Vehicule *> *, std::vector<Noeud>, Distributeur*, bool*, bool*);
 
 };
 

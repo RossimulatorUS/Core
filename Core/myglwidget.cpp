@@ -393,18 +393,40 @@ void MyGLWidget::DrawRoadPressed()
 
 void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton
 {
+
+#include "vehicule.h"
+#include "vehiculethread.h"
+#include "poissoneur.h"
+
+    //auto vtts = new vector<VehiculeThread*>();
+
+    //vtts->push_back(new VehiculeThread(1));
+
+    Noeud noeudA = allNodes_[0];
+    Noeud noeudB = allNodes_[1];
+
+    //Vehicule* shiny = new Vehicule(noeudA, noeudB, &allRoads_[0]);
+
+    //allVehicules_.push_back(*shiny);
+
+    //Distributeur* theD = new Distributeur(vtts, new bool(false), new bool(false));
+
+    //auto poisson = new Poissoneur(&allVehicules_, allNodes_, theD, new bool(false), new bool(false));
+
+    //theD->ajouter_vehicule(&allVehicules_[0]);
+
+    //vh->ajouter_vehicule(&allVehicules_[0]);
+
     // Creer le Cortex
     Cortex cortex(allNodes_);
-    std::cout << "ici" << std::flush;
-    cortex.interpreter();
+    //cortex.interpreter();
 
     // Transformer bouton start en bouton end
 
 
     // Tout se fait dans le cortex
     /*
-    Noeud noeudA = Noeud(0,1.6);
-    Noeud noeudB = Noeud(0,-1.6);
+
 
     vehicule = new Vehicule(noeudA, noeudB);
 
@@ -416,6 +438,9 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
     */
 
     // updateGL();
+
+    //while(true)
+    //    sleep(1);
 }
 
 void MyGLWidget::moveCar()
@@ -462,7 +487,8 @@ void MyGLWidget::draw()
         qglColor(Qt::green);
         glColor3f(0,1,0);
         glBegin(GL_POINTS);
-            glVertex2f(allVehicules_[i].x_, allVehicules_[i].y_);
+            glVertex2f(allVehicules_[i]->x_, allVehicules_[i]->y_);
         glEnd();
+
     }
 }

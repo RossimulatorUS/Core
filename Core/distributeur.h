@@ -13,16 +13,16 @@
 class Distributeur : public Module
 {
     // Vehicules en attente d'etre distribues
-    std::vector<Vehicule> vehicules_;
+    std::vector<Vehicule*> vehicules_;
 
     // Threads du cortex qui sont utilisables pour calcul des deplacements
-    std::vector<VehiculeThread>* threads_;
+    std::vector<VehiculeThread*>* threads_;
 
     void initialiser();
 
 public:
-    Distributeur(std::vector<VehiculeThread>*, bool*, bool*);
-    void ajouter_vehicule(Vehicule);
+    Distributeur(std::vector<VehiculeThread *> *, bool*, bool*);
+    void ajouter_vehicule(Vehicule *);
 
 };
 

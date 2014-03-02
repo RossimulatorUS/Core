@@ -4,21 +4,22 @@
 #include "cortex.h"
 
 Cortex::Cortex(std::vector<Noeud> noeuds)
-    : analyste_(&fin_simulation, &attente_analyste_),
-      distributeur_(&threads_vehicule_, &fin_simulation, &attente_distributeur_),
-      poissoneur_(noeuds, &distributeur_, &fin_simulation, &attente_poissoneur_),
-      fin_simulation(false)
+    : fin_simulation(false)
 {
-
     /*
      * Ajouter variable a la construction
      * pour savoir si les temps d'attente
      * et nombre d'iterations sont decides par algortihmes
      * automatiquement, semi-automatiquement ou manuellement
      */
+    threads_vehicule_ = new std::vector<VehiculeThread*>();
 
     load_informations();
     reserve_ressources();
+
+    analyste_ = new Analyseur(&fin_simulation, &attente_analyste_);
+    distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
+    poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
 }
 
 void Cortex::load_informations()
@@ -32,13 +33,13 @@ void Cortex::reserve_ressources()
     {
         // Demarrer un nombre intelligent de threads en fonction de la qte. disponible.
         for(unsigned int i = 0; i < physical_threads_ * COEF_MULT_PHYSIQUE; ++i)
-            threads_vehicule_.push_back(VehiculeThread(threads_vehicule_.size()));
+            ajouter_thread();
     }
     else
     {
         // Demarrer les threads qui seront utilises par le distributeur
         for(unsigned int i = 0; i < NB_THREADS_DE_BASE; ++i)
-            threads_vehicule_.push_back(VehiculeThread(threads_vehicule_.size()));
+            ajouter_thread();
     }
 }
 
@@ -51,7 +52,8 @@ unsigned int Cortex::get_physical_threads()
 // Commande de l'interpreteur
 void Cortex::ajouter_thread()
 {
-    threads_vehicule_.push_back(VehiculeThread(threads_vehicule_.size()));
+    VehiculeThread* v = new VehiculeThread();
+    threads_vehicule_->emplace_back(v);
 }
 
 // Commande de l'interpreteur
@@ -72,9 +74,10 @@ void Cortex::interpreter()
     std::string commande;
     while(commande != "exit")
     {
-        std::cout << "RossimulatorUS >> : " << std::flush;
-        std::cin >> commande;
-        std::cout << commande << "\n" << std::flush;
+        //std::cout << physical_threads_ << " " << temps_attente_analyste_ << std::endl;
+        //std::cout << "RossimulatorUS >> : " << std::flush;
+        //std::cin >> commande;
+        //std::cout << commande << "\n" << std::flush;
 
         // Switch
     }
