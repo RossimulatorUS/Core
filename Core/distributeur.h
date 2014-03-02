@@ -1,6 +1,7 @@
 #ifndef DISTRIBUTEUR_H
 #define DISTRIBUTEUR_H
 
+#include <atomic>
 #include <vector>
 
 #include <vehiculethread.h>

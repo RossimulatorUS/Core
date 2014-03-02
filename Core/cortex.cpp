@@ -4,7 +4,10 @@
 #include "cortex.h"
 
 Cortex::Cortex(std::vector<Noeud> noeuds)
-    : fin_simulation(false)
+    : //attente_analyste_(false),
+      //attente_distributeur_(false),
+      attente_poissoneur_(false),
+      fin_simulation(false)
 {
     /*
      * Ajouter variable a la construction
@@ -12,6 +15,8 @@ Cortex::Cortex(std::vector<Noeud> noeuds)
      * et nombre d'iterations sont decides par algortihmes
      * automatiquement, semi-automatiquement ou manuellement
      */
+
+    vehicules_ = new std::vector<Vehicule*>();
     threads_vehicule_ = new std::vector<VehiculeThread*>();
 
     load_informations();
@@ -20,6 +25,8 @@ Cortex::Cortex(std::vector<Noeud> noeuds)
     analyste_ = new Analyseur(&fin_simulation, &attente_analyste_);
     distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
     poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
+
+    std::cout << "fin construction cortex" << std::endl;
 }
 
 void Cortex::load_informations()

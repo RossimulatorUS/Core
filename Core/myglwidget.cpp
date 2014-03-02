@@ -402,8 +402,8 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
 
     //vtts->push_back(new VehiculeThread(1));
 
-    Noeud noeudA = allNodes_[0];
-    Noeud noeudB = allNodes_[1];
+    //Noeud noeudA = allNodes_[0];
+    //Noeud noeudB = allNodes_[1];
 
     //Vehicule* shiny = new Vehicule(noeudA, noeudB, &allRoads_[0]);
 

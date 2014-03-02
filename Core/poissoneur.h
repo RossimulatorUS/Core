@@ -14,8 +14,9 @@
 class Poissoneur : public Module
 {
     std::vector<Noeud> noeuds_;
-    std::vector<Vehicule*>* all_vehicules_;
     Distributeur* distributeur_;
+    std::vector<Vehicule*>* all_vehicules_;
+
     void initialiser();
 
 public:

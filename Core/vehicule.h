@@ -14,9 +14,7 @@ class Vehicule
 public:
     Vehicule();
     Vehicule(Noeud depart, Noeud arrive, Route* route);
-    Vehicule(Noeud depart, Noeud arrive){}
-
-    Route* actualRoad_;
+    //Vehicule(Noeud depart, Noeud arrive){}
 
     float xVariation_;
     float yVariation_;
@@ -24,8 +22,11 @@ public:
     Noeud noeudDepart_;
     Noeud noeudArrive_;
 
+    Route* actualRoad_;
+
     GLfloat x_;
     GLfloat y_;
+    unsigned int id() const;
 };
 
 #endif // VEHICULE_H
