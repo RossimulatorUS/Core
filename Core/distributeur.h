@@ -21,6 +21,9 @@ class Distributeur : public Module
 
     void initialiser();
 
+    // ALGORITHME IMPORTANT
+    unsigned int choisir_thread();
+
 public:
     Distributeur(std::vector<VehiculeThread *> *, bool*, bool*);
     void ajouter_vehicule(Vehicule *);

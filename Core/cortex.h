@@ -12,10 +12,12 @@
 class Cortex
 {
 
+public:
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
-    enum {NB_THREADS_DE_BASE = 1, COEF_MULT_PHYSIQUE = 3};
+    enum {NB_THREADS_DE_BASE = 2, COEF_MULT_PHYSIQUE = 3};
     enum mode_execution {MANUEL = 0, SEMI = 1, AUTO = 2};
 
+private:
     // Temps de « sleep » entre chaque serie d'iteration
     unsigned int temps_attente_analyste_;
     unsigned int temps_attente_poissoneur_;

@@ -6,7 +6,6 @@ Module::Module()
 {
 }
 
-
 bool Module::est_initialise() const
 {
     return est_initialise_;

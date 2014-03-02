@@ -28,7 +28,7 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
         {
             vt->vehicules_[i]->x_ += vt->vehicules_[i]->xVariation_;
             vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
-            qDebug() << vt->vehicules_[i]->x_ << "," << vt->vehicules_[i]->y_;
+            qDebug() << vt->vehicules_[i]->x_ << "," << vt->vehicules_[i]->y_ << " : " << vt->id_;
         }
         usleep(REFRESH_TIME/* - (temps_fin - temps_depart)*/);
 
