@@ -13,6 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MyOpenGL
 TEMPLATE = app
 
+INCLUDEPATH += "C:\Program Files\boost\boost_1_55_0"
 
 SOURCES += main.cpp\
         window.cpp \
@@ -29,7 +30,8 @@ SOURCES += main.cpp\
     distributeur.cpp \
     signaleur.cpp \
     module.cpp \
-    analyseur.cpp
+    analyseur.cpp \
+    dvutility.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -45,6 +47,7 @@ HEADERS  += window.h \
     poissoneur.h \
     signaleur.h \
     module.h \
-    analyseur.h
+    analyseur.h \
+    dvutility.h
 
 FORMS    += window.ui

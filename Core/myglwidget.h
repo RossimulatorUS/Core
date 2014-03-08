@@ -58,11 +58,13 @@ private:
 
     constexpr static float ClickErrorTollerence = 0.3f;
 
+    void AddRoad(Noeud*, Noeud*);
     void DrawNode(float *worldCoords);
+    void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 
-    Noeud FindAssociatedNode(Noeud noeud);
+    Noeud* FindAssociatedNode(Noeud noeud);
 
     void clearWidget();
     void moveCar();
@@ -81,7 +83,7 @@ private:
     std::vector<Route> allRoads_;
     std::vector<Vehicule*> allVehicules_;
 
-    Noeud ClickPressedNode;
+    Noeud* ClickPressedNode;
 };
 
 #endif // MYGLWIDGET_H

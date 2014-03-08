@@ -28,6 +28,8 @@ public:
 
     void DeterminerFormule();
 
+    float GetLongueur();
+
     float GetVariationX();
     float GetVariationY();
 

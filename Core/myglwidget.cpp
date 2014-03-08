@@ -184,48 +184,61 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 {
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
-    Noeud associatedNode = FindAssociatedNode(node);
+    Noeud node = Noeud(worldCoords[0], worldCoords[1], true);
+    Noeud* associatedNode = FindAssociatedNode(node);
 
-    //if (ClickPressedNode != NULL)
-    if (associatedNode.x_ != 10.0f)
-        allRoads_.push_back(Route(ClickPressedNode, associatedNode));
+    if (associatedNode && ClickPressedNode && ClickPressedNode != associatedNode)
+    {
+        AddRoad(ClickPressedNode, associatedNode);
+    }
 }
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
-    Noeud associatedNode = FindAssociatedNode(node);
+    Noeud node = Noeud(worldCoords[0], worldCoords[1], true);
+    Noeud* associatedNode = FindAssociatedNode(node);
 
-    /*if (associatedNode == NULL)
-        ClickPressedNode = NULL;
-    else*/
-        ClickPressedNode = associatedNode;
+    //attention, ça pourrait être NULL
+    ClickPressedNode = associatedNode;
 }
 
-Noeud MyGLWidget::FindAssociatedNode(Noeud noeud)
+Noeud* MyGLWidget::FindAssociatedNode(Noeud noeud)
 {
     for (unsigned int i = 0; i < allNodes_.size(); ++i)
     {
-        float ErrorXPos = allNodes_[i].x_ + ClickErrorTollerence;
-        float ErrorXNeg = allNodes_[i].x_ - ClickErrorTollerence;
-        float ErrorYPos = allNodes_[i].y_ + ClickErrorTollerence;
-        float ErrorYNeg = allNodes_[i].y_ - ClickErrorTollerence;
+        float ErrorXPos = allNodes_[i].x() + ClickErrorTollerence;
+        float ErrorXNeg = allNodes_[i].x() - ClickErrorTollerence;
+        float ErrorYPos = allNodes_[i].y() + ClickErrorTollerence;
+        float ErrorYNeg = allNodes_[i].y() - ClickErrorTollerence;
 
-        if ((noeud.x_ > ErrorXNeg && noeud.x_ < ErrorXPos) &&
-            (noeud.y_ > ErrorYNeg && noeud.y_ < ErrorYPos))
-            return allNodes_[i];
+        if ((noeud.x() > ErrorXNeg && noeud.x() < ErrorXPos) &&
+            (noeud.y() > ErrorYNeg && noeud.y() < ErrorYPos))
+            return &allNodes_[i];
     }
-    //invalid node laid a revoir
-    //return NULL;
-    return Noeud(10.0f,10.0f);
+    return NULL;
 }
 
 void MyGLWidget::DrawNode(float *worldCoords)
 {
     //Ajouter un noeud pour le draw
-    Noeud noeud = Noeud(worldCoords[0], worldCoords[1]);
-    allNodes_.push_back(noeud);
+    DrawNode(worldCoords[0], worldCoords[1]);
+}
+
+void MyGLWidget::DrawNode(float x, float y)
+{
+    //Ajouter un noeud pour le draw
+    //Noeud noeud = Noeud(x, y);
+    //allNodes_.push_back(noeud);
+    allNodes_.emplace_back(x,y);//le vecteur crée lui-même le noeud en le plaçant
+}
+
+void MyGLWidget::AddRoad(Noeud *a, Noeud *b)
+{
+    //TODO si une route existe déjà, créer une voie
+
+    allRoads_.push_back(Route(a, b));
+    a->AddNeighbour(b, &allRoads_[allRoads_.size()-1]);
+    b->AddNeighbour(a, &allRoads_[allRoads_.size()-1]);
 }
 
 /*void MyGLWidget::mouseMoveEvent(QMouseEvent *event)
@@ -255,13 +268,9 @@ void MyGLWidget::CreateSimulation1()
 {
     clearWidget();
 
-    Noeud noeudA = Noeud(0,1.6);
-    Noeud noeudB = Noeud(0,-1.6);
-
-    allNodes_.push_back(noeudA);
-    allNodes_.push_back(noeudB);
-
-    allRoads_.push_back(Route(noeudA, noeudB));
+    DrawNode(0.0f,1.6f);
+    DrawNode(0.0f,-1.6f);
+    AddRoad(&allNodes_[0], &allNodes_[1]);
 
     updateGL();
 }
@@ -271,19 +280,12 @@ void MyGLWidget::CreateSimulation2()
 {
     clearWidget();
 
-    Noeud noeudA = Noeud(0.1,1.6);
-    Noeud noeudB = Noeud(0.1,-1.6);
-
-    Noeud noeudC = Noeud(-0.1,1.6);
-    Noeud noeudD = Noeud(-0.1,-1.6);
-
-    allNodes_.push_back(noeudA);
-    allNodes_.push_back(noeudB);
-    allNodes_.push_back(noeudC);
-    allNodes_.push_back(noeudD);
-
-    allRoads_.push_back(Route(noeudA, noeudB));
-    allRoads_.push_back(Route(noeudC, noeudD));
+    DrawNode(0.1f,1.6f);
+    DrawNode(0.1f,-1.6f);
+    DrawNode(-0.1f,1.6f);
+    DrawNode(-0.1f,-1.6f);
+    AddRoad(&allNodes_[0], &allNodes_[1]);//A-B
+    AddRoad(&allNodes_[2], &allNodes_[3]);//C-D
 
     updateGL();
 }
@@ -293,31 +295,18 @@ void MyGLWidget::CreateSimulation3()
 {
     clearWidget();
 
-    Noeud noeudA = Noeud(0.4,1.6);
-    Noeud noeudB = Noeud(0.4,-1.6);
-
-    Noeud noeudC = Noeud(0.2,1.6);
-    Noeud noeudD = Noeud(0.2,-1.6);
-
-    Noeud noeudE = Noeud(-0.2,1.6);
-    Noeud noeudF = Noeud(-0.2,-1.6);
-
-    Noeud noeudG = Noeud(-0.4,1.6);
-    Noeud noeudH = Noeud(-0.4,-1.6);
-
-    allNodes_.push_back(noeudA);
-    allNodes_.push_back(noeudB);
-    allNodes_.push_back(noeudC);
-    allNodes_.push_back(noeudD);
-    allNodes_.push_back(noeudE);
-    allNodes_.push_back(noeudF);
-    allNodes_.push_back(noeudG);
-    allNodes_.push_back(noeudH);
-
-    allRoads_.push_back(Route(noeudA, noeudB));
-    allRoads_.push_back(Route(noeudC, noeudD));
-    allRoads_.push_back(Route(noeudE, noeudF));
-    allRoads_.push_back(Route(noeudG, noeudH));
+    DrawNode(0.4f,1.6f);
+    DrawNode(0.4f,-1.6f);
+    DrawNode(0.2f,1.6f);
+    DrawNode(0.2f,-1.6f);
+    DrawNode(-0.2f,1.6f);
+    DrawNode(-0.2f,-1.6f);
+    DrawNode(-0.4f,1.6f);
+    DrawNode(-0.4f,-1.6f);
+    AddRoad(&allNodes_[0], &allNodes_[1]);//A-B
+    AddRoad(&allNodes_[2], &allNodes_[3]);//C-D
+    AddRoad(&allNodes_[4], &allNodes_[5]);//E-F
+    AddRoad(&allNodes_[6], &allNodes_[7]);//G-H
 
     updateGL();
 }
@@ -327,19 +316,15 @@ void MyGLWidget::CreateSimulation4()
 {
     clearWidget();
 
-    Noeud noeudA = Noeud(0,1.6);
-    Noeud noeudB = Noeud(0,-1.6);
-
-    Noeud noeudC = Noeud(1.6,0);
-    Noeud noeudD = Noeud(-1.6,0);
-
-    allNodes_.push_back(noeudA);
-    allNodes_.push_back(noeudB);
-    allNodes_.push_back(noeudC);
-    allNodes_.push_back(noeudD);
-
-    allRoads_.push_back(Route(noeudA, noeudB));
-    allRoads_.push_back(Route(noeudC, noeudD));
+    DrawNode(0.0f,1.6f);
+    DrawNode(0.0f,-1.6f);
+    DrawNode(1.6f,0.0f);
+    DrawNode(-1.6f,0.0f);
+    DrawNode(0.0f,0.0f);
+    AddRoad(&allNodes_[0], &allNodes_[4]);//A-E
+    AddRoad(&allNodes_[1], &allNodes_[4]);//B-E
+    AddRoad(&allNodes_[2], &allNodes_[4]);//C-E
+    AddRoad(&allNodes_[3], &allNodes_[4]);//D-E
 
     updateGL();
 
@@ -350,31 +335,43 @@ void MyGLWidget::CreateSimulation5()
 {
     clearWidget();
 
-    Noeud noeudA = Noeud(0.1,1.6);
-    Noeud noeudB = Noeud(0.1,-1.6);
+    //tout est clockwise
+    //noeuds haut
+    DrawNode(-0.1f,1.6f);
+    DrawNode(0.1f,1.6f);
+    //noeuds droite
+    DrawNode(1.6f,0.1f);
+    DrawNode(1.6f,-0.1f);
+    //noeuds bas
+    DrawNode(0.1f,-1.6f);
+    DrawNode(-0.1f,-1.6f);
+    //noeuds gauche
+    DrawNode(-1.6f,-0.1f);
+    DrawNode(-1.6f,0.1f);
 
-    Noeud noeudC = Noeud(-0.1,1.6);
-    Noeud noeudD = Noeud(-0.1,-1.6);
+    //intersections
+    DrawNode(-0.1f,0.1f);
+    DrawNode(0.1f,0.1f);
+    DrawNode(0.1f,-0.1f);
+    DrawNode(-0.1f,-0.1f);
 
-    Noeud noeudE = Noeud(1.6,0.1);
-    Noeud noeudF = Noeud(-1.6,0.1);
+    AddRoad(&allNodes_[0], &allNodes_[8]);
+    AddRoad(&allNodes_[1], &allNodes_[9]);
 
-    Noeud noeudG = Noeud(1.6,-0.1);
-    Noeud noeudH = Noeud(-1.6, -0.1);
+    AddRoad(&allNodes_[2], &allNodes_[9]);
+    AddRoad(&allNodes_[3], &allNodes_[10]);
 
-    allNodes_.push_back(noeudA);
-    allNodes_.push_back(noeudB);
-    allNodes_.push_back(noeudC);
-    allNodes_.push_back(noeudD);
-    allNodes_.push_back(noeudE);
-    allNodes_.push_back(noeudF);
-    allNodes_.push_back(noeudG);
-    allNodes_.push_back(noeudH);
+    AddRoad(&allNodes_[4], &allNodes_[10]);
+    AddRoad(&allNodes_[5], &allNodes_[11]);
 
-    allRoads_.push_back(Route(noeudA, noeudB));
-    allRoads_.push_back(Route(noeudC, noeudD));
-    allRoads_.push_back(Route(noeudE, noeudF));
-    allRoads_.push_back(Route(noeudG, noeudH));
+    AddRoad(&allNodes_[6], &allNodes_[11]);
+    AddRoad(&allNodes_[7], &allNodes_[8]);
+
+    //intersections
+    AddRoad(&allNodes_[8], &allNodes_[9]);
+    AddRoad(&allNodes_[9], &allNodes_[10]);
+    AddRoad(&allNodes_[10], &allNodes_[11]);
+    AddRoad(&allNodes_[11], &allNodes_[8]);
 
     updateGL();
 }
@@ -393,8 +390,35 @@ void MyGLWidget::DrawRoadPressed()
 
 void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton
 {
+    bool dvEnCours = true;
+    for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+    {
+        itt->StartDV();
+    }
+    while(dvEnCours)
+    {
+        dvEnCours = false;
+        for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+        {
+            dvEnCours |= itt->ProcessDVMessages();
+        }
+    }
+
+    for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+    {
+        itt->PrintDVResults();
+    }
+
     // Creer le Cortex
     Cortex cortex(allNodes_, &allVehicules_);
+
+    //auto-rafraichissement de OpenGL
+    const int FPS = 30;
+    const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
+    timer->start(FREQ_RAFRAICHISSMENT_MS);
+
 }
 
 void MyGLWidget::moveCar()
@@ -410,6 +434,7 @@ void MyGLWidget::clearWidget()
 
 void MyGLWidget::draw()
 {
+    glPointSize(5.0f);
     for(unsigned int i = 0; i < allNodes_.size(); ++i)
     {
         glLoadIdentity();
@@ -417,7 +442,7 @@ void MyGLWidget::draw()
         qglColor(Qt::green);
         glColor3f(1,0,0);
         glBegin(GL_POINTS);
-            glVertex2f(allNodes_[i].x_,allNodes_[i].y_);
+            glVertex2f(allNodes_[i].x(),allNodes_[i].y());
         glEnd();
     }
 
@@ -428,8 +453,8 @@ void MyGLWidget::draw()
         qglColor(Qt::green);
         glColor3f(1,0,0);
         glBegin(GL_LINES);
-            glVertex2f(allRoads_[i].PointDepart_.x_, allRoads_[i].PointDepart_.y_);
-            glVertex2f(allRoads_[i].PointArrive_.x_, allRoads_[i].PointArrive_.y_);
+            glVertex2f(allRoads_[i].PointDepart_->x(), allRoads_[i].PointDepart_->y());
+            glVertex2f(allRoads_[i].PointArrive_->x(), allRoads_[i].PointArrive_->y());
         glEnd();
     }
 

@@ -7,7 +7,7 @@ Formule::Formule(Noeud noeudA, Noeud noeudB)
 {
     a = DeterminerPente(noeudA.x(), noeudB.x(), noeudA.y(), noeudB.y());
     b = DeterminerB(noeudA.x(), noeudA.y());
-    Noeud noeudTemp = Noeud(noeudB.x(), noeudA.y());
+    Noeud noeudTemp = Noeud(noeudB.x(), noeudA.y(), true);
 
     float distanceX = CalculerDistance(noeudA, noeudTemp);
     float distanceY = CalculerDistance(noeudB, noeudTemp);
@@ -84,6 +84,11 @@ void Formule::DeterminerDirection(Noeud depart, Noeud destination)
         variationX_ *= -1;
     if (depart.y() > destination.y())
         variationY_ *= -1;
+}
+
+float Formule::GetLongueur()
+{
+    return distanceDroite_;
 }
 
 

@@ -28,7 +28,7 @@ void Poissoneur::initialiser()
     std::vector<Noeud>::iterator iterateur(std::begin(noeuds_));
 
     // Variable qui devront etre supprimees
-    Route* route = new Route(*iterateur, *(iterateur+1));
+    Route* route = new Route(&*iterateur, &*(iterateur+1));
     int i = 0;
 
     // Indication que
@@ -41,11 +41,13 @@ void Poissoneur::initialiser()
         // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
         if(iterateur->est_du() && i < 10)
         {
-            Vehicule* vec = new Vehicule(noeuds_[0], noeuds_[1], route);
+            Vehicule* vec = new Vehicule(&noeuds_[0], &noeuds_[1], route);
             all_vehicules_->emplace_back(vec);
             distributeur_->ajouter_vehicule(vec);
             ++i;
-            sleep(1);
+            //sleep(1);
+            std::chrono::milliseconds dura( 1000 );
+            std::this_thread::sleep_for(dura);
         }
 
         // Pour looper dans les noeuds

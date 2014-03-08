@@ -13,14 +13,14 @@ class Vehicule
 
 public:
     Vehicule();
-    Vehicule(Noeud depart, Noeud arrive, Route* route);
+    Vehicule(Noeud* depart, Noeud* arrive, Route* route);
     //Vehicule(Noeud depart, Noeud arrive){}
 
     float xVariation_;
     float yVariation_;
 
-    Noeud noeudDepart_;
-    Noeud noeudArrive_;
+    Noeud* noeudDepart_;
+    Noeud* noeudArrive_;
 
     Route* actualRoad_;
 
