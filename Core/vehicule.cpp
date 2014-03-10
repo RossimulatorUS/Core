@@ -12,7 +12,7 @@ Vehicule::Vehicule()
 Vehicule::Vehicule(Noeud depart, Noeud arrive, Route *route)
     :noeudDepart_(depart),
      noeudArrive_(arrive),
-     actualRoad_(route)
+     actualRoad_(route) // actual_road(depart, arrive)
 {
     // Retouner id et incrementer ensuite
     id_ = id_a_date_++;
@@ -27,4 +27,11 @@ Vehicule::Vehicule(Noeud depart, Noeud arrive, Route *route)
 unsigned int Vehicule::id() const
 {
     return id_;
+}
+
+// Algorithme important
+Route* Vehicule::choisir_route(Noeud* depart, Noeud* arrivee)
+{
+    // DV -- Charles
+    return new Route();
 }

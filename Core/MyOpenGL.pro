@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     distributeur.cpp \
     signaleur.cpp \
     module.cpp \
-    analyseur.cpp
+    analyseur.cpp \
+    historique_dexecution.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -45,6 +46,7 @@ HEADERS  += window.h \
     poissoneur.h \
     signaleur.h \
     module.h \
-    analyseur.h
+    analyseur.h \
+    historique_dexecution.h
 
 FORMS    += window.ui
