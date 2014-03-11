@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     signaleur.cpp \
     module.cpp \
     analyseur.cpp \
-    dvutility.cpp
+    dvutility.cpp \
+    historique_dexecution.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -48,6 +49,7 @@ HEADERS  += window.h \
     signaleur.h \
     module.h \
     analyseur.h \
-    dvutility.h
+    dvutility.h \
+    historique_dexecution.h
 
 FORMS    += window.ui

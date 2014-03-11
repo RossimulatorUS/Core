@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "module.h"
 #include "distributeur.h"
-
+#include "historique_dexecution.h"
+#include "module.h"
 #include "noeud.h"
 
 // Singleton
@@ -16,6 +16,9 @@ class Poissoneur : public Module
     std::vector<Noeud> noeuds_;
     Distributeur* distributeur_;
     std::vector<Vehicule*>* all_vehicules_;
+
+    // Controle du temps d'execution
+    Historique_dexecution historique_;
 
     void initialiser();
 

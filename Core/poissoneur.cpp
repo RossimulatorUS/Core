@@ -1,5 +1,4 @@
 #include <QDebug>
-#include <iostream>
 #include "poissoneur.h"
 
 Poissoneur::Poissoneur(std::vector<Vehicule*>* all_vehicules, std::vector<Noeud> noeuds, Distributeur* distributeur, bool* terminer, bool* attendre)
@@ -31,13 +30,16 @@ void Poissoneur::initialiser()
     Route* route = new Route(&*iterateur, &*(iterateur+1));
     int i = 0;
 
-    // Indication que
+    // Indication que le poissonneur est pret
     est_initialise_ = true;
+    Historique_dexecution::temps temps_initial;
 
     // Pour chaque noeud source
     while(!(*attendre_))
     {
-        //std::cout << "Poissonage" << std::endl;
+        // Demarrer chronometre
+        temps_initial = Historique_dexecution::get_time();
+
         // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
         if(iterateur->est_du() && i < 10)
         {
@@ -53,6 +55,11 @@ void Poissoneur::initialiser()
         // Pour looper dans les noeuds
         if(iterateur == end(noeuds_))
             iterateur = begin(noeuds_);
+
+        // Arreter chronometre
+        historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+
+        qDebug() << "Temps parcours : " << historique_.get_dernier_temps().count();
     }
 
     /*

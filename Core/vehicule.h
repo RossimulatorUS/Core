@@ -1,9 +1,9 @@
 #ifndef VEHICULE_H
 #define VEHICULE_H
 
+#include <QGLWidget>
 #include "noeud.h"
 #include "route.h"
-#include <QGLWidget>
 
 class Vehicule
 {
@@ -11,10 +11,11 @@ class Vehicule
     static unsigned int id_a_date_;
     unsigned int id_;
 
+    static Route* choisir_route(Noeud*, Noeud*);
+
 public:
     Vehicule();
-    Vehicule(Noeud* depart, Noeud* arrive, Route* route);
-    //Vehicule(Noeud depart, Noeud arrive){}
+    Vehicule(Noeud* depart, Noeud* arrive);
 
     float xVariation_;
     float yVariation_;

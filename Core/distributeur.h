@@ -4,12 +4,10 @@
 #include <atomic>
 #include <vector>
 
-#include <vehiculethread.h>
-#include <vehicule.h>
+#include "historique_dexecution.h"
 #include "module.h"
-
-// Singleton
-// TODO : Heritage d'une classe incopiable
+#include "vehicule.h"
+#include "vehiculethread.h"
 
 class Distributeur : public Module
 {
@@ -18,6 +16,9 @@ class Distributeur : public Module
 
     // Threads du cortex qui sont utilisables pour calcul des deplacements
     std::vector<VehiculeThread*>* threads_;
+
+    // Controle du temps d'execution
+    Historique_dexecution historique_;
 
     void initialiser();
 

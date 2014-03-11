@@ -18,6 +18,7 @@ public:
     enum mode_execution {MANUEL = 0, SEMI = 1, AUTO = 2};
 
 private:
+
     // Temps de « sleep » entre chaque serie d'iteration
     unsigned int temps_attente_analyste_;
     unsigned int temps_attente_poissoneur_;
@@ -25,14 +26,6 @@ private:
     unsigned int temps_attente_deplaceurs_;
     unsigned int temps_attente_signaleur_;
     unsigned int temps_attente_OpenGL_;
-
-    // Nombre d'iteration entre chaque « sleep »
-    unsigned int nombre_iterations_analyste_;
-    unsigned int nombre_iterations_poissoneur_;
-    unsigned int nombre_iterations_distributeur_;
-    unsigned int nombre_iterations_deplaceurs_;
-    unsigned int nombre_iterations_signaleur_;
-    unsigned int nombre_iterations_OpenGL_;
 
     // Mettre un module en attente
     bool attente_analyste_;

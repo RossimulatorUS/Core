@@ -5,7 +5,7 @@
 #include <vector>
 #include "vehicule.h"
 
-class VehiculeThread
+class VehiculeThread // : public Module
 {
     // Materiel
     std::vector<Vehicule*> vehicules_;
