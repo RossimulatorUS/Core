@@ -2,7 +2,7 @@
 #include <thread>
 #include "cortex.h"
 
-Cortex::Cortex(std::vector<Noeud> noeuds, std::vector<Vehicule*>* vehicules)
+Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     : //attente_analyste_(false),
       //attente_distributeur_(false),
       attente_poissoneur_(false),

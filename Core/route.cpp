@@ -1,10 +1,21 @@
 #include "route.h"
 #include "formule.h"
+#include "simulationdata.h"
 
-Route::Route(Noeud *depart, Noeud *arrive)
-    :PointDepart_(depart), PointArrive_(arrive)
+Noeud Route::GetNoeudDepart()
 {
-    formuleDroite = Formule(*PointDepart_, *PointArrive_);
+    return SimulationData::GetInstance().GetNoeud(IDDepart_);
+}
+
+Noeud Route::GetNoeudArrivee()
+{
+    return SimulationData::GetInstance().GetNoeud(IDArrive_);
+}
+
+Route::Route(road_id_type idDepart, road_id_type idArrive)
+    :IDDepart_(idDepart), IDArrive_(idArrive)
+{
+    formuleDroite = Formule(GetNoeudDepart(), GetNoeudArrivee());
 }
 
 Route::Route()
@@ -15,7 +26,7 @@ Formule Route::getFormuleDroite()
     return formuleDroite;
 }
 
-Route::cost_type Route::Cost()
+Route::road_cost_type Route::Cost()
 {
     return formuleDroite.GetLongueur();
 }

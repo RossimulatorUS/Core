@@ -1,5 +1,6 @@
 #include "formule.h"
 #include "qdebug.h"
+#include "simulationdata.h"
 
 Formule::Formule(){}
 
@@ -7,7 +8,7 @@ Formule::Formule(Noeud noeudA, Noeud noeudB)
 {
     a = DeterminerPente(noeudA.x(), noeudB.x(), noeudA.y(), noeudB.y());
     b = DeterminerB(noeudA.x(), noeudA.y());
-    Noeud noeudTemp = Noeud(noeudB.x(), noeudA.y(), true);
+    Noeud noeudTemp = Noeud(noeudB.x(), noeudA.y());
 
     float distanceX = CalculerDistance(noeudA, noeudTemp);
     float distanceY = CalculerDistance(noeudB, noeudTemp);
@@ -17,11 +18,6 @@ Formule::Formule(Noeud noeudA, Noeud noeudB)
     variationY_ = (distanceY / distanceDroite_);
 
     DeterminerDirection(noeudA, noeudB);
-}
-
-void Formule::DeterminerFormule()
-{
-
 }
 
 float Formule::getPente()

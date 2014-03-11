@@ -26,8 +26,6 @@ public:
     GLfloat a;
     GLfloat b;
 
-    void DeterminerFormule();
-
     float GetLongueur();
 
     float GetVariationX();

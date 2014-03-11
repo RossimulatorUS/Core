@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <unistd.h>
+#include "simulationdata.h"
 
 const unsigned int REFRESH_TIME = 100000;
 
@@ -13,7 +14,7 @@ VehiculeThread::VehiculeThread()
     : execution_(&VehiculeThread::demarrer_traitement,this, this),
       terminer(false)
 {
-    vehicules_ = std::vector<Vehicule*>();
+    vehicules_ = std::list<Vehicule*>();
 
     // Retouner id et incrementer ensuite
     id_ = id_a_date_++;
@@ -24,11 +25,21 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
     while(!terminer)
     {
         // Temps depart
-        for (unsigned int i = 0; i < vt->vehicules_.size(); ++i)
+        for (auto itt = vt->vehicules_.begin() ; itt != vt->vehicules_.end() ; ++itt)
         {
-            vt->vehicules_[i]->x_ += vt->vehicules_[i]->xVariation_;
-            vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
-            qDebug() << vt->vehicules_[i]->x_ << "," << vt->vehicules_[i]->y_ << " : " << vt->id_;
+            if((*itt)->Process() == false)   //HE MUST DIE IF HE IS FALSE
+            {
+                qDebug() << "DESTROY!";
+                vt->vehicules_.remove(*itt);
+                SimulationData::GetInstance().GetVehiculesPointer()->remove(*itt);
+                delete(*itt);
+                //*itt
+                //destroy it in simulation data first instead of glwidget
+                //and here too, bitch
+            }
+            //x_ += vt->vehicules_[i]->xVariation_;
+            //vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
+            qDebug() << (*itt)->x_ << "," << (*itt)->y_ << " : " << vt->id_;
         }
         usleep(REFRESH_TIME/* - (temps_fin - temps_depart)*/);
 
@@ -42,7 +53,7 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
 void VehiculeThread::ajouter_vehicule(Vehicule* vehicule)
 {
     //qDebug() << vehicules_->size();
-    vehicules_.emplace_back(vehicule); // vehicules n'existe pas encore
+    vehicules_.push_back(vehicule); // vehicules n'existe pas encore
 }
 
 void VehiculeThread::termine()

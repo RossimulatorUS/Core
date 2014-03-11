@@ -57,13 +57,13 @@ private:
     Signaleur* signaleur_;
 
     // Vehicules se deplacant dans le reseau routier
-    std::vector<Vehicule*>* vehicules_;
+    std::list<Vehicule*>* vehicules_;
 
     // Fin de la simulation
     bool fin_simulation;
 
 public:
-    Cortex(std::vector<Noeud>, std::vector<Vehicule*>*);
+    Cortex(std::vector<Noeud>, std::list<Vehicule *> *);
 
     // API -> Commandes interpretees
     void interpreter();

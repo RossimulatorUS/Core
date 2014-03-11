@@ -6,6 +6,7 @@
 #include "noeud.h"
 #include "route.h"
 #include "vehicule.h"
+#include "simulationtraits.h"
 
 class MyGLWidget : public QGLWidget
 {
@@ -13,6 +14,9 @@ class MyGLWidget : public QGLWidget
 public:
     MyGLWidget(QWidget *parent = 0);
     ~MyGLWidget();
+    using node_id_type = typename simulation_traits::node_id_type;
+    using road_id_type = typename simulation_traits::road_id_type;
+    using road_cost_type = typename simulation_traits::road_cost_type;
 signals:
 
 public slots:
@@ -59,12 +63,13 @@ private:
     constexpr static float ClickErrorTollerence = 0.3f;
 
     void AddRoad(Noeud*, Noeud*);
+    void AddRoad(node_id_type, node_id_type);
     void DrawNode(float *worldCoords);
     void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 
-    Noeud* FindAssociatedNode(Noeud noeud);
+    node_id_type FindAssociatedNode(Noeud noeud);
 
     void clearWidget();
     void moveCar();
@@ -79,11 +84,14 @@ private:
     std::vector<Vehicule> allVehicules_ = std::vector<Vehicule>();
     */
 
-    std::vector<Noeud> allNodes_;
-    std::vector<Route> allRoads_;
+    std::vector<Noeud> &GetAllNodes();
+    std::vector<Route> GetAllRoads();
+    std::list<Vehicule*> GetAllVehicules();
+    //std::vector<Noeud> allNodes_;
+    //std::vector<Route> allRoads_;
     std::vector<Vehicule*> allVehicules_;
 
-    Noeud* ClickPressedNode;
+    node_id_type ClickPressedNode;
 };
 
 #endif // MYGLWIDGET_H

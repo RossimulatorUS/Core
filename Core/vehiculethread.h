@@ -8,7 +8,7 @@
 class VehiculeThread // : public Module
 {
     // Materiel
-    std::vector<Vehicule*> vehicules_;
+    std::list<Vehicule*> vehicules_;
     std::thread execution_;
     bool terminer;
     static unsigned int id_a_date_;

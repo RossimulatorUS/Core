@@ -15,7 +15,7 @@ class Poissoneur : public Module
 {
     std::vector<Noeud> noeuds_;
     Distributeur* distributeur_;
-    std::vector<Vehicule*>* all_vehicules_;
+    std::list<Vehicule*>* all_vehicules_;
 
     // Controle du temps d'execution
     Historique_dexecution historique_;
@@ -23,7 +23,7 @@ class Poissoneur : public Module
     void initialiser();
 
 public:
-    Poissoneur(std::vector<Vehicule *> *, std::vector<Noeud>, Distributeur*, bool*, bool*);
+    Poissoneur(std::list<Vehicule *> *, std::vector<Noeud>, Distributeur*, bool*, bool*);
 
 };
 

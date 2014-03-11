@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     module.cpp \
     analyseur.cpp \
     dvutility.cpp \
-    historique_dexecution.cpp
+    historique_dexecution.cpp \
+    simulationdata.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -50,6 +51,8 @@ HEADERS  += window.h \
     module.h \
     analyseur.h \
     dvutility.h \
-    historique_dexecution.h
+    historique_dexecution.h \
+    simulationdata.h \
+    simulationtraits.h
 
 FORMS    += window.ui

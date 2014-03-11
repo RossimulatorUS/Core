@@ -1,7 +1,7 @@
 #include <QDebug>
 #include "poissoneur.h"
 
-Poissoneur::Poissoneur(std::vector<Vehicule*>* all_vehicules, std::vector<Noeud> noeuds, Distributeur* distributeur, bool* terminer, bool* attendre)
+Poissoneur::Poissoneur(std::list<Vehicule *> *all_vehicules, std::vector<Noeud> noeuds, Distributeur* distributeur, bool* terminer, bool* attendre)
     : distributeur_(distributeur),
       all_vehicules_(all_vehicules)
 {
@@ -27,7 +27,7 @@ void Poissoneur::initialiser()
     std::vector<Noeud>::iterator iterateur(std::begin(noeuds_));
 
     // Variable qui devront etre supprimees
-    Route* route = new Route(&*iterateur, &*(iterateur+1));
+    //Route* route = new Route(&*iterateur, &*(iterateur+1));
     int i = 0;
 
     // Indication que le poissonneur est pret
@@ -43,8 +43,8 @@ void Poissoneur::initialiser()
         // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
         if(iterateur->est_du() && i < 10)
         {
-            Vehicule* vec = new Vehicule(&noeuds_[0], &noeuds_[1], route);
-            all_vehicules_->emplace_back(vec);
+            Vehicule* vec = new Vehicule(noeuds_[0].GetId(), noeuds_[1].GetId());
+            all_vehicules_->push_back(vec);
             distributeur_->ajouter_vehicule(vec);
             ++i;
             //sleep(1);
@@ -59,7 +59,7 @@ void Poissoneur::initialiser()
         // Arreter chronometre
         historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
 
-        qDebug() << "Temps parcours : " << historique_.get_dernier_temps().count();
+        //qDebug() << "Temps parcours : " << historique_.get_dernier_temps().count();
     }
 
     /*
