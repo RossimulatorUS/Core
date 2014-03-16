@@ -1,5 +1,4 @@
 #include "route.h"
-#include "formule.h"
 #include "simulationdata.h"
 
 Noeud Route::GetNoeudDepart()

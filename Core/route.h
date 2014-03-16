@@ -1,13 +1,15 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
-#include <QGLWidget>
-#include <vector>
-#include <utility> // pair
-#include "voie.h"
-#include "noeud.h"
 #include "formule.h"
+
+#include <QGLWidget>
+#include <utility>
+#include <vector>
+
 #include "dvutility.h"
+#include "noeud.h"
+#include "voie.h"
 
 using std::vector;
 using std::pair;
@@ -19,13 +21,12 @@ class Route
 public:
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
+
 private:
     vector<Voie> voies_;
     //pair<Noeud, Noeud> origines_;
 
     Formule formuleDroite;
-
-
     //offset 0.2 = pas pire pentoute
 
 public:

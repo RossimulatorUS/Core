@@ -1,12 +1,12 @@
-#include "vehiculethread.h"
 #include <QDebug>
+
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <unistd.h>
-#include "simulationdata.h"
 
-const unsigned int REFRESH_TIME = 100000;
+#include "simulationdata.h"
+#include "vehiculethread.h"
 
 unsigned int VehiculeThread::id_a_date_ = 0;
 
@@ -24,6 +24,7 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
 {
     while(!terminer)
     {
+        //if(!(*attendre_))
         // Temps depart
         for (auto itt = vt->vehicules_.begin() ; itt != vt->vehicules_.end() ; ++itt)
         {
@@ -41,12 +42,6 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
             //vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
             qDebug() << (*itt)->x_ << "," << (*itt)->y_ << " : " << vt->id_;
         }
-        usleep(REFRESH_TIME/* - (temps_fin - temps_depart)*/);
-
-        //QObject *test = this->parent();
-        //MyGLWidget *widget = reinterpret_cast<MyGLWidget*>(test);
-        //widget->RemoveCar(vehicule);
-
     }
 }
 

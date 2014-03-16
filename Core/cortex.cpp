@@ -21,7 +21,7 @@ Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     load_informations();
     reserve_ressources();
 
-    analyste_ = new Analyseur(&fin_simulation, &attente_analyste_);
+    analyste_ = new Analyseur(&fin_simulation, this);
     distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
     poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
 }
@@ -86,3 +86,8 @@ void Cortex::interpreter()
         // Switch
     }
 }
+
+/*unsigned int Cortex::qte_threads_vehicule()
+{
+    return threads_vehicule_->size();
+}*/

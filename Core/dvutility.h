@@ -4,6 +4,8 @@
 #include <map>
 #include "simulationtraits.h"
 #define DV_INFINITY 999999;
+
+
 class Noeud;    //forward declaration
 
 

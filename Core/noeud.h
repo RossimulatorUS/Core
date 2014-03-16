@@ -4,11 +4,14 @@
 #include <QGLWidget>
 
 #include <map>
-#include <queue>
-#include "dvutility.h"
 #include <mutex>
+#include <queue>
+
+#include "dvutility.h"
+#include "historique_dexecution.h"
 #include "simulationtraits.h"
 
+class Vehicule;
 class Route;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
 
 class Noeud
@@ -17,6 +20,7 @@ public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
+
 private:
     bool est_source_;
     bool est_du_;
@@ -34,6 +38,14 @@ private:
 
     bool ReceiveDVMessage(DVMessage);
     void SendDVMessageToNeighbours();
+
+    // Utilises pour la generation des voitures
+    Historique_dexecution::temps derniere_creation_;
+    enum loi {UNIFORME, POISSON};
+    loi loi_utilisee_;
+    static std::default_random_engine generateur_;
+    static std::bernoulli_distribution distribution_bernouilli_;
+
 public:
     //Noeud(){}
 
@@ -43,6 +55,7 @@ public:
 
     bool est_source();
     bool est_du();
+    Vehicule* creer_vehicule();
 
     GLfloat x() const;
     GLfloat y() const;

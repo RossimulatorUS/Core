@@ -2,6 +2,7 @@
 #define FORMULE_H
 
 #include <QGLWidget>
+
 #include "noeud.h"
 
 class Formule
@@ -36,8 +37,6 @@ public:
 
     GLfloat DeterminerPente(GLfloat x1, GLfloat x2, GLfloat y1, GLfloat y2);
     GLfloat DeterminerB(GLfloat x, GLfloat y);
-
-
 
     float getPente();
 

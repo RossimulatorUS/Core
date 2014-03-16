@@ -73,6 +73,7 @@ bool Vehicule::Process()
         return SwitchRoute();
     }
 }
+
 void Vehicule::Avancer()
 {
     x_ = x_ + xVariation_;
