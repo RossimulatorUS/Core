@@ -12,6 +12,7 @@ public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
 private:
+
     SimulationData(SimulationData const&); //DON'T IMPLEMENT
     void operator=(SimulationData const&); //DON'T IMPLEMENT
 
@@ -32,6 +33,8 @@ public:
     road_id_type AddRoute(Route);
     void AddVehicule(Vehicule*);
     void ResetAllData();
+
+
 };
 
 #endif // SIMULATIONDATA_H

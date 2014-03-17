@@ -27,6 +27,7 @@ private:
     static std::mutex mtx;
 
     node_id_type id_;
+
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
@@ -35,7 +36,7 @@ private:
     bool ReceiveDVMessage(DVMessage);
     void SendDVMessageToNeighbours();
 public:
-    //Noeud(){}
+    Noeud();
 
     //Noeud(bool est_source);
     Noeud(GLfloat x, GLfloat y);
@@ -48,10 +49,12 @@ public:
     GLfloat y() const;
     node_id_type GetId();
 
-    void StartDV();
     bool ProcessDVMessages();
+
+    void StartDV();
     void AddNeighbour(node_id_type, road_id_type);
     void PrintDVResults();
+
     node_id_type GetProchaineEtape(node_id_type destination);
     road_id_type GetProchaineRoute(node_id_type destination);
 

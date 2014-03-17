@@ -169,6 +169,19 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
+  <widget class="QPushButton" name="m_boutonDrawLane">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>DrawLane</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -192,6 +205,7 @@
     <slot>DrawRoadPressed()</slot>
     <slot>ClearWidget()</slot>
     <slot>ResetPressed()</slot>
+    <slot>DrawLanePressed()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -354,6 +368,22 @@
     <hint type="destinationlabel">
      <x>103</x>
      <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_boutonDrawLane</sender>
+   <signal>pressed()</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>DrawLanePressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>136</x>
+     <y>80</y>
     </hint>
    </hints>
   </connection>

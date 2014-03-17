@@ -29,6 +29,8 @@ void Poissoneur::initialiser()
     // Variable qui devront etre supprimees
     //Route* route = new Route(&*iterateur, &*(iterateur+1));
     int i = 0;
+    int cpt = 0;
+
 
     // Indication que le poissonneur est pret
     est_initialise_ = true;
@@ -43,7 +45,17 @@ void Poissoneur::initialiser()
         // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
         if(iterateur->est_du() && i < 10)
         {
-            Vehicule* vec = new Vehicule(noeuds_[0].GetId(), noeuds_[1].GetId());
+            int cpt2 = 0;
+
+            if (iterateur->GetId() == 0)
+                cpt2 = 1;
+
+            //TODO 2e argument étant un noeud au hasard dans la liste de noeud
+            Vehicule* vec = new Vehicule(iterateur->GetId(), noeuds_[cpt2].GetId());
+            //Vehicule* vec = new Vehicule(noeuds_[0].GetId(), noeuds_[1].GetId());
+
+            ++cpt;
+
             all_vehicules_->push_back(vec);
             distributeur_->ajouter_vehicule(vec);
             ++i;
@@ -53,8 +65,13 @@ void Poissoneur::initialiser()
         }
 
         // Pour looper dans les noeuds
-        if(iterateur == end(noeuds_))
-            iterateur = begin(noeuds_);
+        if(cpt == 2/*iterateur == std::end(noeuds_)*/)
+        {
+            cpt = 0;
+            iterateur = std::begin(noeuds_);
+        }
+        else
+            ++iterateur;
 
         // Arreter chronometre
         historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);

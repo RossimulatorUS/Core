@@ -15,6 +15,8 @@ std::mutex Noeud::mtx;
     id_ = nextId_++;
 }*/
 
+Noeud::Noeud(){}
+
 Noeud::Noeud(GLfloat x, GLfloat y)
     : x_(x), y_(y),
       neighbours_(std::map<node_id_type, road_id_type>()),
@@ -161,5 +163,5 @@ Noeud &Noeud::GetNoeud(node_id_type id)
 
 Route &Noeud::GetRoute(Noeud::road_id_type id)
 {
-return SimulationData::GetInstance().GetRoute(id);
+    return SimulationData::GetInstance().GetRoute(id);
 }

@@ -4,6 +4,7 @@
 #include <QGLWidget>
 #include "noeud.h"
 #include "route.h"
+#include "voie.h"
 #include "simulationtraits.h"
 
 class Vehicule
@@ -21,6 +22,8 @@ private:
     void Avancer();
     bool SwitchRoute();
     Noeud GetDestinationImmediate();
+    void PrintNodeCoordinates(Noeud depart, Noeud arrivee);
+    Noeud GetNextStep();
 public:
     Vehicule();
     Vehicule(node_id_type depart, node_id_type arrive);
@@ -32,6 +35,7 @@ public:
     node_id_type noeudArrive_;
 
     road_id_type actualRoad_;
+    Voie actualLane_;
 
     GLfloat x_;
     GLfloat y_;
@@ -40,6 +44,7 @@ public:
     Noeud GetNoeudDepart();
     Noeud GetNoeudArrivee();
     Route GetRouteActuelle();
+    Voie GetVoieActuelle();
 
     bool Process();
 };

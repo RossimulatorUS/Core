@@ -12,6 +12,7 @@
 #include "window.h"
 #include "ui_window.h"
 #include "simulationdata.h"
+#include "qdebug.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
@@ -145,6 +146,8 @@ void MyGLWidget::mousePressEvent(QMouseEvent *event)
         DrawNode(worldCoords);
     else if (isDrawRoadPressed_)
         DrawRoadMousePressed(worldCoords);
+    else if (isDrawLanePressed_)
+        DrawLaneMousePressed(worldCoords);
     else
     {
         //other things later (perturbation stats)
@@ -157,28 +160,33 @@ void MyGLWidget::mousePressEvent(QMouseEvent *event)
 
 void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    int x = event->pos().x();
+    int y = event->pos().y();
+
+    GLint viewport[4]; //var to hold the viewport info
+    GLfloat modelview[16]; //var to hold the modelview info
+    GLfloat projection[16]; //var to hold the projection matrix info
+    GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
+    GLfloat worldCoords[3]; //variables to hold world x,y,z coordinates
+
+    glGetFloatv( GL_MODELVIEW_MATRIX, modelview ); //get the modelview info
+    glGetFloatv( GL_PROJECTION_MATRIX, projection ); //get the projection matrix info
+    glGetIntegerv( GL_VIEWPORT, viewport ); //get the viewport info
+
+    winX = (float)x;
+    winY = (float)viewport[3] - (float)y;
+    winZ = 0;
+
+    GLUtility::unProject(winX, winY, winZ, modelview, projection, viewport, worldCoords );
+
     if (isDrawRoadPressed_)
     {
-        int x = event->pos().x();
-        int y = event->pos().y();
-
-        GLint viewport[4]; //var to hold the viewport info
-        GLfloat modelview[16]; //var to hold the modelview info
-        GLfloat projection[16]; //var to hold the projection matrix info
-        GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
-        GLfloat worldCoords[3]; //variables to hold world x,y,z coordinates
-
-        glGetFloatv( GL_MODELVIEW_MATRIX, modelview ); //get the modelview info
-        glGetFloatv( GL_PROJECTION_MATRIX, projection ); //get the projection matrix info
-        glGetIntegerv( GL_VIEWPORT, viewport ); //get the viewport info
-
-        winX = (float)x;
-        winY = (float)viewport[3] - (float)y;
-        winZ = 0;
-
-        GLUtility::unProject(winX, winY, winZ, modelview, projection, viewport, worldCoords );
-
         DrawRoadMouseReleased(worldCoords);
+        updateGL();
+    }
+    else if (isDrawLanePressed_)
+    {
+        DrawLaneMouseReleased(worldCoords);
         updateGL();
     }
 }
@@ -193,6 +201,8 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
         AddRoad(ClickPressedNode, associatedNode);
     }
 }
+
+
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
@@ -219,6 +229,83 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Noeud noeud)
     return 66666;   //kinda lame
 }
 
+void MyGLWidget::DrawLaneMousePressed(float *worldCoords)
+{
+    Noeud node = Noeud(worldCoords[0], worldCoords[1], true);
+    node_id_type associatedNode = FindAssociatedNode(node);
+
+    ClickPressedNode = associatedNode;
+}
+
+void MyGLWidget::DrawLaneMouseReleased(float *worldCoords)
+{
+    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
+    Noeud depart = SimulationData::GetInstance().GetNoeud(ClickPressedNode);
+
+    Noeud outNodeDepart = Noeud(5, 5);
+    Noeud outNodeArrivee = Noeud(5, 5);
+
+    bool isInverted = false;
+
+    Route & associatedRoad = FindAssociatedRoad(depart,node, outNodeDepart, outNodeArrivee, isInverted);
+
+    if (!isInverted/*associatedRoad.IsReadyToCreate() && associatedRoad.IsInSameDirection(outNodeDepart, outNodeArrivee)*//*associatedRoad.IsLeftToRight(depart, node)*/)
+        associatedRoad.AddLane(associatedRoad.GetNoeudDepart(), associatedRoad.GetNoeudArrivee());
+    else
+        associatedRoad.AddLane(associatedRoad.GetNoeudArrivee(), associatedRoad.GetNoeudDepart());
+}
+
+Route& MyGLWidget::FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted)
+{
+    Route returnValue;
+    auto Roads = GetAllRoads();
+    for (unsigned int i = 0; i < Roads.size(); ++i)
+    {
+        Noeud test = Roads.at(i).GetNoeudDepart();
+        Noeud test2 = Roads.at(i).GetNoeudArrivee();
+
+        if ((!Roads[i].IsInSameDirection(test, test2, noeud1, noeud2)))
+        {
+            isInverted = true;
+            Noeud noeudTemp = Noeud(noeud2.x(), noeud2.y());
+            noeud2 = noeud1;
+            noeud1 = noeudTemp;
+        }
+
+        auto ErrorXPos1 = noeud1.x() + ClickErrorTollerence;
+        auto ErrorYPos1 = noeud1.y() + ClickErrorTollerence;
+
+        auto ErrorXNeg1 = noeud1.x() - ClickErrorTollerence;
+        auto ErrorYNeg1 = noeud1.y() - ClickErrorTollerence;
+
+        auto ErrorXPos2 = noeud2.x() + ClickErrorTollerence;
+        auto ErrorYPos2 = noeud2.y() + ClickErrorTollerence;
+
+        auto ErrorXNeg2 = noeud2.x() - ClickErrorTollerence;
+        auto ErrorYNeg2 = noeud2.y() - ClickErrorTollerence;
+
+        outNoeudDepart = noeud1;
+        outNoeudArrivee = noeud2;
+
+        if ((test.x() > ErrorXNeg1 && test.x() < ErrorXPos1) &&
+             (test.y() > ErrorYNeg1 && test.y() < ErrorYPos1) &&
+             (test2.x() > ErrorXNeg2 && test2.x() < ErrorXPos2) &&
+             (test2.y() > ErrorYNeg2 && test2.y() < ErrorYPos2))
+        {
+            returnValue = SimulationData::GetInstance().GetRoute(i);
+            return SimulationData::GetInstance().GetRoute(i);
+        }
+
+    }
+    return returnValue; //si aucune route trouvé faire de quoi de brillant this is not brillant
+}
+
+void MyGLWidget::PrintNodeCoordinates(Noeud depart, Noeud arrivee)
+{
+    qDebug() << "depart : " << depart.x() << ", " << depart.y() << endl <<
+                "arrivee: " << arrivee.x() << ", " << arrivee.y() << endl;
+}
+
 void MyGLWidget::DrawNode(float *worldCoords)
 {
     //Ajouter un noeud pour le draw
@@ -239,24 +326,7 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto roadId = SimulationData::GetInstance().AddRoute(Route(a, b));
     SimulationData::GetInstance().GetNoeud(a).AddNeighbour(b, roadId);
     SimulationData::GetInstance().GetNoeud(b).AddNeighbour(a, roadId);
-
 }
-
-/*void MyGLWidget::mouseMoveEvent(QMouseEvent *event)
-{
-    int dx = event->x() - lastPos.x();
-    int dy = event->y() - lastPos.y();
-
-    if (event->buttons() & Qt::LeftButton) {
-        setXRotation(xRot + 8 * dy);
-        setYRotation(yRot + 8 * dx);
-    } else if (event->buttons() & Qt::RightButton) {
-        setXRotation(xRot + 8 * dy);
-        setZRotation(zRot + 8 * dx);
-    }
-
-    lastPos = event->pos();
-}*/
 
 void MyGLWidget::ClearWidget()
 {
@@ -381,11 +451,20 @@ void MyGLWidget::DrawNodePressed()
 {
     isDrawNodePressed_ = true;
     isDrawRoadPressed_ = false;
+    isDrawLanePressed_ = false;
 }
 
 void MyGLWidget::DrawRoadPressed()
 {
     isDrawRoadPressed_ = true;
+    isDrawNodePressed_ = false;
+    isDrawLanePressed_ = false;
+}
+
+void MyGLWidget::DrawLanePressed()
+{
+    isDrawLanePressed_ = true;
+    isDrawRoadPressed_ = false;
     isDrawNodePressed_ = false;
 }
 
@@ -450,16 +529,33 @@ void MyGLWidget::draw()
     }
 
     auto allRoads = GetAllRoads();
+    //glLineWidth(150.0f);
     for (unsigned int i = 0; i < allRoads.size(); ++i)
     {
         glLoadIdentity();
         glTranslatef(0,0,-10);
         qglColor(Qt::green);
         glColor3f(1,0,0);
-        glBegin(GL_LINES);
-            glVertex2f(allRoads[i].GetNoeudDepart().x(), allRoads[i].GetNoeudDepart().y());
-            glVertex2f(allRoads[i].GetNoeudArrivee().x(), allRoads[i].GetNoeudArrivee().y());
+        glBegin(GL_QUADS);
+            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX1(), allRoads[i].getFormuleDroite().GetPointControleY1());
+            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX2(), allRoads[i].getFormuleDroite().GetPointControleY2());
+            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX4(), allRoads[i].getFormuleDroite().GetPointControleY4());
+            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX3(), allRoads[i].getFormuleDroite().GetPointControleY3());
         glEnd();
+
+        std::vector<Voie> allLanes = allRoads.at(i).GetLanes();
+        for (unsigned int i = 0; i < allLanes.size(); ++i)
+        {
+            glLoadIdentity();
+            glLineWidth(2);
+            glTranslatef(0,0,-10);
+            qglColor(Qt::green);
+            glColor3f(0,0,1);
+            glBegin(GL_LINES);
+                glVertex2f(allLanes[i].GetNoeudDepart().x(), allLanes[i].GetNoeudDepart().y());
+                glVertex2f(allLanes[i].GetNoeudArrivee().x(), allLanes[i].GetNoeudArrivee().y());
+            glEnd();
+        }
     }
 
     auto allVehicules = GetAllVehicules();

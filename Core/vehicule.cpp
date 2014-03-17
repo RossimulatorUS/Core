@@ -17,15 +17,26 @@ Vehicule::Vehicule(node_id_type depart, node_id_type arrive)
      noeudArrive_(arrive),
      actualRoad_(GetNoeudDepart().GetProchaineRoute(arrive))
 {
-    // Retouner id et incrementer ensuite
+    actualLane_ = GetRouteActuelle().FindAssociatedLane(GetNoeudDepart(), GetNoeudArrivee());
+
+    // Retouner id et incrementer ensuite    
     id_ = id_a_date_++;
 
-    x_ = GetNoeudDepart().x();
-    y_ = GetNoeudDepart().y();
+    x_ = actualLane_.GetNoeudDepart().x();
+    y_ = actualLane_.GetNoeudDepart().y();
 
-    xVariation_ = vitesseBase_ * GetRouteActuelle().getFormuleDroite().GetVariationX();
-    yVariation_ = vitesseBase_ * GetRouteActuelle().getFormuleDroite().GetVariationY();
+    /*x_ = GetNoeudDepart().x();
+    y_ = GetNoeudDepart().y();*/
+
+    xVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationX();
+    yVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationY();
     //qDebug() << "VEHICULE HAS SPAWNED! GOING FROM " << depart << " TO " << arrive << " VIA ROAD " << actualRoad_;
+}
+
+void Vehicule::PrintNodeCoordinates(Noeud depart, Noeud arrivee)
+{
+    qDebug() << "depart : " << depart.x() << ", " << depart.y() << endl <<
+                "arrivee: " << arrivee.x() << ", " << arrivee.y() << endl;
 }
 
 unsigned int Vehicule::id() const
@@ -46,6 +57,11 @@ Noeud Vehicule::GetNoeudArrivee()
 Route Vehicule::GetRouteActuelle()
 {
     return SimulationData::GetInstance().GetRoute(actualRoad_);
+}
+
+Voie Vehicule::GetVoieActuelle()
+{
+    return actualLane_;
 }
 
 float pyth(float a, float b)
@@ -70,9 +86,11 @@ bool Vehicule::Process()
     }
     else
     {
+
         return SwitchRoute();
     }
 }
+
 void Vehicule::Avancer()
 {
     x_ = x_ + xVariation_;
@@ -84,16 +102,27 @@ bool Vehicule::SwitchRoute()
     qDebug() << "SWITCH!";
     if(GetDestinationImmediate().GetId() == noeudArrive_)
         return false;
-    noeudDepart_ = GetDestinationImmediate().GetId();
+
+    //noeudDepart_ = GetDestinationImmediate().GetId();
+    noeudDepart_ = GetNextStep().GetId();
+
     actualRoad_ = choisir_route(noeudDepart_, noeudArrive_);
-    xVariation_ = vitesseBase_ * GetRouteActuelle().getFormuleDroite().GetVariationX();
-    yVariation_ = vitesseBase_ * GetRouteActuelle().getFormuleDroite().GetVariationY();
-    x_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).x();//just in case...
-    y_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).y();
+    actualLane_ = GetRouteActuelle().FindAssociatedLane(GetNoeudDepart(), GetNoeudArrivee());
+    xVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationX();
+    yVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationY();
+    //x_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).x();
+    //y_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).y();
+    x_ = GetVoieActuelle().GetNoeudDepart().x();
+    y_ = GetVoieActuelle().GetNoeudDepart().y();
     return true;
 }
 
 Noeud Vehicule::GetDestinationImmediate()
+{
+    return GetVoieActuelle().GetNoeudArrivee();
+}
+
+Noeud Vehicule::GetNextStep()
 {
     auto depart = SimulationData::GetInstance().GetNoeud(noeudDepart_);
     auto idArrivee = SimulationData::GetInstance().GetNoeud(noeudArrive_).GetId();

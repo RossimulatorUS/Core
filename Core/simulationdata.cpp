@@ -45,7 +45,6 @@ SimulationData::node_id_type SimulationData::AddNode(GLfloat x, GLfloat y)
 {
     allNodes_.emplace_back(x, y, allNodes_.size());
     return allNodes_.size()-1;
-
 }
 
 SimulationData::road_id_type SimulationData::AddRoute(Route r)

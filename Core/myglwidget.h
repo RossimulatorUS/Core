@@ -26,11 +26,8 @@ protected:
     void paintGL();
     void resizeGL(int width, int height);
 
-    //virtual void keyPressEvent(QKeyEvent *e);
-
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-    //void mouseMoveEvent(QMouseEvent *event);
 
 public slots:
     //slots for xyz-rotation slider
@@ -44,23 +41,29 @@ public slots:
 
     void DrawRoadPressed();
     void DrawNodePressed();
+    void DrawLanePressed();
 
     void ClearWidget();
-    //void setXRotation(int angle);
-    //void setYRotation(int angle);
-    //void setZRotation(int angle);
 
 signals:
-    //signaling rotation from mouse movement
-    //void xRotationChanged(int angle);
-    //void yRotationChanged(int angle);
-    //void zRotationChanged(int angle);
 
 private:
+    constexpr static float ClickErrorTollerence = 0.1f;
+
+    // pour test
+    Vehicule* vehicule;
+
+    std::vector<Noeud> &GetAllNodes();
+    std::vector<Route> GetAllRoads();
+    std::list<Vehicule*> GetAllVehicules();
+    std::vector<Vehicule*> allVehicules_;
+
+    node_id_type ClickPressedNode;
+    node_id_type FindAssociatedNode(Noeud noeud);
+
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;
-
-    constexpr static float ClickErrorTollerence = 0.3f;
+    bool isDrawLanePressed_;
 
     void AddRoad(Noeud*, Noeud*);
     void AddRoad(node_id_type, node_id_type);
@@ -68,30 +71,15 @@ private:
     void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
+    void DrawLaneMousePressed(float *worldCoords);
+    void DrawLaneMouseReleased(float *worldCoords);
 
-    node_id_type FindAssociatedNode(Noeud noeud);
+    Route &FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted);
 
     void clearWidget();
     void moveCar();
     void draw();
-
-    // pour test
-    Vehicule* vehicule;
-
-    /*
-    std::vector<Noeud> allNodes_ = std::vector<Noeud>();
-    std::vector<Route> allRoads_ = std::vector<Route>();
-    std::vector<Vehicule> allVehicules_ = std::vector<Vehicule>();
-    */
-
-    std::vector<Noeud> &GetAllNodes();
-    std::vector<Route> GetAllRoads();
-    std::list<Vehicule*> GetAllVehicules();
-    //std::vector<Noeud> allNodes_;
-    //std::vector<Route> allRoads_;
-    std::vector<Vehicule*> allVehicules_;
-
-    node_id_type ClickPressedNode;
+    void PrintNodeCoordinates(Noeud depart, Noeud arrivee);
 };
 
 #endif // MYGLWIDGET_H
