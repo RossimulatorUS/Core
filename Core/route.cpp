@@ -18,7 +18,7 @@ bool Route::IsReadyToCreate()
     return isReadyToCreate;
 }
 
-//comparer avec des coordonnÃ©es
+//comparer avec des coordonnées
 bool Route::IsInSameDirection(Noeud departRoute, Noeud arriveeRoute, Noeud departClick, Noeud arriveeClick)
 {
     if (formuleDroite.IsInSameDirection(departRoute, arriveeRoute, departClick, arriveeClick))

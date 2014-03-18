@@ -2,6 +2,7 @@
 #define VEHICULE_H
 
 #include <QGLWidget>
+
 #include "noeud.h"
 #include "route.h"
 #include "voie.h"

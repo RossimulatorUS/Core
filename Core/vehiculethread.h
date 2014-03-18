@@ -3,9 +3,12 @@
 
 #include <thread>
 #include <vector>
+
+#include "module.h"
 #include "vehicule.h"
 
-class VehiculeThread // : public Module
+// NE RESPECTE PAS LES TICS
+class VehiculeThread : public Module
 {
     // Materiel
     std::list<Vehicule*> vehicules_;

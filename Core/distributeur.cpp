@@ -1,5 +1,6 @@
-#include <algorithm>
 #include <QDebug>
+
+#include <algorithm>
 
 #include "cortex.h"
 #include "distributeur.h"
@@ -26,17 +27,25 @@ void Distributeur::initialiser()
 
     while(!(*terminer_))
     {
-        // Demarrer chronometre
-        temps_initial = Historique_dexecution::get_time();
-
-        while(vehicules_.size())
+        if(!(*attendre_))
         {
-            threads_->at(choisir_thread())->ajouter_vehicule(vehicules_[0]);
-            vehicules_.erase(begin(vehicules_));
-        }
+            *attendre_ = true;
 
-        // Arreter chronometre
-        historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+            // Demarrer chronometre
+            temps_initial = Historique_dexecution::get_time();
+
+            // Qte vehicules a placer pour ce tic
+            auto qte_vehicules(vehicules_.size());
+
+            for(unsigned int i(0); i < qte_vehicules; ++i)
+            {
+                threads_->at(choisir_thread())->ajouter_vehicule(vehicules_[0]);
+                vehicules_.erase(begin(vehicules_));
+            }
+
+            // Arreter chronometre
+            historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+        }
     }
 }
 

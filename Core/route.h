@@ -1,13 +1,15 @@
 #ifndef ROUTE_H
 #define ROUTE_H
 
-#include <QGLWidget>
-#include <vector>
-#include <utility> // pair
-#include "voie.h"
-#include "noeud.h"
 #include "formule.h"
+
+#include <QGLWidget>
+#include <utility>
+#include <vector>
+
 #include "dvutility.h"
+#include "noeud.h"
+#include "voie.h"
 
 using std::vector;
 using std::pair;
@@ -20,6 +22,7 @@ public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
+
 private:
     vector<Voie> voies_;
 

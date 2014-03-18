@@ -1,6 +1,7 @@
 #ifndef CORTEX_H
 #define CORTEX_H
 
+#include <thread>
 #include <vector>
 
 #include "analyseur.h"
@@ -9,8 +10,11 @@
 #include "signaleur.h"
 #include "vehiculethread.h"
 
+class Analyseur;
+
 class Cortex
 {
+friend class Analyseur;
 
 public:
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
@@ -28,12 +32,10 @@ private:
     unsigned int temps_attente_OpenGL_;
 
     // Mettre un module en attente
-    bool attente_analyste_;
     bool attente_distributeur_;
     bool attente_poissoneur_;
     bool attente_deplaceurs_;
     bool attente_signaleur_;
-    bool attente_OpenGL_;
 
     // Fonctions d'initialisation
     void load_informations();
@@ -59,7 +61,7 @@ private:
     // Vehicules se deplacant dans le reseau routier
     std::list<Vehicule*>* vehicules_;
 
-    // Fin de la simulation
+    // Delais simulation
     bool fin_simulation;
 
 public:
@@ -67,6 +69,8 @@ public:
 
     // API -> Commandes interpretees
     void interpreter();
+    void executer();
+    //unsigned int qte_threads_vehicule();
 
 };
 

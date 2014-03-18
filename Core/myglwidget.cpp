@@ -28,54 +28,6 @@ MyGLWidget::~MyGLWidget()
 
 }
 
-/*QSize MyGLWidget::minimumSizeHint() const
-{
-    return QSize(50, 50);
-}
-
-QSize MyGLWidget::sizeHint() const
-{
-    return QSize(400, 400);
-}*/
-
-/*static void qNormalizeAngle(int &angle)
-{
-    while (angle < 0)
-        angle += 360 * 16;
-    while (angle > 360)
-        angle -= 360 * 16;
-}*/
-
-/*void MyGLWidget::setXRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != xRot) {
-        xRot = angle;
-        emit xRotationChanged(angle);
-        updateGL();
-    }
-}
-
-void MyGLWidget::setYRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != yRot) {
-        yRot = angle;
-        emit yRotationChanged(angle);
-        updateGL();
-    }
-}
-
-void MyGLWidget::setZRotation(int angle)
-{
-    qNormalizeAngle(angle);
-    if (angle != zRot) {
-        zRot = angle;
-        emit zRotationChanged(angle);
-        updateGL();
-    }
-}*/
-
 void MyGLWidget::initializeGL()
 {
     //couleur du background
@@ -495,7 +447,7 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
     Cortex cortex(allNodes, SimulationData::GetInstance().GetVehiculesPointer());
 
     //auto-rafraichissement de OpenGL
-    const int FPS = 30;
+    const int FPS = 30; // Devrait pouvoir etre modifier depuis le Cortex
     const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));

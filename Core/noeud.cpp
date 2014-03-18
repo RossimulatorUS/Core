@@ -1,9 +1,14 @@
+#include <random>
+
 #include "noeud.h"
 #include "myglwidget.h"
 #include "qdebug.h"
 #include "simulationdata.h"
+#include "vehicule.h"
 
 std::mutex Noeud::mtx;
+std::default_random_engine generateur_ = std::default_random_engine();
+std::bernoulli_distribution distribution_uniforme_ = std::bernoulli_distribution(0.5);
 
 /*Noeud::Noeud(bool est_source)
     : est_source_(est_source), est_du_(false),
@@ -22,17 +27,27 @@ Noeud::Noeud(GLfloat x, GLfloat y)
       neighbours_(std::map<node_id_type, road_id_type>()),
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
-      pendingDVMessages_(std::queue<DVMessage>())
+      pendingDVMessages_(std::queue<DVMessage>()),
+      derniere_creation_(Historique_dexecution::temps(0)),
+      loi_utilisee_(UNIFORME)
+      //generateur_(std::default_random_engine()),
+
+
 {
+    //est_du_fonction_ = std::bind ( distribution_, generateur_ );
 }
+
 
 Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id)
     : x_(x), y_(y),
       neighbours_(std::map<node_id_type, road_id_type>()),
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
-      pendingDVMessages_(std::queue<DVMessage>())
+      pendingDVMessages_(std::queue<DVMessage>()),
+      derniere_creation_(Historique_dexecution::temps(0)),
+      loi_utilisee_(UNIFORME)
 {
+    // Pourquoi pas avant?
     id_ = id;
 }
 
@@ -54,14 +69,34 @@ Noeud::node_id_type Noeud::GetId()
 
 bool Noeud::est_source()
 {
-    return neighbours_.size()==1;
+    return neighbours_.size() == 1;
 }
 
 bool Noeud::est_du()
 {
-    static bool tmp(true);
-    tmp = !tmp;
-    return tmp;
+
+        if((Historique_dexecution::get_time() - derniere_creation_) > Historique_dexecution::temps(1000))
+        {
+            derniere_creation_ = Historique_dexecution::get_time();
+            return true;
+        }
+
+    return false;
+}
+
+Vehicule *Noeud::creer_vehicule()
+{
+    // Atrocement long
+    std::default_random_engine generator;
+    std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::GetInstance().GetNoeuds().size() - 1);
+    simulation_traits::node_id_type id_fin;
+
+    do
+    {
+        id_fin = distribution(generator);
+    }while(id_fin == this->id_);
+
+    return new Vehicule(this->id_, id_fin);
 }
 
 void Noeud::StartDV()
