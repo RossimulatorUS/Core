@@ -2,14 +2,12 @@
 #define SIGNALEUR_H
 
 #include <thread>
+#include "module.h"
 
-class Signaleur
+class Signaleur : public Module
 {
-    // Thread du Signaleur
-    std::thread execution_;
-
     // Fonction d'initialisation
-    void signaler();
+    void initialiser();
 
 public:
     Signaleur();

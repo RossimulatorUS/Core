@@ -53,6 +53,7 @@ HEADERS  += window.h \
     dvutility.h \
     historique_dexecution.h \
     simulationdata.h \
-    simulationtraits.h
+    simulationtraits.h \
+    autoverrou.h
 
 FORMS    += window.ui

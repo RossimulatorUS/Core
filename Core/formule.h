@@ -67,8 +67,10 @@ public:
     GLfloat DeterminerB(GLfloat x, GLfloat y);
 
     bool IsLeftToRight(Noeud depart, Noeud arrivee);
+    bool IsRightToLeft(Noeud depart, Noeud arrivee);
     bool IsInSameDirection(Noeud departRoute, Noeud arriveeRoute, Noeud departClick, Noeud arriveeClick);
     bool IsTopToBottom(Noeud depart, Noeud arrivee);
+    bool IsBottomToTop(Noeud depart, Noeud arrivee);
 
     float getPente();
 

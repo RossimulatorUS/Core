@@ -4,7 +4,7 @@
 
 Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     : //attente_analyste_(false),
-      //attente_distributeur_(false),
+      attente_distributeur_(false),
       attente_poissoneur_(false),
       fin_simulation(false)
 {
@@ -24,6 +24,7 @@ Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     analyste_ = new Analyseur(&fin_simulation, this);
     distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
     poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
+    signaleur_ = new Signaleur();
 }
 
 void Cortex::load_informations()

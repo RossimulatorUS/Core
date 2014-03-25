@@ -17,14 +17,15 @@ private:
     static const float vitesseBase_;
     static unsigned int id_a_date_;
     unsigned int id_;
+    bool isWaiting;
 
     static road_id_type choisir_route(node_id_type, node_id_type);
 
     void Avancer();
-    bool SwitchRoute();
+    void SwitchRoute();
     Noeud GetDestinationImmediate();
     void PrintNodeCoordinates(Noeud depart, Noeud arrivee);
-    Noeud GetNextStep();
+    Noeud &GetNextStep();
 public:
     Vehicule();
     Vehicule(node_id_type depart, node_id_type arrive);
@@ -48,6 +49,7 @@ public:
     Voie GetVoieActuelle();
 
     bool Process();
+    void IntersectionGo();
 };
 
 #endif // VEHICULE_H

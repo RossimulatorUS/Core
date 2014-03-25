@@ -28,20 +28,18 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
         // Temps depart
         for (auto itt = vt->vehicules_.begin() ; itt != vt->vehicules_.end() ; ++itt)
         {
-            if((*itt)->Process() == false)   //HE MUST DIE IF HE IS FALSE
+            if((*itt)->Process() == false)   //i.e. le véhicule est arrivé à destination
             {
-                qDebug() << "DESTROY!";
-                vt->vehicules_.remove(*itt);
+                //vt->vehicules_.remove(*itt); //on peut pas modifier une collection sur laquelle on itère, donc changer ça
                 SimulationData::GetInstance().GetVehiculesPointer()->remove(*itt);
-                delete(*itt);
-                //*itt
-                //destroy it in simulation data first instead of glwidget
-                //and here too, bitch
+                //delete(*itt);
             }
             //x_ += vt->vehicules_[i]->xVariation_;
             //vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
-            qDebug() << (*itt)->x_ << "," << (*itt)->y_ << " : " << vt->id_;
+            //qDebug() << (*itt)->x_ << "," << (*itt)->y_ << " : " << vt->id_;
         }
+        std::chrono::milliseconds timespan(100);
+        std::this_thread::sleep_for(timespan);
     }
 }
 

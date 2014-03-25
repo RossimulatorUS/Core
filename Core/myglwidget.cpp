@@ -21,6 +21,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     setMouseTracking(true);
     isDrawNodePressed_ = true;
     isDrawRoadPressed_ = false;
+    isDrawLanePressed_ = false;
 }
 
 MyGLWidget::~MyGLWidget()
@@ -148,7 +149,7 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
     Noeud node = Noeud(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
-    if (ClickPressedNode != associatedNode && ClickPressedNode != 66666)
+    if (ClickPressedNode != associatedNode && ClickPressedNode != 66666 && associatedNode != 66666)
     {
         AddRoad(ClickPressedNode, associatedNode);
     }
@@ -158,7 +159,7 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
-    Noeud node = Noeud(worldCoords[0], worldCoords[1], true);
+    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
     ClickPressedNode = associatedNode;
@@ -183,7 +184,7 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Noeud noeud)
 
 void MyGLWidget::DrawLaneMousePressed(float *worldCoords)
 {
-    Noeud node = Noeud(worldCoords[0], worldCoords[1], true);
+    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
     ClickPressedNode = associatedNode;
@@ -191,7 +192,10 @@ void MyGLWidget::DrawLaneMousePressed(float *worldCoords)
 
 void MyGLWidget::DrawLaneMouseReleased(float *worldCoords)
 {
+
     Noeud node = Noeud(worldCoords[0], worldCoords[1]);
+    if (ClickPressedNode == 66666 || FindAssociatedNode(node) == 66666)
+        return;
     Noeud depart = SimulationData::GetInstance().GetNoeud(ClickPressedNode);
 
     Noeud outNodeDepart = Noeud(5, 5);
@@ -294,6 +298,11 @@ void MyGLWidget::CreateSimulation1()
     DrawNode(0.0f,1.6f);
     DrawNode(0.0f,-1.6f);
     AddRoad(0, 1);
+    auto& r1 = SimulationData::GetInstance().GetRoute(0);
+    r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
+    r1.AddLane(r1.GetNoeudArrivee(), r1.GetNoeudDepart());
+
+
 
     updateGL();
 }
@@ -349,6 +358,22 @@ void MyGLWidget::CreateSimulation4()
     AddRoad(1, 4);
     AddRoad(2, 4);
     AddRoad(3, 4);
+
+    auto& r0 = SimulationData::GetInstance().GetRoute(0);
+    r0.AddLane(r0.GetNoeudDepart(), r0.GetNoeudArrivee());
+    r0.AddLane(r0.GetNoeudArrivee(), r0.GetNoeudDepart());
+
+    auto& r1 = SimulationData::GetInstance().GetRoute(1);
+    r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
+    r1.AddLane(r1.GetNoeudArrivee(), r1.GetNoeudDepart());
+
+    auto& r2 = SimulationData::GetInstance().GetRoute(2);
+    r2.AddLane(r2.GetNoeudDepart(), r2.GetNoeudArrivee());
+    r2.AddLane(r2.GetNoeudArrivee(), r2.GetNoeudDepart());
+
+    auto& r3 = SimulationData::GetInstance().GetRoute(3);
+    r3.AddLane(r3.GetNoeudDepart(), r3.GetNoeudArrivee());
+    r3.AddLane(r3.GetNoeudArrivee(), r3.GetNoeudDepart());
 
     updateGL();
 
@@ -444,10 +469,10 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
     }
 
     // Creer le Cortex
-    Cortex cortex(allNodes, SimulationData::GetInstance().GetVehiculesPointer());
+    Cortex* cortex = new Cortex(allNodes, SimulationData::GetInstance().GetVehiculesPointer());
 
     //auto-rafraichissement de OpenGL
-    const int FPS = 30; // Devrait pouvoir etre modifier depuis le Cortex
+    const int FPS = 15; // Devrait pouvoir etre modifier depuis le Cortex
     const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
@@ -467,14 +492,13 @@ void MyGLWidget::clearWidget()
 
 void MyGLWidget::draw()
 {
-    glPointSize(5.0f);
+    glPointSize(25.0f);
     auto allNodes = GetAllNodes();
     for(unsigned int i = 0; i < allNodes.size(); ++i)
     {
         glLoadIdentity();
         glTranslatef(0, 0, -10);
-        qglColor(Qt::green);
-        glColor3f(1,0,0);
+        qglColor(Qt::red);
         glBegin(GL_POINTS);
             glVertex2f(allNodes[i].x(),allNodes[i].y());
         glEnd();
@@ -486,8 +510,7 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0,0,-10);
-        qglColor(Qt::green);
-        glColor3f(1,0,0);
+        qglColor(Qt::red);
         glBegin(GL_QUADS);
             glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX1(), allRoads[i].getFormuleDroite().GetPointControleY1());
             glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX2(), allRoads[i].getFormuleDroite().GetPointControleY2());
@@ -500,23 +523,21 @@ void MyGLWidget::draw()
         {
             glLoadIdentity();
             glLineWidth(2);
-            glTranslatef(0,0,-10);
-            qglColor(Qt::green);
-            glColor3f(0,0,1);
+            glTranslatef(0,0,-9);
+            qglColor(Qt::blue);
             glBegin(GL_LINES);
                 glVertex2f(allLanes[i].GetNoeudDepart().x(), allLanes[i].GetNoeudDepart().y());
                 glVertex2f(allLanes[i].GetNoeudArrivee().x(), allLanes[i].GetNoeudArrivee().y());
             glEnd();
         }
     }
-
+    glPointSize(5.0f);
     auto allVehicules = GetAllVehicules();
     for (auto itt = allVehicules.begin(); itt!= allVehicules.end(); ++itt)
     {
         glLoadIdentity();
-        glTranslatef(0,0,-10);
+        glTranslatef(0,0,-8);
         qglColor(Qt::green);
-        glColor3f(0,1,0);
         glBegin(GL_POINTS);
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();

@@ -6,6 +6,7 @@
 #include <map>
 #include <mutex>
 #include <queue>
+#include <stack>
 
 #include "dvutility.h"
 #include "historique_dexecution.h"
@@ -32,6 +33,7 @@ private:
 
     node_id_type id_;
 
+    std::map<road_id_type, std::vector<Vehicule*>> waitingVehicules_;
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
@@ -39,6 +41,8 @@ private:
 
     bool ReceiveDVMessage(DVMessage);
     void SendDVMessageToNeighbours();
+
+    int currentWaitingVehiculeIndex;
 
     // Utilises pour la generation des voitures
     Historique_dexecution::temps derniere_creation_;
@@ -73,6 +77,10 @@ public:
 
     Noeud& GetNoeud(node_id_type);
     Route& GetRoute(road_id_type);
+    std::vector<Vehicule*> GetWaitingVehicules(road_id_type);
+
+    void AddToWaitingVehicules(Vehicule*);
+    void ProcessWaitingVehicules();
 };
 
 #endif // POINT_H

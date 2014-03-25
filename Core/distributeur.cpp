@@ -46,6 +46,8 @@ void Distributeur::initialiser()
             // Arreter chronometre
             historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
+        std::chrono::milliseconds timespan(10);//juste pour pas atteindre 100% de la capacité du CPU à regarder des ifs
+        std::this_thread::sleep_for(timespan);
     }
 }
 

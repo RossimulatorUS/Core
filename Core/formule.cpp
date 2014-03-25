@@ -50,10 +50,19 @@ bool Formule::IsLeftToRight(Noeud depart, Noeud arrivee)
     return false;
 }
 
+bool Formule::IsRightToLeft(Noeud depart, Noeud arrivee)
+{
+    if (depart.x() > arrivee.x())
+        return true;
+    return false;
+}
+
 bool Formule::IsInSameDirection(Noeud departRoute, Noeud arriveeRoute, Noeud departClick, Noeud arriveeClick)
 {
-    if (IsLeftToRight(departRoute, arriveeRoute) && IsLeftToRight(departClick, arriveeClick) ||
-        !IsLeftToRight(departRoute, arriveeRoute) && !IsLeftToRight(departClick,arriveeClick))
+    if ((IsLeftToRight(departRoute, arriveeRoute) && IsLeftToRight(departClick, arriveeClick)) ||
+        (IsTopToBottom(departRoute, arriveeRoute) && IsTopToBottom(departClick,arriveeClick)) ||
+        (IsRightToLeft(departRoute, arriveeRoute) && IsRightToLeft(departClick,arriveeClick)) ||
+        (IsBottomToTop(departRoute, arriveeRoute) && IsBottomToTop(departClick,arriveeClick)))
         return true;
     return false;
 }
@@ -61,6 +70,13 @@ bool Formule::IsInSameDirection(Noeud departRoute, Noeud arriveeRoute, Noeud dep
 bool Formule::IsTopToBottom(Noeud depart, Noeud arrivee)
 {
     if (depart.y() < arrivee.y())
+        return true;
+    return false;
+}
+
+bool Formule::IsBottomToTop(Noeud depart, Noeud arrivee)
+{
+    if (depart.y() > arrivee.y())
         return true;
     return false;
 }
@@ -132,7 +148,7 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
             LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01));
         }
     }
-    else
+    else if (a < 0)
     {
         pointControleX1_ = noeud1.x()-(10*(variationY_*0.01));
         pointControleY1_ = noeud1.y()-(10*(variationX_*0.01));
@@ -162,6 +178,62 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
             LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01));
             LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01));
         }
+    }
+    else if(IsLeftToRight(noeud1, noeud2) || IsLeftToRight(noeud2, noeud1)) //horizontal
+    {
+        pointControleX1_ = noeud1.x();
+        pointControleY1_ = noeud1.y()-10*0.01;
+
+        pointControleX2_ = noeud1.x();
+        pointControleY2_ = noeud1.y()+10*0.01;
+
+        pointControleX3_ = noeud2.x();
+        pointControleY3_ = noeud2.y()-10*0.01;
+
+        pointControleX4_ = noeud2.x();
+        pointControleY4_ = noeud2.y()+10*0.01;
+
+        if(noeud1.x() < noeud2.x())
+        {
+            LaneCoordinateY1_ = noeud1.y()+5*0.01;
+            LaneCoordinateY2_ = noeud1.y()+5*0.01;
+        }
+        else
+        {
+            LaneCoordinateY1_ = noeud1.y()-5*0.01;
+            LaneCoordinateY2_ = noeud1.y()-5*0.01;
+        }
+
+        LaneCoordinateX1_ = noeud1.x();
+        LaneCoordinateX2_ = noeud2.x();
+    }
+    else //vertical
+    {
+        pointControleX1_ = noeud1.x()-10*0.01;
+        pointControleY1_ = noeud1.y();
+
+        pointControleX2_ = noeud1.x()+10*0.01;
+        pointControleY2_ = noeud1.y();
+
+        pointControleX3_ = noeud2.x()-10*0.01;
+        pointControleY3_ = noeud2.y();
+
+        pointControleX4_ = noeud2.x()+10*0.01;
+        pointControleY4_ = noeud2.y();
+
+        if(noeud1.y() < noeud2.y())
+        {
+            LaneCoordinateX1_ = noeud1.x()+5*0.01;
+            LaneCoordinateX2_ = noeud1.x()+5*0.01;
+        }
+        else
+        {
+            LaneCoordinateX1_ = noeud1.x()-5*0.01;
+            LaneCoordinateX2_ = noeud1.x()-5*0.01;
+        }
+
+        LaneCoordinateY1_ = noeud1.y();
+        LaneCoordinateY2_ = noeud2.y();
     }
 }
 

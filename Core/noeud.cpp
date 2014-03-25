@@ -5,6 +5,7 @@
 #include "qdebug.h"
 #include "simulationdata.h"
 #include "vehicule.h"
+#include "autoverrou.h"
 
 std::mutex Noeud::mtx;
 std::default_random_engine generateur_ = std::default_random_engine();
@@ -29,7 +30,9 @@ Noeud::Noeud(GLfloat x, GLfloat y)
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
       derniere_creation_(Historique_dexecution::temps(0)),
-      loi_utilisee_(UNIFORME)
+      loi_utilisee_(UNIFORME),
+      waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
+      currentWaitingVehiculeIndex(0)
       //generateur_(std::default_random_engine()),
 
 
@@ -45,7 +48,9 @@ Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id)
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
       derniere_creation_(Historique_dexecution::temps(0)),
-      loi_utilisee_(UNIFORME)
+      loi_utilisee_(UNIFORME),
+      waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
+      currentWaitingVehiculeIndex(0)
 {
     // Pourquoi pas avant?
     id_ = id;
@@ -87,6 +92,7 @@ bool Noeud::est_du()
 Vehicule *Noeud::creer_vehicule()
 {
     // Atrocement long
+    //CE : ça retourne toujours 0 ou 3 dans la simulation 5
     std::default_random_engine generator;
     std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::GetInstance().GetNoeuds().size() - 1);
     simulation_traits::node_id_type id_fin;
@@ -168,6 +174,7 @@ void Noeud::AddNeighbour(node_id_type neighbour, road_id_type connection)
     neighbours_[neighbour] = connection;
     nextHopForDestination_[neighbour] = neighbour;
     costs_[neighbour] = GetRoute(connection).Cost();
+    waitingVehicules_[connection] = std::vector<Vehicule*>();
 }
 
 void Noeud::PrintDVResults()
@@ -199,4 +206,49 @@ Noeud &Noeud::GetNoeud(node_id_type id)
 Route &Noeud::GetRoute(Noeud::road_id_type id)
 {
     return SimulationData::GetInstance().GetRoute(id);
+}
+
+std::vector<Vehicule *> Noeud::GetWaitingVehicules(Noeud::road_id_type id)
+{
+    return waitingVehicules_.at(id);
+}
+
+void Noeud::AddToWaitingVehicules(Vehicule * v)
+{
+    Autoverrou av(mtx);
+    waitingVehicules_.at(v->GetRouteActuelle().GetRoadID()).push_back(v);
+}
+
+//renvoie le véhicule auquel donner le go, ou NULL si aucun véhicule n'attend
+void Noeud::ProcessWaitingVehicules()
+{
+    Autoverrou av(mtx);
+    auto itt = waitingVehicules_.begin();
+
+    //amener l'itérateur là où on est rendus
+    for(int i = 0; i < currentWaitingVehiculeIndex ; ++i)
+        ++itt;
+
+    //trouver prochaine queue non-vide
+    for(int i = 0; i < waitingVehicules_.size() ; ++i)
+    {
+        if(++currentWaitingVehiculeIndex > waitingVehicules_.size())
+        {
+            currentWaitingVehiculeIndex = 0;
+            itt = waitingVehicules_.begin();
+        }
+
+        if(itt->second.empty())
+            continue;
+
+        for(auto ittV = itt->second.begin() ; ittV != itt->second.end() ; ++ittV)
+        {
+            (*ittV)->IntersectionGo();
+        }
+        itt->second.clear();
+        //return v;
+    }
+
+    //return std::queue<Vehicule*>();
+
 }

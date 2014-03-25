@@ -2,6 +2,7 @@
 #include "simulationdata.h"
 #include "qdebug.h"
 #include "math.h"
+#include <algorithm>
 
 const float Vehicule::vitesseBase_ = 0.01f;
 unsigned int Vehicule::id_a_date_ = 0;
@@ -76,19 +77,52 @@ float distance(float x1, float y1, float x2, float y2)
 
 bool Vehicule::Process()
 {
+    if(isWaiting)
+        return true;
+
     auto nextX = x_ + xVariation_;
     auto nextY = y_ + yVariation_;
 
     if(distance(nextX, nextY, GetDestinationImmediate().x(), GetDestinationImmediate().y()) > pyth(xVariation_, yVariation_)/2)
     {
+        auto waitingVehicules = GetNextStep().GetWaitingVehicules(actualRoad_);
+        for(auto itt = waitingVehicules.begin(); itt != waitingVehicules.end(); ++itt)
+        {
+            Vehicule* v = *itt;
+            if(distance(v->x_, v->y_, x_, y_) < pyth(xVariation_, yVariation_)/2*16 ) //le *valeur est "breathing room"
+            {
+                isWaiting = true;
+                auto& noeud = GetNextStep();
+                noeud.AddToWaitingVehicules(this);
+                return true;
+            }
+        };
         Avancer();
         return true;
     }
     else
     {
-
-        return SwitchRoute();
+        if(GetNextStep().GetId() == noeudArrive_)
+        {
+            isWaiting = true;
+            return false;
+        }
+        Avancer();
+        isWaiting = true;
+        auto& noeud = GetNextStep();
+        noeud.AddToWaitingVehicules(this);
+        return true;
     }
+}
+
+void Vehicule::IntersectionGo()
+{
+    if(distance(x_, y_, GetDestinationImmediate().x(), GetDestinationImmediate().y()) < pyth(xVariation_, yVariation_)/2)
+    {
+        SwitchRoute();
+    }
+    isWaiting = false;
+
 }
 
 void Vehicule::Avancer()
@@ -97,12 +131,8 @@ void Vehicule::Avancer()
     y_ = y_ + yVariation_;
 }
 
-bool Vehicule::SwitchRoute()
+void Vehicule::SwitchRoute()
 {
-    qDebug() << "SWITCH!";
-    if(GetDestinationImmediate().GetId() == noeudArrive_)
-        return false;
-
     //noeudDepart_ = GetDestinationImmediate().GetId();
     noeudDepart_ = GetNextStep().GetId();
 
@@ -114,7 +144,6 @@ bool Vehicule::SwitchRoute()
     //y_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).y();
     x_ = GetVoieActuelle().GetNoeudDepart().x();
     y_ = GetVoieActuelle().GetNoeudDepart().y();
-    return true;
 }
 
 Noeud Vehicule::GetDestinationImmediate()
@@ -122,7 +151,7 @@ Noeud Vehicule::GetDestinationImmediate()
     return GetVoieActuelle().GetNoeudArrivee();
 }
 
-Noeud Vehicule::GetNextStep()
+Noeud& Vehicule::GetNextStep()
 {
     auto depart = SimulationData::GetInstance().GetNoeud(noeudDepart_);
     auto idArrivee = SimulationData::GetInstance().GetNoeud(noeudArrive_).GetId();

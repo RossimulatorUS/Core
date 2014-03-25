@@ -9,7 +9,7 @@ class Cortex;
 class Analyseur : public Module
 {
     Cortex* cortex_;
-    void initialiser();
+    void initialiser(Analyseur *a);
 public:
     Analyseur(bool*, Cortex *cortex);
 };
