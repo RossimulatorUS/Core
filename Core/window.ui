@@ -121,7 +121,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>40</y>
+     <y>70</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -173,13 +173,26 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>100</y>
      <width>75</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>DrawLane</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_boutonDrawSource">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Draw Source</string>
    </property>
   </widget>
  </widget>
@@ -206,6 +219,7 @@
     <slot>ClearWidget()</slot>
     <slot>ResetPressed()</slot>
     <slot>DrawLanePressed()</slot>
+    <slot>DrawSourcePressed()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -331,7 +345,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>61</x>
-     <y>45</y>
+     <y>75</y>
     </hint>
     <hint type="destinationlabel">
      <x>112</x>
@@ -379,11 +393,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>46</x>
-     <y>79</y>
+     <y>109</y>
     </hint>
     <hint type="destinationlabel">
      <x>136</x>
      <y>80</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>m_boutonDrawSource</sender>
+   <signal>pressed()</signal>
+   <receiver>myGLWidget</receiver>
+   <slot>DrawSourcePressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>151</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>

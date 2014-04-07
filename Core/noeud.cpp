@@ -1,4 +1,8 @@
 #include <random>
+#include <iostream>
+#include <chrono>
+
+#include <QDebug>
 
 #include "noeud.h"
 #include "myglwidget.h"
@@ -32,17 +36,15 @@ Noeud::Noeud(GLfloat x, GLfloat y)
       derniere_creation_(Historique_dexecution::temps(0)),
       loi_utilisee_(UNIFORME),
       waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
-      currentWaitingVehiculeIndex(0)
-      //generateur_(std::default_random_engine()),
-
-
+      currentWaitingVehiculeIndex(0),
+      distribution_bernouilli_(0.2),
+      generateur_((unsigned int)time(0))
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
 }
 
-
-Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id)
-    : x_(x), y_(y),
+Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource)
+    : x_(x), y_(y), est_source_(isSource),
       neighbours_(std::map<node_id_type, road_id_type>()),
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
@@ -50,7 +52,9 @@ Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id)
       derniere_creation_(Historique_dexecution::temps(0)),
       loi_utilisee_(UNIFORME),
       waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
-      currentWaitingVehiculeIndex(0)
+      currentWaitingVehiculeIndex(0),
+      distribution_bernouilli_(0.2),
+      generateur_((unsigned int)time(0))
 {
     // Pourquoi pas avant?
     id_ = id;
@@ -74,17 +78,29 @@ Noeud::node_id_type Noeud::GetId()
 
 bool Noeud::est_source()
 {
-    return neighbours_.size() == 1;
+    return est_source_;
+    //return neighbours_.size() == 1;
 }
 
 bool Noeud::est_du()
 {
+    static std::default_random_engine generateur((unsigned int)time(0));
 
-        if((Historique_dexecution::get_time() - derniere_creation_) > Historique_dexecution::temps(1000))
-        {
-            derniere_creation_ = Historique_dexecution::get_time();
-            return true;
-        }
+    /*const int nrolls = 100000;
+    int count = 0;
+
+    for (int i = 0; i < nrolls; ++i) if (distribution_bernouilli_(generateur_)) ++count;
+
+    qDebug() << "true: " << count;
+    qDebug() << "false: " << nrolls-count;*/
+
+    if(est_source() && distribution_bernouilli_(generateur)/* && ((Historique_dexecution::get_time() - derniere_creation_) > Historique_dexecution::temps(1000))*/)
+    {
+        qDebug() << "TRUE";
+        derniere_creation_ = Historique_dexecution::get_time();
+        return true;
+    }
+    qDebug() << "FALSE";
 
     return false;
 }
@@ -93,8 +109,8 @@ Vehicule *Noeud::creer_vehicule()
 {
     // Atrocement long
     //CE : ça retourne toujours 0 ou 3 dans la simulation 5
-    std::default_random_engine generator;
-    std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::GetInstance().GetNoeuds().size() - 1);
+    static std::default_random_engine generator;
+    static std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::GetInstance().GetNoeuds().size() - 1);
     simulation_traits::node_id_type id_fin;
 
     do

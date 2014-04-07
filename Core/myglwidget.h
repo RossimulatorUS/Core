@@ -42,6 +42,7 @@ public slots:
     void DrawRoadPressed();
     void DrawNodePressed();
     void DrawLanePressed();
+    void DrawSourcePressed();
 
     void ClearWidget();
 
@@ -64,9 +65,12 @@ private:
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;
     bool isDrawLanePressed_;
+    bool isDrawSourcePressed_;
 
     void AddRoad(Noeud*, Noeud*);
     void AddRoad(node_id_type, node_id_type);
+    void DrawSource(float *worldCoords);
+    void DrawSource(float x, float y);
     void DrawNode(float *worldCoords);
     void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);

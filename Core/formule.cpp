@@ -133,19 +133,19 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if (IsLeftToRight(noeud1, noeud2))
         {
-            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01));
-            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01));
+            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01)) - (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01));
-            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01));
+            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01)) - (10*(variationY_*0.01));
         }
         else
         {
-            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01));
-            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01));
+            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01)) + (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01));
-            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01));
+            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01)) + (10*(variationY_*0.01));
         }
     }
     else if (a < 0)
@@ -164,19 +164,19 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if (IsLeftToRight(noeud1, noeud2))
         {
-            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01));
-            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01));
+            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01)) - (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01));
-            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01));
+            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01)) + (10*(variationY_*0.01));
         }
         else
         {
-            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01));
-            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01));
+            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01)) + (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01));
-            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01));
+            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01)) - (10*(variationY_*0.01));
         }
     }
     else if(IsLeftToRight(noeud1, noeud2) || IsLeftToRight(noeud2, noeud1)) //horizontal
@@ -197,15 +197,21 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
         {
             LaneCoordinateY1_ = noeud1.y()+5*0.01;
             LaneCoordinateY2_ = noeud1.y()+5*0.01;
+
+            LaneCoordinateX1_ = noeud1.x() + 0.1;
+            LaneCoordinateX2_ = noeud2.x() - 0.1;
         }
         else
         {
             LaneCoordinateY1_ = noeud1.y()-5*0.01;
             LaneCoordinateY2_ = noeud1.y()-5*0.01;
+
+            LaneCoordinateX1_ = noeud1.x() - 0.1;
+            LaneCoordinateX2_ = noeud2.x() + 0.1;
         }
 
-        LaneCoordinateX1_ = noeud1.x();
-        LaneCoordinateX2_ = noeud2.x();
+        //LaneCoordinateX1_ = noeud1.x();
+        //LaneCoordinateX2_ = noeud2.x();
     }
     else //vertical
     {
@@ -225,15 +231,18 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
         {
             LaneCoordinateX1_ = noeud1.x()+5*0.01;
             LaneCoordinateX2_ = noeud1.x()+5*0.01;
+
+            LaneCoordinateY1_ = noeud1.y() + 0.1;
+            LaneCoordinateY2_ = noeud2.y() - 0.1;
         }
         else
         {
             LaneCoordinateX1_ = noeud1.x()-5*0.01;
             LaneCoordinateX2_ = noeud1.x()-5*0.01;
-        }
 
-        LaneCoordinateY1_ = noeud1.y();
-        LaneCoordinateY2_ = noeud2.y();
+            LaneCoordinateY1_ = noeud1.y() - 0.1;
+            LaneCoordinateY2_ = noeud2.y() + 0.1;
+        }        
     }
 }
 

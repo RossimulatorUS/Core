@@ -41,9 +41,9 @@ Route& SimulationData::GetRoute(simulation_traits::road_id_type id)
     return allRoads_[id];
 }
 
-SimulationData::node_id_type SimulationData::AddNode(GLfloat x, GLfloat y)
+SimulationData::node_id_type SimulationData::AddNode(GLfloat x, GLfloat y, bool isSource)
 {
-    allNodes_.emplace_back(x, y, allNodes_.size());
+    allNodes_.emplace_back(x, y, allNodes_.size(), isSource);
     return allNodes_.size()-1;
 }
 

@@ -22,6 +22,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     isDrawNodePressed_ = true;
     isDrawRoadPressed_ = false;
     isDrawLanePressed_ = false;
+    isDrawSourcePressed_ = false;
 }
 
 MyGLWidget::~MyGLWidget()
@@ -101,6 +102,10 @@ void MyGLWidget::mousePressEvent(QMouseEvent *event)
         DrawRoadMousePressed(worldCoords);
     else if (isDrawLanePressed_)
         DrawLaneMousePressed(worldCoords);
+    else if (isDrawSourcePressed_)
+    {
+        DrawSource(worldCoords);
+    }
     else
     {
         //other things later (perturbation stats)
@@ -271,7 +276,7 @@ void MyGLWidget::DrawNode(float *worldCoords)
 void MyGLWidget::DrawNode(float x, float y)
 {
     //allNodes_.emplace_back(x,y, allNodes_.size());//le vecteur crée lui-même le noeud en le plaçant
-    SimulationData::GetInstance().AddNode(x,y);
+    SimulationData::GetInstance().AddNode(x,y, false);
 }
 
 void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
@@ -282,6 +287,16 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto roadId = SimulationData::GetInstance().AddRoute(Route(a, b));
     SimulationData::GetInstance().GetNoeud(a).AddNeighbour(b, roadId);
     SimulationData::GetInstance().GetNoeud(b).AddNeighbour(a, roadId);
+}
+
+void MyGLWidget::DrawSource(float *worldCoords)
+{
+    DrawSource(worldCoords[0], worldCoords[1]);
+}
+
+void MyGLWidget::DrawSource(float x, float y)
+{
+    SimulationData::GetInstance().AddNode(x,y, true);
 }
 
 void MyGLWidget::ClearWidget()
@@ -295,8 +310,8 @@ void MyGLWidget::CreateSimulation1()
 {
     clearWidget();
 
-    DrawNode(0.0f,1.6f);
-    DrawNode(0.0f,-1.6f);
+    DrawSource(0.0f,1.6f);
+    DrawSource(0.0f,-1.6f);
     AddRoad(0, 1);
     auto& r1 = SimulationData::GetInstance().GetRoute(0);
     r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
@@ -348,10 +363,10 @@ void MyGLWidget::CreateSimulation4()
 {
     clearWidget();
 
-    DrawNode(0.0f,1.6f);
-    DrawNode(1.6f,0.0f);
-    DrawNode(-1.6f,0.0f);
-    DrawNode(0.0f,-1.6f);
+    DrawSource(0.0f,1.6f);
+    DrawSource(1.6f,0.0f);
+    DrawSource(-1.6f,0.0f);
+    DrawSource(0.0f,-1.6f);
 
     DrawNode(0.0f,0.0f);
     AddRoad(0, 4);
@@ -429,6 +444,7 @@ void MyGLWidget::DrawNodePressed()
     isDrawNodePressed_ = true;
     isDrawRoadPressed_ = false;
     isDrawLanePressed_ = false;
+    isDrawSourcePressed_ = false;
 }
 
 void MyGLWidget::DrawRoadPressed()
@@ -436,6 +452,7 @@ void MyGLWidget::DrawRoadPressed()
     isDrawRoadPressed_ = true;
     isDrawNodePressed_ = false;
     isDrawLanePressed_ = false;
+    isDrawSourcePressed_ = false;
 }
 
 void MyGLWidget::DrawLanePressed()
@@ -443,6 +460,15 @@ void MyGLWidget::DrawLanePressed()
     isDrawLanePressed_ = true;
     isDrawRoadPressed_ = false;
     isDrawNodePressed_ = false;
+    isDrawSourcePressed_ = false;
+}
+
+void MyGLWidget::DrawSourcePressed()
+{
+    isDrawLanePressed_ = false;
+    isDrawRoadPressed_ = false;
+    isDrawNodePressed_ = false;
+    isDrawSourcePressed_ = true;
 }
 
 void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton

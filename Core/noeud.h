@@ -48,15 +48,15 @@ private:
     Historique_dexecution::temps derniere_creation_;
     enum loi {UNIFORME, POISSON};
     loi loi_utilisee_;
-    static std::default_random_engine generateur_;
-    static std::bernoulli_distribution distribution_bernouilli_;
+    std::default_random_engine generateur_;
+    std::bernoulli_distribution distribution_bernouilli_;
 
 public:
     Noeud();
 
     //Noeud(bool est_source);
     Noeud(GLfloat x, GLfloat y);
-    Noeud(GLfloat x, GLfloat y, node_id_type id);
+    Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource);
 
     bool est_source();
     bool est_du();
