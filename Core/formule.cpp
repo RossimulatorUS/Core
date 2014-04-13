@@ -195,16 +195,16 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if(noeud1.x() < noeud2.x())
         {
-            LaneCoordinateY1_ = noeud1.y()+5*0.01;
-            LaneCoordinateY2_ = noeud1.y()+5*0.01;
+            LaneCoordinateY1_ = noeud1.y()-5*0.01;
+            LaneCoordinateY2_ = noeud1.y()-5*0.01;
 
             LaneCoordinateX1_ = noeud1.x() + 0.1;
             LaneCoordinateX2_ = noeud2.x() - 0.1;
         }
         else
         {
-            LaneCoordinateY1_ = noeud1.y()-5*0.01;
-            LaneCoordinateY2_ = noeud1.y()-5*0.01;
+            LaneCoordinateY1_ = noeud1.y()+5*0.01;
+            LaneCoordinateY2_ = noeud1.y()+5*0.01;
 
             LaneCoordinateX1_ = noeud1.x() - 0.1;
             LaneCoordinateX2_ = noeud2.x() + 0.1;
@@ -242,7 +242,7 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
             LaneCoordinateY1_ = noeud1.y() - 0.1;
             LaneCoordinateY2_ = noeud2.y() + 0.1;
-        }        
+        }
     }
 }
 

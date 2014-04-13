@@ -1,4 +1,5 @@
 #include <QtWidgets>
+
 #include "window.h"
 #include "ui_window.h"
 
@@ -7,15 +8,46 @@ Window::Window(QWidget *parent) :
     ui(new Ui::Window)
 {
     ui->setupUi(this);
-
-    //connect(ui->myGLWidget, SIGNAL(xRotationChanged(int)), ui->xRotSlider, SLOT(setValue(int)));
-    //connect(ui->myGLWidget, SIGNAL(yRotationChanged(int)), ui->yRotSlider, SLOT(setValue(int)));
-    //connect(ui->myGLWidget, SIGNAL(zRotationChanged(int)), ui->zRotSlider, SLOT(setValue(int)));
 }
 
 Window::~Window()
 {
     delete ui;
+}
+
+QString Window::getTauxBernouilli()
+{
+    return ui->m_lineEditTauxBernouilli->text();
+}
+
+QString Window::getTauxUniforme()
+{
+    return ui->m_lineEditTauxUniforme->text();
+}
+
+bool Window::isBernouilliChecked()
+{
+    return ui->m_radioButtonBernouilli->isChecked();
+}
+
+bool Window::isUniformeChecked()
+{
+    return ui->m_radioButtonUniforme->isChecked();
+}
+
+bool Window::isIntersectionChecked()
+{
+    return ui->m_radioButtonIntersection->isChecked();
+}
+
+bool Window::isSourceChecked()
+{
+    return ui->m_radioButtonSource->isChecked();
+}
+
+int Window::getCurrentTabIndex()
+{
+    return ui->m_tabSimulation->currentIndex();
 }
 
 void Window::keyPressEvent(QKeyEvent *e)
@@ -25,3 +57,4 @@ void Window::keyPressEvent(QKeyEvent *e)
     else
         QWidget::keyPressEvent(e);
 }
+

@@ -40,8 +40,8 @@ void Distributeur::initialiser()
             // Arreter chronometre
             historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
-        //static std::chrono::milliseconds timespan(10); // Max 20% du temps de perdu
-        //std::this_thread::sleep_for(timespan);
+        std::chrono::milliseconds timespan(1); // Max 20% du temps de perdu
+        std::this_thread::sleep_for(timespan);
     }
 }
 

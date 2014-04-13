@@ -4,6 +4,7 @@
 #include <atomic>
 #include <thread>
 #include <vector>
+#include <list>
 
 #include "analyseur.h"
 #include "distributeur.h"
@@ -27,7 +28,7 @@ private:
     // Mettre un module en attente
     volatile bool execution_distributeur_;
     volatile bool execution_poissoneur_;
-    volatile bool execution_deplaceurs_;
+    std::list<volatile bool> execution_deplaceurs_;
     volatile bool execution_signaleur_;
 
     // Fonctions d'initialisation

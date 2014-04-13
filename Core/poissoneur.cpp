@@ -42,7 +42,7 @@ void Poissoneur::initialiser()
             // Demarrer chronometre
             temps_initial = Historique_dexecution::get_time();
 
-            std::for_each(noeuds_.begin(), noeuds_.end(), [&](Noeud noeud){
+            std::for_each(noeuds_.begin(), noeuds_.end(), [&](Noeud& noeud){
 
                 // Si le noeud est pret a poissoner, ajouter un vehicule sur le reseau
                 if(noeud.est_du())
@@ -58,7 +58,7 @@ void Poissoneur::initialiser()
             historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
 
-        //std::chrono::milliseconds timespan(10); // Max 20% de la plage perdu
-        //std::this_thread::sleep_for(timespan);
+        std::chrono::milliseconds timespan(1); // Max 20% de la plage perdu
+        std::this_thread::sleep_for(timespan);
     }
 }

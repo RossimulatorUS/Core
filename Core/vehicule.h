@@ -50,6 +50,7 @@ public:
 
     bool Process();
     void IntersectionGo();
+    bool IsOnLastStretch();
 };
 
 #endif // VEHICULE_H

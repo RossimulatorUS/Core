@@ -43,7 +43,16 @@ Route& SimulationData::GetRoute(simulation_traits::road_id_type id)
 
 SimulationData::node_id_type SimulationData::AddNode(GLfloat x, GLfloat y, bool isSource)
 {
+
     allNodes_.emplace_back(x, y, allNodes_.size(), isSource);
+
+    return allNodes_.size()-1;
+}
+
+SimulationData::node_id_type SimulationData::AddNode(GLfloat x, GLfloat y, bool isSource, Noeud::DistributionInfo distributionInfo)
+{
+    allNodes_.emplace_back(x, y, allNodes_.size(), isSource, distributionInfo);
+
     return allNodes_.size()-1;
 }
 

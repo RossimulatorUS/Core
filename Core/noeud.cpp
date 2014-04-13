@@ -33,14 +33,13 @@ Noeud::Noeud(GLfloat x, GLfloat y)
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
-      derniere_creation_(Historique_dexecution::temps(0)),
-      loi_utilisee_(UNIFORME),
       waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
       currentWaitingVehiculeIndex(0),
       distribution_bernouilli_(0.2),
       generateur_((unsigned int)time(0))
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
+    derniere_creation_=Historique_dexecution::temps(0);
 }
 
 Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource)
@@ -49,8 +48,6 @@ Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
-      derniere_creation_(Historique_dexecution::temps(0)),
-      loi_utilisee_(UNIFORME),
       waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
       currentWaitingVehiculeIndex(0),
       distribution_bernouilli_(0.2),
@@ -58,6 +55,23 @@ Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource)
 {
     // Pourquoi pas avant?
     id_ = id;
+    derniere_creation_=Historique_dexecution::temps(0);
+}
+
+Noeud::Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
+    : x_(x), y_(y), est_source_(isSource), DistributionInfo_(distributionInfo),
+      neighbours_(std::map<node_id_type, road_id_type>()),
+      nextHopForDestination_(std::map<node_id_type, node_id_type>()),
+      costs_(std::map<node_id_type, road_cost_type>()),
+      pendingDVMessages_(std::queue<DVMessage>()),
+      waitingVehicules_(std::map<road_id_type, std::vector<Vehicule*>>()),
+      currentWaitingVehiculeIndex(0),
+      distribution_bernouilli_(distributionInfo.TauxBernouilli.toDouble(&ok)),
+      generateur_((unsigned int)time(0))
+{
+    // Pourquoi pas avant?
+    id_ = id;
+    derniere_creation_=Historique_dexecution::temps(0);
 }
 
 
@@ -84,35 +98,38 @@ bool Noeud::est_source()
 
 bool Noeud::est_du()
 {
+    //static auto derniere_creation = Historique_dexecution::get_time();//for some reason, mettre ça en variable de classe marchait pas, ça valait toujours 0
     static std::default_random_engine generateur((unsigned int)time(0));
-
-    /*const int nrolls = 100000;
-    int count = 0;
-
-    for (int i = 0; i < nrolls; ++i) if (distribution_bernouilli_(generateur_)) ++count;
-
-    qDebug() << "true: " << count;
-    qDebug() << "false: " << nrolls-count;*/
-
-    if(est_source() && distribution_bernouilli_(generateur)/* && ((Historique_dexecution::get_time() - derniere_creation_) > Historique_dexecution::temps(1000))*/)
+    auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(Historique_dexecution::get_time()-derniere_creation_).count();
+    if (DistributionInfo_.isBernouilli)
     {
-        qDebug() << "TRUE";
-        derniere_creation_ = Historique_dexecution::get_time();
-        return true;
-    }
-    qDebug() << "FALSE";
+        if(est_source() && distribution_bernouilli_(generateur)&& timeSinceLastCreation > 250)
+        {
+            derniere_creation_ = Historique_dexecution::get_time();
+            return true;
+        }
 
-    return false;
+        return false;
+    }
+    else if (DistributionInfo_.isUniforme)
+    {
+        auto delais = DistributionInfo_.TauxUniforme.toInt(&ok, 10);
+        if(est_source() &&timeSinceLastCreation > delais)
+        {
+            derniere_creation_ = Historique_dexecution::get_time();
+            return true;
+        }
+        return false;
+    }
 }
 
 Vehicule *Noeud::creer_vehicule()
 {
-    // Atrocement long
-    //CE : ça retourne toujours 0 ou 3 dans la simulation 5
     static std::default_random_engine generator;
     static std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::GetInstance().GetNoeuds().size() - 1);
     simulation_traits::node_id_type id_fin;
 
+    //TODO vérifier si il y a un chemin qui se rend
     do
     {
         id_fin = distribution(generator);

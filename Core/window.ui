@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>796</width>
-    <height>553</height>
+    <width>996</width>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,32 +18,16 @@
     <rect>
      <x>90</x>
      <y>10</y>
-     <width>691</width>
+     <width>891</width>
      <height>531</height>
     </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonDrawNode">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Draw Node</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="m_boutonSimulation4">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>470</y>
+     <y>130</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -52,124 +36,7 @@
     <string>Simulation4</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="m_boutonSimulation3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>440</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Simulation3</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonSimulation2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>410</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Simulation2</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="m_boutonSimulation1">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>380</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Simulation1</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonSimulation5">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>500</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Simulation5</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonStartSimulation">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>230</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Start</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonDrawRoad">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Draw Road</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonClearWidget">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>300</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Clear</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_Resetbutton">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>260</y>
-     <width>75</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Reset</string>
-   </property>
-  </widget>
-  <widget class="Line" name="line">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>280</y>
-     <width>91</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="m_boutonDrawLane">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -179,21 +46,314 @@
     </rect>
    </property>
    <property name="text">
-    <string>DrawLane</string>
+    <string>Simulation1</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="m_boutonDrawSource">
+  <widget class="QPushButton" name="m_boutonStartSimulation">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>75</width>
-     <height>23</height>
+     <x>0</x>
+     <y>10</y>
+     <width>91</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
-    <string>Draw Source</string>
+    <string>Start</string>
    </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>91</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QTabWidget" name="m_tabSimulation">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>540</y>
+     <width>1001</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>Noeud</string>
+    </attribute>
+    <widget class="QPushButton" name="m_boutonDrawSource">
+     <property name="geometry">
+      <rect>
+       <x>840</x>
+       <y>-10</y>
+       <width>161</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Draw Node</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="m_groupBoxTypeNoeud">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>151</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Type de noeud</string>
+     </property>
+     <widget class="QRadioButton" name="m_radioButtonIntersection">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Intersection</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="m_radioButtonSource">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Source</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="m_groupBoxDistribution">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>10</y>
+       <width>271</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Loi de distribution</string>
+     </property>
+     <widget class="QRadioButton" name="m_radioButtonBernouilli">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Bernouilli</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="m_radioButtonUniforme">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Uniforme</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_lineEditTauxUniforme">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>50</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>50</y>
+        <width>41</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ms : </string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="m_lineEditTauxBernouilli">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>20</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.2</string>
+      </property>
+      <property name="placeholderText">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>20</y>
+        <width>41</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Taux : </string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Route</string>
+    </attribute>
+    <widget class="QPushButton" name="m_boutonDrawRoad">
+     <property name="geometry">
+      <rect>
+       <x>870</x>
+       <y>0</y>
+       <width>121</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Draw Road</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="m_boutonDrawLane">
+     <property name="geometry">
+      <rect>
+       <x>770</x>
+       <y>10</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>DrawLane</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nombre de voies :</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="m_spinBoxNombreDeVoies">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>10</y>
+       <width>42</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>1</number>
+     </property>
+     <property name="value">
+      <number>1</number>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="m_groupBoxDirection">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>10</y>
+       <width>161</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Direction</string>
+     </property>
+     <widget class="QRadioButton" name="m_radioButtonSensUnique">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sens unique</string>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="m_radioButtonRouteRencontre">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>111</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>bi directionnel</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_3">
+    <attribute name="title">
+     <string>Statistiques</string>
+    </attribute>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -242,38 +402,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>m_boutonSimulation2</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>CreateSimulation2()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>71</x>
-     <y>415</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>149</x>
-     <y>422</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_boutonSimulation3</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>CreateSimulation3()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>63</x>
-     <y>452</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>142</x>
-     <y>450</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>m_boutonSimulation4</sender>
    <signal>pressed()</signal>
    <receiver>myGLWidget</receiver>
@@ -286,22 +414,6 @@
     <hint type="destinationlabel">
      <x>110</x>
      <y>483</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_boutonSimulation5</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>CreateSimulation5()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>71</x>
-     <y>509</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>140</x>
-     <y>514</y>
     </hint>
    </hints>
   </connection>
@@ -322,22 +434,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>m_boutonDrawNode</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>DrawNodePressed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>23</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>116</x>
-     <y>21</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>m_boutonDrawRoad</sender>
    <signal>pressed()</signal>
    <receiver>myGLWidget</receiver>
@@ -354,34 +450,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>m_boutonClearWidget</sender>
+   <sender>m_boutonDrawSource</sender>
    <signal>pressed()</signal>
    <receiver>myGLWidget</receiver>
-   <slot>ClearWidget()</slot>
+   <slot>DrawSourcePressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>311</y>
+     <x>47</x>
+     <y>45</y>
     </hint>
     <hint type="destinationlabel">
-     <x>143</x>
-     <y>309</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_Resetbutton</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>ResetPressed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>269</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>103</x>
-     <y>269</y>
+     <x>151</x>
+     <y>53</y>
     </hint>
    </hints>
   </connection>
@@ -398,22 +478,6 @@
     <hint type="destinationlabel">
      <x>136</x>
      <y>80</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_boutonDrawSource</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>DrawSourcePressed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>47</x>
-     <y>45</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>151</x>
-     <y>53</y>
     </hint>
    </hints>
   </connection>

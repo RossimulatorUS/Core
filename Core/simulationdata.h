@@ -29,6 +29,7 @@ public:
     Noeud& GetNoeud(simulation_traits::node_id_type);
     Route& GetRoute(simulation_traits::road_id_type);
 
+    node_id_type AddNode(GLfloat, GLfloat, bool isSource, Noeud::DistributionInfo distributionInfo);
     node_id_type AddNode(GLfloat, GLfloat, bool isSource);
     road_id_type AddRoute(Route);
     void AddVehicule(Vehicule*);

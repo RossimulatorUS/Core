@@ -11,17 +11,18 @@ Signaleur::Signaleur(bool* terminer, volatile bool* executer)
 
 void Signaleur::initialiser()
 {
-    while(!(*terminer_)) //TODO plz fix this Ross
+    while(!(*terminer_))
     {
         if(*executer_)
         {
+            *executer_ = false;
             auto& noeuds = SimulationData::GetInstance().GetNoeuds();
             for(auto itt = noeuds.begin(); itt != noeuds.end() ; ++itt)
             {
                 itt->ProcessWaitingVehicules();
             }
         }
-        //std::chrono::milliseconds timespan(600);//s'arranger pour que le cortex donne des ordres
-        //std::this_thread::sleep_for(timespan);
+        std::chrono::milliseconds timespan(1);
+        std::this_thread::sleep_for(timespan);
     }
 }

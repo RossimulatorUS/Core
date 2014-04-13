@@ -8,7 +8,7 @@
 class Historique_dexecution
 {
 public:
-    typedef std::chrono::nanoseconds temps;
+    typedef std::chrono::milliseconds temps;
 
 private:
     // Moyenne mobile -- boost::circular_buffer

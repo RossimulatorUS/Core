@@ -32,10 +32,8 @@ protected:
 public slots:
     //slots for xyz-rotation slider
     void CreateSimulation1();
-    void CreateSimulation2();
-    void CreateSimulation3();
     void CreateSimulation4();
-    void CreateSimulation5();
+    //void CreateSimulation5();
 
     void StartSimulation();
 

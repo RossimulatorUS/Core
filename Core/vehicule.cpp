@@ -102,7 +102,7 @@ bool Vehicule::Process()
     }
     else
     {
-        if(GetNextStep().GetId() == noeudArrive_)
+        if(IsOnLastStretch())
         {
             isWaiting = true;
             return false;
@@ -125,6 +125,11 @@ void Vehicule::IntersectionGo()
 
 }
 
+bool Vehicule::IsOnLastStretch()
+{
+    return GetNextStep().GetId() == noeudArrive_;
+}
+
 void Vehicule::Avancer()
 {
     x_ = x_ + xVariation_;
@@ -133,15 +138,12 @@ void Vehicule::Avancer()
 
 void Vehicule::SwitchRoute()
 {
-    //noeudDepart_ = GetDestinationImmediate().GetId();
     noeudDepart_ = GetNextStep().GetId();
 
     actualRoad_ = choisir_route(noeudDepart_, noeudArrive_);
     actualLane_ = GetRouteActuelle().FindAssociatedLane(GetNoeudDepart(), GetNoeudArrivee());
     xVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationX();
     yVariation_ = vitesseBase_ * GetVoieActuelle().getFormuleDroite().GetVariationY();
-    //x_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).x();
-    //y_ = SimulationData::GetInstance().GetNoeud(noeudDepart_).y();
     x_ = GetVoieActuelle().GetNoeudDepart().x();
     y_ = GetVoieActuelle().GetNoeudDepart().y();
 }

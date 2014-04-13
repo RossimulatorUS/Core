@@ -22,9 +22,20 @@ public:
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
 
+    enum loi{BERNOUILLI = 0, UNIFORME = 1};
+
+        struct DistributionInfo {
+            bool isBernouilli;
+            bool isUniforme;
+            QString TauxBernouilli;
+            QString TauxUniforme;
+        };
 private:
+    bool ok;
     bool est_source_;
     bool est_du_;
+
+    DistributionInfo DistributionInfo_;
 
     GLfloat x_;
     GLfloat y_;
@@ -32,6 +43,7 @@ private:
     static std::mutex mtx;
 
     node_id_type id_;
+    Historique_dexecution::temps derniere_creation_;
 
     std::map<road_id_type, std::vector<Vehicule*>> waitingVehicules_;
     std::map<node_id_type, road_id_type> neighbours_;
@@ -45,9 +57,7 @@ private:
     int currentWaitingVehiculeIndex;
 
     // Utilises pour la generation des voitures
-    Historique_dexecution::temps derniere_creation_;
-    enum loi {UNIFORME, BERNOUILLI};
-    loi loi_utilisee_;
+
     std::default_random_engine generateur_;
     std::bernoulli_distribution distribution_bernouilli_;
 
@@ -57,6 +67,7 @@ public:
     //Noeud(bool est_source);
     Noeud(GLfloat x, GLfloat y);
     Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource);
+    Noeud(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
 
     bool est_source();
     bool est_du();

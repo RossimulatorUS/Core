@@ -25,7 +25,7 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
     {
         if(*executer_)
         {
-            //*executer_ = false;
+            *executer_ = false;
             std::for_each(vt->vehicules_.begin(), vt->vehicules_.end(), [](Vehicule* v){
                 if(v->Process() == false)   //i.e. le véhicule est arrivé à destination
                 {
@@ -34,7 +34,7 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
             });
         }
 
-        std::chrono::milliseconds timespan(10);
+        std::chrono::milliseconds timespan(1);
         std::this_thread::sleep_for(timespan);
     }
 }

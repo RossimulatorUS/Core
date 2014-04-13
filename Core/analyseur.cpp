@@ -1,4 +1,5 @@
 #include "analyseur.h"
+#include <qdebug.h>
 
 Analyseur::Analyseur(bool* terminer, Cortex* cortex)
 {
@@ -12,12 +13,18 @@ void Analyseur::initialiser()
 {
     while(!(*terminer_))
     {
-        cortex_->execution_distributeur_ = true;
-        cortex_->execution_poissoneur_ = true;
-        cortex_->execution_deplaceurs_ = true;
+        std::chrono::milliseconds timespan(50);
+
+        for(int i = 0; i < 5 ; ++i)
+        {
+            cortex_->execution_distributeur_ = true;
+            cortex_->execution_poissoneur_ = true;
+            std::for_each(cortex_->execution_deplaceurs_.begin(), cortex_->execution_deplaceurs_.end(), [&](volatile bool& b){b = true;});
+            std::this_thread::sleep_for(timespan);
+        }
         cortex_->execution_signaleur_ = true;
 
-        std::chrono::milliseconds timespan(10);
-        std::this_thread::sleep_for(timespan);
+
+
     }
 }

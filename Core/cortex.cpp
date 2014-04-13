@@ -5,7 +5,7 @@
 Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     : execution_distributeur_(false),
       execution_poissoneur_(false),
-      execution_deplaceurs_(false),
+      execution_deplaceurs_(std::list<volatile bool>()),
       execution_signaleur_(false),
       fin_simulation(false)
 {
@@ -58,8 +58,10 @@ unsigned int Cortex::get_physical_threads()
 // Commande de l'interpreteur
 void Cortex::ajouter_thread()
 {
-    VehiculeThread* v = new VehiculeThread(&fin_simulation, &execution_deplaceurs_);
+    execution_deplaceurs_.emplace_back(false);
+    VehiculeThread* v = new VehiculeThread(&fin_simulation, &execution_deplaceurs_.back());
     threads_vehicule_->emplace_back(v);
+
 }
 
 // Commande de l'interpreteur
