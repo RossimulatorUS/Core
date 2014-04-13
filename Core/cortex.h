@@ -1,6 +1,7 @@
 #ifndef CORTEX_H
 #define CORTEX_H
 
+#include <atomic>
 #include <thread>
 #include <vector>
 
@@ -18,24 +19,16 @@ friend class Analyseur;
 
 public:
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
-    enum {NB_THREADS_DE_BASE = 2, COEF_MULT_PHYSIQUE = 3};
+    enum {NB_THREADS_DE_BASE = 2, COEF_MULT_PHYSIQUE = 1};
     enum mode_execution {MANUEL = 0, SEMI = 1, AUTO = 2};
 
 private:
 
-    // Temps de « sleep » entre chaque serie d'iteration
-    unsigned int temps_attente_analyste_;
-    unsigned int temps_attente_poissoneur_;
-    unsigned int temps_attente_distributeur_;
-    unsigned int temps_attente_deplaceurs_;
-    unsigned int temps_attente_signaleur_;
-    unsigned int temps_attente_OpenGL_;
-
     // Mettre un module en attente
-    bool attente_distributeur_;
-    bool attente_poissoneur_;
-    bool attente_deplaceurs_;
-    bool attente_signaleur_;
+    volatile bool execution_distributeur_;
+    volatile bool execution_poissoneur_;
+    volatile bool execution_deplaceurs_;
+    volatile bool execution_signaleur_;
 
     // Fonctions d'initialisation
     void load_informations();

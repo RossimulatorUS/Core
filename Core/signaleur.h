@@ -10,7 +10,7 @@ class Signaleur : public Module
     void initialiser();
 
 public:
-    Signaleur();
+    Signaleur(bool *terminer, volatile bool *executer);
 };
 
 #endif // SIGNALEUR_H

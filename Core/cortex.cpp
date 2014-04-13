@@ -3,9 +3,10 @@
 #include "cortex.h"
 
 Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
-    : //attente_analyste_(false),
-      attente_distributeur_(false),
-      attente_poissoneur_(false),
+    : execution_distributeur_(false),
+      execution_poissoneur_(false),
+      execution_deplaceurs_(false),
+      execution_signaleur_(false),
       fin_simulation(false)
 {
     /*
@@ -22,9 +23,9 @@ Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
     reserve_ressources();
 
     analyste_ = new Analyseur(&fin_simulation, this);
-    distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &attente_distributeur_);
-    poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &attente_poissoneur_);
-    signaleur_ = new Signaleur();
+    distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &execution_distributeur_);
+    poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &execution_poissoneur_);
+    signaleur_ = new Signaleur(&fin_simulation, &execution_signaleur_);
 }
 
 void Cortex::load_informations()
@@ -57,7 +58,7 @@ unsigned int Cortex::get_physical_threads()
 // Commande de l'interpreteur
 void Cortex::ajouter_thread()
 {
-    VehiculeThread* v = new VehiculeThread();
+    VehiculeThread* v = new VehiculeThread(&fin_simulation, &execution_deplaceurs_);
     threads_vehicule_->emplace_back(v);
 }
 

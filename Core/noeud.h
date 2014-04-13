@@ -46,7 +46,7 @@ private:
 
     // Utilises pour la generation des voitures
     Historique_dexecution::temps derniere_creation_;
-    enum loi {UNIFORME, POISSON};
+    enum loi {UNIFORME, BERNOUILLI};
     loi loi_utilisee_;
     std::default_random_engine generateur_;
     std::bernoulli_distribution distribution_bernouilli_;

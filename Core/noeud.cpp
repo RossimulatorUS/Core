@@ -246,7 +246,7 @@ void Noeud::ProcessWaitingVehicules()
         ++itt;
 
     //trouver prochaine queue non-vide
-    for(int i = 0; i < waitingVehicules_.size() ; ++i)
+    for(unsigned int i = 0; i < waitingVehicules_.size() ; ++i)
     {
         if(++currentWaitingVehiculeIndex > waitingVehicules_.size())
         {

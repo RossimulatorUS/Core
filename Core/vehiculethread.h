@@ -7,7 +7,6 @@
 #include "module.h"
 #include "vehicule.h"
 
-// NE RESPECTE PAS LES TICS
 class VehiculeThread : public Module
 {
     // Materiel
@@ -21,8 +20,9 @@ class VehiculeThread : public Module
     void demarrer_traitement(VehiculeThread *vt);
 
 public:
-     VehiculeThread();
+     VehiculeThread(bool *terminer, volatile bool *executer);
      void ajouter_vehicule(Vehicule*);
+     std::list<Vehicule*>::size_type nb_vehicules() const;
      void termine();
 };
 

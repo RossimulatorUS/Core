@@ -1,6 +1,7 @@
 #ifndef MODULE_H
 #define MODULE_H
 
+#include <atomic>
 #include <thread>
 
 class Module
@@ -14,7 +15,7 @@ protected:
     bool est_initialise_;
 
     // Variables de communication avec le Cortex
-    /*const*/ bool* attendre_;
+    volatile bool* executer_;
     /*const*/ bool* terminer_;
 
     // Fonction d'initialisation

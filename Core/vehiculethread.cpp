@@ -1,20 +1,19 @@
 #include <QDebug>
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <unistd.h>
+#include <algorithm>
 
 #include "simulationdata.h"
 #include "vehiculethread.h"
 
 unsigned int VehiculeThread::id_a_date_ = 0;
 
-VehiculeThread::VehiculeThread()
-    : execution_(&VehiculeThread::demarrer_traitement,this, this),
-      terminer(false)
+VehiculeThread::VehiculeThread(bool* terminer, volatile bool* executer)
+    : execution_(&VehiculeThread::demarrer_traitement,this, this)
 {
     vehicules_ = std::list<Vehicule*>();
+
+    executer_ = executer;
+    terminer_ = terminer;
 
     // Retouner id et incrementer ensuite
     id_ = id_a_date_++;
@@ -22,36 +21,35 @@ VehiculeThread::VehiculeThread()
 
 void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
 {
-    while(!terminer)
+    while(!(*terminer_))
     {
-        //if(!(*attendre_))
-        // Temps depart
-        for (auto itt = vt->vehicules_.begin() ; itt != vt->vehicules_.end() ; ++itt)
+        if(*executer_)
         {
-            if((*itt)->Process() == false)   //i.e. le véhicule est arrivé à destination
-            {
-                //vt->vehicules_.remove(*itt); //on peut pas modifier une collection sur laquelle on itère, donc changer ça
-                SimulationData::GetInstance().GetVehiculesPointer()->remove(*itt);
-                //delete(*itt);
-            }
-            //x_ += vt->vehicules_[i]->xVariation_;
-            //vt->vehicules_[i]->y_ += vt->vehicules_[i]->yVariation_;
-            //qDebug() << (*itt)->x_ << "," << (*itt)->y_ << " : " << vt->id_;
+            //*executer_ = false;
+            std::for_each(vt->vehicules_.begin(), vt->vehicules_.end(), [](Vehicule* v){
+                if(v->Process() == false)   //i.e. le véhicule est arrivé à destination
+                {
+                    SimulationData::GetInstance().GetVehiculesPointer()->remove(v);
+                }
+            });
         }
-        std::chrono::milliseconds timespan(100);
+
+        std::chrono::milliseconds timespan(10);
         std::this_thread::sleep_for(timespan);
     }
 }
 
 void VehiculeThread::ajouter_vehicule(Vehicule* vehicule)
 {
-    //qDebug() << vehicules_->size();
-    vehicules_.push_back(vehicule); // vehicules n'existe pas encore
+    vehicules_.push_back(vehicule);
+}
+
+std::list<Vehicule*>::size_type VehiculeThread::nb_vehicules() const
+{
+    return vehicules_.size();
 }
 
 void VehiculeThread::termine()
 {
     terminer = true;
 }
-
-

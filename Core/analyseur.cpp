@@ -1,25 +1,23 @@
 #include "analyseur.h"
 
-Analyseur::Analyseur(bool* terminer, Cortex* cortex)/*
-    : terminer_(terminer),
-      attendre_(attendre),
-      execution_(&Analyseur::initialiser, this)*/
+Analyseur::Analyseur(bool* terminer, Cortex* cortex)
 {
     terminer_ = terminer;
     cortex_ = cortex;
-    execution_ = std::thread(&Analyseur::initialiser, this, this);
+    execution_ = std::thread(&Analyseur::initialiser, this);
 
 }
 
-void Analyseur::initialiser(Analyseur* a)
+void Analyseur::initialiser()
 {
     while(!(*terminer_))
     {
-        a->cortex_->attente_distributeur_ = false;
-        a->cortex_->attente_poissoneur_ = false;
-        //attente_deplaceurs_;
-        //attente_signaleur_;
-        std::chrono::milliseconds timespan(1000); // or whatever
+        cortex_->execution_distributeur_ = true;
+        cortex_->execution_poissoneur_ = true;
+        cortex_->execution_deplaceurs_ = true;
+        cortex_->execution_signaleur_ = true;
+
+        std::chrono::milliseconds timespan(10);
         std::this_thread::sleep_for(timespan);
     }
 }

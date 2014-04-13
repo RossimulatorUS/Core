@@ -26,9 +26,8 @@ class Distributeur : public Module
     unsigned int choisir_thread();
 
 public:
-    Distributeur(std::vector<VehiculeThread *> *, bool*, bool*);
+    Distributeur(std::vector<VehiculeThread *> *, bool*, volatile bool*);
     void ajouter_vehicule(Vehicule *);
-
 };
 
 #endif // DISTRIBUTEUR_H

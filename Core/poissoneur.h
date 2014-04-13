@@ -8,9 +8,6 @@
 #include "module.h"
 #include "noeud.h"
 
-// Singleton
-// TODO : Heritage d'une classe incopiable
-
 class Poissoneur : public Module
 {
     std::vector<Noeud> noeuds_;
@@ -23,7 +20,7 @@ class Poissoneur : public Module
     void initialiser();
 
 public:
-    Poissoneur(std::list<Vehicule *> *, std::vector<Noeud>, Distributeur*, bool*, bool*);
+    Poissoneur(std::list<Vehicule *> *, std::vector<Noeud>, Distributeur*, bool*, volatile bool*);
 
 };
 

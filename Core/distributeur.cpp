@@ -5,18 +5,12 @@
 #include "cortex.h"
 #include "distributeur.h"
 
-bool min(std::vector<VehiculeThread*>::iterator i, std::vector<VehiculeThread*>::iterator j)
-{
-    return false;
-    //return ((*i).size() < j.size());
-}
-
-Distributeur::Distributeur(std::vector<VehiculeThread*>* threads, bool* terminer, bool* attendre)
+Distributeur::Distributeur(std::vector<VehiculeThread*>* threads, bool* terminer, volatile bool* executer)
     : threads_(threads)
 {
     vehicules_ = std::vector<Vehicule*>();
     terminer_ = terminer;
-    attendre_ = attendre;
+    executer_ = executer;
     execution_ = std::thread(&Distributeur::initialiser, this);
 }
 
@@ -27,9 +21,9 @@ void Distributeur::initialiser()
 
     while(!(*terminer_))
     {
-        if(!(*attendre_))
+        if(*executer_)
         {
-            *attendre_ = true;
+            *executer_ = false;
 
             // Demarrer chronometre
             temps_initial = Historique_dexecution::get_time();
@@ -46,18 +40,19 @@ void Distributeur::initialiser()
             // Arreter chronometre
             historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
-        std::chrono::milliseconds timespan(10);//juste pour pas atteindre 100% de la capacité du CPU à regarder des ifs
-        std::this_thread::sleep_for(timespan);
+        //static std::chrono::milliseconds timespan(10); // Max 20% du temps de perdu
+        //std::this_thread::sleep_for(timespan);
     }
 }
 
 // ALGORITHME IMPORTANT
 unsigned int Distributeur::choisir_thread()
 {
-    //return std::min_element(threads_->begin(), threads_->end(), min);
-    static int t = 0;
-    t = (t + 1) % Cortex::NB_THREADS_DE_BASE;
-    return t;
+    // Retourne l'iterateur du thread le moins occupe - le debut du vector, donc sa position
+    return std::min_element(threads_->begin(), threads_->end(),
+                            [](VehiculeThread* a, VehiculeThread* b){
+                                return a->nb_vehicules() < b->nb_vehicules();
+                            }) - threads_->begin();
 }
 
 void Distributeur::ajouter_vehicule(Vehicule* vehicule)

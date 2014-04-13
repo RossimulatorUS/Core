@@ -317,8 +317,6 @@ void MyGLWidget::CreateSimulation1()
     r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
     r1.AddLane(r1.GetNoeudArrivee(), r1.GetNoeudDepart());
 
-
-
     updateGL();
 }
 
