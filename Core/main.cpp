@@ -1,7 +1,7 @@
 #include "window.h"
 #include <QApplication>
 #include <QDesktopWidget>
-#include <myglwidget.h>
+#include "myglwidget.h"
 
 
 int main(int argc, char **argv)

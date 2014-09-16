@@ -1,4 +1,5 @@
 #include <QtWidgets>
+#include <QDebug>
 #include <QtOpenGL>
 #include <iostream>
 
@@ -15,7 +16,7 @@
 #include "qdebug.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
+    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent), file("Vehicule data.txt")
 {
     glDisable(GL_DEPTH_TEST);
     setMouseTracking(true);
@@ -23,6 +24,9 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     isDrawRoadPressed_ = false;
     isDrawLanePressed_ = false;
     isDrawSourcePressed_ = false;
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        return;
 }
 
 MyGLWidget::~MyGLWidget()
@@ -52,8 +56,6 @@ void MyGLWidget::initializeGL()
 
 void MyGLWidget::paintGL()
 {
-
-
     //glClearColor(1,1,1,1); //décommenter pour fond blanc
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -508,6 +510,8 @@ void MyGLWidget::clearWidget()
 
 void MyGLWidget::draw()
 {
+    QTextStream out(&file);
+    //draw roads
     auto allRoads = GetAllRoads();
     for (unsigned int i = 0; i < allRoads.size(); ++i)
     {
@@ -537,6 +541,7 @@ void MyGLWidget::draw()
         }
     }
 
+    //draw nodes
     glPointSize(25.0f);
     auto allNodes = GetAllNodes();
     for(unsigned int i = 0; i < allNodes.size(); ++i)
@@ -552,8 +557,12 @@ void MyGLWidget::draw()
         glEnd();
     }
 
+    //draw vehicules
     glPointSize(5.0f);
+    int i = 1;
     auto allVehicules = GetAllVehicules();
+
+    out << "----------------------- DRAWING VEHICULE ----------------------------------" << "\n";
     for (auto itt = allVehicules.begin(); itt!= allVehicules.end(); ++itt)
     {
         glLoadIdentity();
@@ -567,6 +576,8 @@ void MyGLWidget::draw()
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();
 
+        out << "Position of vehicule #" << (*itt)->id() << " : " << "x = " << (*itt)->x_ << " y = " << (*itt)->y_ << "\n";
+        ++i;
     }
 }
 

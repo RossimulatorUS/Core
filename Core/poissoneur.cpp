@@ -29,7 +29,7 @@ void Poissoneur::initialiser()
 
     // Indication que le poissonneur est pret
     est_initialise_ = true;
-    Historique_dexecution::temps temps_initial;
+    //Historique_dexecution::temps temps_initial;
 
     // Tant que la simulation n'est pas terminee
     while(!(*terminer_))
@@ -40,7 +40,7 @@ void Poissoneur::initialiser()
             *executer_ = false;
 
             // Demarrer chronometre
-            temps_initial = Historique_dexecution::get_time();
+            //temps_initial = Historique_dexecution::get_time();
 
             std::for_each(noeuds_.begin(), noeuds_.end(), [&](Noeud& noeud){
 
@@ -55,7 +55,7 @@ void Poissoneur::initialiser()
 
 
             // Arreter chronometre
-            historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+            //historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
 
         std::chrono::milliseconds timespan(1); // Max 20% de la plage perdu

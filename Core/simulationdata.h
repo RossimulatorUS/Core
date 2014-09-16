@@ -32,6 +32,8 @@ public:
     node_id_type AddNode(GLfloat, GLfloat, bool isSource, Noeud::DistributionInfo distributionInfo);
     node_id_type AddNode(GLfloat, GLfloat, bool isSource);
     road_id_type AddRoute(Route);
+
+    void RemoveVehicule(Vehicule*);
     void AddVehicule(Vehicule*);
     void ResetAllData();
 

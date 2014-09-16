@@ -9,8 +9,6 @@
 class Noeud;    //forward declaration
 
 
-
-
 class DVMessage
 {
 public:

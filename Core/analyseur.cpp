@@ -6,7 +6,6 @@ Analyseur::Analyseur(bool* terminer, Cortex* cortex)
     terminer_ = terminer;
     cortex_ = cortex;
     execution_ = std::thread(&Analyseur::initialiser, this);
-
 }
 
 void Analyseur::initialiser()
@@ -23,8 +22,5 @@ void Analyseur::initialiser()
             std::this_thread::sleep_for(timespan);
         }
         cortex_->execution_signaleur_ = true;
-
-
-
     }
 }

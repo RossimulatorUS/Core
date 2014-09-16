@@ -62,6 +62,12 @@ SimulationData::road_id_type SimulationData::AddRoute(Route r)
     return allRoads_.size()-1;
 }
 
+void SimulationData::RemoveVehicule(Vehicule * v)
+{
+    GetVehiculesPointer()->remove(v);
+    GetVehicules().remove(v);
+}
+
 void SimulationData::ResetAllData()
 {
     allNodes_.clear();

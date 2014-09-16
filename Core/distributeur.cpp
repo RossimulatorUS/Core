@@ -17,7 +17,7 @@ Distributeur::Distributeur(std::vector<VehiculeThread*>* threads, bool* terminer
 void Distributeur::initialiser()
 {
     est_initialise_ = true;
-    Historique_dexecution::temps temps_initial;
+    //Historique_dexecution::temps temps_initial;
 
     while(!(*terminer_))
     {
@@ -26,7 +26,7 @@ void Distributeur::initialiser()
             *executer_ = false;
 
             // Demarrer chronometre
-            temps_initial = Historique_dexecution::get_time();
+            //temps_initial = Historique_dexecution::get_time();
 
             // Qte vehicules a placer pour ce tic
             auto qte_vehicules(vehicules_.size());
@@ -38,7 +38,7 @@ void Distributeur::initialiser()
             }
 
             // Arreter chronometre
-            historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+            //historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
         }
         std::chrono::milliseconds timespan(1); // Max 20% du temps de perdu
         std::this_thread::sleep_for(timespan);

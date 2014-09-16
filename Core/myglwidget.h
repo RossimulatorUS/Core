@@ -2,7 +2,9 @@
 #define MYGLWIDGET_H
 
 #include <QGLWidget>
+#include <QFile>
 #include <vector>
+
 #include "noeud.h"
 #include "route.h"
 #include "vehicule.h"
@@ -82,6 +84,8 @@ private:
     void moveCar();
     void draw();
     void PrintNodeCoordinates(Noeud depart, Noeud arrivee);
+
+    QFile file;
 };
 
 #endif // MYGLWIDGET_H

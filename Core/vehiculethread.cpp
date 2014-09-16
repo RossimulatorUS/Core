@@ -11,6 +11,7 @@ VehiculeThread::VehiculeThread(bool* terminer, volatile bool* executer)
     : execution_(&VehiculeThread::demarrer_traitement,this, this)
 {
     vehicules_ = std::list<Vehicule*>();
+    toDelete = std::list<Vehicule*>();
 
     executer_ = executer;
     terminer_ = terminer;
@@ -26,12 +27,31 @@ void VehiculeThread::demarrer_traitement(VehiculeThread* vt)
         if(*executer_)
         {
             *executer_ = false;
-            std::for_each(vt->vehicules_.begin(), vt->vehicules_.end(), [](Vehicule* v){
+
+            for (auto itt = vehicules_.begin(); itt != vehicules_.end(); ++itt)
+            {
+                //remove the vehicule from the simluation data
+                Vehicule* v = *itt;
+                if (v->Process() == false)
+                {
+                    SimulationData::GetInstance().RemoveVehicule(v);
+                    toDelete.push_back(v);
+                }
+            }
+
+            for (auto itt = toDelete.begin(); itt != toDelete.end(); ++itt)
+            {
+                //remove the vehicule from the vehicule thread
+                Vehicule *v = *itt;
+                vehicules_.remove(v);
+            }
+
+            /*std::for_each(vt->vehicules_.begin(), vt->vehicules_.end(), [](Vehicule* v){
                 if(v->Process() == false)   //i.e. le véhicule est arrivé à destination
                 {
-                    SimulationData::GetInstance().GetVehiculesPointer()->remove(v);
+                    SimulationData::GetInstance().RemoveVehicule(v);
                 }
-            });
+            });*/
         }
 
         std::chrono::milliseconds timespan(1);

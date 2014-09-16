@@ -16,6 +16,7 @@ Vehicule::Vehicule()
 Vehicule::Vehicule(node_id_type depart, node_id_type arrive)
     :noeudDepart_(depart),
      noeudArrive_(arrive),
+     isWaiting(false),
      actualRoad_(GetNoeudDepart().GetProchaineRoute(arrive))
 {
     actualLane_ = GetRouteActuelle().FindAssociatedLane(GetNoeudDepart(), GetNoeudArrivee());

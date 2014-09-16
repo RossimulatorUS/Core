@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <string>
 #include <thread>
 #include "cortex.h"
@@ -38,7 +39,7 @@ void Cortex::reserve_ressources()
     if(physical_threads_)
     {
         // Demarrer un nombre intelligent de threads en fonction de la qte. disponible.
-        for(unsigned int i = 0; i < physical_threads_ * COEF_MULT_PHYSIQUE; ++i)
+        for(unsigned int i = 0; i < 1 * COEF_MULT_PHYSIQUE; ++i)
             ajouter_thread();
     }
     else
@@ -61,7 +62,6 @@ void Cortex::ajouter_thread()
     execution_deplaceurs_.emplace_back(false);
     VehiculeThread* v = new VehiculeThread(&fin_simulation, &execution_deplaceurs_.back());
     threads_vehicule_->emplace_back(v);
-
 }
 
 // Commande de l'interpreteur
