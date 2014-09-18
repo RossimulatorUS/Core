@@ -85,7 +85,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -258,19 +258,6 @@
       <string>Draw Road</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="m_boutonDrawLane">
-     <property name="geometry">
-      <rect>
-       <x>770</x>
-       <y>10</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>DrawLane</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
@@ -282,6 +269,19 @@
      </property>
      <property name="text">
       <string>Nombre de voies :</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="m_checkboxOneWay">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>131</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>One way</string>
      </property>
     </widget>
     <widget class="QSpinBox" name="m_spinBoxNombreDeVoies">
@@ -297,56 +297,8 @@
       <number>1</number>
      </property>
      <property name="maximum">
-      <number>1</number>
+      <number>5</number>
      </property>
-     <property name="value">
-      <number>1</number>
-     </property>
-    </widget>
-    <widget class="QGroupBox" name="m_groupBoxDirection">
-     <property name="geometry">
-      <rect>
-       <x>150</x>
-       <y>10</y>
-       <width>161</width>
-       <height>91</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string>Direction</string>
-     </property>
-     <widget class="QRadioButton" name="m_radioButtonSensUnique">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>82</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Sens unique</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="m_radioButtonRouteRencontre">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>40</y>
-        <width>111</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>bi directionnel</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
@@ -475,22 +427,6 @@
     <hint type="destinationlabel">
      <x>151</x>
      <y>53</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>m_boutonDrawLane</sender>
-   <signal>pressed()</signal>
-   <receiver>myGLWidget</receiver>
-   <slot>DrawLanePressed()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>46</x>
-     <y>109</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>136</x>
-     <y>80</y>
     </hint>
    </hints>
   </connection>

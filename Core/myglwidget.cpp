@@ -149,15 +149,15 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
         DrawRoadMouseReleased(worldCoords);
         updateGL();
     }
-    else if (isDrawLanePressed_)
-    {
-        DrawLaneMouseReleased(worldCoords);
-        updateGL();
-    }
 }
 
 void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 {
+    auto window = static_cast<Window*>(parent());
+
+    auto isOneWay = window->isOneWay();
+    auto numberOfLane = window->getNumberofLane();
+
     Noeud node = Noeud(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
@@ -166,8 +166,6 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
         AddRoad(ClickPressedNode, associatedNode);
     }
 }
-
-
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
@@ -192,35 +190,6 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Noeud noeud)
             return allNodes[i].GetId();
     }
     return 66666;   //kinda lame
-}
-
-void MyGLWidget::DrawLaneMousePressed(float *worldCoords)
-{
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
-    node_id_type associatedNode = FindAssociatedNode(node);
-
-    ClickPressedNode = associatedNode;
-}
-
-void MyGLWidget::DrawLaneMouseReleased(float *worldCoords)
-{
-
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
-    if (ClickPressedNode == 66666 || FindAssociatedNode(node) == 66666)
-        return;
-    Noeud depart = SimulationData::GetInstance().GetNoeud(ClickPressedNode);
-
-    Noeud outNodeDepart = Noeud(5, 5);
-    Noeud outNodeArrivee = Noeud(5, 5);
-
-    bool isInverted = false;
-
-    Route & associatedRoad = FindAssociatedRoad(depart,node, outNodeDepart, outNodeArrivee, isInverted);
-
-    if (!isInverted/*associatedRoad.IsReadyToCreate() && associatedRoad.IsInSameDirection(outNodeDepart, outNodeArrivee)*//*associatedRoad.IsLeftToRight(depart, node)*/)
-        associatedRoad.AddLane(associatedRoad.GetNoeudDepart(), associatedRoad.GetNoeudArrivee());
-    else
-        associatedRoad.AddLane(associatedRoad.GetNoeudArrivee(), associatedRoad.GetNoeudDepart());
 }
 
 Route& MyGLWidget::FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted)
@@ -298,16 +267,27 @@ void MyGLWidget::DrawNode(float x, float y)
 
 void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
 {
+    auto window = static_cast<Window*>(parent());
+
+    auto isOneWay = window->isOneWay();
+    auto numberOfLane = window->getNumberofLane();
+
     //allRoads_.push_back(Route(a, b));
-    Route newRoad = Route(a,b);
+    Route newRoad = Route(a, b, isOneWay, numberOfLane);
     auto roadId = SimulationData::GetInstance().AddRoute(newRoad);
     SimulationData::GetInstance().GetNoeud(a).AddNeighbour(b, roadId);
     SimulationData::GetInstance().GetNoeud(b).AddNeighbour(a, roadId);
 
+    qDebug()<<"WTF";
     auto& r0 = SimulationData::GetInstance().GetRoute(roadId);
 
-    r0.AddLane(r0.GetNoeudDepart(), r0.GetNoeudArrivee());
-    r0.AddLane(r0.GetNoeudArrivee(), r0.GetNoeudDepart());
+    for(int i = 1; i <= numberOfLane; ++i)
+    {
+        r0.AddLane(r0.GetNoeudDepart(), r0.GetNoeudArrivee(), i);
+
+        if (!isOneWay)
+            r0.AddLane(r0.GetNoeudArrivee(), r0.GetNoeudDepart(), i);
+    }
 }
 
 void MyGLWidget::DrawSource(float *worldCoords)
@@ -343,9 +323,6 @@ void MyGLWidget::CreateSimulation1()
     DrawSource(0.0f,1.6f);
     DrawSource(0.0f,-1.6f);
     AddRoad(0, 1);
-    auto& r1 = SimulationData::GetInstance().GetRoute(0);
-    r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
-    r1.AddLane(r1.GetNoeudArrivee(), r1.GetNoeudDepart());
 
     updateGL();
 }
@@ -366,24 +343,7 @@ void MyGLWidget::CreateSimulation4()
     AddRoad(2, 4);
     AddRoad(3, 4);
 
-    auto& r0 = SimulationData::GetInstance().GetRoute(0);
-    r0.AddLane(r0.GetNoeudDepart(), r0.GetNoeudArrivee());
-    r0.AddLane(r0.GetNoeudArrivee(), r0.GetNoeudDepart());
-
-    auto& r1 = SimulationData::GetInstance().GetRoute(1);
-    r1.AddLane(r1.GetNoeudDepart(), r1.GetNoeudArrivee());
-    r1.AddLane(r1.GetNoeudArrivee(), r1.GetNoeudDepart());
-
-    auto& r2 = SimulationData::GetInstance().GetRoute(2);
-    r2.AddLane(r2.GetNoeudDepart(), r2.GetNoeudArrivee());
-    r2.AddLane(r2.GetNoeudArrivee(), r2.GetNoeudDepart());
-
-    auto& r3 = SimulationData::GetInstance().GetRoute(3);
-    r3.AddLane(r3.GetNoeudDepart(), r3.GetNoeudArrivee());
-    r3.AddLane(r3.GetNoeudArrivee(), r3.GetNoeudDepart());
-
     updateGL();
-
 }
 
 //intersection 2 voie

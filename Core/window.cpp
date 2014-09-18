@@ -30,9 +30,19 @@ bool Window::isBernouilliChecked()
     return ui->m_radioButtonBernouilli->isChecked();
 }
 
+bool Window::isOneWay()
+{
+    return ui->m_checkboxOneWay->isChecked();
+}
+
 bool Window::isUniformeChecked()
 {
     return ui->m_radioButtonUniforme->isChecked();
+}
+
+int Window::getNumberofLane()
+{
+    return ui->m_spinBoxNombreDeVoies->value();
 }
 
 bool Window::isIntersectionChecked()

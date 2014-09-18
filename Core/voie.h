@@ -18,7 +18,7 @@ private:
     Formule formuleDroite;
 public:
     Voie();
-    Voie(Noeud, Noeud, road_id_type parent);
+    Voie(Noeud, Noeud, road_id_type parent, int laneNumber);
 
     Noeud GetNoeudDepart();
     Noeud GetNoeudArrivee();

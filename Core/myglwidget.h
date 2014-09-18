@@ -75,8 +75,6 @@ private:
     void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
-    void DrawLaneMousePressed(float *worldCoords);
-    void DrawLaneMouseReleased(float *worldCoords);
 
     Route &FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted);
 

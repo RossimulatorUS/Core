@@ -4,7 +4,7 @@
 
 Formule::Formule(){}
 
-Formule::Formule(Noeud noeudA, Noeud noeudB)
+Formule::Formule(Noeud noeudA, Noeud noeudB, int laneNumber)
 {
     a = DeterminerPente(noeudA.x(), noeudB.x(), noeudA.y(), noeudB.y());
     b = DeterminerB(noeudA.x(), noeudA.y());
@@ -17,9 +17,7 @@ Formule::Formule(Noeud noeudA, Noeud noeudB)
     variationX_ = (distanceX / distanceDroite_);
     variationY_ = (distanceY / distanceDroite_);
 
-    //qDebug() << variationX_ << "," << variationY_;
-
-    DeterminerPerpendiculaire(noeudA, noeudB);
+    DeterminerPerpendiculaire(noeudA, noeudB, laneNumber);
     DeterminerDirection(noeudA, noeudB);
 }
 
@@ -115,7 +113,9 @@ void Formule::DeterminerDirection(Noeud depart, Noeud destination)
         variationY_ *= -1;
 }
 
-void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
+///pointControleX1 et autre correspond au coordonnee de la zone pour la route
+/// LaneCoordinateX1 et autre correspond au coordonnee de la zone pour la voie
+void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2, int laneNumber)
 {
     if (a > 0)
     {
@@ -133,19 +133,19 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if (IsLeftToRight(noeud1, noeud2))
         {
-            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01)) + (10*(variationX_*0.01));
-            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX1_ = noeud1.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01)) + (10*(variationY_*0.01));
-            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY1_ = noeud1.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
         }
         else
         {
-            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01)) - (10*(variationX_*0.01));
-            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX1_ = noeud1.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01)) - (10*(variationY_*0.01));
-            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY1_ = noeud1.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
         }
     }
     else if (a < 0)
@@ -164,22 +164,23 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if (IsLeftToRight(noeud1, noeud2))
         {
-            LaneCoordinateX1_ = noeud1.x()-(5*(variationY_*0.01)) + (10*(variationX_*0.01));
-            LaneCoordinateX2_ = noeud2.x()-(5*(variationY_*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX1_ = noeud1.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()-(5*(variationX_*0.01)) - (10*(variationY_*0.01));
-            LaneCoordinateY2_ = noeud2.y()-(5*(variationX_*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY1_ = noeud1.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
         }
         else
         {
-            LaneCoordinateX1_ = noeud1.x()+(5*(variationY_*0.01)) - (10*(variationX_*0.01));
-            LaneCoordinateX2_ = noeud2.x()+(5*(variationY_*0.01)) + (10*(variationX_*0.01));
+            LaneCoordinateX1_ = noeud1.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            LaneCoordinateX2_ = noeud2.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
 
-            LaneCoordinateY1_ = noeud1.y()+(5*(variationX_*0.01)) + (10*(variationY_*0.01));
-            LaneCoordinateY2_ = noeud2.y()+(5*(variationX_*0.01)) - (10*(variationY_*0.01));
+            LaneCoordinateY1_ = noeud1.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            LaneCoordinateY2_ = noeud2.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
         }
     }
-    else if(IsLeftToRight(noeud1, noeud2) || IsLeftToRight(noeud2, noeud1)) //horizontal
+    //horizontal
+    else if(IsLeftToRight(noeud1, noeud2) || IsLeftToRight(noeud2, noeud1))
     {
         pointControleX1_ = noeud1.x();
         pointControleY1_ = noeud1.y()-10*0.01;
@@ -195,25 +196,23 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if(noeud1.x() < noeud2.x())
         {
-            LaneCoordinateY1_ = noeud1.y()-5*0.01;
-            LaneCoordinateY2_ = noeud1.y()-5*0.01;
+            LaneCoordinateY1_ = noeud1.y()-5*(laneNumber*0.01);
+            LaneCoordinateY2_ = noeud1.y()-5*(laneNumber*0.01);
 
             LaneCoordinateX1_ = noeud1.x() + 0.1;
             LaneCoordinateX2_ = noeud2.x() - 0.1;
         }
         else
         {
-            LaneCoordinateY1_ = noeud1.y()+5*0.01;
-            LaneCoordinateY2_ = noeud1.y()+5*0.01;
+            LaneCoordinateY1_ = noeud1.y()+5*(laneNumber*0.01);
+            LaneCoordinateY2_ = noeud1.y()+5*(laneNumber*0.01);
 
             LaneCoordinateX1_ = noeud1.x() - 0.1;
             LaneCoordinateX2_ = noeud2.x() + 0.1;
         }
-
-        //LaneCoordinateX1_ = noeud1.x();
-        //LaneCoordinateX2_ = noeud2.x();
     }
-    else //vertical
+    //vertical
+    else
     {
         pointControleX1_ = noeud1.x()-10*0.01;
         pointControleY1_ = noeud1.y();
@@ -229,16 +228,16 @@ void Formule::DeterminerPerpendiculaire(Noeud noeud1, Noeud noeud2)
 
         if(noeud1.y() < noeud2.y())
         {
-            LaneCoordinateX1_ = noeud1.x()+5*0.01;
-            LaneCoordinateX2_ = noeud1.x()+5*0.01;
+            LaneCoordinateX1_ = noeud1.x()+5*(laneNumber*0.01);
+            LaneCoordinateX2_ = noeud1.x()+5*(laneNumber*0.01);
 
             LaneCoordinateY1_ = noeud1.y() + 0.1;
             LaneCoordinateY2_ = noeud2.y() - 0.1;
         }
         else
         {
-            LaneCoordinateX1_ = noeud1.x()-5*0.01;
-            LaneCoordinateX2_ = noeud1.x()-5*0.01;
+            LaneCoordinateX1_ = noeud1.x()-5*(laneNumber*0.01);
+            LaneCoordinateX2_ = noeud1.x()-5*(laneNumber*0.01);
 
             LaneCoordinateY1_ = noeud1.y() - 0.1;
             LaneCoordinateY2_ = noeud2.y() + 0.1;

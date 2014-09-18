@@ -1,9 +1,10 @@
 #include "voie.h"
+#include <QDebug>
 
-Voie::Voie(Noeud depart, Noeud arrivee, road_id_type parent)
+Voie::Voie(Noeud depart, Noeud arrivee, road_id_type parent, int laneNumber)
     :depart_(depart), arrivee_(arrivee), parent_(parent)
 {
-    formuleDroite = Formule(GetNoeudDepart(), GetNoeudArrivee());
+    formuleDroite = Formule(GetNoeudDepart(), GetNoeudArrivee(), laneNumber);
 
     depart_ = Noeud(formuleDroite.GetLaneCoordinateX1(), formuleDroite.GetLaneCoordinateY1());
     arrivee_ = Noeud(formuleDroite.GetLaneCoordinateX2(), formuleDroite.GetLaneCoordinateY2());

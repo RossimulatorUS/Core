@@ -32,7 +32,7 @@ class Formule
     float CalculerPythagore(float a, float b);
     float CalculerDistance(Noeud noeudA, Noeud noeudB);
     void DeterminerDirection(Noeud depart, Noeud destination);
-    void DeterminerPerpendiculaire(Noeud, Noeud);
+    void DeterminerPerpendiculaire(Noeud, Noeud, int laneNumber);
 
 
 public:
@@ -53,7 +53,7 @@ public:
     float GetLaneCoordinateY2();
 
     Formule();
-    Formule(Noeud noeudA, Noeud noeudB);
+    Formule(Noeud noeudA, Noeud noeudB, int laneNumber);
 
     GLfloat a;
     GLfloat b;

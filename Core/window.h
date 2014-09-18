@@ -24,7 +24,10 @@ public:
     bool isIntersectionChecked();
     bool isSourceChecked();
 
+    bool isOneWay();
+
     int getCurrentTabIndex();
+    int getNumberofLane();
 protected:
     void keyPressEvent(QKeyEvent *event);
 

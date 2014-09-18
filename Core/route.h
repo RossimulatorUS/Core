@@ -6,6 +6,7 @@
 #include <QGLWidget>
 #include <utility>
 #include <vector>
+#include <QTime>
 
 #include "dvutility.h"
 #include "noeud.h"
@@ -30,9 +31,10 @@ private:
     
     bool isReadyToCreate;
     bool isLeftToRight_;
+    bool isOneWay_;
 
 public:
-    Route(node_id_type idDepart, node_id_type idArrivee);
+    Route(node_id_type idDepart, node_id_type idArrivee, bool isOneWay, int laneNumber);
     Route();
 
     node_id_type IDDepart_;
@@ -54,7 +56,7 @@ public:
     Formule getFormuleDroite();
     road_cost_type Cost();
 
-    void AddLane(Noeud, Noeud);
+    void AddLane(Noeud, Noeud, int laneNumber);
 
     std::vector<Voie> GetLanes();
 
