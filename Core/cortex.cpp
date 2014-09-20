@@ -3,12 +3,12 @@
 #include <thread>
 #include "cortex.h"
 
-Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
-    : execution_distributeur_(false),
-      execution_poissoneur_(false),
-      execution_deplaceurs_(std::list<volatile bool>()),
-      execution_signaleur_(false),
-      fin_simulation(false)
+Cortex::Cortex(std::vector<Node> nodes, std::list<Vehicle*>* vehicles)
+    : distributor_execution_(false),
+      poissoner_execution_(false),
+      mover_execution_(std::list<volatile bool>()),
+      signaler_execution_(false),
+      end_simulation(false)
 {
     /*
      * Ajouter variable a la construction
@@ -17,19 +17,19 @@ Cortex::Cortex(std::vector<Noeud> noeuds, std::list<Vehicule*>* vehicules)
      * automatiquement, semi-automatiquement ou manuellement
      */
 
-    vehicules_ = vehicules;
-    threads_vehicule_ = new std::vector<VehiculeThread*>();
+    vehicles_ = vehicles;
+    vehicle_threads_ = new std::vector<VehicleThread*>();
 
-    load_informations();
+    load_information();
     reserve_ressources();
 
-    analyste_ = new Analyseur(&fin_simulation, this);
-    distributeur_ = new Distributeur(threads_vehicule_, &fin_simulation, &execution_distributeur_);
-    poissoneur_ = new Poissoneur(vehicules_, noeuds, distributeur_, &fin_simulation, &execution_poissoneur_);
-    signaleur_ = new Signaleur(&fin_simulation, &execution_signaleur_);
+    analyst_ = new Analyser(&end_simulation, this);
+    distributor_ = new Distributor(vehicle_threads_, &end_simulation, &distributor_execution_);
+    poissoner_ = new Poissoner(vehicles_, nodes, distributor_, &end_simulation, &poissoner_execution_);
+    signaler_ = new Signaler(&end_simulation, &signaler_execution_);
 }
 
-void Cortex::load_informations()
+void Cortex::load_information()
 {
    physical_threads_ = get_physical_threads();
 }
@@ -39,14 +39,14 @@ void Cortex::reserve_ressources()
     if(physical_threads_)
     {
         // Demarrer un nombre intelligent de threads en fonction de la qte. disponible.
-        for(unsigned int i = 0; i < 1 * COEF_MULT_PHYSIQUE; ++i)
-            ajouter_thread();
+        for(unsigned int i = 0; i < 1 * PHYSICAL_MULT_COEF; ++i)
+            add_thread();
     }
     else
     {
         // Demarrer les threads qui seront utilises par le distributeur
-        for(unsigned int i = 0; i < NB_THREADS_DE_BASE; ++i)
-            ajouter_thread();
+        for(unsigned int i = 0; i < BASE_NB_OF_THREADS; ++i)
+            add_thread();
     }
 }
 
@@ -57,27 +57,27 @@ unsigned int Cortex::get_physical_threads()
 }
 
 // Commande de l'interpreteur
-void Cortex::ajouter_thread()
+void Cortex::add_thread()
 {
-    execution_deplaceurs_.emplace_back(false);
-    VehiculeThread* v = new VehiculeThread(&fin_simulation, &execution_deplaceurs_.back());
-    threads_vehicule_->emplace_back(v);
+    mover_execution_.emplace_back(false);
+    VehicleThread* v = new VehicleThread(&end_simulation, &mover_execution_.back());
+    vehicle_threads_->emplace_back(v);
 }
 
 // Commande de l'interpreteur
-void Cortex::terminer()
+void Cortex::terminate()
 {
     // Sauvegarder statistiques
 
     // Sauvegarder etat simulation?
 
     // termienr threads
-    fin_simulation = true;
+    end_simulation = true;
 
 }
 
 // API -> communique avec cortex, distributeur, poissoneur, signaleur
-void Cortex::interpreter()
+void Cortex::interpret()
 {
     std::string commande;
     while(commande != "exit")

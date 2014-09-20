@@ -12,18 +12,18 @@ protected:
     // Thread d'execution
     std::thread execution_;
 
-    bool est_initialise_;
+    bool is_initialised_;
 
     // Variables de communication avec le Cortex
-    volatile bool* executer_;
-    /*const*/ bool* terminer_;
+    volatile bool* execute_;
+    /*const*/ bool* terminate_;
 
     // Fonction d'initialisation
-    virtual void initialiser();
+    virtual void init();
 
 public:
     Module();
-    bool est_initialise() const;
+    bool is_initialized() const;
 };
 
 #endif // MODULE_H

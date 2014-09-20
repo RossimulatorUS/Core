@@ -15,12 +15,12 @@ Window::~Window()
     delete ui;
 }
 
-QString Window::getTauxBernouilli()
+QString Window::getBernouilliAmount()
 {
     return ui->m_lineEditTauxBernouilli->text();
 }
 
-QString Window::getTauxUniforme()
+QString Window::getUniformAmount()
 {
     return ui->m_lineEditTauxUniforme->text();
 }
@@ -35,7 +35,7 @@ bool Window::isOneWay()
     return ui->m_checkboxOneWay->isChecked();
 }
 
-bool Window::isUniformeChecked()
+bool Window::isUniformChecked()
 {
     return ui->m_radioButtonUniforme->isChecked();
 }

@@ -6,7 +6,7 @@
 #define DV_INFINITY 999999;
 
 
-class Noeud;    //forward declaration
+class Node;    //forward declaration
 
 
 class DVMessage

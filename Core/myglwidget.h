@@ -5,9 +5,9 @@
 #include <QFile>
 #include <vector>
 
-#include "noeud.h"
-#include "route.h"
-#include "vehicule.h"
+#include "node.h"
+#include "road.h"
+#include "vehicle.h"
 #include "simulationtraits.h"
 
 class MyGLWidget : public QGLWidget
@@ -52,22 +52,22 @@ private:
     constexpr static float ClickErrorTollerence = 0.1f;
 
     // pour test
-    Vehicule* vehicule;
+    Vehicle* vehicule;
 
-    std::vector<Noeud> &GetAllNodes();
-    std::vector<Route> GetAllRoads();
-    std::list<Vehicule*> GetAllVehicules();
-    std::vector<Vehicule*> allVehicules_;
+    std::vector<Node> &GetAllNodes();
+    std::vector<Road> GetAllRoads();
+    std::list<Vehicle*> GetAllVehicules();
+    std::vector<Vehicle*> allVehicules_;
 
-    node_id_type ClickPressedNode;
-    node_id_type FindAssociatedNode(Noeud noeud);
+    node_id_type clickPressedNode;
+    node_id_type FindAssociatedNode(Node noeud);
 
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;
     bool isDrawLanePressed_;
     bool isDrawSourcePressed_;
 
-    void AddRoad(Noeud*, Noeud*);
+    void AddRoad(Node*, Node*);
     void AddRoad(node_id_type, node_id_type);
     void DrawSource(float *worldCoords);
     void DrawSource(float x, float y);
@@ -76,12 +76,12 @@ private:
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 
-    Route &FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted);
+    Road &FindAssociatedRoad(Node node1, Node node2, Node &outStartNode, Node &outEndNode, bool &isInverted);
 
     void clearWidget();
     void moveCar();
     void draw();
-    void PrintNodeCoordinates(Noeud depart, Noeud arrivee);
+    void PrintNodeCoordinates(Node start, Node end);
 
     QFile file;
 };

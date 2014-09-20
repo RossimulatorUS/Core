@@ -4,11 +4,11 @@
 #include <iostream>
 
 #include "myglwidget.h"
-#include "noeud.h" // Utile?
-#include "route.h" // Utile?
-#include "vehicule.h" // Utile?
+#include "node.h" // Utile?
+#include "road.h" // Utile?
+#include "vehicle.h" // Utile?
 #include "cortex.h"
-#include "vehiculethread.h" // Utile?
+#include "vehiclethread.h" // Utile?
 #include "glutility.h"
 #include "window.h"
 #include "ui_window.h"
@@ -158,24 +158,24 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
     auto isOneWay = window->isOneWay();
     auto numberOfLane = window->getNumberofLane();
 
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
+    Node node = Node(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
-    if (ClickPressedNode != associatedNode && ClickPressedNode != 66666 && associatedNode != 66666)
+    if (clickPressedNode != associatedNode && clickPressedNode != 66666 && associatedNode != 66666)
     {
-        AddRoad(ClickPressedNode, associatedNode);
+        AddRoad(clickPressedNode, associatedNode);
     }
 }
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
-    Noeud node = Noeud(worldCoords[0], worldCoords[1]);
+    Node node = Node(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
-    ClickPressedNode = associatedNode;
+    clickPressedNode = associatedNode;
 }
 
-MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Noeud noeud)
+MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
 {
     auto allNodes = GetAllNodes();
     for (unsigned int i = 0; i < allNodes.size(); ++i)
@@ -192,20 +192,20 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Noeud noeud)
     return 66666;   //kinda lame
 }
 
-Route& MyGLWidget::FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeudDepart, Noeud &outNoeudArrivee, bool &isInverted)
+Road& MyGLWidget::FindAssociatedRoad(Node noeud1, Node noeud2, Node &outNoeudDepart, Node &outNoeudArrivee, bool &isInverted)
 {
-    Route returnValue;
+    Road returnValue;
     auto Roads = GetAllRoads();
     for (unsigned int i = 0; i < Roads.size(); ++i)
     {
-        Noeud test = Roads.at(i).GetNoeudDepart();
-        Noeud test2 = Roads.at(i).GetNoeudArrivee();
+        Node test = Roads.at(i).getStartNode();
+        Node test2 = Roads.at(i).getEndNode();
 
 
-        if (!Roads[i].IsInSameDirection(test, test2, noeud1, noeud2))
+        if (!Roads[i].isInSameDirection(test, test2, noeud1, noeud2))
         {
             isInverted = true;
-            Noeud noeudTemp = Noeud(noeud2.x(), noeud2.y());
+            Node noeudTemp = Node(noeud2.x(), noeud2.y());
             noeud2 = noeud1;
             noeud1 = noeudTemp;
         }
@@ -230,15 +230,15 @@ Route& MyGLWidget::FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeu
              (test2.x() > ErrorXNeg2 && test2.x() < ErrorXPos2) &&
              (test2.y() > ErrorYNeg2 && test2.y() < ErrorYPos2))
         {
-            returnValue = SimulationData::GetInstance().GetRoute(i);
-            return SimulationData::GetInstance().GetRoute(i);
+            returnValue = SimulationData::getInstance().getRoad(i);
+            return SimulationData::getInstance().getRoad(i);
         }
 
         //dé-inverser les voies pour la prochaine itération
         if(isInverted)
         {
             isInverted = false;
-            Noeud noeudTemp = Noeud(noeud2.x(), noeud2.y());
+            Node noeudTemp = Node(noeud2.x(), noeud2.y());
             noeud2 = noeud1;
             noeud1 = noeudTemp;
         }
@@ -247,7 +247,7 @@ Route& MyGLWidget::FindAssociatedRoad(Noeud noeud1, Noeud noeud2, Noeud &outNoeu
     return returnValue; //si aucune route trouvé faire de quoi de brillant this is not brillant
 }
 
-void MyGLWidget::PrintNodeCoordinates(Noeud depart, Noeud arrivee)
+void MyGLWidget::PrintNodeCoordinates(Node depart, Node arrivee)
 {
     qDebug() << "depart : " << depart.x() << ", " << depart.y() << endl <<
                 "arrivee: " << arrivee.x() << ", " << arrivee.y() << endl;
@@ -262,7 +262,7 @@ void MyGLWidget::DrawNode(float *worldCoords)
 void MyGLWidget::DrawNode(float x, float y)
 {
     //allNodes_.emplace_back(x,y, allNodes_.size());//le vecteur crée lui-même le noeud en le plaçant
-    SimulationData::GetInstance().AddNode(x,y, false);
+    SimulationData::getInstance().addNode(x,y, false);
 }
 
 void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
@@ -273,20 +273,20 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto numberOfLane = window->getNumberofLane();
 
     //allRoads_.push_back(Route(a, b));
-    Route newRoad = Route(a, b, isOneWay, numberOfLane);
-    auto roadId = SimulationData::GetInstance().AddRoute(newRoad);
-    SimulationData::GetInstance().GetNoeud(a).AddNeighbour(b, roadId);
-    SimulationData::GetInstance().GetNoeud(b).AddNeighbour(a, roadId);
+    Road newRoad = Road(a, b, isOneWay, numberOfLane);
+    auto roadId = SimulationData::getInstance().addRoad(newRoad);
+    SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
+    SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
 
     qDebug()<<"WTF";
-    auto& r0 = SimulationData::GetInstance().GetRoute(roadId);
+    auto& r0 = SimulationData::getInstance().getRoad(roadId);
 
     for(int i = 1; i <= numberOfLane; ++i)
     {
-        r0.AddLane(r0.GetNoeudDepart(), r0.GetNoeudArrivee(), i);
+        r0.addLane(r0.getStartNode(), r0.getEndNode(), i);
 
         if (!isOneWay)
-            r0.AddLane(r0.GetNoeudArrivee(), r0.GetNoeudDepart(), i);
+            r0.addLane(r0.getEndNode(), r0.getStartNode(), i);
     }
 }
 
@@ -299,14 +299,14 @@ void MyGLWidget::DrawSource(float x, float y)
 {
     auto window = static_cast<Window*>(parent());
 
-    auto distribution = Noeud::DistributionInfo();
+    auto distribution = Node::DistributionInfo();
 
     distribution.isBernouilli = window->isBernouilliChecked();
-    distribution.isUniforme = window->isUniformeChecked();
-    distribution.TauxBernouilli = window->getTauxBernouilli();
-    distribution.TauxUniforme = window->getTauxUniforme();
+    distribution.isUniform = window->isUniformChecked();
+    distribution.bernouilliAmount = window->getBernouilliAmount();
+    distribution.uniformAmount = window->getUniformAmount();
 
-    SimulationData::GetInstance().AddNode(x,y, true, distribution);
+    SimulationData::getInstance().addNode(x,y, true, distribution);
 }
 
 void MyGLWidget::ClearWidget()
@@ -430,24 +430,24 @@ void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouto
     auto& allNodes = GetAllNodes(); //ben oui, auto&, c'est pas un typo
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        itt->StartDV();
+        itt->startDV();
     }
     while(dvEnCours)
     {
         dvEnCours = false;
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            dvEnCours |= itt->ProcessDVMessages();
+            dvEnCours |= itt->processDVMessages();
         }
     }
 
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        itt->PrintDVResults();
+        itt->printDVResults();
     }
 
     // Creer le Cortex
-    Cortex* cortex = new Cortex(allNodes, SimulationData::GetInstance().GetVehiculesPointer());
+    Cortex* cortex = new Cortex(allNodes, SimulationData::getInstance().getVehiclesPointer());
 
     //auto-rafraichissement de OpenGL
     const int FPS = 15; // Devrait pouvoir etre modifier depuis le Cortex
@@ -465,7 +465,7 @@ void MyGLWidget::moveCar()
 
 void MyGLWidget::clearWidget()
 {
-    SimulationData::GetInstance().ResetAllData();
+    SimulationData::getInstance().resetAllData();
 }
 
 void MyGLWidget::draw()
@@ -480,13 +480,13 @@ void MyGLWidget::draw()
         //qglColor(Qt::red);
         glColor4f(1,0,0,0.5f);
         glBegin(GL_QUADS);
-            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX1(), allRoads[i].getFormuleDroite().GetPointControleY1());
-            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX2(), allRoads[i].getFormuleDroite().GetPointControleY2());
-            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX4(), allRoads[i].getFormuleDroite().GetPointControleY4());
-            glVertex2f(allRoads[i].getFormuleDroite().GetPointControleX3(), allRoads[i].getFormuleDroite().GetPointControleY3());
+            glVertex2f(allRoads[i].getLineFormula().getControlPointX1(), allRoads[i].getLineFormula().getControlPointY1());
+            glVertex2f(allRoads[i].getLineFormula().getControlPointX2(), allRoads[i].getLineFormula().getControlPointY2());
+            glVertex2f(allRoads[i].getLineFormula().getControlPointX4(), allRoads[i].getLineFormula().getControlPointY4());
+            glVertex2f(allRoads[i].getLineFormula().getControlPointX3(), allRoads[i].getLineFormula().getControlPointY3());
         glEnd();
 
-        std::vector<Voie> allLanes = allRoads.at(i).GetLanes();
+        std::vector<Lane> allLanes = allRoads.at(i).getLanes();
         for (unsigned int i = 0; i < allLanes.size(); ++i)
         {
             glLoadIdentity();
@@ -495,8 +495,8 @@ void MyGLWidget::draw()
             glColor4f(0.75f,0,0, 0.75f);
             //qglColor(Qt::blue);
             glBegin(GL_LINES);
-                glVertex2f(allLanes[i].GetNoeudDepart().x(), allLanes[i].GetNoeudDepart().y());
-                glVertex2f(allLanes[i].GetNoeudArrivee().x(), allLanes[i].GetNoeudArrivee().y());
+                glVertex2f(allLanes[i].getStartNode().x(), allLanes[i].getStartNode().y());
+                glVertex2f(allLanes[i].getEndNode().x(), allLanes[i].getEndNode().y());
             glEnd();
         }
     }
@@ -508,7 +508,7 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0, 0, -9);
-        if(allNodes[i].est_source())
+        if(allNodes[i].is_source())
             qglColor(Qt::red);
         else
             glColor3f(0.9f,0.3f,0.1f);
@@ -527,7 +527,7 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0,0,-8);
-        if((*itt)->IsOnLastStretch())
+        if((*itt)->isOnLastStretch())
             qglColor(Qt::yellow );
         else
             qglColor(Qt::green);
@@ -541,17 +541,17 @@ void MyGLWidget::draw()
     }
 }
 
-std::vector<Noeud>& MyGLWidget::GetAllNodes()
+std::vector<Node>& MyGLWidget::GetAllNodes()
 {
-    return SimulationData::GetInstance().GetNoeuds();
+    return SimulationData::getInstance().getNodes();
 }
 
-std::vector<Route> MyGLWidget::GetAllRoads()
+std::vector<Road> MyGLWidget::GetAllRoads()
 {
-    return SimulationData::GetInstance().GetRoutes();
+    return SimulationData::getInstance().getRoads();
 }
 
-std::list<Vehicule *> MyGLWidget::GetAllVehicules()
+std::list<Vehicle *> MyGLWidget::GetAllVehicules()
 {
-    return SimulationData::GetInstance().GetVehicules();
+    return SimulationData::getInstance().getVehicles();
 }

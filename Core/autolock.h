@@ -1,18 +1,20 @@
-#ifndef AUTOVERROU_H
-#define AUTOVERROU_H
+#ifndef AUTOLOCK_H
+#define AUTOLOCK_H
 //pris de http://h-deb.clg.qc.ca/Sujets/Client-Serveur/Mutex-Autoverrou.html
+
 #include <mutex>
 #include <string>
-class Autoverrou
+
+class Autolock
 {
    std::mutex &mutex_;
 public:
-   Autoverrou(std::mutex &m) throw()
+   Autolock(std::mutex &m) throw()
       : mutex_(m)
    {
        mutex_.lock();
    }
-   ~Autoverrou() throw()
+   ~Autolock() throw()
       { mutex_.unlock(); }
 };
 

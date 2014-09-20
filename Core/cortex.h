@@ -6,33 +6,33 @@
 #include <vector>
 #include <list>
 
-#include "analyseur.h"
-#include "distributeur.h"
-#include "poissoneur.h"
-#include "signaleur.h"
-#include "vehiculethread.h"
+#include "analyser.h"
+#include "distributor.h"
+#include "poissoner.h"
+#include "signaler.h"
+#include "vehiclethread.h"
 
-class Analyseur;
+class Analyser;
 
 class Cortex
 {
-friend class Analyseur;
+friend class Analyser;
 
 public:
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
-    enum {NB_THREADS_DE_BASE = 2, COEF_MULT_PHYSIQUE = 1};
-    enum mode_execution {MANUEL = 0, SEMI = 1, AUTO = 2};
+    enum {BASE_NB_OF_THREADS = 2, PHYSICAL_MULT_COEF = 1};
+    enum execution_mode {MANUAL = 0, SEMI = 1, AUTO = 2};
 
 private:
 
     // Mettre un module en attente
-    volatile bool execution_distributeur_;
-    volatile bool execution_poissoneur_;
-    std::list<volatile bool> execution_deplaceurs_;
-    volatile bool execution_signaleur_;
+    volatile bool distributor_execution_;
+    volatile bool poissoner_execution_;
+    std::list<volatile bool> mover_execution_;
+    volatile bool signaler_execution_;
 
     // Fonctions d'initialisation
-    void load_informations();
+    void load_information();
     void reserve_ressources();
     unsigned int get_physical_threads();
 
@@ -40,30 +40,30 @@ private:
     unsigned int physical_threads_;
 
     // Commandes
-    void ajouter_thread();
-    void terminer();
+    void add_thread();
+    void terminate();
 
     // Threads qui commencent a travailler sur leurs donnees a la construction
-    std::vector<VehiculeThread*>* threads_vehicule_;
+    std::vector<VehicleThread*>* vehicle_threads_;
 
     // Modules
-    Analyseur* analyste_;
-    Distributeur* distributeur_;
-    Poissoneur* poissoneur_;
-    Signaleur* signaleur_;
+    Analyser* analyst_;
+    Distributor* distributor_;
+    Poissoner* poissoner_;
+    Signaler* signaler_;
 
     // Vehicules se deplacant dans le reseau routier
-    std::list<Vehicule*>* vehicules_;
+    std::list<Vehicle*>* vehicles_;
 
     // Delais simulation
-    bool fin_simulation;
+    bool end_simulation;
 
 public:
-    Cortex(std::vector<Noeud>, std::list<Vehicule *> *);
+    Cortex(std::vector<Node>, std::list<Vehicle *> *);
 
     // API -> Commandes interpretees
-    void interpreter();
-    void executer();
+    void interpret();
+    void execute();
     //unsigned int qte_threads_vehicule();
 
 };

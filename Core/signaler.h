@@ -4,13 +4,13 @@
 #include <thread>
 #include "module.h"
 
-class Signaleur : public Module
+class Signaler : public Module
 {
     // Fonction d'initialisation
-    void initialiser();
+    void init();
 
 public:
-    Signaleur(bool *terminer, volatile bool *executer);
+    Signaler(bool *terminate, volatile bool *execute);
 };
 
 #endif // SIGNALEUR_H

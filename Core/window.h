@@ -16,11 +16,11 @@ public:
     explicit Window(QWidget *parent = 0);
     ~Window();
 
-    QString getTauxBernouilli();
-    QString getTauxUniforme();
+    QString getBernouilliAmount();
+    QString getUniformAmount();
 
     bool isBernouilliChecked();
-    bool isUniformeChecked();
+    bool isUniformChecked();
     bool isIntersectionChecked();
     bool isSourceChecked();
 

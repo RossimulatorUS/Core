@@ -1,10 +1,11 @@
 #ifndef SIMULATIONDATA_H
 #define SIMULATIONDATA_H
+
 #include <vector>
 #include "simulationtraits.h"
-#include "noeud.h"
-#include "route.h"
-#include "vehicule.h"
+#include "node.h"
+#include "road.h"
+#include "vehicle.h"
 
 class SimulationData
 {
@@ -17,25 +18,25 @@ private:
     void operator=(SimulationData const&); //DON'T IMPLEMENT
 
     SimulationData();
-    std::vector<Noeud> allNodes_;
-    std::vector<Route> allRoads_;
-    std::list<Vehicule*> allVehicules_;
+    std::vector<Node> allNodes_;
+    std::vector<Road> allRoads_;
+    std::list<Vehicle*> allVehicules_;
 public:
-    static SimulationData &GetInstance();
-    std::vector<Noeud> &GetNoeuds();
-    std::vector<Route> GetRoutes();
-    std::list<Vehicule*> GetVehicules();
-    std::list<Vehicule *> *GetVehiculesPointer();
-    Noeud& GetNoeud(simulation_traits::node_id_type);
-    Route& GetRoute(simulation_traits::road_id_type);
+    static SimulationData &getInstance();
+    std::vector<Node> &getNodes();
+    std::vector<Road> getRoads();
+    std::list<Vehicle*> getVehicles();
+    std::list<Vehicle *> *getVehiclesPointer();
+    Node& getNode(simulation_traits::node_id_type);
+    Road& getRoad(simulation_traits::road_id_type);
 
-    node_id_type AddNode(GLfloat, GLfloat, bool isSource, Noeud::DistributionInfo distributionInfo);
-    node_id_type AddNode(GLfloat, GLfloat, bool isSource);
-    road_id_type AddRoute(Route);
+    node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
+    node_id_type addNode(GLfloat, GLfloat, bool isSource);
+    road_id_type addRoad(Road);
 
-    void RemoveVehicule(Vehicule*);
-    void AddVehicule(Vehicule*);
-    void ResetAllData();
+    void removeVehicle(Vehicle*);
+    void addVehicle(Vehicle*);
+    void resetAllData();
 
 
 };
