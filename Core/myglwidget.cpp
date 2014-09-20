@@ -480,10 +480,10 @@ void MyGLWidget::draw()
         //qglColor(Qt::red);
         glColor4f(1,0,0,0.5f);
         glBegin(GL_QUADS);
-            glVertex2f(allRoads[i].getLineFormula().getControlPointX1(), allRoads[i].getLineFormula().getControlPointY1());
-            glVertex2f(allRoads[i].getLineFormula().getControlPointX2(), allRoads[i].getLineFormula().getControlPointY2());
-            glVertex2f(allRoads[i].getLineFormula().getControlPointX4(), allRoads[i].getLineFormula().getControlPointY4());
-            glVertex2f(allRoads[i].getLineFormula().getControlPointX3(), allRoads[i].getLineFormula().getControlPointY3());
+            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X1), allRoads[i].getLineFormula().getControlPoint(Y1));
+            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X2), allRoads[i].getLineFormula().getControlPoint(Y2));
+            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X4), allRoads[i].getLineFormula().getControlPoint(Y4));
+            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X3), allRoads[i].getLineFormula().getControlPoint(Y3));
         glEnd();
 
         std::vector<Lane> allLanes = allRoads.at(i).getLanes();

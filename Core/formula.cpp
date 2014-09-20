@@ -113,196 +113,146 @@ void Formula::determineDirection(Node start, Node destination)
         variationY_ *= -1;
 }
 
-///pointControleX1 et autre correspond au coordonnee de la zone pour la route
-/// LaneCoordinateX1 et autre correspond au coordonnee de la zone pour la voie
+///pointControle X1 et autre correspond au coordonnee de la zone pour la route
+/// LaneCoordinate X1 et autre correspond au coordonnee de la zone pour la voie
 void Formula::determinePerpendicular(Node node1, Node node2, int laneNumber)
 {
     if (a > 0)
     {
-        controlPointX1_ = node1.x()-(10*(variationY_*0.01));
-        controlPointY1_ = node1.y()+(10*(variationX_*0.01));
+        controlPoints[X1] = node1.x()-(10*(variationY_*0.01));
+        controlPoints[Y1] = node1.y()+(10*(variationX_*0.01));
 
-        controlPointX2_ = node1.x()+(10*(variationY_*0.01));
-        controlPointY2_ = node1.y()-(10*(variationX_*0.01));
+        controlPoints[X2] = node1.x()+(10*(variationY_*0.01));
+        controlPoints[Y2] = node1.y()-(10*(variationX_*0.01));
 
-        controlPointX3_ = node2.x()-(10*(variationY_*0.01));
-        controlPointY3_ = node2.y()+(10*(variationX_*0.01));
+        controlPoints[X3] = node2.x()-(10*(variationY_*0.01));
+        controlPoints[Y3] = node2.y()+(10*(variationX_*0.01));
 
-        controlPointX4_ = node2.x()+(10*(variationY_*0.01));
-        controlPointY4_ = node2.y()-(10*(variationX_*0.01));
+        controlPoints[X4] = node2.x()+(10*(variationY_*0.01));
+        controlPoints[Y4] = node2.y()-(10*(variationX_*0.01));
 
         if (isLeftToRight(node1, node2))
         {
-            laneCoordinateX1_ = node1.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
-            laneCoordinateX2_ = node2.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            laneCoordinates[X1] = node1.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            laneCoordinates[X2] = node2.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
 
-            laneCoordinateY1_ = node1.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
-            laneCoordinateY2_ = node2.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            laneCoordinates[Y1] = node1.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            laneCoordinates[Y2] = node2.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
         }
         else
         {
-            laneCoordinateX1_ = node1.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
-            laneCoordinateX2_ = node2.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            laneCoordinates[X1] = node1.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            laneCoordinates[X2] = node2.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
 
-            laneCoordinateY1_ = node1.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
-            laneCoordinateY2_ = node2.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            laneCoordinates[Y1] = node1.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            laneCoordinates[Y2] = node2.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
         }
     }
     else if (a < 0)
     {
-        controlPointX1_ = node1.x()-(10*(variationY_*0.01));
-        controlPointY1_ = node1.y()-(10*(variationX_*0.01));
+        controlPoints[X1] = node1.x()-(10*(variationY_*0.01));
+        controlPoints[Y1] = node1.y()-(10*(variationX_*0.01));
 
-        controlPointX2_ = node1.x()+(10*(variationY_*0.01));
-        controlPointY2_ = node1.y()+(10*(variationX_*0.01));
+        controlPoints[X2] = node1.x()+(10*(variationY_*0.01));
+        controlPoints[Y2] = node1.y()+(10*(variationX_*0.01));
 
-        controlPointX3_ = node2.x()-(10*(variationY_*0.01));
-        controlPointY3_ = node2.y()-(10*(variationX_*0.01));
+        controlPoints[X3] = node2.x()-(10*(variationY_*0.01));
+        controlPoints[Y3] = node2.y()-(10*(variationX_*0.01));
 
-        controlPointX4_ = node2.x()+(10*(variationY_*0.01));
-        controlPointY4_ = node2.y()+(10*(variationX_*0.01));
+        controlPoints[X4] = node2.x()+(10*(variationY_*0.01));
+        controlPoints[Y4] = node2.y()+(10*(variationX_*0.01));
 
         if (isLeftToRight(node1, node2))
         {
-            laneCoordinateX1_ = node1.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
-            laneCoordinateX2_ = node2.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            laneCoordinates[X1] = node1.x()-(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            laneCoordinates[X2] = node2.x()-(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
 
-            laneCoordinateY1_ = node1.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
-            laneCoordinateY2_ = node2.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            laneCoordinates[Y1] = node1.y()-(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            laneCoordinates[Y2] = node2.y()-(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
         }
         else
         {
-            laneCoordinateX1_ = node1.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
-            laneCoordinateX2_ = node2.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
+            laneCoordinates[X1] = node1.x()+(5*((laneNumber*variationY_)*0.01)) - (10*(variationX_*0.01));
+            laneCoordinates[X2] = node2.x()+(5*((laneNumber*variationY_)*0.01)) + (10*(variationX_*0.01));
 
-            laneCoordinateY1_ = node1.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
-            laneCoordinateY2_ = node2.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
+            laneCoordinates[Y1] = node1.y()+(5*((laneNumber*variationX_)*0.01)) + (10*(variationY_*0.01));
+            laneCoordinates[Y2] = node2.y()+(5*((laneNumber*variationX_)*0.01)) - (10*(variationY_*0.01));
         }
     }
     //horizontal
     else if(isLeftToRight(node1, node2) || isLeftToRight(node2, node1))
     {
-        controlPointX1_ = node1.x();
-        controlPointY1_ = node1.y()-10*0.01;
+        controlPoints[X1] = node1.x();
+        controlPoints[Y1] = node1.y()-10*0.01;
 
-        controlPointX2_ = node1.x();
-        controlPointY2_ = node1.y()+10*0.01;
+        controlPoints[X2] = node1.x();
+        controlPoints[Y2] = node1.y()+10*0.01;
 
-        controlPointX3_ = node2.x();
-        controlPointY3_ = node2.y()-10*0.01;
+        controlPoints[X3] = node2.x();
+        controlPoints[Y3] = node2.y()-10*0.01;
 
-        controlPointX4_ = node2.x();
-        controlPointY4_ = node2.y()+10*0.01;
+        controlPoints[X4] = node2.x();
+        controlPoints[Y4] = node2.y()+10*0.01;
 
         if(node1.x() < node2.x())
         {
-            laneCoordinateY1_ = node1.y()-5*(laneNumber*0.01);
-            laneCoordinateY2_ = node1.y()-5*(laneNumber*0.01);
+            laneCoordinates[Y1] = node1.y()-5*(laneNumber*0.01);
+            laneCoordinates[Y2] = node1.y()-5*(laneNumber*0.01);
 
-            laneCoordinateX1_ = node1.x() + 0.1;
-            laneCoordinateX2_ = node2.x() - 0.1;
+            laneCoordinates[X1] = node1.x() + 0.1;
+            laneCoordinates[X2] = node2.x() - 0.1;
         }
         else
         {
-            laneCoordinateY1_ = node1.y()+5*(laneNumber*0.01);
-            laneCoordinateY2_ = node1.y()+5*(laneNumber*0.01);
+            laneCoordinates[Y1] = node1.y()+5*(laneNumber*0.01);
+            laneCoordinates[Y2] = node1.y()+5*(laneNumber*0.01);
 
-            laneCoordinateX1_ = node1.x() - 0.1;
-            laneCoordinateX2_ = node2.x() + 0.1;
+            laneCoordinates[X1] = node1.x() - 0.1;
+            laneCoordinates[X2] = node2.x() + 0.1;
         }
     }
     //vertical
     else
     {
-        controlPointX1_ = node1.x()-10*0.01;
-        controlPointY1_ = node1.y();
+        controlPoints[X1] = node1.x()-10*0.01;
+        controlPoints[Y1] = node1.y();
 
-        controlPointX2_ = node1.x()+10*0.01;
-        controlPointY2_ = node1.y();
+        controlPoints[X2] = node1.x()+10*0.01;
+        controlPoints[Y2] = node1.y();
 
-        controlPointX3_ = node2.x()-10*0.01;
-        controlPointY3_ = node2.y();
+        controlPoints[X3] = node2.x()-10*0.01;
+        controlPoints[Y3] = node2.y();
 
-        controlPointX4_ = node2.x()+10*0.01;
-        controlPointY4_ = node2.y();
+        controlPoints[X4] = node2.x()+10*0.01;
+        controlPoints[Y4] = node2.y();
 
         if(node1.y() < node2.y())
         {
-            laneCoordinateX1_ = node1.x()+5*(laneNumber*0.01);
-            laneCoordinateX2_ = node1.x()+5*(laneNumber*0.01);
+            laneCoordinates[X1] = node1.x()+5*(laneNumber*0.01);
+            laneCoordinates[X2] = node1.x()+5*(laneNumber*0.01);
 
-            laneCoordinateY1_ = node1.y() + 0.1;
-            laneCoordinateY2_ = node2.y() - 0.1;
+            laneCoordinates[Y1] = node1.y() + 0.1;
+            laneCoordinates[Y2] = node2.y() - 0.1;
         }
         else
         {
-            laneCoordinateX1_ = node1.x()-5*(laneNumber*0.01);
-            laneCoordinateX2_ = node1.x()-5*(laneNumber*0.01);
+            laneCoordinates[X1] = node1.x()-5*(laneNumber*0.01);
+            laneCoordinates[X2] = node1.x()-5*(laneNumber*0.01);
 
-            laneCoordinateY1_ = node1.y() - 0.1;
-            laneCoordinateY2_ = node2.y() + 0.1;
+            laneCoordinates[Y1] = node1.y() - 0.1;
+            laneCoordinates[Y2] = node2.y() + 0.1;
         }
     }
 }
 
-float Formula::getControlPointX1()
+float Formula::getControlPoint(int which)
 {
-    return controlPointX1_;
+    return controlPoints[which];
 }
 
-float Formula::getControlPointY1()
+float Formula::getLaneCoordinate(int which)
 {
-    return controlPointY1_;
-}
-
-float Formula::getControlPointX2()
-{
-    return controlPointX2_;
-}
-
-float Formula::getControlPointY2()
-{
-    return controlPointY2_;
-}
-
-float Formula::getControlPointX3()
-{
-    return controlPointX3_;
-}
-
-float Formula::getControlPointY3()
-{
-    return controlPointY3_;
-}
-
-float Formula::getControlPointX4()
-{
-    return controlPointX4_;
-}
-
-float Formula::getControlPointY4()
-{
-    return controlPointY4_;
-}
-
-float Formula::getLaneCoordinateX1()
-{
-    return laneCoordinateX1_;
-}
-
-float Formula::getLaneCoordinateX2()
-{
-    return laneCoordinateX2_;
-}
-
-float Formula::getLaneCoordinateY1()
-{
-    return laneCoordinateY1_;
-}
-
-float Formula::getLaneCoordinateY2()
-{
-    return laneCoordinateY2_;
+    return laneCoordinates[which];
 }
 
 float Formula::getLength()

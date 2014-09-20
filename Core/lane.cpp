@@ -6,8 +6,8 @@ Lane::Lane(Node start, Node end, road_id_type parent, int laneNumber)
 {
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
 
-    start_ = Node( lineFormula.getLaneCoordinateX1(),  lineFormula.getLaneCoordinateY1());
-    end_ = Node( lineFormula.getLaneCoordinateX2(),  lineFormula.getLaneCoordinateY2());
+    start_ = Node( lineFormula.getLaneCoordinate(X1),  lineFormula.getLaneCoordinate(Y1));
+    end_ = Node( lineFormula.getLaneCoordinate(X2),  lineFormula.getLaneCoordinate(Y2));
 }
 
 Lane::Lane()

@@ -4,6 +4,17 @@
 #include <QGLWidget>
 #include "node.h"
 
+enum{
+    X1=0,
+    Y1=1,
+    X2=2,
+    Y2=3,
+    X3=4,
+    Y3=5,
+    X4=6,
+    Y4=7
+} pointEnum;
+
 class Formula
 {
     //Formule de la forme y = ax+b
@@ -14,20 +25,9 @@ class Formula
     float directionX_;
     float directionY_;
 
-    float controlPointX1_;
-    float controlPointY1_;
-    float controlPointX2_;
-    float controlPointY2_;
-    float controlPointX3_;
-    float controlPointY3_;
-    float controlPointX4_;
-    float controlPointY4_;
+    float controlPoints[8];
 
-    float laneCoordinateX1_;
-    float laneCoordinateX2_;
-
-    float laneCoordinateY1_;
-    float laneCoordinateY2_;
+    float laneCoordinates[4];
 
     float calculatePythagorus(float a, float b);
     float calculateDistance(Node noeudA, Node noeudB);
@@ -37,20 +37,9 @@ class Formula
 
 public:
 
-    float getControlPointX1();
-    float getControlPointY1();
-    float getControlPointX2();
-    float getControlPointY2();
-    float getControlPointX3();
-    float getControlPointY3();
-    float getControlPointX4();
-    float getControlPointY4();
+    float getControlPoint(int which);
 
-    float getLaneCoordinateX1();
-    float getLaneCoordinateX2();
-
-    float getLaneCoordinateY1();
-    float getLaneCoordinateY2();
+    float getLaneCoordinate(int which);
 
     Formula();
     Formula(Node nodeA, Node nodeB, int laneNumber);
