@@ -12,6 +12,7 @@
 #include "execution_history.h"
 #include "simulationtraits.h"
 
+class Intersection;
 class Vehicle;
 class Road;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
 
@@ -54,15 +55,15 @@ private:
     bool receiveDVMessage(DVMessage);
     void sendDVMessageToNeighbours();
 
-    int currentWaitingVehicleIndex;
-
     // Utilises pour la generation des voitures
 
     std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
+    Intersection* intersectionType;
 
 public:
     Node();
+    ~Node(){}
 
     //Noeud(bool est_source);
     Node(GLfloat x, GLfloat y);
@@ -91,7 +92,7 @@ public:
     std::vector<Vehicle*> getWaitingVehicles(road_id_type);
 
     void addToWaitingVehicles(Vehicle*);
-    void processWaitingVehicles();
+    virtual void processWaitingVehicles();
 };
 
 #endif // POINT_H

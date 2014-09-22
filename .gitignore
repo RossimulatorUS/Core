@@ -11,3 +11,8 @@ build-MyOpenGL-Qt_5_3_for_Windows_Runtime_64bit-Debug/Makefile
 Core/MyOpenGL.pro
 Core/MyOpenGL.pro.user
 Core/MyOpenGL.pro.user.3.2-pre1
+build-MyOpenGL-Desktop_Qt_5_3_MinGW_32bit-Debug/Vehicule data.txt
+build-MyOpenGL-Desktop_Qt_5_3_MinGW_32bit-Release/Makefile
+*.txt
+Core/MyOpenGL.pro.user
+Core/MyOpenGL.pro

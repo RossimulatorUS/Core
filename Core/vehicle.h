@@ -48,6 +48,9 @@ public:
     Road getCurrentRoad();
     Lane getCurrentLane();
 
+    road_id_type getCurrentRoadId();
+    road_id_type getNextRoadID();
+
     bool process();
     void intersectionGo();
     bool isOnLastStretch();

@@ -2,7 +2,7 @@
 #define GTE_H
 
 #include <chrono>
-#include "boost/circular_buffer.hpp"
+//#include "boost/circular_buffer.hpp"
 
 // Gestionnaire de Temps d'Execution
 class Execution_history
@@ -12,8 +12,8 @@ public:
 
 private:
     // Moyenne mobile -- boost::circular_buffer
-    boost::circular_buffer<time> last_execution_time_;
-    boost::circular_buffer<time>::size_type buffer_size_;
+    //boost::circular_buffer<time> last_execution_time_;
+    //boost::circular_buffer<time>::size_type buffer_size_;
     time average_;
 
 public:

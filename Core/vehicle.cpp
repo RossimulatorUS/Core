@@ -61,6 +61,16 @@ Road Vehicle::getCurrentRoad()
     return SimulationData::getInstance().getRoad(currentRoad_);
 }
 
+Road::road_id_type Vehicle::getCurrentRoadId()
+{
+    return currentRoad_;
+}
+
+Road::road_id_type Vehicle::getNextRoadID()
+{
+    return getNextStep().GetId();
+}
+
 Lane Vehicle::getCurrentLane()
 {
     return currentLane_;
