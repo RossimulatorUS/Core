@@ -36,11 +36,11 @@ Node::Node(GLfloat x, GLfloat y)
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      currentWaitingVehicleIndex(0)
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_=Execution_history::time(0);
-    intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
@@ -51,12 +51,12 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      currentWaitingVehicleIndex(0)
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
-    intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
@@ -67,12 +67,12 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      currentWaitingVehicleIndex(0)
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
-    intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 
@@ -256,5 +256,29 @@ void Node::addToWaitingVehicles(Vehicle * v)
 //renvoie le véhicule auquel donner le go, ou NULL si aucun véhicule n'attend
 void Node::processWaitingVehicles()
 {
-    intersectionType->processWaitingVehicles();
+    Autolock av(mtx);
+    auto itt = waitingVehicles_.begin();
+
+    //amener l'itérateur là où on est rendus
+    for(int i = 0; i < currentWaitingVehicleIndex ; ++i)
+        ++itt;
+
+    //trouver prochaine queue non-vide
+    for(unsigned int i = 0; i < waitingVehicles_.size() ; ++i)
+    {
+        if(++currentWaitingVehicleIndex > waitingVehicles_.size())
+        {
+            currentWaitingVehicleIndex = 0;
+            itt = waitingVehicles_.begin();
+        }
+
+        if(itt->second.empty())
+            continue;
+
+        for(auto ittV = itt->second.begin(); ittV != itt->second.end() ; ++ittV)
+        {
+            (*ittV)->intersectionGo();
+        }
+        itt->second.clear();/**/
+    }
 }
