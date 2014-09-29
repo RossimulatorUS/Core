@@ -35,12 +35,13 @@ Node::Node(GLfloat x, GLfloat y)
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
+      currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0)),
-      currentWaitingVehicleIndex(0)
+      generator_((unsigned int)time(0))
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_=Execution_history::time(0);
+    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
@@ -50,13 +51,14 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
+      currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0)),
-      currentWaitingVehicleIndex(0)
+      generator_((unsigned int)time(0))
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
@@ -66,13 +68,14 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
       waitingVehicles_(std::map<road_id_type, std::vector<Vehicle*>>()),
+      currentWaitingVehicleIndex(0),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
-      generator_((unsigned int)time(0)),
-      currentWaitingVehicleIndex(0)
+      generator_((unsigned int)time(0))
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 
@@ -275,10 +278,15 @@ void Node::processWaitingVehicles()
         if(itt->second.empty())
             continue;
 
-        for(auto ittV = itt->second.begin(); ittV != itt->second.end() ; ++ittV)
+        for(auto ittV = itt->second.begin() ; ittV != itt->second.end() ; ++ittV)
         {
             (*ittV)->intersectionGo();
         }
-        itt->second.clear();/**/
+        itt->second.clear();
+        //return v;
     }
+
+    //return std::queue<Vehicule*>();
+
+    //intersectionType->processWaitingVehicles();
 }

@@ -1,21 +1,23 @@
 #ifndef STOPSIGN_H
 #define STOPSIGN_H
 
-//#include <map>
-//#include <vector>
+#include <map>
+#include <vector>
 #include "simulationtraits.h"
-//#include "vehicle.h"
-#include "node.h"
+#include "vehicle.h"
+#include "intersection.h"
 
-class StopSign: public Node
+class StopSign: public Intersection
 {
-    //using road_id_type = typename simulation_traits::road_id_type;
+    using road_id_type = typename simulation_traits::road_id_type;
+    int currentWaitingVehicleIndex;
+    std::map<road_id_type, std::vector<Vehicle*>>* waitingVehicles_;
+
+    std::mutex* mtx;
+
 public:
     StopSign(){}
-
-    StopSign(GLfloat x, GLfloat y);
-    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource);
-    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
+    StopSign(std::map<road_id_type, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_);
     void processWaitingVehicles();
 };
 

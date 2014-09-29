@@ -18,18 +18,11 @@ bool Road::isReadyToCreate()
     return isReadyToCreate_;
 }
 
-//comparer avec des coordonnées
+//comparer avec des coordonnees
 bool Road::isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node endClick)
 {
     return lineFormula.isInSameDirection(startRoad, endRoad, startClick, endClick);
 }
-
-/*bool Road::IsInSameDirection(Node departRoad, Node arriveeRoad)
-{
-    if (formuleDroite.IsInSameDirection(departRoad, arriveeRoad, getNodeDepart(), getNodeArrivee()))
-        return true;
-    return false;
-}*/
 
 bool Road::isLeftToRight(Node Node1, Node Node2)
 {
@@ -41,7 +34,7 @@ bool Road::isLeftToRight()
     return isLeftToRight_;
 }
 
-Lane Road::findAssociatedLane(Node start, Node end)
+QSharedPointer<Lane> Road::findAssociatedLane(Node start, Node end)
 {
     QTime time = QTime::currentTime();
     srand((uint)time.msec());
@@ -50,7 +43,7 @@ Lane Road::findAssociatedLane(Node start, Node end)
     {
         auto randLaneNumber = (rand() % (lanes_.size()) + 0);
 
-        if (isInSameDirection(lanes_[randLaneNumber].getStartNode(), lanes_[randLaneNumber].getEndNode(), start, end))
+        if (isInSameDirection(lanes_[randLaneNumber]->getStartNode(), lanes_[randLaneNumber]->getEndNode(), start, end))
         {
             return lanes_[randLaneNumber];
         }
@@ -64,11 +57,11 @@ Lane Road::findAssociatedLane(Node start, Node end)
             return lanes_[i];
         }
     }*/
-    return Lane();
+    return QSharedPointer<Lane>();
 }
 
 Road::Road(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber)
-    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane>())
+    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<QSharedPointer<Lane>>())
 {
     isOneWay_ = isOneWay;
     isLeftToRight_ = isLeftToRight(getStartNode(), getEndNode());
@@ -91,7 +84,8 @@ Road::road_cost_type Road::cost()
 
 void Road::addLane(Node node1, Node node2, int laneNumber)
 {
-    lanes_.push_back(Lane(node1, node2, getRoadID(), laneNumber));
+    QSharedPointer<Lane> lane = QSharedPointer<Lane>(new Lane(node1, node2, getRoadID(), laneNumber));
+    lanes_.push_back(lane);
 }
 
 Road::road_id_type Road::getRoadID()
@@ -99,7 +93,7 @@ Road::road_id_type Road::getRoadID()
     return SimulationData::getInstance().getNode(startID_).getNextRoad(endID_);
 }
 
-std::vector<Lane> Road::getLanes()
+std::vector<QSharedPointer<Lane>> Road::getLanes()
 {
     return lanes_;
 }

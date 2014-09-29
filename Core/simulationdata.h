@@ -6,6 +6,7 @@
 #include "node.h"
 #include "road.h"
 #include "vehicle.h"
+#include "lane.h"
 
 class SimulationData
 {
@@ -20,6 +21,7 @@ private:
     SimulationData();
     std::vector<Node> allNodes_;
     std::vector<Road> allRoads_;
+    std::vector<Lane> allLanes_;
     std::list<Vehicle*> allVehicules_;
 public:
     static SimulationData &getInstance();
@@ -33,12 +35,11 @@ public:
     node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
     node_id_type addNode(GLfloat, GLfloat, bool isSource);
     road_id_type addRoad(Road);
+    void addLane(Lane);
 
     void removeVehicle(Vehicle*);
     void addVehicle(Vehicle*);
     void resetAllData();
-
-
 };
 
 #endif // SIMULATIONDATA_H

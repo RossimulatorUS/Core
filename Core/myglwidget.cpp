@@ -473,6 +473,7 @@ void MyGLWidget::draw()
     QTextStream out(&file);
     //draw roads
     auto allRoads = GetAllRoads();
+    out << "----------------------- DRAWING ROAD & LANES ----------------------------------" << "\n";
     for (unsigned int i = 0; i < allRoads.size(); ++i)
     {
         glLoadIdentity();
@@ -486,7 +487,9 @@ void MyGLWidget::draw()
             glVertex2f(allRoads[i].getLineFormula().getControlPoint(X3), allRoads[i].getLineFormula().getControlPoint(Y3));
         glEnd();
 
-        std::vector<Lane> allLanes = allRoads.at(i).getLanes();
+        //Drawing lanes
+        std::vector<QSharedPointer<Lane>> allLanes = allRoads.at(i).getLanes();
+        //for (auto itt = allLanes.begin(); itt != allLanes.end(); ++i)
         for (unsigned int i = 0; i < allLanes.size(); ++i)
         {
             glLoadIdentity();
@@ -495,9 +498,10 @@ void MyGLWidget::draw()
             glColor4f(0.75f,0,0, 0.75f);
             //qglColor(Qt::blue);
             glBegin(GL_LINES);
-                glVertex2f(allLanes[i].getStartNode().x(), allLanes[i].getStartNode().y());
-                glVertex2f(allLanes[i].getEndNode().x(), allLanes[i].getEndNode().y());
+                glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
+                glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
             glEnd();
+            out << "Number of cars on lane : " << allLanes[i]->getNumberOfVehicle() << "\n";
         }
     }
 
@@ -521,22 +525,55 @@ void MyGLWidget::draw()
     glPointSize(5.0f);
     int i = 1;
     auto allVehicules = GetAllVehicules();
+    Vehicle* vehicleInFront;
+    Vehicle* vehicleBehind;
 
     out << "----------------------- DRAWING VEHICULE ----------------------------------" << "\n";
     for (auto itt = allVehicules.begin(); itt!= allVehicules.end(); ++itt)
     {
         glLoadIdentity();
         glTranslatef(0,0,-8);
-        if((*itt)->isOnLastStretch())
-            qglColor(Qt::yellow );
+        if((*itt)->getPositionInLane() < 5)
+            qglColor(Qt::blue);
         else
             qglColor(Qt::green);
+
+        if ((*itt)->isCarBehind())
+        {
+            out << " car in back : yep ";
+            vehicleBehind = (*itt)->getVehicleBehind();
+            out << " vehicle behind id" << vehicleBehind->id();
+        }
+        else
+            out << " car in back : nop ";
+
+        if ((*itt)->isCarInFront())
+        {
+            out << " car in front : yep ";
+            vehicleInFront = (*itt)->getVehicleInFront();
+            out << " vehicle behind id" << vehicleInFront->id();
+        }
+        else
+        {
+            out << " car in front : nop ";
+        }
+
+        /*if((*itt)->isOnLastStretch())
+            qglColor(Qt::yellow );
+        else
+            qglColor(Qt::green);*/
 
         glBegin(GL_POINTS);
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();
 
-        out << "Position of vehicule #" << (*itt)->id() << " : " << "x = " << (*itt)->x_ << " y = " << (*itt)->y_ << "\n";
+        out << "Position of vehicule #"
+            << (*itt)->id()
+            << " : "
+            << "x = " << (*itt)->x_
+            << " y = " << (*itt)->y_
+            << " car position : " << (*itt)->getPositionInLane()
+            <<"\n";
         ++i;
     }
 }

@@ -4,14 +4,24 @@
 #include "node.h"
 #include "formula.h"
 #include "simulationtraits.h"
+#include <vector>
+#include <set>
+
+class Vehicle; //forward declaration
 
 class Lane
 {
 public:
     using road_id_type = typename simulation_traits::road_id_type;
 private:
+    static std::mutex mtx;
+
     Node start_;
     Node end_;
+
+    int nbChar;
+
+    std::map<float, Vehicle*> vehicleProgressionOrder;
 
     road_id_type parent_;
 
@@ -22,6 +32,17 @@ public:
 
     Node getStartNode();
     Node getEndNode();
+
+    void addVehicleToLane(Vehicle *vehicle);
+    void addVehicleToLane(Vehicle *vehicle, float progress);
+    void removeVehicleFromLane(float progress);
+    void updateProgress(float oldProgress, float newProgress);
+
+    int getNumberOfVehicle();
+    int getPositionOfVehicle(float progress);
+
+    Vehicle *getVehicleInFront(float progress);
+    Vehicle *getVehicleBehind(float progress);
 
     Formula getLineFormula();
 };

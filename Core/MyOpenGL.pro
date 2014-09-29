@@ -13,6 +13,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MyOpenGL
 TEMPLATE = app
 
+INCLUDEPATH += "C:\Program Files\boost\boost_1_55_0\boost_1_55_0"
+
 SOURCES += main.cpp\
         window.cpp \
     myglwidget.cpp \
@@ -23,6 +25,7 @@ SOURCES += main.cpp\
     simulationdata.cpp \
     analyser.cpp \
     distributor.cpp \
+    StopSign.cpp \
     formula.cpp \
     execution_history.cpp \
     node.cpp \
@@ -31,8 +34,7 @@ SOURCES += main.cpp\
     signaler.cpp \
     vehicle.cpp \
     vehiclethread.cpp \
-    lane.cpp \
-    StopSign.cpp
+    lane.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -42,6 +44,8 @@ HEADERS  += window.h \
     dvutility.h \
     simulationdata.h \
     simulationtraits.h \
+    intersection.h \
+    StopSign.h \
     analyser.h \
     distributor.h \
     autolock.h \
@@ -53,7 +57,6 @@ HEADERS  += window.h \
     signaler.h \
     vehicle.h \
     vehiclethread.h \
-    lane.h \
-    stopSign.h
+    lane.h
 
 FORMS    += window.ui
