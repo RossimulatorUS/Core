@@ -8,7 +8,6 @@
 
 #include "analyser.h"
 #include "distributor.h"
-#include "poissoner.h"
 #include "signaler.h"
 #include "vehiclethread.h"
 
@@ -27,7 +26,6 @@ private:
 
     // Mettre un module en attente
     volatile bool distributor_execution_;
-    volatile bool poissoner_execution_;
     std::list<volatile bool> mover_execution_;
     volatile bool signaler_execution_;
 
@@ -49,7 +47,6 @@ private:
     // Modules
     Analyser* analyst_;
     Distributor* distributor_;
-    Poissoner* poissoner_;
     Signaler* signaler_;
 
     // Vehicules se deplacant dans le reseau routier

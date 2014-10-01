@@ -11,6 +11,10 @@
 
 class Distributor : public Module
 {
+    std::vector<Node> nodes_;
+
+    std::list<Vehicle*>* all_vehicles_;
+
     // Vehicules en attente d'etre distribues
     std::vector<Vehicle*> vehicles_;
 
@@ -26,7 +30,7 @@ class Distributor : public Module
     unsigned int chose_thread();
 
 public:
-    Distributor(std::vector<VehicleThread *> *, bool*, volatile bool*);
+    Distributor(std::vector<VehicleThread *> *, bool*, volatile bool*, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_);
     void add_vehicle(Vehicle *);
 };
 

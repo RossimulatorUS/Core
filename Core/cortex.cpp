@@ -5,7 +5,6 @@
 
 Cortex::Cortex(std::vector<Node> nodes, std::list<Vehicle*>* vehicles)
     : distributor_execution_(false),
-      poissoner_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
       end_simulation(false)
@@ -24,8 +23,7 @@ Cortex::Cortex(std::vector<Node> nodes, std::list<Vehicle*>* vehicles)
     reserve_ressources();
 
     analyst_ = new Analyser(&end_simulation, this);
-    distributor_ = new Distributor(vehicle_threads_, &end_simulation, &distributor_execution_);
-    poissoner_ = new Poissoner(vehicles_, nodes, distributor_, &end_simulation, &poissoner_execution_);
+    distributor_ = new Distributor(vehicle_threads_, &end_simulation, &distributor_execution_, nodes, vehicles_);
     signaler_ = new Signaler(&end_simulation, &signaler_execution_);
 }
 
@@ -76,7 +74,7 @@ void Cortex::terminate()
 
 }
 
-// API -> communique avec cortex, distributeur, poissoneur, signaleur
+// API -> communique avec cortex, distributeur, signaleur
 void Cortex::interpret()
 {
     std::string commande;

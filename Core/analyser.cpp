@@ -17,7 +17,6 @@ void Analyser::init()
         for(int i = 0; i < 5 ; ++i)
         {
             cortex_->distributor_execution_ = true;
-            cortex_->poissoner_execution_ = true;
             std::for_each(cortex_->mover_execution_.begin(), cortex_->mover_execution_.end(), [&](volatile bool& b){b = true;});
             std::this_thread::sleep_for(timespan);
         }

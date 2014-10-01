@@ -5,13 +5,21 @@
 #include "cortex.h"
 #include "distributor.h"
 
-Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute)
-    : threads_(threads)
+Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
+    : threads_(threads),
+      all_vehicles_(all_vehicles_)
 {
     vehicles_ = std::vector<Vehicle*>();
     terminate_ = terminate;
     execute_ = execute;
     execution_ = std::thread(&Distributor::init, this);
+
+    nodes_.reserve(nodes.size() / 2);
+
+    // On garde seulement les noeuds qui sont des sources
+    for(auto i(std::begin(nodes)); i != std::end(nodes); ++i)
+        if(i->is_source())
+            nodes_.emplace_back(*i);
 }
 
 void Distributor::init()
@@ -21,6 +29,7 @@ void Distributor::init()
 
     while(!(*terminate_))
     {
+        // Attendre prochain tic
         if(*execute_)
         {
             *execute_ = false;
@@ -28,21 +37,23 @@ void Distributor::init()
             // Demarrer chronometre
             //temps_initial = Historique_dexecution::get_time();
 
-            // Qte vehicules a placer pour ce tic
-            auto qty_vehicles(vehicles_.size());
+            std::for_each(nodes_.begin(), nodes_.end(), [&](Node& node){
 
-            for(unsigned int i(0); i < qty_vehicles; ++i)
-            {
-                threads_->at(chose_thread())->add_vehicle(vehicles_[0]);
-                vehicles_.erase(begin(vehicles_));
-            }
+                // Si le noeud est pret, ajouter un vehicule sur le reseau
+                if(node.is_due())
+                {
+                    Vehicle* v = node.create_vehicle();
+                    all_vehicles_->push_back(v);
 
-            // Arreter chronometre
-            //historique_.ajouter_temps(Historique_dexecution::get_time() - temps_initial);
+                    threads_->at(chose_thread())->add_vehicle(v);
+                }
+            });
         }
-        std::chrono::milliseconds timespan(1); // Max 20% du temps de perdu
+
+        std::chrono::milliseconds timespan(1); // Max 20% de la plage perdu
         std::this_thread::sleep_for(timespan);
     }
+
 }
 
 // ALGORITHME IMPORTANT
