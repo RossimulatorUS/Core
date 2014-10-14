@@ -65,7 +65,7 @@ public:
 
     Node getStartNode();
     Node getEndNode();
-    Road getCurrentRoad();
+    Road& getCurrentRoad();
     QSharedPointer<Lane> getCurrentLane();
 
     float getProgress();
@@ -81,6 +81,7 @@ public:
     bool process();
     void intersectionGo();
     bool isOnLastStretch();
+    void addToLane();
 };
 
 #endif // VEHICULE_H

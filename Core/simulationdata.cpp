@@ -16,9 +16,9 @@ std::vector<Node>& SimulationData::getNodes()
     return allNodes_;
 }
 
-std::vector<Road> SimulationData::getRoads()
+std::vector<Road> *SimulationData::getRoads()
 {
-    return allRoads_;
+    return &allRoads_;
 }
 
 std::list<Vehicle *> SimulationData::getVehicles()
@@ -59,11 +59,6 @@ SimulationData::road_id_type SimulationData::addRoad(Road r)
 {
     allRoads_.push_back(r);
     return allRoads_.size()-1;
-}
-
-void SimulationData::addLane(Lane lane)
-{
-    allLanes_.push_back(lane);
 }
 
 void SimulationData::removeVehicle(Vehicle * v)

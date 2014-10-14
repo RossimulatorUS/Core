@@ -4,6 +4,8 @@
 
 #include "cortex.h"
 #include "distributor.h"
+#include "simulationdata.h"
+#include <iostream>
 
 Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
     : threads_(threads),
@@ -13,6 +15,15 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, 
     terminate_ = terminate;
     execute_ = execute;
     execution_ = std::thread(&Distributor::init, this);
+
+    waitingVehicles = std::map<Road*,std::vector<Vehicle*>>();
+
+    std::vector<Road>* allRoads = SimulationData::getInstance().getRoads();
+
+    for(int i=0; i<allRoads->size();i++)
+    {
+        waitingVehicles.insert(std::pair<Road*,std::vector<Vehicle*>>(&(allRoads->at(i)),std::vector<Vehicle*>()));
+    }
 
     nodes_.reserve(nodes.size() / 2);
 
@@ -43,9 +54,30 @@ void Distributor::init()
                 if(node.is_due())
                 {
                     Vehicle* v = node.create_vehicle();
-                    all_vehicles_->push_back(v);
 
-                    threads_->at(chose_thread())->add_vehicle(v);
+                    Road entry = v->getCurrentRoad(); //might want to make spawn limit node-based, rather than road-based
+                    std::vector<QSharedPointer<Lane>> roadLanes = entry.getLanes();
+
+                    float lastProgression = 100.0f;
+
+                    for(int i=0; i<roadLanes.size(); i++) //change this when lanes are independant
+                    {
+                        float tmp = roadLanes[i]->getLastVehiclePos();
+                        std::cout<<lastProgression<<" "<<tmp<<std::endl;
+                        lastProgression = std::min(lastProgression,tmp);
+                    }
+
+                    if(lastProgression < 15.0f)
+                    {
+                        std::cout<<lastProgression<<std::endl;
+                        waitingVehicles[(&entry)].push_back(v);
+                    }
+                    else
+                    {
+                        all_vehicles_->push_back(v);
+                        threads_->at(chose_thread())->add_vehicle(v);
+                        v->addToLane();
+                    }
                 }
             });
         }

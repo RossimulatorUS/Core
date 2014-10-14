@@ -8,6 +8,7 @@
 #include "module.h"
 #include "vehicle.h"
 #include "vehiclethread.h"
+#include "road.h"
 
 class Distributor : public Module
 {
@@ -17,6 +18,8 @@ class Distributor : public Module
 
     // Vehicules en attente d'etre distribues
     std::vector<Vehicle*> vehicles_;
+
+    std::map<Road*,std::vector<Vehicle*>> waitingVehicles;
 
     // Threads du cortex qui sont utilisables pour calcul des deplacements
     std::vector<VehicleThread*>* threads_;

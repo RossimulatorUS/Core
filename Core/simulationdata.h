@@ -21,12 +21,11 @@ private:
     SimulationData();
     std::vector<Node> allNodes_;
     std::vector<Road> allRoads_;
-    std::vector<Lane> allLanes_;
     std::list<Vehicle*> allVehicules_;
 public:
     static SimulationData &getInstance();
     std::vector<Node> &getNodes();
-    std::vector<Road> getRoads();
+    std::vector<Road>* getRoads();
     std::list<Vehicle*> getVehicles();
     std::list<Vehicle *> *getVehiclesPointer();
     Node& getNode(simulation_traits::node_id_type);
@@ -35,7 +34,6 @@ public:
     node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
     node_id_type addNode(GLfloat, GLfloat, bool isSource);
     road_id_type addRoad(Road);
-    void addLane(Lane);
 
     void removeVehicle(Vehicle*);
     void addVehicle(Vehicle*);

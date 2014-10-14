@@ -43,6 +43,7 @@ public:
 
     Vehicle *getVehicleInFront(float progress);
     Vehicle *getVehicleBehind(float progress);
+    float getLastVehiclePos();
 
     Formula getLineFormula();
 };

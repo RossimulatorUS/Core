@@ -33,7 +33,7 @@ Vehicle::Vehicle(node_id_type start, node_id_type end)
     Autolock av(mtx);
 
     currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
-    currentLane_->addVehicleToLane(this);
+    //currentLane_->addVehicleToLane(this);
 
     // Retouner id et incrementer ensuite
     id_ = id_to_date_++;
@@ -43,6 +43,11 @@ Vehicle::Vehicle(node_id_type start, node_id_type end)
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();
+}
+
+void Vehicle::addToLane()
+{
+    currentLane_->addVehicleToLane(this);
 }
 
 void Vehicle::printNodeCoordinates(Node start, Node end)
@@ -71,7 +76,7 @@ Node Vehicle::getEndNode()
     return SimulationData::getInstance().getNode(endNode_);
 }
 
-Road Vehicle::getCurrentRoad()
+Road& Vehicle::getCurrentRoad()
 {
     return SimulationData::getInstance().getRoad(currentRoad_);
 }
@@ -269,7 +274,7 @@ void Vehicle::switchRoad()
     currentRoad_ = chose_road(startNode_, endNode_);
 
     currentLane_->removeVehicleFromLane(progress_);
-    currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());    
+    currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
     currentLane_->addVehicleToLane(this, 0);
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();

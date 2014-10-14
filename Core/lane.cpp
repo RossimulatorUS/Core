@@ -108,6 +108,14 @@ Vehicle* Lane::getVehicleInFront(float progress)
     return frontCar->second;
 }
 
+float Lane::getLastVehiclePos()
+{
+    float pos = 100.0f;
+    if(vehicleProgressionOrder.size()!=0)
+        pos = vehicleProgressionOrder.begin()->first;
+    return pos;
+}
+
 Node Lane::getStartNode()
 {
     return start_;

@@ -585,7 +585,7 @@ std::vector<Node>& MyGLWidget::GetAllNodes()
 
 std::vector<Road> MyGLWidget::GetAllRoads()
 {
-    return SimulationData::getInstance().getRoads();
+    return *SimulationData::getInstance().getRoads();
 }
 
 std::list<Vehicle *> MyGLWidget::GetAllVehicules()
