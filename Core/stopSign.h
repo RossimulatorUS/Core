@@ -11,13 +11,13 @@ class StopSign: public Intersection
 {
     using road_id_type = typename simulation_traits::road_id_type;
     int currentWaitingVehicleIndex;
-    std::map<road_id_type, std::vector<Vehicle*>>* waitingVehicles_;
+    std::map<Lane*, std::vector<Vehicle*>>* waitingVehicles_;
 
     std::mutex* mtx;
 
 public:
     StopSign(){}
-    StopSign(std::map<road_id_type, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_);
+    StopSign(std::map<Lane*, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_);
     void processWaitingVehicles();
 };
 

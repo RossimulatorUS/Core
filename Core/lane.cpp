@@ -22,12 +22,14 @@ Lane::Lane()
 
 void Lane::addVehicleToLane(Vehicle* vehicle)
 {
+    Autolock av(mtx);
     vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(vehicle->getProgress(), vehicle));
     ++nbChar;
 }
 
 void Lane::addVehicleToLane(Vehicle* vehicle, float progress)
 {
+    Autolock av(mtx);
     vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(progress, vehicle));
     ++nbChar;
 }
@@ -131,3 +133,7 @@ Formula Lane::getLineFormula()
     return lineFormula;
 }
 
+simulation_traits::road_id_type Lane::getRoadId()
+{
+    return parent_;
+}

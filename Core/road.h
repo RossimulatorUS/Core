@@ -25,7 +25,7 @@ public:
     using road_cost_type = typename simulation_traits::road_cost_type;
 
 private:
-    vector<QSharedPointer<Lane>> lanes_;
+    vector<Lane*> lanes_;
 
     Formula lineFormula;
     
@@ -50,14 +50,14 @@ public:
     bool isLeftToRight(Node node1, Node node2);
     bool isLeftToRight();
 
-    QSharedPointer<Lane> findAssociatedLane(Node, Node);
+    Lane* findAssociatedLane(Node, Node);
 
     Formula getLineFormula();
     road_cost_type cost();
 
     void addLane(Node, Node, int laneNumber);
 
-    std::vector<QSharedPointer<Lane> > getLanes();
+    std::vector<Lane*> getLanes();
 
     road_id_type getRoadID();
 };

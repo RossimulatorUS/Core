@@ -55,22 +55,15 @@ void Distributor::init()
                 {
                     Vehicle* v = node.create_vehicle();
 
-                    Road entry = v->getCurrentRoad(); //might want to make spawn limit node-based, rather than road-based
-                    std::vector<QSharedPointer<Lane>> roadLanes = entry.getLanes();
+                    Lane* entry = v->getCurrentLane();
 
-                    float lastProgression = 100.0f;
-
-                    for(int i=0; i<roadLanes.size(); i++) //change this when lanes are independant
-                    {
-                        float tmp = roadLanes[i]->getLastVehiclePos();
-                        std::cout<<lastProgression<<" "<<tmp<<std::endl;
-                        lastProgression = std::min(lastProgression,tmp);
-                    }
+                    float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
 
                     if(lastProgression < 15.0f)
                     {
                         std::cout<<lastProgression<<std::endl;
-                        waitingVehicles[(&entry)].push_back(v);
+                        Road parentRoad = SimulationData::getInstance().getRoad(entry->getRoadId());
+                        waitingVehicles[(&parentRoad)].push_back(v);
                     }
                     else
                     {

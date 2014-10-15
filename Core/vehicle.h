@@ -51,7 +51,7 @@ public:
     node_id_type endNode_;
 
     road_id_type currentRoad_;
-    QSharedPointer<Lane> currentLane_;
+    Lane* currentLane_;
 
     bool isAccelerating_;
     bool isDecelerating_;
@@ -66,7 +66,7 @@ public:
     Node getStartNode();
     Node getEndNode();
     Road& getCurrentRoad();
-    QSharedPointer<Lane> getCurrentLane();
+    Lane* getCurrentLane();
 
     float getProgress();
     float getSpeed();

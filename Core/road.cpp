@@ -34,12 +34,12 @@ bool Road::isLeftToRight()
     return isLeftToRight_;
 }
 
-QSharedPointer<Lane> Road::findAssociatedLane(Node start, Node end)
+Lane* Road::findAssociatedLane(Node start, Node end)
 {
     QTime time = QTime::currentTime();
     srand((uint)time.msec());
 
-    while(true)
+    while(true) //TODO: (maybe) this should return the lane with the least cars
     {
         auto randLaneNumber = (rand() % (lanes_.size()) + 0);
 
@@ -57,11 +57,11 @@ QSharedPointer<Lane> Road::findAssociatedLane(Node start, Node end)
             return lanes_[i];
         }
     }*/
-    return QSharedPointer<Lane>();
+    return 0;
 }
 
 Road::Road(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber)
-    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<QSharedPointer<Lane>>())
+    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>())
 {
     isOneWay_ = isOneWay;
     isLeftToRight_ = isLeftToRight(getStartNode(), getEndNode());
@@ -84,7 +84,7 @@ Road::road_cost_type Road::cost()
 
 void Road::addLane(Node node1, Node node2, int laneNumber)
 {
-    QSharedPointer<Lane> lane = QSharedPointer<Lane>(new Lane(node1, node2, getRoadID(), laneNumber));
+    Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber);
     lanes_.push_back(lane);
 }
 
@@ -93,7 +93,7 @@ Road::road_id_type Road::getRoadID()
     return SimulationData::getInstance().getNode(startID_).getNextRoad(endID_);
 }
 
-std::vector<QSharedPointer<Lane>> Road::getLanes()
+std::vector<Lane*> Road::getLanes()
 {
     return lanes_;
 }

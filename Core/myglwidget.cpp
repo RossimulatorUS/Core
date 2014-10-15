@@ -278,7 +278,7 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
     SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
 
-    qDebug()<<"WTF";
+    //qDebug()<<"WTF";
     auto& r0 = SimulationData::getInstance().getRoad(roadId);
 
     for(int i = 1; i <= numberOfLane; ++i)
@@ -288,6 +288,9 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
         if (!isOneWay)
             r0.addLane(r0.getEndNode(), r0.getStartNode(), i);
     }
+
+    SimulationData::getInstance().getNode(a).addLanes(roadId);
+    SimulationData::getInstance().getNode(b).addLanes(roadId);
 }
 
 void MyGLWidget::DrawSource(float *worldCoords)
@@ -488,7 +491,7 @@ void MyGLWidget::draw()
         glEnd();
 
         //Drawing lanes
-        std::vector<QSharedPointer<Lane>> allLanes = allRoads.at(i).getLanes();
+        std::vector<Lane*> allLanes = allRoads.at(i).getLanes();
         //for (auto itt = allLanes.begin(); itt != allLanes.end(); ++i)
         for (unsigned int i = 0; i < allLanes.size(); ++i)
         {

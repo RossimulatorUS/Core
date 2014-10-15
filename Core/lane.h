@@ -33,6 +33,8 @@ public:
     Node getStartNode();
     Node getEndNode();
 
+    road_id_type getRoadId();
+
     void addVehicleToLane(Vehicle *vehicle);
     void addVehicleToLane(Vehicle *vehicle, float progress);
     void removeVehicleFromLane(float progress);

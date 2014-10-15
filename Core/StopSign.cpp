@@ -4,7 +4,7 @@
 
 //std::mutex StopSign::mtx;
 
-StopSign::StopSign(std::map<road_id_type, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_)
+StopSign::StopSign(std::map<Lane*, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_)
     :waitingVehicles_(waitingVehicles),
       currentWaitingVehicleIndex(0),
       mtx(mtx_)

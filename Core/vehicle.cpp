@@ -91,7 +91,7 @@ Road::road_id_type Vehicle::getNextRoadID()
     return getNextStep().GetId();
 }
 
-QSharedPointer<Lane> Vehicle::getCurrentLane()
+Lane* Vehicle::getCurrentLane()
 {
     Autolock av(mtx);
     return currentLane_;
@@ -146,7 +146,7 @@ bool Vehicle::process()
 
     if(distance(nextX, nextY, getImmediateDestination().x(), getImmediateDestination().y()) > pyth(xVariation_, yVariation_)/2)
     {
-        auto waitingVehicles = getNextStep().getWaitingVehicles(currentRoad_);
+        auto waitingVehicles = getNextStep().getWaitingVehicles(currentLane_);
         for(auto itt = waitingVehicles.begin(); itt != waitingVehicles.end(); ++itt)
         {
             Vehicle* v = *itt;

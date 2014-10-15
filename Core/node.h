@@ -15,6 +15,7 @@
 class Intersection;
 class Vehicle;
 class Road;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
+class Lane;
 
 class Node
 {
@@ -46,7 +47,7 @@ private:
     node_id_type id_;
     Execution_history::time last_creation_;
 
-    std::map<road_id_type, std::vector<Vehicle*>> waitingVehicles_;
+    std::map<Lane*, std::vector<Vehicle*>> waitingVehicles_;
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
@@ -84,6 +85,7 @@ public:
 
     void startDV();
     void addNeighbour(node_id_type, road_id_type);
+    void addLanes(road_id_type connection);
     void printDVResults();
 
     node_id_type getNextStep(node_id_type destination);
@@ -91,7 +93,7 @@ public:
 
     Node& getNode(node_id_type);
     Road& getRoad(road_id_type);
-    std::vector<Vehicle*> getWaitingVehicles(road_id_type);
+    std::vector<Vehicle*> getWaitingVehicles(Lane*);
 
     void addToWaitingVehicles(Vehicle*);
     void processWaitingVehicles();
