@@ -12,6 +12,8 @@
 
 class Distributor : public Module
 {
+    using road_id_type = typename simulation_traits::road_id_type;
+
     std::vector<Node> nodes_;
 
     std::list<Vehicle*>* all_vehicles_;
@@ -19,7 +21,7 @@ class Distributor : public Module
     // Vehicules en attente d'etre distribues
     std::vector<Vehicle*> vehicles_;
 
-    std::map<Road*,std::vector<Vehicle*>> waitingVehicles;
+    std::map<road_id_type,std::vector<Vehicle*>> waitingVehicles;
 
     // Threads du cortex qui sont utilisables pour calcul des deplacements
     std::vector<VehicleThread*>* threads_;

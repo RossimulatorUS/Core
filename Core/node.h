@@ -7,12 +7,13 @@
 #include <mutex>
 #include <queue>
 #include <stack>
+#include <queue>
+#include <set>
 
 #include "dvutility.h"
 #include "execution_history.h"
 #include "simulationtraits.h"
 
-class Intersection;
 class Vehicle;
 class Road;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
 class Lane;
@@ -32,7 +33,7 @@ public:
             QString bernouilliAmount;
             QString uniformAmount;
         };
-private:
+protected:
     bool ok;
     bool is_source_;
     bool is_due_;
@@ -48,6 +49,8 @@ private:
     Execution_history::time last_creation_;
 
     std::map<Lane*, std::vector<Vehicle*>> waitingVehicles_;
+    std::queue<road_id_type> waitingRoads_;
+    std::set<road_id_type> waitingRoadIndex_;
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
@@ -62,7 +65,6 @@ private:
 
     std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
-    Intersection* intersectionType;
 
 public:
     Node();
@@ -93,10 +95,11 @@ public:
 
     Node& getNode(node_id_type);
     Road& getRoad(road_id_type);
-    std::vector<Vehicle*> getWaitingVehicles(Lane*);
+    std::vector<Vehicle*>& getWaitingVehicles(Lane*);
 
     void addToWaitingVehicles(Vehicle*);
-    void processWaitingVehicles();
+    void addToWaitingRoads(road_id_type id);
+    virtual void processWaitingVehicles();
 };
 
 #endif // POINT_H

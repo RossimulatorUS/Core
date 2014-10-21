@@ -192,7 +192,7 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
     return 66666;   //kinda lame
 }
 
-Road& MyGLWidget::FindAssociatedRoad(Node noeud1, Node noeud2, Node &outNoeudDepart, Node &outNoeudArrivee, bool &isInverted)
+/*Road& MyGLWidget::FindAssociatedRoad(Node noeud1, Node noeud2, Node &outNoeudDepart, Node &outNoeudArrivee, bool &isInverted)
 {
     Road returnValue;
     auto Roads = GetAllRoads();
@@ -245,7 +245,7 @@ Road& MyGLWidget::FindAssociatedRoad(Node noeud1, Node noeud2, Node &outNoeudDep
 
     }
     return returnValue; //si aucune route trouvé faire de quoi de brillant this is not brillant
-}
+}*/
 
 void MyGLWidget::PrintNodeCoordinates(Node depart, Node arrivee)
 {
@@ -501,8 +501,10 @@ void MyGLWidget::draw()
             glColor4f(0.75f,0,0, 0.75f);
             //qglColor(Qt::blue);
             glBegin(GL_LINES);
-                glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
-                glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
+                //glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
+                //glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
+                glVertex2f(allLanes[i]->getLineFormula().getLaneCoordinate(X1), allLanes[i]->getLineFormula().getLaneCoordinate(Y1));
+                glVertex2f(allLanes[i]->getLineFormula().getLaneCoordinate(X2), allLanes[i]->getLineFormula().getLaneCoordinate(Y2));
             glEnd();
             out << "Number of cars on lane : " << allLanes[i]->getNumberOfVehicle() << "\n";
         }
@@ -527,12 +529,12 @@ void MyGLWidget::draw()
     //draw vehicules
     glPointSize(5.0f);
     int i = 1;
-    auto allVehicules = GetAllVehicules();
+    auto allVehicles = GetAllVehicles();
     Vehicle* vehicleInFront;
     Vehicle* vehicleBehind;
 
     out << "----------------------- DRAWING VEHICULE ----------------------------------" << "\n";
-    for (auto itt = allVehicules.begin(); itt!= allVehicules.end(); ++itt)
+    for (auto itt = allVehicles.begin(); itt!= allVehicles.end(); ++itt)
     {
         glLoadIdentity();
         glTranslatef(0,0,-8);
@@ -570,7 +572,7 @@ void MyGLWidget::draw()
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();
 
-        out << "Position of vehicule #"
+        out << "Position of vehicle #"
             << (*itt)->id()
             << " : "
             << "x = " << (*itt)->x_
@@ -586,12 +588,12 @@ std::vector<Node>& MyGLWidget::GetAllNodes()
     return SimulationData::getInstance().getNodes();
 }
 
-std::vector<Road> MyGLWidget::GetAllRoads()
+std::vector<Road>& MyGLWidget::GetAllRoads()
 {
-    return *SimulationData::getInstance().getRoads();
+    return SimulationData::getInstance().getRoads();
 }
 
-std::list<Vehicle *> MyGLWidget::GetAllVehicules()
+std::list<Vehicle*>& MyGLWidget::GetAllVehicles()
 {
     return SimulationData::getInstance().getVehicles();
 }

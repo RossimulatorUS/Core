@@ -2,13 +2,14 @@
 #include "formula.h"
 #include "qdebug.h"
 #include "simulationdata.h"
+#include <iostream>
 
-Node Road::getStartNode()
+Node& Road::getStartNode()
 {
     return SimulationData::getInstance().getNode(startID_);
 }
 
-Node Road::getEndNode()
+Node& Road::getEndNode()
 {
     return SimulationData::getInstance().getNode(endID_);
 }
@@ -72,7 +73,7 @@ Road::Road()
     :isReadyToCreate_(false)
 {}
 
-Formula Road::getLineFormula()
+Formula& Road::getLineFormula()
 {
     return lineFormula;
 }
@@ -82,9 +83,9 @@ Road::road_cost_type Road::cost()
     return lineFormula.getLength();
 }
 
-void Road::addLane(Node node1, Node node2, int laneNumber)
+void Road::addLane(Node& node1, Node& node2, int laneNumber) //could remove node1 and node2
 {
-    Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber);
+    Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber); //and replace them with getStartNode(), getEndNode()
     lanes_.push_back(lane);
 }
 
@@ -93,7 +94,15 @@ Road::road_id_type Road::getRoadID()
     return SimulationData::getInstance().getNode(startID_).getNextRoad(endID_);
 }
 
-std::vector<Lane*> Road::getLanes()
+std::vector<Lane*>& Road::getLanes()
 {
     return lanes_;
+}
+
+void Road::allLanesUnblocked()
+{
+    for(int i = 0;i<lanes_.size();i++)
+    {
+        lanes_[i]->laneUnblocked();
+    }
 }

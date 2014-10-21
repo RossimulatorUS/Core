@@ -16,19 +16,19 @@ std::vector<Node>& SimulationData::getNodes()
     return allNodes_;
 }
 
-std::vector<Road> *SimulationData::getRoads()
+std::vector<Road>& SimulationData::getRoads()
 {
-    return &allRoads_;
+    return allRoads_;
 }
 
-std::list<Vehicle *> SimulationData::getVehicles()
+std::list<Vehicle *>& SimulationData::getVehicles()
 {
-    return allVehicules_;
+    return allVehicles_;
 }
 
 std::list<Vehicle *> *SimulationData::getVehiclesPointer()
 {
-    return &allVehicules_;
+    return &allVehicles_;
 }
 
 Node& SimulationData::getNode(simulation_traits::node_id_type id)

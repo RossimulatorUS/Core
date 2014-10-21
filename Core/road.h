@@ -42,8 +42,8 @@ public:
 
     road_id_type roadID_;
 
-    Node getStartNode();
-    Node getEndNode();
+    Node& getStartNode();
+    Node& getEndNode();
 
     bool isReadyToCreate();
     bool isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node endClick);
@@ -52,12 +52,13 @@ public:
 
     Lane* findAssociatedLane(Node, Node);
 
-    Formula getLineFormula();
+    Formula& getLineFormula();
     road_cost_type cost();
 
-    void addLane(Node, Node, int laneNumber);
+    void addLane(Node&, Node&, int laneNumber);
+    void allLanesUnblocked();
 
-    std::vector<Lane*> getLanes();
+    std::vector<Lane*>& getLanes();
 
     road_id_type getRoadID();
 };

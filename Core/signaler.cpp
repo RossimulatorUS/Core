@@ -2,6 +2,8 @@
 #include "simulationdata.h"
 #include "qdebug.h"
 
+#include <iostream>
+
 Signaler::Signaler(bool* terminate, volatile bool* execute)
 {
     terminate_ = terminate;

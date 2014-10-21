@@ -5,9 +5,9 @@
 #include <vector>
 #include "simulationtraits.h"
 #include "vehicle.h"
-#include "intersection.h"
+#include "node.h"
 
-class StopSign: public Intersection
+class StopSign: public Node
 {
     using road_id_type = typename simulation_traits::road_id_type;
     int currentWaitingVehicleIndex;
@@ -17,7 +17,10 @@ class StopSign: public Intersection
 
 public:
     StopSign(){}
-    StopSign(std::map<Lane*, std::vector<Vehicle*>>* waitingVehicles, std::mutex* mtx_);
+    StopSign(GLfloat x, GLfloat y);
+    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource);
+    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
+
     void processWaitingVehicles();
 };
 

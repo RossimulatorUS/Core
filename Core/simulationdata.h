@@ -21,12 +21,12 @@ private:
     SimulationData();
     std::vector<Node> allNodes_;
     std::vector<Road> allRoads_;
-    std::list<Vehicle*> allVehicules_;
+    std::list<Vehicle*> allVehicles_;
 public:
     static SimulationData &getInstance();
-    std::vector<Node> &getNodes();
-    std::vector<Road>* getRoads();
-    std::list<Vehicle*> getVehicles();
+    std::vector<Node>& getNodes();
+    std::vector<Road>& getRoads();
+    std::list<Vehicle*>& getVehicles();
     std::list<Vehicle *> *getVehiclesPointer();
     Node& getNode(simulation_traits::node_id_type);
     Road& getRoad(simulation_traits::road_id_type);

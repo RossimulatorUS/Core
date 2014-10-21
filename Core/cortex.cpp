@@ -89,7 +89,3 @@ void Cortex::interpret()
     }
 }
 
-/*unsigned int Cortex::qte_threads_vehicule()
-{
-    return threads_vehicule_->size();
-}*/

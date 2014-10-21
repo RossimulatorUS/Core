@@ -37,11 +37,12 @@ Node::Node(GLfloat x, GLfloat y)
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      waitingRoads_(std::queue<road_id_type>()),
+      waitingRoadIndex_(std::set<road_id_type>())
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_=Execution_history::time(0);
-    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
@@ -53,12 +54,13 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      waitingRoads_(std::queue<road_id_type>()),
+      waitingRoadIndex_(std::set<road_id_type>())
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
-    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
@@ -70,12 +72,13 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
-      generator_((unsigned int)time(0))
+      generator_((unsigned int)time(0)),
+      waitingRoads_(std::queue<road_id_type>()),
+      waitingRoadIndex_(std::set<road_id_type>())
 {
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
-    //intersectionType = new StopSign(&waitingVehicles_, &mtx);
 }
 
 
@@ -251,7 +254,7 @@ Road &Node::getRoad(Node::road_id_type id)
     return SimulationData::getInstance().getRoad(id);
 }
 
-std::vector<Vehicle *> Node::getWaitingVehicles(Lane* lane)
+std::vector<Vehicle *>& Node::getWaitingVehicles(Lane* lane)
 {
     return waitingVehicles_.at(lane);
 }
@@ -266,7 +269,25 @@ void Node::addToWaitingVehicles(Vehicle * v)
 void Node::processWaitingVehicles()
 {
     Autolock av(mtx);
-    auto itt = waitingVehicles_.begin();
+
+    if(waitingRoads_.size()>0)
+    {
+
+        //std::cout<<waitingRoads_.size()<<std::endl;
+        road_id_type rID = waitingRoads_.front();
+        Road& r = SimulationData::getInstance().getRoad(rID);
+       // std::cout<<"GAH2"<<std::endl;
+        r.allLanesUnblocked();
+        //std::cout<<"GAH3"<<std::endl;
+        waitingRoads_.pop();
+        waitingRoadIndex_.erase(rID);
+    }
+    //else
+        //std::cout<<"G"<<std::endl;
+
+
+
+    /*auto itt = waitingVehicles_.begin();
 
     //amener l'itérateur là où on est rendus
     for(int i = 0; i < currentWaitingVehicleIndex ; ++i)
@@ -289,10 +310,19 @@ void Node::processWaitingVehicles()
             (*ittV)->intersectionGo();
         }
         itt->second.clear();
+        //break;
         //return v;
-    }
+    }*/
 
     //return std::queue<Vehicule*>();
 
     //intersectionType->processWaitingVehicles();
+}
+
+void Node::addToWaitingRoads(road_id_type id)
+{
+    Autolock av(mtx);
+
+    if(waitingRoadIndex_.find(id) == waitingRoadIndex_.end())
+        waitingRoads_.push(id);
 }

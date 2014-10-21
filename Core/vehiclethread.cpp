@@ -1,6 +1,7 @@
 #include <QDebug>
 
 #include <algorithm>
+#include <iostream>
 
 #include "simulationdata.h"
 #include "vehiclethread.h"
@@ -28,6 +29,8 @@ void VehicleThread::start_process(VehicleThread* vt)
         if(*execute_)
         {
             *execute_ = false;
+
+            //std::cout<<vehicles_.size()<<std::endl;
 
             for (auto itt = vehicles_.begin(); itt != vehicles_.end(); ++itt)
             {

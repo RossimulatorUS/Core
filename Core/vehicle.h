@@ -14,7 +14,7 @@ public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
 private:
-    static std::mutex mtx;
+    std::mutex mtx;
 
     static const float baseSpeed_;
     static const float maxSpeed_;
@@ -22,7 +22,7 @@ private:
     static const float decelerationRate_;
     static unsigned int id_to_date_;
     unsigned int id_;
-    bool isWaiting;
+    bool isWaiting, readyToSwitch;
 
     //0 to 100
     float progress_;
@@ -36,9 +36,11 @@ private:
 
     void advance();
     void switchRoad();
-    Node getImmediateDestination();
+    Node& getImmediateDestination();
+    GLfloat getImmediateX();
+    GLfloat getImmediateY();
     void printNodeCoordinates(Node start, Node end);
-    Node &getNextStep();
+    Node& getNextStep();
 public:
     Vehicle();
     Vehicle(node_id_type start, node_id_type end);
@@ -63,20 +65,22 @@ public:
     GLfloat y_;
     unsigned int id() const;
 
-    Node getStartNode();
-    Node getEndNode();
+    Node& getStartNode();
+    Node& getEndNode();
     Road& getCurrentRoad();
     Lane* getCurrentLane();
 
     float getProgress();
     float getSpeed();
     int getPositionInLane();
+    void resetLane();
 
     road_id_type getCurrentRoadId();
     road_id_type getNextRoadID();
 
     Vehicle *getVehicleInFront();
     Vehicle *getVehicleBehind();
+    Vehicle *getVehicleInFront(float* x, float* y);
 
     bool process();
     void intersectionGo();

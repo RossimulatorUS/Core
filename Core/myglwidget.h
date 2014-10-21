@@ -54,10 +54,10 @@ private:
     // pour test
     Vehicle* vehicule;
 
-    std::vector<Node> &GetAllNodes();
-    std::vector<Road> GetAllRoads();
-    std::list<Vehicle*> GetAllVehicules();
-    std::vector<Vehicle*> allVehicules_;
+    std::vector<Node>& GetAllNodes();
+    std::vector<Road>& GetAllRoads();
+    std::list<Vehicle*>& GetAllVehicles();
+    std::vector<Vehicle*> allVehicles_;
 
     node_id_type clickPressedNode;
     node_id_type FindAssociatedNode(Node noeud);
@@ -76,7 +76,7 @@ private:
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 
-    Road &FindAssociatedRoad(Node node1, Node node2, Node &outStartNode, Node &outEndNode, bool &isInverted);
+    //Road* FindAssociatedRoad(Node* node1, Node* node2, Node &outStartNode, Node &outEndNode, bool &isInverted);
 
     void clearWidget();
     void moveCar();

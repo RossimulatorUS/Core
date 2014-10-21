@@ -4,8 +4,9 @@
 #include "math.h"
 #include "autolock.h"
 #include <algorithm>
+#include<iostream>
 
-std::mutex Vehicle::mtx;
+//std::mutex Vehicle::mtx;
 
 const float Vehicle::maxSpeed_ = 0.02f;
 const float Vehicle::accelerationRate_ = 0.0001f;
@@ -28,7 +29,8 @@ Vehicle::Vehicle(node_id_type start, node_id_type end)
      isAccelerating_(true),
      isDecelerating_(false),
      progress_(0),
-     currentRoad_(getStartNode().getNextRoad(end))
+     currentRoad_(getStartNode().getNextRoad(end)),
+     readyToSwitch(false)
 {
     Autolock av(mtx);
 
@@ -38,11 +40,18 @@ Vehicle::Vehicle(node_id_type start, node_id_type end)
     // Retouner id et incrementer ensuite
     id_ = id_to_date_++;
 
-    x_ = currentLane_->getStartNode().x();
-    y_ = currentLane_->getStartNode().y();
+    x_ = currentLane_->getLineFormula().getLaneCoordinate(X1);
+    y_ = currentLane_->getLineFormula().getLaneCoordinate(Y1);
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();
+}
+
+void Vehicle::resetLane()
+{
+    currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
+    x_ = currentLane_->getLineFormula().getLaneCoordinate(X1);
+    y_ = currentLane_->getLineFormula().getLaneCoordinate(Y1);
 }
 
 void Vehicle::addToLane()
@@ -66,12 +75,12 @@ float Vehicle::getSpeed()
     return actualSpeed_;
 }
 
-Node Vehicle::getStartNode()
+Node& Vehicle::getStartNode()
 {
     return SimulationData::getInstance().getNode(startNode_);
 }
 
-Node Vehicle::getEndNode()
+Node& Vehicle::getEndNode()
 {
     return SimulationData::getInstance().getNode(endNode_);
 }
@@ -136,29 +145,49 @@ Vehicle* Vehicle::getVehicleInFront()
     return currentLane_->getVehicleInFront(progress_);
 }
 
+Vehicle* Vehicle::getVehicleInFront(float* x, float* y)
+{
+    return currentLane_->getVehicleInFront(progress_, x, y);
+}
+
 bool Vehicle::process()
 {
+    //Autolock av(mtx);
+
     if(isWaiting)
         return true;
 
     auto nextX = x_ + xVariation_;
     auto nextY = y_ + yVariation_;
 
-    if(distance(nextX, nextY, getImmediateDestination().x(), getImmediateDestination().y()) > pyth(xVariation_, yVariation_)/2)
+    /*if(readyToSwitch)
     {
-        auto waitingVehicles = getNextStep().getWaitingVehicles(currentLane_);
-        for(auto itt = waitingVehicles.begin(); itt != waitingVehicles.end(); ++itt)
+        switchRoad();
+        return true;
+    }
+    else*/
+    if(distance(nextX, nextY, getImmediateX(), getImmediateY()) > pyth(xVariation_, yVariation_)/2)
+    {
+        //auto waitingVehicles = getNextStep().getWaitingVehicles(currentLane_);
+
+        //for(auto itt = waitingVehicles.begin(); itt != waitingVehicles.end(); ++itt)
+        //{
+            //Vehicle* v = *itt;
+        float x,y;
+
+        Vehicle* v = getVehicleInFront(&x,&y);
+        if(v)
         {
-            Vehicle* v = *itt;
             auto breathingRoom = 16;
-            if(distance(v->x_, v->y_, x_, y_) < pyth(xVariation_, yVariation_)/2*breathingRoom)
+            if(distance(x, y, x_, y_) < pyth(xVariation_, yVariation_)/2*breathingRoom)
             {
-                isWaiting = true;
-                auto& node = getNextStep();
+                //isWaiting = true;
+                /*auto& node = getNextStep();
                 node.addToWaitingVehicles(this);
+                node.addToWaitingRoads(currentRoad_);*/
                 return true;
             }
-        };
+        }
         advance();
         return true;
     }
@@ -166,26 +195,40 @@ bool Vehicle::process()
     {
         if(isOnLastStretch())
         {
-            isWaiting = true;
+            //isWaiting = true;
             currentLane_->removeVehicleFromLane(progress_);
             return false;
         }
         advance();
         isWaiting = true;
         auto& node = getNextStep();
-        node.addToWaitingVehicles(this);
+        /*node.addToWaitingVehicles(this);*/
+        node.addToWaitingRoads(currentRoad_);
         return true;
     }
 }
 
 void Vehicle::intersectionGo()
 {
-    if(distance(x_, y_, getImmediateDestination().x(), getImmediateDestination().y()) < pyth(xVariation_, yVariation_)/2)
-    {
-        switchRoad();
-    }
-    isWaiting = false;
+    Autolock av(mtx);
 
+    if(isWaiting)
+    {
+        //float p = progress_;
+        //Vehicle* v = currentLane_->getVehicleBehind(p);
+
+        //std::cout<<distance(x_, y_, getImmediateDestination().x(), getImmediateDestination().y())<<"  "<<pyth(xVariation_, yVariation_)/2<<std::endl;
+        //if(distance(x_, y_, getImmediateDestination().x(), getImmediateDestination().y()) <= pyth(xVariation_, yVariation_)/2)
+        //{
+            //std::cout<<" mv m"<<std::endl;
+            switchRoad();
+            //readyToSwitch = true;
+        //}
+        isWaiting = false;
+
+        //if(v)
+        //    v->intersectionGo();
+    }
 }
 
 bool Vehicle::isOnLastStretch()
@@ -206,6 +249,7 @@ int Vehicle::getPositionInLane()
 
 void Vehicle::advance()
 {
+    Autolock av(mtx);
     //auto breathingRoom = 40;
     //Vehicle* carInFront = currentLane_.getWaitingVehicle(this);
 
@@ -222,10 +266,10 @@ void Vehicle::advance()
         //accelerateVehicle();
     //}
 
-    evaluateProgress();
-
     x_ = x_ + xVariation_;
     y_ = y_ + yVariation_;
+
+    evaluateProgress();
 }
 
 void Vehicle::decelerateVehicle()
@@ -252,7 +296,7 @@ void Vehicle::accelerateVehicle()
 
 void Vehicle::evaluateProgress()
 {
-    Autolock av(mtx);
+    //Autolock av(mtx);
     auto oldProgress = progress_;
 
     auto laneLength = currentLane_->getLineFormula().getLength();
@@ -267,6 +311,8 @@ void Vehicle::evaluateProgress()
 void Vehicle::switchRoad()
 {
     //Autolock av(mtx);
+    readyToSwitch = false;
+    //std::cout<<"SWITCHING"<<std::endl;
     resetVehicleSpeed();
 
     startNode_ = getNextStep().GetId();
@@ -280,8 +326,8 @@ void Vehicle::switchRoad()
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();
 
-    x_ = currentLane_->getStartNode().x();
-    y_ = currentLane_->getStartNode().y();
+    x_ = currentLane_->getLineFormula().getLaneCoordinate(X1);
+    y_ = currentLane_->getLineFormula().getLaneCoordinate(Y1);
 
     progress_ = 0;
 }
@@ -291,10 +337,20 @@ void Vehicle::resetVehicleSpeed()
     actualSpeed_ = baseSpeed_;
 }
 
-Node Vehicle::getImmediateDestination()
+Node& Vehicle::getImmediateDestination()
 {
     //Autolock av(mtx);
-    return getCurrentLane()->getEndNode();
+    return currentLane_->getEndNode();
+}
+
+GLfloat Vehicle::getImmediateX()
+{
+    return currentLane_->getLineFormula().getLaneCoordinate(X2);
+}
+
+GLfloat Vehicle::getImmediateY()
+{
+    return currentLane_->getLineFormula().getLaneCoordinate(Y2);
 }
 
 Node& Vehicle::getNextStep()
