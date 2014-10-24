@@ -2,7 +2,7 @@
 
 #include "map_fetcher.h"
 #include "utils.h"
-#include "C:\Users\dinf0014_admin\Documents\Rossimulatorus\pugixml-1.4\src\pugixml.hpp"
+#include "lib/pugixml/pugixml.hpp"
 
 map_fetcher::map_fetcher(double south, double west, double north, double east) :
     site("overpass-api.de/api/interpreter?data=")

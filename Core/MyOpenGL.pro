@@ -13,8 +13,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MyOpenGL
 TEMPLATE = app
 
-INCLUDEPATH += C:\Users\dinf0014_admin\Documents\Rossimulatorus\curl-7.38.0\include
-LIBS += -LC:\Users\dinf0014_admin\Documents\Rossimulatorus\curl-7.38.0-rtmp-ssh2-ssl-sspi-zlib-idn-static-bin-w32 -lcurl
+INCLUDEPATH += lib\curl-7.38.0\curl-7.38.0\include
+LIBS += -Llib\curl-7.38.0-ssl-sspi-zlib-static-bin-w32\curl-7.38.0-ssl-sspi-zlib-static-bin-w32 -lcurl
 
 SOURCES += main.cpp\
         window.cpp \
