@@ -63,7 +63,6 @@ SimulationData::road_id_type SimulationData::addRoad(Road r)
 
 void SimulationData::removeVehicle(Vehicle * v)
 {
-    getVehiclesPointer()->remove(v);
     getVehicles().remove(v);
 }
 

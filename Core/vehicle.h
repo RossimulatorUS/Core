@@ -80,12 +80,14 @@ public:
 
     Vehicle *getVehicleInFront();
     Vehicle *getVehicleBehind();
-    Vehicle *getVehicleInFront(float* x, float* y);
+    bool getVehicleInFront(float* x, float* y);
 
     bool process();
     void intersectionGo();
     bool isOnLastStretch();
     void addToLane();
 };
+
+float distance(float x1, float y1, float x2, float y2);
 
 #endif // VEHICULE_H

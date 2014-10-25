@@ -145,46 +145,28 @@ Vehicle* Vehicle::getVehicleInFront()
     return currentLane_->getVehicleInFront(progress_);
 }
 
-Vehicle* Vehicle::getVehicleInFront(float* x, float* y)
+bool Vehicle::getVehicleInFront(float* x, float* y)
 {
-    return currentLane_->getVehicleInFront(progress_, x, y);
+    return currentLane_->getVehicleInFront(this, x, y);
 }
 
 bool Vehicle::process()
 {
-    //Autolock av(mtx);
-
     if(isWaiting)
         return true;
 
     auto nextX = x_ + xVariation_;
     auto nextY = y_ + yVariation_;
 
-    /*if(readyToSwitch)
-    {
-        switchRoad();
-        return true;
-    }
-    else*/
     if(distance(nextX, nextY, getImmediateX(), getImmediateY()) > pyth(xVariation_, yVariation_)/2)
     {
-        //auto waitingVehicles = getNextStep().getWaitingVehicles(currentLane_);
-
-        //for(auto itt = waitingVehicles.begin(); itt != waitingVehicles.end(); ++itt)
-        //{
-            //Vehicle* v = *itt;
         float x,y;
 
-        Vehicle* v = getVehicleInFront(&x,&y);
-        if(v)
+        if(getVehicleInFront(&x,&y))
         {
             auto breathingRoom = 16;
             if(distance(x, y, x_, y_) < pyth(xVariation_, yVariation_)/2*breathingRoom)
             {
-                //isWaiting = true;
-                /*auto& node = getNextStep();
-                node.addToWaitingVehicles(this);
-                node.addToWaitingRoads(currentRoad_);*/
                 return true;
             }
         }
@@ -196,13 +178,13 @@ bool Vehicle::process()
         if(isOnLastStretch())
         {
             //isWaiting = true;
-            currentLane_->removeVehicleFromLane(progress_);
+            y_ = x_ = 1000000.0f;
+            currentLane_->removeVehicleFromLane(this);
             return false;
         }
         advance();
         isWaiting = true;
         auto& node = getNextStep();
-        /*node.addToWaitingVehicles(this);*/
         node.addToWaitingRoads(currentRoad_);
         return true;
     }
@@ -210,24 +192,10 @@ bool Vehicle::process()
 
 void Vehicle::intersectionGo()
 {
-    Autolock av(mtx);
-
     if(isWaiting)
     {
-        //float p = progress_;
-        //Vehicle* v = currentLane_->getVehicleBehind(p);
-
-        //std::cout<<distance(x_, y_, getImmediateDestination().x(), getImmediateDestination().y())<<"  "<<pyth(xVariation_, yVariation_)/2<<std::endl;
-        //if(distance(x_, y_, getImmediateDestination().x(), getImmediateDestination().y()) <= pyth(xVariation_, yVariation_)/2)
-        //{
-            //std::cout<<" mv m"<<std::endl;
-            switchRoad();
-            //readyToSwitch = true;
-        //}
+        switchRoad();
         isWaiting = false;
-
-        //if(v)
-        //    v->intersectionGo();
     }
 }
 
@@ -296,22 +264,17 @@ void Vehicle::accelerateVehicle()
 
 void Vehicle::evaluateProgress()
 {
-    //Autolock av(mtx);
     auto oldProgress = progress_;
 
     auto laneLength = currentLane_->getLineFormula().getLength();
-    auto distanceLeft = distance(x_, y_, currentLane_->getEndNode().x(), currentLane_->getEndNode().y());
+    auto distanceTraveled = distance(x_, y_, currentLane_->getStartNode().x(), currentLane_->getStartNode().y());
 
-    auto distanceTraveled = laneLength - distanceLeft;
-
-    progress_ = ((distanceTraveled / laneLength)*100);
-    currentLane_->updateProgress(oldProgress, progress_);
+    progress_ = ((distanceTraveled / laneLength)*100.0f);
 }
 
 void Vehicle::switchRoad()
 {
-    //Autolock av(mtx);
-    readyToSwitch = false;
+    //readyToSwitch = false;
     //std::cout<<"SWITCHING"<<std::endl;
     resetVehicleSpeed();
 
@@ -319,9 +282,9 @@ void Vehicle::switchRoad()
 
     currentRoad_ = chose_road(startNode_, endNode_);
 
-    currentLane_->removeVehicleFromLane(progress_);
+    currentLane_->removeVehicleFromLane(this);
     currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
-    currentLane_->addVehicleToLane(this, 0);
+    currentLane_->addVehicleToLane(this);
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();

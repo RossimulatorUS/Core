@@ -81,7 +81,7 @@ void Distributor::init()
 
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
 
-                    if(lastProgression < 15.0f)
+                    if(lastProgression < 0.03f)
                     {
                         //Road parentRoad = SimulationData::getInstance().getRoad(entry->getRoadId());
                         waitingVehicles[entry->getRoadId()].push_back(v);

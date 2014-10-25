@@ -282,41 +282,7 @@ void Node::processWaitingVehicles()
         waitingRoads_.pop();
         waitingRoadIndex_.erase(rID);
     }
-    //else
-        //std::cout<<"G"<<std::endl;
 
-
-
-    /*auto itt = waitingVehicles_.begin();
-
-    //amener l'itérateur là où on est rendus
-    for(int i = 0; i < currentWaitingVehicleIndex ; ++i)
-        ++itt;
-
-    //trouver prochaine queue non-vide
-    for(unsigned int i = 0; i < waitingVehicles_.size() ; ++i)
-    {
-        if(++currentWaitingVehicleIndex > waitingVehicles_.size())
-        {
-            currentWaitingVehicleIndex = 0;
-            itt = waitingVehicles_.begin();
-        }
-
-        if(itt->second.empty())
-            continue;
-
-        for(auto ittV = itt->second.begin() ; ittV != itt->second.end() ; ++ittV)
-        {
-            (*ittV)->intersectionGo();
-        }
-        itt->second.clear();
-        //break;
-        //return v;
-    }*/
-
-    //return std::queue<Vehicule*>();
-
-    //intersectionType->processWaitingVehicles();
 }
 
 void Node::addToWaitingRoads(road_id_type id)

@@ -9,7 +9,8 @@ Lane::Lane(Node& start, Node& end, road_id_type parent, int laneNumber)
     :start_(start), end_(end), parent_(parent)
 {
 
-    vehicleProgressionOrder = std::map<float, Vehicle*>();
+    //vehicleProgressionOrder = std::map<float, Vehicle*>();
+    vehicles = std::list<Vehicle*>();
     nbChar = 0;
 
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
@@ -21,27 +22,27 @@ Lane::Lane(Node& start, Node& end, road_id_type parent, int laneNumber)
 void Lane::addVehicleToLane(Vehicle* vehicle)
 {
     Autolock av(mtx);
-    vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(vehicle->getProgress(), vehicle));
-    //vehicles.push_back(vehicle);
+    //vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(vehicle->getProgress(), vehicle));
+    vehicles.insert(vehicles.end(),vehicle);
     ++nbChar;
 }
 
 void Lane::addVehicleToLane(Vehicle* vehicle, float progress)
 {
     Autolock av(mtx);
-    vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(progress, vehicle));
-    //vehicles.push_back(vehicle);
+    //vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(progress, vehicle));
+    vehicles.insert(vehicles.end(),vehicle);
     ++nbChar;
 }
 
 int Lane::getNumberOfVehicle()
 {
-    return vehicleProgressionOrder.size();
+    return nbChar;
 }
 
 int Lane::getPositionOfVehicle(float progress)
 {
-    int position = vehicleProgressionOrder.size()-1;
+    /*int position = vehicleProgressionOrder.size()-1;
     for (auto itt = vehicleProgressionOrder.begin(); itt != vehicleProgressionOrder.end(); ++itt)
     {
         float progressArray = itt->first;
@@ -50,12 +51,13 @@ int Lane::getPositionOfVehicle(float progress)
             return position;
         }
         --position;
-    }
+    }*/
+    return 0;
 }
 
 void Lane::updateProgress(float oldProgress, float newProgress)
 {
-    Autolock av(mtx);
+    /*Autolock av(mtx);
 
     auto value = vehicleProgressionOrder.find(oldProgress);
 
@@ -65,7 +67,7 @@ void Lane::updateProgress(float oldProgress, float newProgress)
         vehicleProgressionOrder.erase(value);
         vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(newProgress, value->second));
         //mtx.unlock();
-    }
+    }*/
 }
 
 //always remove the first vehicle in the lane (dernier vehicle puisque it is sorted)
@@ -73,7 +75,7 @@ void Lane::removeVehicleFromLane(float progress)
 {
     Autolock av(mtx);
 
-    auto value = vehicleProgressionOrder.find(progress);
+    //auto value = vehicleProgressionOrder.find(progress);
     --nbChar;
 
     /*typedef std::map<float, Vehicle>::iterator mapIterator;
@@ -90,12 +92,20 @@ void Lane::removeVehicleFromLane(float progress)
         }
     }*/
 
-    if (value != vehicleProgressionOrder.end())
+    /*if (value != vehicleProgressionOrder.end())
     {
         //Vehicle* v = value->second;
         //vehicles.remove(v);
         vehicleProgressionOrder.erase(value);
-    }
+    }*/
+}
+
+void Lane::removeVehicleFromLane(Vehicle* v)
+{
+    Autolock av(mtx);
+
+    vehicles.remove(v);
+    --nbChar;
 }
 
 ///always use isCarBehind before calling this method
@@ -130,29 +140,38 @@ Vehicle* Lane::getVehicleInFront(float progress)
     return v;
 }
 
-Vehicle* Lane::getVehicleInFront(float progress, float *x, float *y)
+bool Lane::getVehicleInFront(Vehicle* v, float *x, float *y)
 {
     Autolock av(mtx);
 
-    Vehicle* v = 0;
-    auto value = vehicleProgressionOrder.find(progress);
-    auto frontCar = ++value;
-    if(value != vehicleProgressionOrder.end())
+    bool b = false;
+
+    std::list<Vehicle*>::iterator it = std::find(vehicles.begin(),vehicles.end(),v);
+
+    if(it!=vehicles.begin())
     {
-        v = frontCar->second;
-        *x = v->x_;
-        *y = v->y_;
+        it--;
+        b=true;
+
+        *x = (*it)->x_;
+        *y = (*it)->y_;
     }
 
-    return v;
+    return b;
 }
 
 float Lane::getLastVehiclePos()
 {
-    float pos = 100.0f;
-    if(vehicleProgressionOrder.size()!=0)
-        pos = vehicleProgressionOrder.begin()->first;
-    return pos;
+    float tmp = 100.0f;
+
+    std::list<Vehicle*>::iterator it = vehicles.end();
+    if(vehicles.end()!=vehicles.begin())
+    {
+        it--;
+        tmp = distance((*it)->x_,(*it)->y_,start_.x(),start_.y());
+    }
+
+    return tmp;
 }
 
 Node& Lane::getStartNode()
@@ -177,14 +196,16 @@ simulation_traits::road_id_type Lane::getRoadId()
 
 void Lane::laneUnblocked()
 {
-    if(vehicleProgressionOrder.size()>0)
+    if(vehicles.begin() != vehicles.end())
+        vehicles.front()->intersectionGo();
+    /*if(vehicleProgressionOrder.size()>0)
     {
         std::map<float, Vehicle*>::iterator it = vehicleProgressionOrder.end();
         //do
         //{
         it--;
         it->second->intersectionGo();
-    }
+    }*/
     //else
     //    std::cout<<"ERMAGERD"<<std::endl;
     //while(it!= vehicleProgressionOrder.begin());

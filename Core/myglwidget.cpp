@@ -538,12 +538,12 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0,0,-8);
-        if((*itt)->getPositionInLane() < 5)
+        //if((*itt)->getPositionInLane() < 5)
             qglColor(Qt::blue);
-        else
-            qglColor(Qt::green);
+        //else
+        //    qglColor(Qt::green);
 
-        if ((*itt)->isCarBehind())
+        /*if ((*itt)->isCarBehind())
         {
             out << " car in back : yep ";
             vehicleBehind = (*itt)->getVehicleBehind();

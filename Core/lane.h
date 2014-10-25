@@ -22,7 +22,7 @@ private:
     int nbChar;
 
     std::map<float, Vehicle*> vehicleProgressionOrder;
-    //std::list<Vehicle*> vehicles;
+    std::list<Vehicle*> vehicles;
 
     road_id_type parent_;
 
@@ -39,6 +39,7 @@ public:
     void addVehicleToLane(Vehicle *vehicle);
     void addVehicleToLane(Vehicle *vehicle, float progress);
     void removeVehicleFromLane(float progress);
+    void removeVehicleFromLane(Vehicle *vehicle);
     void updateProgress(float oldProgress, float newProgress);
     void laneUnblocked();
 
@@ -47,7 +48,7 @@ public:
 
     Vehicle *getVehicleInFront(float progress);
     Vehicle *getVehicleBehind(float progress);
-    Vehicle *getVehicleInFront(float progress, float* x, float* y);
+    bool getVehicleInFront(Vehicle* v, float* x, float* y);
     float getLastVehiclePos();
 
     Formula& getLineFormula();

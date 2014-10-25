@@ -42,8 +42,8 @@ void map_fetcher::url_encode()
 
 void map_fetcher::execute()
 {
-    response = send_request(request.c_str());
-    parse_response();
+    //response = send_request(request.c_str());
+    //parse_response();
 }
 
 // http://pugixml.org
