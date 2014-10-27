@@ -25,14 +25,16 @@ public:
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
 
-    enum loi{BERNOUILLI = 0, UNIFORM = 1};
+    struct DistributionInfo {
+        bool isBernouilli;
+        bool isUniform;
+        bool isExponential;
 
-        struct DistributionInfo {
-            bool isBernouilli;
-            bool isUniform;
-            QString bernouilliAmount;
-            QString uniformAmount;
-        };
+        QString bernouilliAmount;
+        QString uniformAmount;
+        QString exponentialAmount;
+    };
+
 protected:
     bool ok;
     bool is_source_;
@@ -65,6 +67,7 @@ protected:
 
     std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
+    std::exponential_distribution<double> exponential_distribution_;
 
 public:
     Node();

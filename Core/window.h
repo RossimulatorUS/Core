@@ -18,9 +18,11 @@ public:
 
     QString getBernouilliAmount();
     QString getUniformAmount();
+    QString getExponentialAmount();
 
     bool isBernouilliChecked();
     bool isUniformChecked();
+    bool isExponentialChecked();
     bool isIntersectionChecked();
     bool isSourceChecked();
 

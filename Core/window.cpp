@@ -25,6 +25,11 @@ QString Window::getUniformAmount()
     return ui->m_lineEditTauxUniforme->text();
 }
 
+QString Window::getExponentialAmount()
+{
+    return ui->m_lineEditTauxExponentielle->text();
+}
+
 bool Window::isBernouilliChecked()
 {
     return ui->m_radioButtonBernouilli->isChecked();
@@ -38,6 +43,11 @@ bool Window::isOneWay()
 bool Window::isUniformChecked()
 {
     return ui->m_radioButtonUniforme->isChecked();
+}
+
+bool Window::isExponentialChecked()
+{
+    return ui->m_radioButtonExponentielle->isChecked();
 }
 
 int Window::getNumberofLane()

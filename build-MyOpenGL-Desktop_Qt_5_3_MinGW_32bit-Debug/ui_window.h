@@ -184,7 +184,7 @@ public:
         m_lineEditTauxBernouilli->setPlaceholderText(QString());
         label->setText(QApplication::translate("Window", "Taux : ", 0));
         m_radioButtonExponentielle->setText(QApplication::translate("Window", "Exponentielle", 0));
-        m_lineEditTauxExponentielle->setText(QApplication::translate("Window", "3.5", 0));
+        m_lineEditTauxExponentielle->setText(QApplication::translate("Window", "1.5", 0));
         m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab), QApplication::translate("Window", "Noeud", 0));
         m_boutonDrawRoad->setText(QApplication::translate("Window", "Draw Road", 0));
         label_3->setText(QApplication::translate("Window", "Nombre de voies :", 0));

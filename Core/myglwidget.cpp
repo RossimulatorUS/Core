@@ -306,8 +306,11 @@ void MyGLWidget::DrawSource(float x, float y)
 
     distribution.isBernouilli = window->isBernouilliChecked();
     distribution.isUniform = window->isUniformChecked();
+    distribution.isExponential = window->isExponentialChecked();
+
     distribution.bernouilliAmount = window->getBernouilliAmount();
     distribution.uniformAmount = window->getUniformAmount();
+    distribution.exponentialAmount = window->getExponentialAmount();
 
     SimulationData::getInstance().addNode(x,y, true, distribution);
 }

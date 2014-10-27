@@ -13,8 +13,8 @@
 #include "stopSign.h"
 
 std::mutex Node::mtx;
-std::default_random_engine generator_ = std::default_random_engine();
-std::bernoulli_distribution uniform_distribution_ = std::bernoulli_distribution(0.5);
+//std::default_random_engine generator_ = std::default_random_engine();
+//std::bernoulli_distribution uniform_distribution_ = std::bernoulli_distribution(0.5);
 
 /*Noeud::Noeud(bool est_source)
     : est_source_(est_source), est_du_(false),
@@ -72,6 +72,7 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
+      exponential_distribution_(distributionInfo.exponentialAmount.toDouble(&ok)),
       generator_((unsigned int)time(0)),
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
@@ -126,6 +127,16 @@ bool Node::is_due()
             last_creation_ = Execution_history::get_time();
             return true;
         }
+        return false;
+    }
+    else if (distributionInfo_.isExponential)
+    {
+        if(is_source() && exponential_distribution_(generateur)&& timeSinceLastCreation > 250)
+        {
+            last_creation_ = Execution_history::get_time();
+            return true;
+        }
+
         return false;
     }
 }
