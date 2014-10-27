@@ -49,6 +49,8 @@ public:
     QLabel *label_2;
     QLineEdit *m_lineEditTauxBernouilli;
     QLabel *label;
+    QRadioButton *m_radioButtonExponentielle;
+    QLineEdit *m_lineEditTauxExponentielle;
     QWidget *tab_2;
     QPushButton *m_boutonDrawRoad;
     QLabel *label_3;
@@ -64,7 +66,7 @@ public:
         Window->resize(996, 675);
         myGLWidget = new MyGLWidget(Window);
         myGLWidget->setObjectName(QStringLiteral("myGLWidget"));
-        myGLWidget->setGeometry(QRect(90, 10, 891, 531));
+        myGLWidget->setGeometry(QRect(90, 10, 891, 511));
         m_boutonSimulation4 = new QPushButton(Window);
         m_boutonSimulation4->setObjectName(QStringLiteral("m_boutonSimulation4"));
         m_boutonSimulation4->setGeometry(QRect(10, 130, 75, 23));
@@ -81,7 +83,7 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         m_tabSimulation = new QTabWidget(Window);
         m_tabSimulation->setObjectName(QStringLiteral("m_tabSimulation"));
-        m_tabSimulation->setGeometry(QRect(0, 540, 1001, 141));
+        m_tabSimulation->setGeometry(QRect(0, 530, 1001, 151));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         m_boutonDrawSource = new QPushButton(tab);
@@ -99,7 +101,7 @@ public:
         m_radioButtonSource->setChecked(true);
         m_groupBoxDistribution = new QGroupBox(tab);
         m_groupBoxDistribution->setObjectName(QStringLiteral("m_groupBoxDistribution"));
-        m_groupBoxDistribution->setGeometry(QRect(170, 10, 271, 91));
+        m_groupBoxDistribution->setGeometry(QRect(170, 10, 631, 101));
         m_radioButtonBernouilli = new QRadioButton(m_groupBoxDistribution);
         m_radioButtonBernouilli->setObjectName(QStringLiteral("m_radioButtonBernouilli"));
         m_radioButtonBernouilli->setGeometry(QRect(10, 20, 82, 17));
@@ -119,6 +121,12 @@ public:
         label = new QLabel(m_groupBoxDistribution);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(90, 20, 41, 16));
+        m_radioButtonExponentielle = new QRadioButton(m_groupBoxDistribution);
+        m_radioButtonExponentielle->setObjectName(QStringLiteral("m_radioButtonExponentielle"));
+        m_radioButtonExponentielle->setGeometry(QRect(10, 80, 82, 17));
+        m_lineEditTauxExponentielle = new QLineEdit(m_groupBoxDistribution);
+        m_lineEditTauxExponentielle->setObjectName(QStringLiteral("m_lineEditTauxExponentielle"));
+        m_lineEditTauxExponentielle->setGeometry(QRect(120, 80, 113, 20));
         m_tabSimulation->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
@@ -151,7 +159,7 @@ public:
         QObject::connect(m_boutonDrawRoad, SIGNAL(pressed()), myGLWidget, SLOT(DrawRoadPressed()));
         QObject::connect(m_boutonDrawSource, SIGNAL(pressed()), myGLWidget, SLOT(DrawSourcePressed()));
 
-        m_tabSimulation->setCurrentIndex(1);
+        m_tabSimulation->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(Window);
@@ -170,10 +178,13 @@ public:
         m_groupBoxDistribution->setTitle(QApplication::translate("Window", "Loi de distribution", 0));
         m_radioButtonBernouilli->setText(QApplication::translate("Window", "Bernouilli", 0));
         m_radioButtonUniforme->setText(QApplication::translate("Window", "Uniforme", 0));
+        m_lineEditTauxUniforme->setText(QApplication::translate("Window", "1000", 0));
         label_2->setText(QApplication::translate("Window", "ms : ", 0));
-        m_lineEditTauxBernouilli->setText(QApplication::translate("Window", "0.2", 0));
+        m_lineEditTauxBernouilli->setText(QApplication::translate("Window", "0.08", 0));
         m_lineEditTauxBernouilli->setPlaceholderText(QString());
         label->setText(QApplication::translate("Window", "Taux : ", 0));
+        m_radioButtonExponentielle->setText(QApplication::translate("Window", "Exponentielle", 0));
+        m_lineEditTauxExponentielle->setText(QApplication::translate("Window", "3.5", 0));
         m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab), QApplication::translate("Window", "Noeud", 0));
         m_boutonDrawRoad->setText(QApplication::translate("Window", "Draw Road", 0));
         label_3->setText(QApplication::translate("Window", "Nombre de voies :", 0));
