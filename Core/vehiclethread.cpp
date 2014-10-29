@@ -1,36 +1,27 @@
-#include <QDebug>
-
-#include <algorithm>
-#include <iostream>
-
 #include "simulationdata.h"
 #include "vehiclethread.h"
 
 unsigned int VehicleThread::id_to_date_ = 0;
 
-VehicleThread::VehicleThread(bool* terminate, volatile bool* execute)
-    : execution_(&VehicleThread::start_process,this, this),
-      terminated(false)
+VehicleThread::VehicleThread(volatile bool* execute)
+    : execution_(&VehicleThread::init, this)
 {
     vehicles_ = std::list<Vehicle*>();
     toDelete = std::list<Vehicle*>();
 
     execute_ = execute;
-    terminate_ = terminate;
 
-    // Retouner id et incrementer ensuite
-    id_ = id_to_date_++;
+    id_ = id_to_date_;
+    ++id_to_date_;
 }
 
-void VehicleThread::start_process(VehicleThread* vt)
+void VehicleThread::init()
 {
-    while(!(*terminate_))
+    while(!terminate_)
     {
         if(*execute_)
         {
             *execute_ = false;
-
-            //std::cout<<vehicles_.size()<<std::endl;
 
             for (auto itt = vehicles_.begin(); itt != vehicles_.end(); ++itt)
             {
@@ -49,13 +40,6 @@ void VehicleThread::start_process(VehicleThread* vt)
                 Vehicle *v = *itt;
                 vehicles_.remove(v);
             }
-
-            /*std::for_each(vt->vehicules_.begin(), vt->vehicules_.end(), [](Vehicule* v){
-                if(v->Process() == false)   //i.e. le véhicule est arrivé à destination
-                {
-                    SimulationData::GetInstance().RemoveVehicule(v);
-                }
-            });*/
         }
 
         std::chrono::milliseconds timespan(1);
@@ -75,5 +59,13 @@ std::list<Vehicle*>::size_type VehicleThread::nb_vehicles() const
 
 void VehicleThread::terminate()
 {
-    terminated = true;
+    terminate_ = true;
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    clear_data();
+}
+
+void VehicleThread::clear_data()
+{
+    vehicles_.clear();
+    toDelete.clear();
 }

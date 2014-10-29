@@ -1,16 +1,14 @@
 #include "analyser.h"
-#include <qdebug.h>
 
-Analyser::Analyser(bool* terminate, Cortex* cortex)
+Analyser::Analyser(Cortex* cortex)
 {
-    terminate_ = terminate;
     cortex_ = cortex;
     execution_ = std::thread(&Analyser::init, this);
 }
 
 void Analyser::init()
 {
-    while(!(*terminate_))
+    while(!terminate_)
     {
         std::chrono::milliseconds timespan(50);
 

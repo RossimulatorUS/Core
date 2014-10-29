@@ -116,9 +116,17 @@ void Window::on_m_boutonStartSimulation_clicked()
 
         ui->m_boutonStartSimulation->setText("End");
     }
+    // Terminate the simulation
     else
     {
         timer->stop();
+        cortex->terminate();
+        delete cortex;
+        cortex = nullptr;
+
+        SimulationData::getInstance().resetAllData();
+        ui->myGLWidget->updateGL();
+
         ui->m_boutonStartSimulation->setText("Start");
     }
 

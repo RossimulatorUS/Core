@@ -70,5 +70,9 @@ void SimulationData::resetAllData()
 {
     allNodes_.clear();
     allRoads_.clear();
+    for(auto vehicle = allVehicles_.begin(); vehicle != allVehicles_.end(); ++vehicle)
+    {
+        delete *vehicle;
+    }
     allVehicles_.clear();
 }

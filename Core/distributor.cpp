@@ -7,12 +7,11 @@
 #include "simulationdata.h"
 #include <iostream>
 
-Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
-    : threads_(threads),
-      all_vehicles_(all_vehicles_)
+Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
+    : all_vehicles_(all_vehicles_),
+      threads_(threads)
 {
     vehicles_ = std::vector<Vehicle*>();
-    terminate_ = terminate;
     execute_ = execute;
     execution_ = std::thread(&Distributor::init, this);
 
@@ -20,7 +19,7 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, 
 
     std::vector<Road> allRoads = SimulationData::getInstance().getRoads();
 
-    for(int i=0; i<allRoads.size();i++)
+    for(size_t i(0); i<allRoads.size();i++)
     {
         waitingVehicles.insert(std::pair<road_id_type,std::vector<Vehicle*>>((allRoads.at(i)).getRoadID(),std::vector<Vehicle*>()));
     }
@@ -38,37 +37,12 @@ void Distributor::init()
     is_initialised_ = true;
     //Historique_dexecution::temps temps_initial;
 
-    while(!(*terminate_))
+    while(!terminate_)
     {
         // Attendre prochain tic
         if(*execute_)
         {
             *execute_ = false;
-
-            // Demarrer chronometre
-            //temps_initial = Historique_dexecution::get_time();
-            /*for(std::map<road_id_type,std::vector<Vehicle*>>::iterator it = waitingVehicles.begin();
-                it != waitingVehicles.end(); it++)
-            {
-                std::vector<Vehicle*> vV = it->second;
-                if(vV.size() > 0)
-                {
-                    Vehicle* v = vV.back();
-                    v->resetLane();
-                    Lane* entry = v->getCurrentLane();
-
-                    float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
-
-                    if(lastProgression > 15.0f)
-                    {
-                        all_vehicles_->push_back(v);
-                        threads_->at(chose_thread())->add_vehicle(v);
-                        v->addToLane();
-                        vV.pop_back();
-                    }
-                }
-            }*/
-
 
             std::for_each(nodes_.begin(), nodes_.end(), [&](Node& node){
 
@@ -100,7 +74,6 @@ void Distributor::init()
         std::chrono::milliseconds timespan(1); // Max 20% de la plage perdu
         std::this_thread::sleep_for(timespan); //THIS HERE ALMOST CERTAINLY DOES NOT WORK AS PLANNED. CPU CLOCK PRECISION IS 16ms, SAYING SLEEP(1) SLEEPS FOR 16
     }
-
 }
 
 // ALGORITHME IMPORTANT

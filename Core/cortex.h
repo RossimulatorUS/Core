@@ -39,7 +39,6 @@ private:
 
     // Commandes
     void add_thread();
-    void terminate();
 
     // Threads qui commencent a travailler sur leurs donnees a la construction
     std::vector<VehicleThread*>* vehicle_threads_;
@@ -54,7 +53,6 @@ private:
 
     // Delais simulation
     unsigned int opengl_fps_;
-    bool end_simulation;
 
 public:
     Cortex(std::vector<Node>, std::list<Vehicle *> *);
@@ -62,6 +60,7 @@ public:
     //unsigned int qte_threads_vehicule();
 
     unsigned int opengl_fps() const;
+    void terminate();
 };
 
 #endif // CORTEX_H

@@ -1,19 +1,15 @@
 #include "signaler.h"
 #include "simulationdata.h"
-#include "qdebug.h"
 
-#include <iostream>
-
-Signaler::Signaler(bool* terminate, volatile bool* execute)
+Signaler::Signaler(volatile bool* execute)
 {
-    terminate_ = terminate;
     execute_ = execute;
     execution_ = std::thread(&Signaler::init, this);
 }
 
 void Signaler::init()
 {
-    while(!(*terminate_))
+    while(!terminate_)
     {
         if(*execute_)
         {

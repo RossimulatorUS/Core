@@ -12,7 +12,7 @@ class Analyser : public Module
 
     void init();
 public:
-    Analyser(bool*, Cortex *cortex);
+    Analyser(Cortex *cortex);
 };
 
 #endif // ANALYSEUR_H
