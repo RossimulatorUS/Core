@@ -429,39 +429,15 @@ void MyGLWidget::DrawSourcePressed()
     isDrawSourcePressed_ = true;
 }
 
-void MyGLWidget::StartSimulation() // Fonction appelee lors du clic sur le bouton
+// Fonction appelee lors du clic sur le bouton Start
+void MyGLWidget::StartSimulation()
 {
-    bool dvEnCours = true;
-
-    auto& allNodes = GetAllNodes(); //ben oui, auto&, c'est pas un typo
-    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-    {
-        itt->startDV();
-    }
-    while(dvEnCours)
-    {
-        dvEnCours = false;
-        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-        {
-            dvEnCours |= itt->processDVMessages();
-        }
-    }
-
-    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-    {
-        itt->printDVResults();
-    }
-
-    // Creer le Cortex
-    Cortex* cortex = new Cortex(allNodes, SimulationData::getInstance().getVehiclesPointer());
-
     //auto-rafraichissement de OpenGL
     const int FPS = 15; // Devrait pouvoir etre modifier depuis le Cortex
     const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     timer->start(FREQ_RAFRAICHISSMENT_MS);
-
 }
 
 void MyGLWidget::moveCar()

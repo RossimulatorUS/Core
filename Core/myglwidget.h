@@ -45,6 +45,7 @@ public slots:
     void DrawSourcePressed();
 
     void ClearWidget();
+    void draw();
 
 signals:
 
@@ -80,7 +81,7 @@ private:
 
     void clearWidget();
     void moveCar();
-    void draw();
+
     void PrintNodeCoordinates(Node start, Node end);
 
     QFile file;

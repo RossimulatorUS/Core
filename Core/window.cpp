@@ -3,6 +3,8 @@
 #include "window.h"
 #include "ui_window.h"
 
+#include "simulationdata.h"
+
 Window::Window(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Window)
@@ -78,3 +80,39 @@ void Window::keyPressEvent(QKeyEvent *e)
         QWidget::keyPressEvent(e);
 }
 
+// Beginning the simulation
+void Window::on_m_boutonStartSimulation_clicked()
+{
+    if(ui->m_boutonStartSimulation->text() == "Start")
+    {
+        bool dvEnCours = true;
+
+        auto& allNodes = SimulationData::getInstance().getNodes();
+        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+        {
+            itt->startDV();
+        }
+        while(dvEnCours)
+        {
+            dvEnCours = false;
+            for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+            {
+                dvEnCours |= itt->processDVMessages();
+            }
+        }
+
+        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+        {
+            itt->printDVResults();
+        }
+
+        cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
+
+        ui->m_boutonStartSimulation->setText("End");
+    }
+    else
+    {
+        ui->m_boutonStartSimulation->setText("Start");
+    }
+
+}

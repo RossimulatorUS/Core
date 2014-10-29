@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QString>
 
+#include "cortex.h"
+
 namespace Ui {
 class Window;
 }
@@ -30,8 +32,14 @@ public:
 
     int getCurrentTabIndex();
     int getNumberofLane();
+
+     // Cortex stuff
+    Cortex* cortex;
 protected:
     void keyPressEvent(QKeyEvent *event);
+
+private slots:
+    void on_m_boutonStartSimulation_clicked();
 
 private:
     Ui::Window *ui;
