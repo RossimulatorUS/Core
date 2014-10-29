@@ -9,10 +9,13 @@
 #include "road.h"
 #include "vehicle.h"
 #include "simulationtraits.h"
+#include "window.h"
 
 class MyGLWidget : public QGLWidget
 {
     Q_OBJECT
+    friend class Window;
+
 public:
     MyGLWidget(QWidget *parent = 0);
     ~MyGLWidget();
@@ -33,7 +36,6 @@ protected:
 
 public slots:
     //slots for xyz-rotation slider
-    void StartSimulation();
 
     void DrawRoadPressed();
     void DrawNodePressed();
@@ -77,8 +79,6 @@ private:
     //Road* FindAssociatedRoad(Node* node1, Node* node2, Node &outStartNode, Node &outEndNode, bool &isInverted);
 
     void moveCar();
-
-    void PrintNodeCoordinates(Node start, Node end);
 
     QFile file;
 };

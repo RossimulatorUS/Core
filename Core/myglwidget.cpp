@@ -1,19 +1,9 @@
 #include <QtWidgets>
-#include <QDebug>
 #include <QtOpenGL>
-#include <iostream>
 
 #include "myglwidget.h"
-#include "node.h" // Utile?
-#include "road.h" // Utile?
-#include "vehicle.h" // Utile?
-#include "cortex.h"
-#include "vehiclethread.h" // Utile?
 #include "glutility.h"
-#include "window.h"
-#include "ui_window.h"
 #include "simulationdata.h"
-#include "qdebug.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent), file("Vehicule data.txt")
@@ -42,21 +32,12 @@ void MyGLWidget::initializeGL()
     //2d means no depth!
     glDisable(GL_DEPTH_TEST);
 
-    //glEnable(GL_CULL_FACE);
-    //glShadeModel(GL_SMOOTH);
-    //glEnable(GL_LIGHTING);
-    //glEnable(GL_LIGHT0);
-
-    //static GLfloat lightPosition[4] = { 0, 0, 10, 1.0 };
-    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA) ;
 }
 
 void MyGLWidget::paintGL()
 {
-    //glClearColor(1,1,1,1); //décommenter pour fond blanc
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
@@ -153,11 +134,6 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 {
-    auto window = static_cast<Window*>(parent());
-
-    auto isOneWay = window->isOneWay();
-    auto numberOfLane = window->getNumberofLane();
-
     Node node = Node(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
@@ -246,12 +222,6 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
     }
     return returnValue; //si aucune route trouvé faire de quoi de brillant this is not brillant
 }*/
-
-void MyGLWidget::PrintNodeCoordinates(Node depart, Node arrivee)
-{
-    qDebug() << "depart : " << depart.x() << ", " << depart.y() << endl <<
-                "arrivee: " << arrivee.x() << ", " << arrivee.y() << endl;
-}
 
 void MyGLWidget::DrawNode(float *worldCoords)
 {
@@ -353,17 +323,6 @@ void MyGLWidget::DrawSourcePressed()
     isDrawSourcePressed_ = true;
 }
 
-// Fonction appelee lors du clic sur le bouton Start
-void MyGLWidget::StartSimulation()
-{
-    //auto-rafraichissement de OpenGL
-    const int FPS = 15; // Devrait pouvoir etre modifier depuis le Cortex
-    const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateGL()));
-    timer->start(FREQ_RAFRAICHISSMENT_MS);
-}
-
 void MyGLWidget::moveCar()
 {
 }
@@ -433,8 +392,6 @@ void MyGLWidget::draw()
     glPointSize(5.0f);
     int i = 1;
     auto allVehicles = GetAllVehicles();
-    Vehicle* vehicleInFront;
-    Vehicle* vehicleBehind;
 
     out << "----------------------- DRAWING VEHICULE ----------------------------------" << "\n";
     for (auto itt = allVehicles.begin(); itt!= allVehicles.end(); ++itt)
