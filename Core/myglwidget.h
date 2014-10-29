@@ -33,10 +33,6 @@ protected:
 
 public slots:
     //slots for xyz-rotation slider
-    void CreateSimulation1();
-    void CreateSimulation4();
-    //void CreateSimulation5();
-
     void StartSimulation();
 
     void DrawRoadPressed();
@@ -45,6 +41,7 @@ public slots:
     void DrawSourcePressed();
 
     void ClearWidget();
+    void clearWidget();
     void draw();
 
 signals:
@@ -79,7 +76,6 @@ private:
 
     //Road* FindAssociatedRoad(Node* node1, Node* node2, Node &outStartNode, Node &outEndNode, bool &isInverted);
 
-    void clearWidget();
     void moveCar();
 
     void PrintNodeCoordinates(Node start, Node end);

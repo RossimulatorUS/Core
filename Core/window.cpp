@@ -1,8 +1,11 @@
 #include <QtWidgets>
+#include <iostream>
 
 #include "window.h"
 #include "ui_window.h"
 
+#include "node.h"
+#include "road.h"
 #include "simulationdata.h"
 
 Window::Window(QWidget *parent) :
@@ -115,4 +118,90 @@ void Window::on_m_boutonStartSimulation_clicked()
         ui->m_boutonStartSimulation->setText("Start");
     }
 
+}
+
+
+// Drawing stuff
+void Window::DrawNode(float *worldCoords)
+{
+    DrawNode(worldCoords[0], worldCoords[1]);
+}
+
+void Window::DrawNode(float x, float y)
+{
+    SimulationData::getInstance().addNode(x,y, false);
+}
+
+void Window::AddRoad(node_id_type a, node_id_type b)
+{
+
+    auto isOneWay_ = isOneWay();
+    auto numberOfLane = getNumberofLane();
+
+    Road newRoad = Road(a, b, isOneWay_, numberOfLane);
+    auto roadId = SimulationData::getInstance().addRoad(newRoad);
+    SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
+    SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
+
+    auto& r0 = SimulationData::getInstance().getRoad(roadId);
+
+    for(int i = 1; i <= numberOfLane; ++i)
+    {
+        r0.addLane(r0.getStartNode(), r0.getEndNode(), i);
+
+        if (!isOneWay_)
+            r0.addLane(r0.getEndNode(), r0.getStartNode(), i);
+    }
+
+    SimulationData::getInstance().getNode(a).addLanes(roadId);
+    SimulationData::getInstance().getNode(b).addLanes(roadId);
+}
+
+void Window::DrawSource(float *worldCoords)
+{
+    DrawSource(worldCoords[0], worldCoords[1]);
+}
+
+void Window::DrawSource(float x, float y)
+{
+    auto distribution = Node::DistributionInfo();
+
+    distribution.isBernouilli = isBernouilliChecked();
+    distribution.isUniform = isUniformChecked();
+    distribution.isExponential =isExponentialChecked();
+
+    distribution.bernouilliAmount = getBernouilliAmount();
+    distribution.uniformAmount = getUniformAmount();
+    distribution.exponentialAmount = getExponentialAmount();
+
+    SimulationData::getInstance().addNode(x,y, true, distribution);
+}
+
+void Window::on_m_boutonSimulation1_clicked()
+{
+    ui->myGLWidget->clearWidget();
+
+    DrawSource(0.0f,1.6f);
+    DrawSource(0.0f,-1.6f);
+    AddRoad(0, 1);
+
+    ui->myGLWidget->updateGL();
+}
+
+void Window::on_m_boutonSimulation4_clicked()
+{
+    ui->myGLWidget->clearWidget();
+
+    DrawSource(0.0f,1.6f);
+    DrawSource(1.6f,0.0f);
+    DrawSource(-1.6f,0.0f);
+    DrawSource(0.0f,-1.6f);
+
+    DrawNode(0.0f,0.0f);
+    AddRoad(0, 4);
+    AddRoad(1, 4);
+    AddRoad(2, 4);
+    AddRoad(3, 4);
+
+    ui->myGLWidget->updateGL();
 }

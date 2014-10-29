@@ -14,6 +14,9 @@
    <string>Window</string>
   </property>
   <widget class="MyGLWidget" name="myGLWidget" native="true">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -362,11 +365,6 @@
     <slot>setYRotation(int)</slot>
     <slot>setZRotation(int)</slot>
     <slot>DrawPoint(QPoint)</slot>
-    <slot>CreateSimulation1()</slot>
-    <slot>CreateSimulation2()</slot>
-    <slot>CreateSimulation3()</slot>
-    <slot>CreateSimulation4()</slot>
-    <slot>CreateSimulation5()</slot>
     <slot>StartSimulation()</slot>
     <slot>DrawNodePressed()</slot>
     <slot>DrawRoadPressed()</slot>

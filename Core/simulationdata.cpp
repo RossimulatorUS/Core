@@ -70,4 +70,5 @@ void SimulationData::resetAllData()
 {
     allNodes_.clear();
     allRoads_.clear();
+    allVehicles_.clear();
 }
