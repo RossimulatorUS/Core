@@ -53,16 +53,15 @@ private:
     std::list<Vehicle*>* vehicles_;
 
     // Delais simulation
+    unsigned int opengl_fps_;
     bool end_simulation;
 
 public:
     Cortex(std::vector<Node>, std::list<Vehicle *> *);
-
-    // API -> Commandes interpretees
-    void interpret();
     void execute();
     //unsigned int qte_threads_vehicule();
 
+    unsigned int opengl_fps() const;
 };
 
 #endif // CORTEX_H

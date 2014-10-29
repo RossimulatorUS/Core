@@ -37,6 +37,7 @@ public:
     int getNumberofLane();
 
     Cortex* cortex;
+    QTimer* timer;
 
 protected:
     void keyPressEvent(QKeyEvent *event);

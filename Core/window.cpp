@@ -109,17 +109,16 @@ void Window::on_m_boutonStartSimulation_clicked()
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
 
-        //auto-rafraichissement de OpenGL
-        const int FPS = 15; // Devrait pouvoir etre modifier depuis le Cortex
-        const int FREQ_RAFRAICHISSMENT_MS = 1000/FPS;
-        QTimer *timer = new QTimer(this);
+        // OpenGL refresh
+        timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), ui->myGLWidget, SLOT(updateGL()));
-        timer->start(FREQ_RAFRAICHISSMENT_MS);
+        timer->start(cortex->opengl_fps());
 
         ui->m_boutonStartSimulation->setText("End");
     }
     else
     {
+        timer->stop();
         ui->m_boutonStartSimulation->setText("Start");
     }
 

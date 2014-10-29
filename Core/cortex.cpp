@@ -7,6 +7,7 @@ Cortex::Cortex(std::vector<Node> nodes, std::list<Vehicle*>* vehicles)
     : distributor_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
+      opengl_fps_(60),
       end_simulation(false)
 {
     /*
@@ -73,19 +74,7 @@ void Cortex::terminate()
     end_simulation = true;
 
 }
-
-// API -> communique avec cortex, distributeur, signaleur
-void Cortex::interpret()
+unsigned int Cortex::opengl_fps() const
 {
-    std::string commande;
-    while(commande != "exit")
-    {
-        //std::cout << physical_threads_ << " " << temps_attente_analyste_ << std::endl;
-        //std::cout << "RossimulatorUS >> : " << std::flush;
-        //std::cin >> commande;
-        //std::cout << commande << "\n" << std::flush;
-
-        // Switch
-    }
+    return opengl_fps_;
 }
-
