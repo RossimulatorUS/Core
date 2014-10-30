@@ -1,7 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-//#include <curl/curl.h>
+#include <curl/curl.h>
+#include <string>
 #include <sstream>
 
 using std::string;
@@ -26,7 +27,7 @@ size_t write_to_string(void *ptr, size_t size, size_t count, void *stream) {
     ((string*)stream)->append((char*)ptr, 0, size*count);
     return size*count;
 }
-/*
+
 string send_request(string request)
 {
     CURL *curl;
@@ -40,10 +41,9 @@ string send_request(string request)
         curl_easy_perform(curl);
         curl_easy_cleanup(curl);
     }
-    //std::cout << response;
     return response;
 }
-*/
+
 string stringify(double x)
 {
     std::ostringstream ss;
