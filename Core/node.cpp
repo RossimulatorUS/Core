@@ -260,7 +260,7 @@ Node &Node::getNode(node_id_type id)
     return SimulationData::getInstance().getNode(id);
 }
 
-Road &Node::getRoad(Node::road_id_type id)
+RoadSegment &Node::getRoad(Node::road_id_type id)
 {
     return SimulationData::getInstance().getRoad(id);
 }
@@ -286,7 +286,7 @@ void Node::processWaitingVehicles()
 
         //std::cout<<waitingRoads_.size()<<std::endl;
         road_id_type rID = waitingRoads_.front();
-        Road& r = SimulationData::getInstance().getRoad(rID);
+        RoadSegment& r = SimulationData::getInstance().getRoad(rID);
        // std::cout<<"GAH2"<<std::endl;
         r.allLanesUnblocked();
         //std::cout<<"GAH3"<<std::endl;

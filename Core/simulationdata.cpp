@@ -2,8 +2,7 @@
 
 SimulationData::SimulationData()
     : allNodes_(std::vector<Node>())
-{
-}
+{}
 
 SimulationData& SimulationData::getInstance()
 {
@@ -16,7 +15,7 @@ std::vector<Node>& SimulationData::getNodes()
     return allNodes_;
 }
 
-std::vector<Road>& SimulationData::getRoads()
+std::vector<RoadSegment>& SimulationData::getRoads()
 {
     return allRoads_;
 }
@@ -36,7 +35,7 @@ Node& SimulationData::getNode(simulation_traits::node_id_type id)
     return allNodes_[id];
 }
 
-Road& SimulationData::getRoad(simulation_traits::road_id_type id)
+RoadSegment& SimulationData::getRoad(simulation_traits::road_id_type id)
 {
     return allRoads_[id];
 }
@@ -55,7 +54,7 @@ SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool 
     return allNodes_.size()-1;
 }
 
-SimulationData::road_id_type SimulationData::addRoad(Road r)
+SimulationData::road_id_type SimulationData::addRoad(RoadSegment r)
 {
     allRoads_.push_back(r);
     return allRoads_.size()-1;

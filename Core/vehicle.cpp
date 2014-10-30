@@ -85,17 +85,17 @@ Node& Vehicle::getEndNode()
     return SimulationData::getInstance().getNode(endNode_);
 }
 
-Road& Vehicle::getCurrentRoad()
+RoadSegment& Vehicle::getCurrentRoad()
 {
     return SimulationData::getInstance().getRoad(currentRoad_);
 }
 
-Road::road_id_type Vehicle::getCurrentRoadId()
+RoadSegment::road_id_type Vehicle::getCurrentRoadId()
 {
     return currentRoad_;
 }
 
-Road::road_id_type Vehicle::getNextRoadID()
+RoadSegment::road_id_type Vehicle::getNextRoadID()
 {
     return getNextStep().GetId();
 }

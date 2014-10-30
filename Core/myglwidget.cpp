@@ -243,7 +243,7 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto numberOfLane = window->getNumberofLane();
 
     //allRoads_.push_back(Route(a, b));
-    Road newRoad = Road(a, b, isOneWay, numberOfLane);
+    RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane);
     auto roadId = SimulationData::getInstance().addRoad(newRoad);
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
     SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
@@ -448,7 +448,7 @@ std::vector<Node>& MyGLWidget::GetAllNodes()
     return SimulationData::getInstance().getNodes();
 }
 
-std::vector<Road>& MyGLWidget::GetAllRoads()
+std::vector<RoadSegment>& MyGLWidget::GetAllRoads()
 {
     return SimulationData::getInstance().getRoads();
 }

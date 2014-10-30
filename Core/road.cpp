@@ -1,41 +1,41 @@
-#include "road.h"
+#include "road_segment.h"
 #include "formula.h"
 #include "qdebug.h"
 #include "simulationdata.h"
 #include <iostream>
 
-Node& Road::getStartNode()
+Node& RoadSegment::getStartNode()
 {
     return SimulationData::getInstance().getNode(startID_);
 }
 
-Node& Road::getEndNode()
+Node& RoadSegment::getEndNode()
 {
     return SimulationData::getInstance().getNode(endID_);
 }
 
-bool Road::isReadyToCreate()
+bool RoadSegment::isReadyToCreate()
 {
     return isReadyToCreate_;
 }
 
 //comparer avec des coordonnees
-bool Road::isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node endClick)
+bool RoadSegment::isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node endClick)
 {
     return lineFormula.isInSameDirection(startRoad, endRoad, startClick, endClick);
 }
 
-bool Road::isLeftToRight(Node Node1, Node Node2)
+bool RoadSegment::isLeftToRight(Node Node1, Node Node2)
 {
     return lineFormula.isLeftToRight(Node1, Node2);
 }
 
-bool Road::isLeftToRight()
+bool RoadSegment::isLeftToRight()
 {
     return isLeftToRight_;
 }
 
-Lane* Road::findAssociatedLane(Node start, Node end)
+Lane* RoadSegment::findAssociatedLane(Node start, Node end)
 {
     QTime time = QTime::currentTime();
     srand((uint)time.msec());
@@ -61,7 +61,7 @@ Lane* Road::findAssociatedLane(Node start, Node end)
     return 0;
 }
 
-Road::Road(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber)
+RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber)
     :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>())
 {
     isOneWay_ = isOneWay;
@@ -69,37 +69,37 @@ Road::Road(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumb
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
 }
 
-Road::Road()
+RoadSegment::RoadSegment()
     :isReadyToCreate_(false)
 {}
 
-Formula& Road::getLineFormula()
+Formula& RoadSegment::getLineFormula()
 {
     return lineFormula;
 }
 
-Road::road_cost_type Road::cost()
+RoadSegment::road_cost_type RoadSegment::cost()
 {
     return lineFormula.getLength();
 }
 
-void Road::addLane(Node& node1, Node& node2, int laneNumber) //could remove node1 and node2
+void RoadSegment::addLane(Node& node1, Node& node2, int laneNumber) //could remove node1 and node2
 {
     Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber); //and replace them with getStartNode(), getEndNode()
     lanes_.push_back(lane);
 }
 
-Road::road_id_type Road::getRoadID()
+RoadSegment::road_id_type RoadSegment::getRoadID()
 {
     return SimulationData::getInstance().getNode(startID_).getNextRoad(endID_);
 }
 
-std::vector<Lane*>& Road::getLanes()
+std::vector<Lane*>& RoadSegment::getLanes()
 {
     return lanes_;
 }
 
-void Road::allLanesUnblocked()
+void RoadSegment::allLanesUnblocked()
 {
     for(int i = 0;i<lanes_.size();i++)
     {

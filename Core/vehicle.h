@@ -4,7 +4,7 @@
 #include <QGLWidget>
 
 #include "node.h"
-#include "road.h"
+#include "road_segment.h"
 #include "lane.h"
 #include "simulationtraits.h"
 
@@ -67,7 +67,7 @@ public:
 
     Node& getStartNode();
     Node& getEndNode();
-    Road& getCurrentRoad();
+    RoadSegment& getCurrentRoad();
     Lane* getCurrentLane();
 
     float getProgress();

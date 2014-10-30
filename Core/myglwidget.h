@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "node.h"
-#include "road.h"
+#include "road_segment.h"
 #include "vehicle.h"
 #include "simulationtraits.h"
 #include "window.h"
@@ -55,7 +55,7 @@ private:
     Vehicle* vehicule;
 
     std::vector<Node>& GetAllNodes();
-    std::vector<Road>& GetAllRoads();
+    std::vector<RoadSegment>& GetAllRoads();
     std::list<Vehicle*>& GetAllVehicles();
     std::vector<Vehicle*> allVehicles_;
 

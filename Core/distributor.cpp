@@ -17,7 +17,7 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* ex
 
     waitingVehicles = std::map<road_id_type,std::vector<Vehicle*>>();
 
-    std::vector<Road> allRoads = SimulationData::getInstance().getRoads();
+    std::vector<RoadSegment> allRoads = SimulationData::getInstance().getRoads();
 
     for(size_t i(0); i<allRoads.size();i++)
     {

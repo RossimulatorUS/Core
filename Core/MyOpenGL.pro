@@ -52,7 +52,6 @@ HEADERS  += window.h \
     distributor.h \
     autolock.h \
     node.h \
-    road.h \
     execution_history.h \
     formula.h \
     signaler.h \
@@ -64,6 +63,7 @@ HEADERS  += window.h \
     map_node.h \
     map_way.h \
     lib/pugixml/pugiconfig.hpp \
-    lib/pugixml/pugixml.hpp
+    lib/pugixml/pugixml.hpp \
+    road_segment.h
 
 FORMS    += window.ui

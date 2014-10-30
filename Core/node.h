@@ -15,7 +15,7 @@
 #include "simulationtraits.h"
 
 class Vehicle;
-class Road;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
+class RoadSegment;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
 class Lane;
 
 class Node
@@ -97,7 +97,7 @@ public:
     road_id_type getNextRoad(node_id_type destination);
 
     Node& getNode(node_id_type);
-    Road& getRoad(road_id_type);
+    RoadSegment& getRoad(road_id_type);
     std::vector<Vehicle*>& getWaitingVehicles(Lane*);
 
     void addToWaitingVehicles(Vehicle*);

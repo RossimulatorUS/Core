@@ -17,7 +17,7 @@ using std::pair;
 
 class Node;    //forward declaration
 
-class Road
+class RoadSegment
 {
 public:
     using node_id_type = typename simulation_traits::node_id_type;
@@ -34,8 +34,8 @@ private:
     bool isOneWay_;
 
 public:
-    Road(node_id_type startID, node_id_type EndID, bool isOneWay, int laneNumber);
-    Road();
+    RoadSegment(node_id_type startID, node_id_type EndID, bool isOneWay, int laneNumber);
+    RoadSegment();
 
     node_id_type startID_;
     node_id_type endID_;

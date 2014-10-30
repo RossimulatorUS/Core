@@ -8,7 +8,7 @@
 #include "module.h"
 #include "vehicle.h"
 #include "vehiclethread.h"
-#include "road.h"
+#include "road_segment.h"
 
 class Distributor : public Module
 {
