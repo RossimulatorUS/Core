@@ -47,6 +47,7 @@ public:
 
     bool isReadyToCreate();
     bool isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node endClick);
+    bool isParallel(Node startRoad, Node endRoad, Node startClick, Node endClick);
     bool isLeftToRight(Node node1, Node node2);
     bool isLeftToRight();
 
@@ -56,7 +57,7 @@ public:
     road_cost_type cost();
 
     void addLane(Node&, Node&, int laneNumber);
-    void allLanesUnblocked();
+    void allLanesUnblocked(node_id_type nodeID);
 
     std::vector<Lane*>& getLanes();
 

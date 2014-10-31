@@ -10,6 +10,7 @@
 #include "distributor.h"
 #include "signaler.h"
 #include "vehiclethread.h"
+#include "TLight.h"
 
 class Analyser;
 
@@ -56,7 +57,7 @@ private:
     bool end_simulation;
 
 public:
-    Cortex(std::vector<Node>, std::list<Vehicle *> *);
+    Cortex(std::vector<TLight>, std::list<Vehicle *> *);
 
     // API -> Commandes interpretees
     void interpret();

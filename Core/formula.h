@@ -58,6 +58,7 @@ public:
     bool isLeftToRight(Node start, Node end);
     bool isRightToLeft(Node start, Node end);
     bool isInSameDirection(Node routeStart, Node routeEnd, Node startClick, Node endClick);
+    bool isParallel(Node routeStart, Node routeEnd, Node startClick, Node endClick);
     bool isTopToBottom(Node start, Node end);
     bool isBottomToTop(Node start, Node end);
 

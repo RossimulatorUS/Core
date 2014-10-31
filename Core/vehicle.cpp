@@ -119,30 +119,30 @@ float distance(float x1, float y1, float x2, float y2)
 ///checks if there is a car behind this
 bool Vehicle::isCarBehind()
 {
-    if (currentLane_->getNumberOfVehicle() - 1 == getPositionInLane())
+    /*if (currentLane_->getNumberOfVehicle() - 1 == getPositionInLane())
         return false;
-    else
+    else*/
         return true;
 }
 
 ///checks if there is a car in front of this
 bool Vehicle::isCarInFront()
 {
-    if (getPositionInLane() == 0)
+    /*if (getPositionInLane() == 0)
         return false;
-    else
+    else*/
         return true;
 }
 
 
 Vehicle* Vehicle::getVehicleBehind()
 {
-    return currentLane_->getVehicleBehind(progress_);
+    return 0;//currentLane_->getVehicleBehind(progress_);
 }
 
 Vehicle* Vehicle::getVehicleInFront()
 {
-    return currentLane_->getVehicleInFront(progress_);
+    return 0;//currentLane_->getVehicleInFront(progress_);
 }
 
 bool Vehicle::getVehicleInFront(float* x, float* y)
@@ -207,12 +207,6 @@ bool Vehicle::isOnLastStretch()
 float Vehicle::getProgress()
 {
     return progress_;
-}
-
-///Returns the index of the vehicle in the lane array
-int Vehicle::getPositionInLane()
-{
-    return currentLane_->getPositionOfVehicle(progress_);
 }
 
 void Vehicle::advance()

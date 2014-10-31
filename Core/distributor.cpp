@@ -7,7 +7,7 @@
 #include "simulationdata.h"
 #include <iostream>
 
-Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
+Distributor::Distributor(std::vector<VehicleThread*>* threads, bool* terminate, volatile bool* execute, std::vector<TLight> nodes, std::list<Vehicle*>* all_vehicles_)
     : threads_(threads),
       all_vehicles_(all_vehicles_)
 {
@@ -70,7 +70,7 @@ void Distributor::init()
             }*/
 
 
-            std::for_each(nodes_.begin(), nodes_.end(), [&](Node& node){
+            std::for_each(nodes_.begin(), nodes_.end(), [&](TLight& node){
 
                 // Si le noeud est pret, ajouter un vehicule sur le reseau
                 if(node.is_due())

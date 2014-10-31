@@ -1,7 +1,9 @@
 #include "simulationdata.h"
+#include "TLight.h"
+#include <iostream>
 
 SimulationData::SimulationData()
-    : allNodes_(std::vector<Node>())
+    : allNodes_(std::vector<TLight>())
 {
 }
 
@@ -11,7 +13,7 @@ SimulationData& SimulationData::getInstance()
     return instance;
 }
 
-std::vector<Node>& SimulationData::getNodes()
+std::vector<TLight>& SimulationData::getNodes()
 {
     return allNodes_;
 }
@@ -31,7 +33,7 @@ std::list<Vehicle *> *SimulationData::getVehiclesPointer()
     return &allVehicles_;
 }
 
-Node& SimulationData::getNode(simulation_traits::node_id_type id)
+TLight& SimulationData::getNode(simulation_traits::node_id_type id)
 {
     return allNodes_[id];
 }
@@ -50,7 +52,8 @@ SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool 
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo)
 {
-    allNodes_.emplace_back(x, y, allNodes_.size(), isSource, distributionInfo);
+    allNodes_.push_back(TLight(x,y,allNodes_.size(),isSource,distributionInfo));
+    //allNodes_.emplace_back(x, y, allNodes_.size(), isSource, distributionInfo);
 
     return allNodes_.size()-1;
 }

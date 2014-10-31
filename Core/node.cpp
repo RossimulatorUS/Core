@@ -10,7 +10,6 @@
 #include "simulationdata.h"
 #include "vehicle.h"
 #include "autolock.h"
-#include "stopSign.h"
 
 std::mutex Node::mtx;
 std::default_random_engine generator_ = std::default_random_engine();
@@ -34,7 +33,6 @@ Node::Node(GLfloat x, GLfloat y)
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
       generator_((unsigned int)time(0)),
@@ -51,7 +49,6 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
       generator_((unsigned int)time(0)),
@@ -69,7 +66,6 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
       costs_(std::map<node_id_type, road_cost_type>()),
       pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
       generator_((unsigned int)time(0)),
@@ -216,13 +212,6 @@ void Node::addNeighbour(node_id_type neighbour, road_id_type connection)
     costs_[neighbour] = getRoad(connection).cost();
 }
 
-void Node::addLanes(road_id_type connection)
-{
-    std::vector<Lane*> lanes = getRoad(connection).getLanes();
-    for(int i=0; i<lanes.size(); i++)
-        waitingVehicles_[lanes[i]] = std::vector<Vehicle*>();
-}
-
 void Node::printDVResults()
 {
     qDebug() << "PATHS FOR NODE " << + id_;
@@ -254,17 +243,6 @@ Road &Node::getRoad(Node::road_id_type id)
     return SimulationData::getInstance().getRoad(id);
 }
 
-std::vector<Vehicle *>& Node::getWaitingVehicles(Lane* lane)
-{
-    return waitingVehicles_.at(lane);
-}
-
-void Node::addToWaitingVehicles(Vehicle * v)
-{
-    Autolock av(mtx);
-    waitingVehicles_.at(v->getCurrentLane()).push_back(v);
-}
-
 //renvoie le véhicule auquel donner le go, ou NULL si aucun véhicule n'attend
 void Node::processWaitingVehicles()
 {
@@ -272,13 +250,9 @@ void Node::processWaitingVehicles()
 
     if(waitingRoads_.size()>0)
     {
-
-        //std::cout<<waitingRoads_.size()<<std::endl;
         road_id_type rID = waitingRoads_.front();
         Road& r = SimulationData::getInstance().getRoad(rID);
-       // std::cout<<"GAH2"<<std::endl;
-        r.allLanesUnblocked();
-        //std::cout<<"GAH3"<<std::endl;
+        r.allLanesUnblocked(id_);
         waitingRoads_.pop();
         waitingRoadIndex_.erase(rID);
     }

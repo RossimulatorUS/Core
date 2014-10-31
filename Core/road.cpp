@@ -25,6 +25,11 @@ bool Road::isInSameDirection(Node startRoad, Node endRoad, Node startClick, Node
     return lineFormula.isInSameDirection(startRoad, endRoad, startClick, endClick);
 }
 
+bool Road::isParallel(Node startRoad, Node endRoad, Node startClick, Node endClick)
+{
+    return lineFormula.isParallel(startRoad, endRoad, startClick, endClick);
+}
+
 bool Road::isLeftToRight(Node Node1, Node Node2)
 {
     return lineFormula.isLeftToRight(Node1, Node2);
@@ -99,10 +104,10 @@ std::vector<Lane*>& Road::getLanes()
     return lanes_;
 }
 
-void Road::allLanesUnblocked()
+void Road::allLanesUnblocked(node_id_type nodeID)
 {
     for(int i = 0;i<lanes_.size();i++)
     {
-        lanes_[i]->laneUnblocked();
+        lanes_[i]->laneUnblocked(nodeID);
     }
 }

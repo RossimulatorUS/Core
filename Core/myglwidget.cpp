@@ -289,8 +289,8 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
             r0.addLane(r0.getEndNode(), r0.getStartNode(), i);
     }
 
-    SimulationData::getInstance().getNode(a).addLanes(roadId);
-    SimulationData::getInstance().getNode(b).addLanes(roadId);
+    //SimulationData::getInstance().getNode(a).addLanes(roadId);
+    //SimulationData::getInstance().getNode(b).addLanes(roadId);
 }
 
 void MyGLWidget::DrawSource(float *worldCoords)
@@ -572,18 +572,18 @@ void MyGLWidget::draw()
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();
 
-        out << "Position of vehicle #"
+        /*out << "Position of vehicle #"
             << (*itt)->id()
             << " : "
             << "x = " << (*itt)->x_
             << " y = " << (*itt)->y_
             << " car position : " << (*itt)->getPositionInLane()
-            <<"\n";
+            <<"\n";*/
         ++i;
     }
 }
 
-std::vector<Node>& MyGLWidget::GetAllNodes()
+std::vector<TLight>& MyGLWidget::GetAllNodes()
 {
     return SimulationData::getInstance().getNodes();
 }

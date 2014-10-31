@@ -9,6 +9,7 @@
 #include "road.h"
 #include "vehicle.h"
 #include "simulationtraits.h"
+#include "TLight.h"
 
 class MyGLWidget : public QGLWidget
 {
@@ -54,7 +55,7 @@ private:
     // pour test
     Vehicle* vehicule;
 
-    std::vector<Node>& GetAllNodes();
+    std::vector<TLight>& GetAllNodes();
     std::vector<Road>& GetAllRoads();
     std::list<Vehicle*>& GetAllVehicles();
     std::vector<Vehicle*> allVehicles_;

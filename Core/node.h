@@ -48,9 +48,9 @@ protected:
     node_id_type id_;
     Execution_history::time last_creation_;
 
-    std::map<Lane*, std::vector<Vehicle*>> waitingVehicles_;
     std::queue<road_id_type> waitingRoads_;
     std::set<road_id_type> waitingRoadIndex_;
+
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
@@ -95,9 +95,7 @@ public:
 
     Node& getNode(node_id_type);
     Road& getRoad(road_id_type);
-    std::vector<Vehicle*>& getWaitingVehicles(Lane*);
 
-    void addToWaitingVehicles(Vehicle*);
     void addToWaitingRoads(road_id_type id);
     virtual void processWaitingVehicles();
 };

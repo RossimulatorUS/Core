@@ -7,6 +7,7 @@
 #include "road.h"
 #include "vehicle.h"
 #include "lane.h"
+#include "TLight.h"
 
 class SimulationData
 {
@@ -19,16 +20,16 @@ private:
     void operator=(SimulationData const&); //DON'T IMPLEMENT
 
     SimulationData();
-    std::vector<Node> allNodes_;
+    std::vector<TLight> allNodes_;
     std::vector<Road> allRoads_;
     std::list<Vehicle*> allVehicles_;
 public:
     static SimulationData &getInstance();
-    std::vector<Node>& getNodes();
+    std::vector<TLight>& getNodes();
     std::vector<Road>& getRoads();
     std::list<Vehicle*>& getVehicles();
     std::list<Vehicle *> *getVehiclesPointer();
-    Node& getNode(simulation_traits::node_id_type);
+    TLight& getNode(simulation_traits::node_id_type);
     Road& getRoad(simulation_traits::road_id_type);
 
     node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
