@@ -156,14 +156,14 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
     auto allNodes = GetAllNodes();
     for (unsigned int i = 0; i < allNodes.size(); ++i)
     {
-        float ErrorXPos = allNodes[i].x() + ClickErrorTollerence;
-        float ErrorXNeg = allNodes[i].x() - ClickErrorTollerence;
-        float ErrorYPos = allNodes[i].y() + ClickErrorTollerence;
-        float ErrorYNeg = allNodes[i].y() - ClickErrorTollerence;
+        float ErrorXPos = allNodes[i]->x() + ClickErrorTollerence;
+        float ErrorXNeg = allNodes[i]->x() - ClickErrorTollerence;
+        float ErrorYPos = allNodes[i]->y() + ClickErrorTollerence;
+        float ErrorYNeg = allNodes[i]->y() - ClickErrorTollerence;
 
         if ((noeud.x() > ErrorXNeg && noeud.x() < ErrorXPos) &&
             (noeud.y() > ErrorYNeg && noeud.y() < ErrorYPos))
-            return allNodes[i].GetId();
+            return allNodes[i]->GetId();
     }
     return 66666;   //kinda lame
 }
@@ -379,12 +379,12 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0, 0, -9);
-        if(allNodes[i].is_source())
+        if(allNodes[i]->is_source())
             qglColor(Qt::red);
         else
             glColor3f(0.9f,0.3f,0.1f);
         glBegin(GL_POINTS);
-            glVertex2f(allNodes[i].x(),allNodes[i].y());
+            glVertex2f(allNodes[i]->x(),allNodes[i]->y());
         glEnd();
     }
 
@@ -432,18 +432,18 @@ void MyGLWidget::draw()
             glVertex2f((*itt)->x_, (*itt)->y_);
         glEnd();
 
-        out << "Position of vehicle #"
+        /*out << "Position of vehicle #"
             << (*itt)->id()
             << " : "
             << "x = " << (*itt)->x_
             << " y = " << (*itt)->y_
             << " car position : " << (*itt)->getPositionInLane()
-            <<"\n";
+            <<"\n";*/
         ++i;
     }
 }
 
-std::vector<Node>& MyGLWidget::GetAllNodes()
+std::vector<Node*>& MyGLWidget::GetAllNodes()
 {
     return SimulationData::getInstance().getNodes();
 }

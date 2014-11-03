@@ -55,7 +55,7 @@ private:
     unsigned int opengl_fps_;
 
 public:
-    Cortex(std::vector<Node>, std::list<Vehicle *> *);
+    Cortex(std::vector<Node*>, std::list<Vehicle *> *);
     void execute();
     //unsigned int qte_threads_vehicule();
 

@@ -13,6 +13,7 @@ class Lane
 {
 public:
     using road_id_type = typename simulation_traits::road_id_type;
+    using node_id_type = typename simulation_traits::node_id_type;
 private:
     std::mutex mtx;
 
@@ -21,7 +22,6 @@ private:
 
     int nbChar;
 
-    std::map<float, Vehicle*> vehicleProgressionOrder;
     std::list<Vehicle*> vehicles;
 
     road_id_type parent_;
@@ -37,17 +37,11 @@ public:
     road_id_type getRoadId();
 
     void addVehicleToLane(Vehicle *vehicle);
-    void addVehicleToLane(Vehicle *vehicle, float progress);
-    void removeVehicleFromLane(float progress);
     void removeVehicleFromLane(Vehicle *vehicle);
-    void updateProgress(float oldProgress, float newProgress);
-    void laneUnblocked();
+    void laneUnblocked(node_id_type nodeID);
 
     int getNumberOfVehicle();
-    int getPositionOfVehicle(float progress);
 
-    Vehicle *getVehicleInFront(float progress);
-    Vehicle *getVehicleBehind(float progress);
     bool getVehicleInFront(Vehicle* v, float* x, float* y);
     float getLastVehiclePos();
 

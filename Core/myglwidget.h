@@ -54,7 +54,7 @@ private:
     // pour test
     Vehicle* vehicule;
 
-    std::vector<Node>& GetAllNodes();
+    std::vector<Node*>& GetAllNodes();
     std::vector<RoadSegment>& GetAllRoads();
     std::list<Vehicle*>& GetAllVehicles();
     std::vector<Vehicle*> allVehicles_;

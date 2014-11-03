@@ -7,7 +7,7 @@
 #include "simulationdata.h"
 #include <iostream>
 
-Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_)
+Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::vector<Node*> nodes, std::list<Vehicle*>* all_vehicles_)
     : all_vehicles_(all_vehicles_),
       threads_(threads)
 {
@@ -28,8 +28,9 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* ex
 
     // On garde seulement les noeuds qui sont des sources
     for(auto i(std::begin(nodes)); i != std::end(nodes); ++i)
-        if(i->is_source())
-            nodes_.emplace_back(*i);
+        if((*i)->is_source())
+            nodes_.push_back((*i));
+            //nodes_.emplace_back(*i);
 }
 
 void Distributor::init()
@@ -44,12 +45,12 @@ void Distributor::init()
         {
             *execute_ = false;
 
-            std::for_each(nodes_.begin(), nodes_.end(), [&](Node& node){
+            std::for_each(nodes_.begin(), nodes_.end(), [&](Node* node){
 
                 // Si le noeud est pret, ajouter un vehicule sur le reseau
-                if(node.is_due())
+                if(node->is_due())
                 {
-                    Vehicle* v = node.create_vehicle();
+                    Vehicle* v = node->create_vehicle();
 
                     Lane* entry = v->getCurrentLane();
 

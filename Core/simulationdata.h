@@ -19,12 +19,12 @@ private:
     void operator=(SimulationData const&); //DON'T IMPLEMENT
 
     SimulationData();
-    std::vector<Node> allNodes_;
+    std::vector<Node*> allNodes_;
     std::vector<RoadSegment> allRoads_;
     std::list<Vehicle*> allVehicles_;
 public:
     static SimulationData &getInstance();
-    std::vector<Node>& getNodes();
+    std::vector<Node*>& getNodes();
     std::vector<RoadSegment>& getRoads();
     std::list<Vehicle*>& getVehicles();
     std::list<Vehicle *> *getVehiclesPointer();

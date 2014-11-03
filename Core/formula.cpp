@@ -65,6 +65,23 @@ bool Formula::isInSameDirection(Node startRoad, Node endRoad, Node startClick, N
     return false;
 }
 
+bool Formula::isParallel(Node startRoad, Node endRoad, Node startClick, Node endClick)
+{
+    float x1 = std::abs(startRoad.x()-endRoad.x());
+    float x2 = std::abs(startClick.x()-endClick.x());
+    float y1 = std::abs(startRoad.y()-endRoad.y());
+    float y2 = std::abs(startClick.y()-endClick.y());
+    if((x1>y1) && (x2>y2))
+    {
+        return true;
+    }
+    else if((y1>x1) && (y2>x2))
+    {
+        return true;
+    }
+    return false;
+}
+
 bool Formula::isTopToBottom(Node start, Node end)
 {
     if (start.y() < end.y())

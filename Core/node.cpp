@@ -10,7 +10,6 @@
 #include "simulationdata.h"
 #include "vehicle.h"
 #include "autolock.h"
-#include "stopSign.h"
 
 std::mutex Node::mtx;
 //std::default_random_engine generator_ = std::default_random_engine();
@@ -288,7 +287,7 @@ void Node::processWaitingVehicles()
         road_id_type rID = waitingRoads_.front();
         RoadSegment& r = SimulationData::getInstance().getRoad(rID);
        // std::cout<<"GAH2"<<std::endl;
-        r.allLanesUnblocked();
+        r.allLanesUnblocked(id_);
         //std::cout<<"GAH3"<<std::endl;
         waitingRoads_.pop();
         waitingRoadIndex_.erase(rID);

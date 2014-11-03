@@ -88,23 +88,23 @@ void Window::on_m_boutonStartSimulation_clicked()
     {
         bool dvEnCours = true;
 
-        auto& allNodes = SimulationData::getInstance().getNodes();
+        std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            itt->startDV();
+            (*itt)->startDV();
         }
         while(dvEnCours)
         {
             dvEnCours = false;
             for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
             {
-                dvEnCours |= itt->processDVMessages();
+                dvEnCours |= (*itt)->processDVMessages();
             }
         }
 
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            itt->printDVResults();
+            (*itt)->printDVResults();
         }
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());

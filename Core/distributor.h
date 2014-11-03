@@ -14,7 +14,7 @@ class Distributor : public Module
 {
     using road_id_type = typename simulation_traits::road_id_type;
 
-    std::vector<Node> nodes_;
+    std::vector<Node*> nodes_;
 
     std::list<Vehicle*>* all_vehicles_;
 
@@ -35,7 +35,7 @@ class Distributor : public Module
     unsigned int chose_thread();
 
 public:
-    Distributor(std::vector<VehicleThread *> *, volatile bool*, std::vector<Node> nodes, std::list<Vehicle*>* all_vehicles_);
+    Distributor(std::vector<VehicleThread *> *, volatile bool*, std::vector<Node*> nodes, std::list<Vehicle*>* all_vehicles_);
     void add_vehicle(Vehicle *);
 };
 
