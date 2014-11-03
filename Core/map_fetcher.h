@@ -12,7 +12,7 @@ class map_fetcher
 {
 public:
     map_fetcher(double, double, double, double);
-    void execute();
+    void fetch();
     void print_response();
     void print();
     std::vector<map_way> get_ways();

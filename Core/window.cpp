@@ -5,6 +5,7 @@
 #include "ui_window.h"
 
 #include "simulationdata.h"
+#include "map_fetcher.h"
 
 Window::Window(QWidget *parent) :
     QWidget(parent),
@@ -159,4 +160,16 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->AddRoad(3, 4);
 
     ui->myGLWidget->updateGL();
+}
+
+void Window::on_pushButton_clicked()
+{
+    // Get roads from coords
+    std::cout << "fetching" << std::flush;
+    map_fetcher map(ui->m_lineEditSouth->text().toDouble(),
+                       ui->m_lineEditWest->text().toDouble(),
+                       ui->m_lineEditNorth->text().toDouble(),
+                       ui->m_lineEditEast->text().toDouble());
+    map.fetch();
+    map.print();
 }

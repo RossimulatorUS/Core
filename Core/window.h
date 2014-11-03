@@ -47,6 +47,8 @@ private slots:
     void on_m_boutonSimulation1_clicked();
     void on_m_boutonSimulation4_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::Window *ui;
 };

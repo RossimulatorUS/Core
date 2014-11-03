@@ -40,10 +40,10 @@ void map_fetcher::url_encode()
     request = site + escaped;
 }
 
-void map_fetcher::execute()
+void map_fetcher::fetch()
 {
-    //response = send_request(request.c_str());
-    //parse_response();
+    response = send_request(request.c_str());
+    parse_response();
 }
 
 // http://pugixml.org
