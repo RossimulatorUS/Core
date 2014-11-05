@@ -164,12 +164,27 @@ void Window::on_m_boutonSimulation4_clicked()
 
 void Window::on_pushButton_clicked()
 {
+    ui->myGLWidget->clearWidget();
+
     // Get roads from coords
-    std::cout << "fetching" << std::flush;
+    std::cout << "initialising" << std::flush;
     map_fetcher map(ui->m_lineEditSouth->text().toDouble(),
                        ui->m_lineEditWest->text().toDouble(),
                        ui->m_lineEditNorth->text().toDouble(),
                        ui->m_lineEditEast->text().toDouble());
     map.fetch();
+    std::cout << "fetching" << std::flush;
     map.print();
+
+    /*std::cout << "adding nodes" << std::flush;
+    auto nodes = map.get_nodes();
+    for(auto it = nodes.begin(); it != nodes.end(); ++it)
+    {
+        ui->myGLWidget->DrawSource(it->second.longitude() / 180.0, it->second.lattitude() / 90.0);
+    }
+
+    std::cout << SimulationData::getInstance().getNodes().size() << std::flush;
+
+    std::cout << "updating gl" << std::flush;
+    ui->myGLWidget->updateGL();*/
 }

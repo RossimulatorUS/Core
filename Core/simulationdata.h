@@ -7,6 +7,7 @@
 #include "road_segment.h"
 #include "vehicle.h"
 #include "lane.h"
+#include <string>
 
 class SimulationData
 {
@@ -22,6 +23,8 @@ private:
     std::vector<Node*> allNodes_;
     std::vector<RoadSegment> allRoads_;
     std::list<Vehicle*> allVehicles_;
+    std::vector<std::string> accepted_road_types_;
+
 public:
     static SimulationData &getInstance();
     std::vector<Node*>& getNodes();
@@ -30,6 +33,7 @@ public:
     std::list<Vehicle *> *getVehiclesPointer();
     Node& getNode(simulation_traits::node_id_type);
     RoadSegment& getRoad(simulation_traits::road_id_type);
+    bool accepted_road(std::string);
 
     node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
     node_id_type addNode(GLfloat, GLfloat, bool isSource);

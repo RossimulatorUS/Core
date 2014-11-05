@@ -3,6 +3,7 @@
 #include "map_fetcher.h"
 #include "utils.h"
 #include "lib/pugixml/pugixml.hpp"
+#include "simulationdata.h"
 
 map_fetcher::map_fetcher(double south, double west, double north, double east) :
     site("overpass-api.de/api/interpreter?data=")
@@ -66,11 +67,16 @@ void map_fetcher::parse_response()
                          atol(inode.attribute("id").value()),
                          map_node(atof(inode.attribute("lon").value()),
                               atof(inode.attribute("lat").value()))));
+        //std::cout << atof(inode.attribute("lon").value()) << std::endl;
+        //std::cout << (--(nodes.end()))->second.longitude() << std::endl;
     }
+
 
     // Get all ways
     for (pugi::xml_node inode: osm.children("way"))
     {
+        bool add_way(false);
+
         std::vector<map_node::node_id> way_nodes;
         std::map<std::string, std::string> way_attributes;
 
@@ -81,15 +87,28 @@ void map_fetcher::parse_response()
 
         for (pugi::xml_node tag: inode.children("tag"))
         {
+
+
             way_attributes.insert(
                         std::pair<std::string, std::string>(
                             tag.attribute("k").value(),
                             tag.attribute("v").value()));
+
+            if(way_attributes.find("highway") != way_attributes.end())
+            {
+                std::cout << way_attributes.find("highway")->second << std::endl;
+
+                if(SimulationData::getInstance().accepted_road(way_attributes.find("highway")->second))
+                    add_way = true;
+            }
         }
 
-        ways.push_back(map_way(map_way::way_id(atol(inode.attribute("id").value())),
-                           way_nodes,
-                           way_attributes));
+        if(add_way)
+        {
+            ways.push_back(map_way(map_way::way_id(atol(inode.attribute("id").value())),
+                                   way_nodes,
+                                   way_attributes));
+        }
     }
 }
 
@@ -108,7 +127,8 @@ void map_fetcher::print()
         cout << "- Way (" << it->id << ")--------------\nNodes ::\nbegin -> ";
         for(auto itt = it->path.begin(); itt != it->path.end(); ++itt)
         {
-            cout << *itt << " -> ";
+            auto node = nodes.find(*itt)->second;
+            cout << *itt << " (" << node.longitude() << "," << node.lattitude() << " -> ";
         }
         cout << "end" << endl << "Attributes ::\n";
         for(auto itt = it->attributes.begin(); itt != it->attributes.end(); ++itt)
