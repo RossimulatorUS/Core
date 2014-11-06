@@ -12,18 +12,6 @@
 #include "autolock.h"
 
 std::mutex Node::mtx;
-//std::default_random_engine generator_ = std::default_random_engine();
-//std::bernoulli_distribution uniform_distribution_ = std::bernoulli_distribution(0.5);
-
-/*Noeud::Noeud(bool est_source)
-    : est_source_(est_source), est_du_(false),
-      neighbours_(std::map<Noeud*, Route*>()),
-      nextHopForDestination_(std::map<Noeud*, Noeud*>()),
-      costs_(std::map<Noeud*, typename DVMessage::cost_type>( costs_)),
-      pendingDVMessages_(std::queue<DVMessage>())
-{
-    id_ = nextId_++;
-}*/
 
 Node::Node(){}
 

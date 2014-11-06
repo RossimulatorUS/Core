@@ -187,8 +187,6 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
         double longitude = (it->second.longitude() - east) / largeur_carte;
         double lattitude = (it->second.lattitude() - south) / hauteur_carte;
 
-        std::cout << it->second.longitude() <<"," << (it->second.longitude() - east) << "," << longitude << std::endl;
-        //std::cout << longitude << ", " << lattitude << std::endl;
         ui->myGLWidget->DrawSource(longitude, lattitude);
     }
 
@@ -197,7 +195,4 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
-
-    //std::cout << SimulationData::getInstance().getNodes().size() << std::flush;
-    //map.print();
 }

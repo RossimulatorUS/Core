@@ -64,16 +64,12 @@ protected:
     int currentWaitingVehicleIndex;
 
     // Utilises pour la generation des voitures
-
     std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
     std::exponential_distribution<double> exponential_distribution_;
 
 public:
     Node();
-    ~Node(){}
-
-    //Noeud(bool est_source);
     Node(GLfloat x, GLfloat y);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);

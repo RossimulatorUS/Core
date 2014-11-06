@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     map_fetcher.cpp \
     lib/pugixml/pugixml.cpp \
     TLight.cpp \
-    road_segment.cpp
+    road_segment.cpp \
+    road.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -64,6 +65,7 @@ HEADERS  += window.h \
     lib/pugixml/pugiconfig.hpp \
     lib/pugixml/pugixml.hpp \
     road_segment.h \
-    TLight.h
+    TLight.h \
+    road.h
 
 FORMS    += window.ui
