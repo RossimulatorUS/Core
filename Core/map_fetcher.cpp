@@ -96,8 +96,6 @@ void map_fetcher::parse_response()
 
             if(way_attributes.find("highway") != way_attributes.end())
             {
-                std::cout << way_attributes.find("highway")->second << std::endl;
-
                 if(SimulationData::getInstance().accepted_road(way_attributes.find("highway")->second))
                     add_way = true;
             }
@@ -128,7 +126,7 @@ void map_fetcher::print()
         for(auto itt = it->path.begin(); itt != it->path.end(); ++itt)
         {
             auto node = nodes.find(*itt)->second;
-            cout << *itt << " (" << node.longitude() << "," << node.lattitude() << " -> ";
+            cout << *itt << "(" << node.longitude() << "," << node.lattitude() << " -> ";
         }
         cout << "end" << endl << "Attributes ::\n";
         for(auto itt = it->attributes.begin(); itt != it->attributes.end(); ++itt)

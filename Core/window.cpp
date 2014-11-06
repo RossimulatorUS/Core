@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <iostream>
+#include <cmath>
 
 #include "window.h"
 #include "ui_window.h"
@@ -162,29 +163,41 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->updateGL();
 }
 
-void Window::on_pushButton_clicked()
+void Window::on_pushButton_clicked() // Works only for north western quadran
 {
+    std::cout << "initialising\n" << std::flush;
     ui->myGLWidget->clearWidget();
 
-    // Get roads from coords
-    std::cout << "initialising" << std::flush;
-    map_fetcher map(ui->m_lineEditSouth->text().toDouble(),
-                       ui->m_lineEditWest->text().toDouble(),
-                       ui->m_lineEditNorth->text().toDouble(),
-                       ui->m_lineEditEast->text().toDouble());
-    map.fetch();
-    std::cout << "fetching" << std::flush;
-    map.print();
+    double south = ui->m_lineEditSouth->text().toDouble();
+    double west = ui->m_lineEditWest->text().toDouble();
+    double north = ui->m_lineEditNorth->text().toDouble();
+    double east = ui->m_lineEditEast->text().toDouble();
 
-    /*std::cout << "adding nodes" << std::flush;
+    auto hauteur_carte = std::abs(north - south);
+    auto largeur_carte = std::abs(east - west);
+
+    std::cout << "fetching\n" << std::flush;
+    map_fetcher map(south, west, north, east);
+    map.fetch();
+
+    std::cout << "adding nodes\n" << std::flush;
     auto nodes = map.get_nodes();
     for(auto it = nodes.begin(); it != nodes.end(); ++it)
     {
-        ui->myGLWidget->DrawSource(it->second.longitude() / 180.0, it->second.lattitude() / 90.0);
+        double longitude = (it->second.longitude() - east) / largeur_carte;
+        double lattitude = (it->second.lattitude() - south) / hauteur_carte;
+
+        std::cout << it->second.longitude() <<"," << (it->second.longitude() - east) << "," << longitude << std::endl;
+        //std::cout << longitude << ", " << lattitude << std::endl;
+        ui->myGLWidget->DrawSource(longitude, lattitude);
     }
 
-    std::cout << SimulationData::getInstance().getNodes().size() << std::flush;
+    std::cout << "adding roads\n" << std::flush;
+    // Create road class that takes a vector<road_segment>
 
-    std::cout << "updating gl" << std::flush;
-    ui->myGLWidget->updateGL();*/
+    std::cout << "updating gl\n" << std::flush;
+    ui->myGLWidget->updateGL();
+
+    //std::cout << SimulationData::getInstance().getNodes().size() << std::flush;
+    //map.print();
 }
