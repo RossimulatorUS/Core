@@ -77,10 +77,31 @@ int Window::getCurrentTabIndex()
 
 void Window::keyPressEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_Escape)
-        close();
-    else
-        QWidget::keyPressEvent(e);
+    switch(e->key())
+    {
+        case Qt::Key_Escape:
+            close();
+            break;
+        case Qt::Key_J:
+        case Qt::Key_Up:
+            std::cout << "up\n";
+            break;
+        case Qt::Key_K:
+        case Qt::Key_Down:
+            std::cout << "down\n";
+            break;
+        case Qt::Key_H:
+        case Qt::Key_Left:
+            std::cout << "left\n";
+            break;
+        case Qt::Key_L:
+        case Qt::Key_Right:
+            std::cout << "right\n";
+            break;
+        default:
+            QWidget::keyPressEvent(e);
+            break;
+    }
 }
 
 // Beginning the simulation
