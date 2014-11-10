@@ -72,7 +72,7 @@ bool Window::isSourceChecked()
 
 int Window::getCurrentTabIndex()
 {
-    return ui->m_tabSimulation->currentIndex();
+    return ui->Display->currentIndex();
 }
 
 void Window::keyPressEvent(QKeyEvent *e)
@@ -216,4 +216,40 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
+}
+
+
+void Window::on_currentScale_textChanged(const QString &arg1)
+{
+    ui->myGLWidget->UpdateScale(arg1.toFloat());
+}
+
+void Window::on_xOffset_textChanged(const QString &arg1)
+{
+    ui->myGLWidget->UpdateXOffset(arg1.toFloat());
+}
+
+void Window::on_yOffset_textChanged(const QString &arg1)
+{
+    ui->myGLWidget->UpdateYOffset(arg1.toFloat());
+}
+
+void Window::on_offsetUp_clicked()
+{
+    ui->myGLWidget->UpdateOffset(8);
+}
+
+void Window::on_offsetRight_clicked()
+{
+    ui->myGLWidget->UpdateOffset(6);
+}
+
+void Window::on_offsetDown_clicked()
+{
+    ui->myGLWidget->UpdateOffset(2);
+}
+
+void Window::on_offsetLeft_clicked()
+{
+    ui->myGLWidget->UpdateOffset(4);
 }

@@ -45,6 +45,10 @@ public slots:
     void ClearWidget();
     void clearWidget();
     void draw();
+    void UpdateScale(float s);
+    void UpdateXOffset(float x);
+    void UpdateYOffset(float y);
+    void UpdateOffset(int which);
 
 signals:
 
@@ -66,6 +70,8 @@ private:
     bool isDrawRoadPressed_;
     bool isDrawLanePressed_;
     bool isDrawSourcePressed_;
+
+    float scale,xOffset,yOffset;
 
     void AddRoad(Node*, Node*);
     void AddRoad(node_id_type, node_id_type);

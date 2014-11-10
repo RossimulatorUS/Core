@@ -49,6 +49,20 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_currentScale_textChanged(const QString &arg1);
+
+    void on_xOffset_textChanged(const QString &arg1);
+
+    void on_yOffset_textChanged(const QString &arg1);
+
+    void on_offsetUp_clicked();
+
+    void on_offsetRight_clicked();
+
+    void on_offsetDown_clicked();
+
+    void on_offsetLeft_clicked();
+
 private:
     Ui::Window *ui;
 };
