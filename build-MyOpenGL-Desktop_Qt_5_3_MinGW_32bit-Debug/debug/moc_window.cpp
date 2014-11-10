@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_Window_t {
-    QByteArrayData data[10];
-    char stringdata[228];
+    QByteArrayData data[18];
+    char stringdata[394];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,14 +38,26 @@ QT_MOC_LITERAL(5, 105, 21),
 QT_MOC_LITERAL(6, 127, 23),
 QT_MOC_LITERAL(7, 151, 16),
 QT_MOC_LITERAL(8, 168, 28),
-QT_MOC_LITERAL(9, 197, 30)
+QT_MOC_LITERAL(9, 197, 30),
+QT_MOC_LITERAL(10, 228, 27),
+QT_MOC_LITERAL(11, 256, 4),
+QT_MOC_LITERAL(12, 261, 22),
+QT_MOC_LITERAL(13, 284, 22),
+QT_MOC_LITERAL(14, 307, 19),
+QT_MOC_LITERAL(15, 327, 22),
+QT_MOC_LITERAL(16, 350, 21),
+QT_MOC_LITERAL(17, 372, 21)
     },
     "Window\0on_m_boutonStartSimulation_clicked\0"
     "\0on_m_boutonSimulation1_clicked\0"
     "on_m_boutonSimulation4_clicked\0"
     "on_pushButton_clicked\0onRoadListWidgetClicked\0"
     "QTreeWidgetItem*\0on_m_boutonBlockRoad_clicked\0"
-    "on_m_boutonUnblockRoad_clicked"
+    "on_m_boutonUnblockRoad_clicked\0"
+    "on_currentScale_textChanged\0arg1\0"
+    "on_xOffset_textChanged\0on_yOffset_textChanged\0"
+    "on_offsetUp_clicked\0on_offsetRight_clicked\0"
+    "on_offsetDown_clicked\0on_offsetLeft_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -55,7 +67,7 @@ static const uint qt_meta_data_Window[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -63,13 +75,20 @@ static const uint qt_meta_data_Window[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x08 /* Private */,
-       3,    0,   50,    2, 0x08 /* Private */,
-       4,    0,   51,    2, 0x08 /* Private */,
-       5,    0,   52,    2, 0x08 /* Private */,
-       6,    2,   53,    2, 0x08 /* Private */,
-       8,    0,   58,    2, 0x08 /* Private */,
-       9,    0,   59,    2, 0x08 /* Private */,
+       1,    0,   84,    2, 0x08 /* Private */,
+       3,    0,   85,    2, 0x08 /* Private */,
+       4,    0,   86,    2, 0x08 /* Private */,
+       5,    0,   87,    2, 0x08 /* Private */,
+       6,    2,   88,    2, 0x08 /* Private */,
+       8,    0,   93,    2, 0x08 /* Private */,
+       9,    0,   94,    2, 0x08 /* Private */,
+      10,    1,   95,    2, 0x08 /* Private */,
+      12,    1,   98,    2, 0x08 /* Private */,
+      13,    1,  101,    2, 0x08 /* Private */,
+      14,    0,  104,    2, 0x08 /* Private */,
+      15,    0,  105,    2, 0x08 /* Private */,
+      16,    0,  106,    2, 0x08 /* Private */,
+      17,    0,  107,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -77,6 +96,13 @@ static const uint qt_meta_data_Window[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 7, QMetaType::Int,    2,    2,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   11,
+    QMetaType::Void, QMetaType::QString,   11,
+    QMetaType::Void, QMetaType::QString,   11,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -95,6 +121,13 @@ void Window::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 4: _t->onRoadListWidgetClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 5: _t->on_m_boutonBlockRoad_clicked(); break;
         case 6: _t->on_m_boutonUnblockRoad_clicked(); break;
+        case 7: _t->on_currentScale_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 8: _t->on_xOffset_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 9: _t->on_yOffset_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 10: _t->on_offsetUp_clicked(); break;
+        case 11: _t->on_offsetRight_clicked(); break;
+        case 12: _t->on_offsetDown_clicked(); break;
+        case 13: _t->on_offsetLeft_clicked(); break;
         default: ;
         }
     }
@@ -125,13 +158,13 @@ int Window::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 14;
     }
     return _id;
 }

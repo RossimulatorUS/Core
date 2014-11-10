@@ -6,7 +6,8 @@
 #include "simulationdata.h"
 
 MyGLWidget::MyGLWidget(QWidget *parent)
-    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent), file("Vehicule data.txt")
+    : QGLWidget(QGLFormat(QGL::SampleBuffers), parent), file("Vehicule data.txt"),
+      scale(1.0f),xOffset(0.0f),yOffset(0.0f)
 {
     glDisable(GL_DEPTH_TEST);
     setMouseTracking(true);
@@ -471,10 +472,10 @@ void MyGLWidget::draw()
             glColor4f(1,0,0,0.5f);
 
         glBegin(GL_QUADS);
-            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X1), allRoads[i].getLineFormula().getControlPoint(Y1));
-            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X2), allRoads[i].getLineFormula().getControlPoint(Y2));
-            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X4), allRoads[i].getLineFormula().getControlPoint(Y4));
-            glVertex2f(allRoads[i].getLineFormula().getControlPoint(X3), allRoads[i].getLineFormula().getControlPoint(Y3));
+            glVertex2f((allRoads[i].getLineFormula().getControlPoint(X1)*scale)+xOffset, (allRoads[i].getLineFormula().getControlPoint(Y1)*scale)+yOffset);
+            glVertex2f((allRoads[i].getLineFormula().getControlPoint(X2)*scale)+xOffset, (allRoads[i].getLineFormula().getControlPoint(Y2)*scale)+yOffset);
+            glVertex2f((allRoads[i].getLineFormula().getControlPoint(X4)*scale)+xOffset, (allRoads[i].getLineFormula().getControlPoint(Y4)*scale)+yOffset);
+            glVertex2f((allRoads[i].getLineFormula().getControlPoint(X3)*scale)+xOffset, (allRoads[i].getLineFormula().getControlPoint(Y3)*scale)+yOffset);
         glEnd();
 
         //Drawing lanes
@@ -496,13 +497,15 @@ void MyGLWidget::draw()
                 //glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
                 glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X1), allLanes[j]->getLineFormula().getLaneCoordinate(Y1));
                 glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X2), allLanes[j]->getLineFormula().getLaneCoordinate(Y2));
+                glVertex2f((allLanes[i]->getLineFormula().getLaneCoordinate(X1)*scale)+xOffset, (allLanes[i]->getLineFormula().getLaneCoordinate(Y1)*scale)+yOffset);
+                glVertex2f((allLanes[i]->getLineFormula().getLaneCoordinate(X2)*scale)+xOffset, (allLanes[i]->getLineFormula().getLaneCoordinate(Y2)*scale)+yOffset);
             glEnd();
             out << "Number of cars on lane : " << allLanes[j]->getNumberOfVehicle() << "\n";
         }
     }
 
     //draw nodes
-    glPointSize(25.0f);
+    glPointSize(25.0f*scale);
     auto allNodes = GetAllNodes();
     for(unsigned int i = 0; i < allNodes.size(); ++i)
     {
@@ -513,7 +516,7 @@ void MyGLWidget::draw()
         else
             glColor3f(0.9f,0.3f,0.1f);
         glBegin(GL_POINTS);
-            glVertex2f(allNodes[i]->x(),allNodes[i]->y());
+            glVertex2f((allNodes[i]->x()*scale)+xOffset,(allNodes[i]->y()*scale)+yOffset);
         glEnd();
     }
 
@@ -559,7 +562,7 @@ void MyGLWidget::draw()
             qglColor(Qt::green);*/
 
         glBegin(GL_POINTS);
-            glVertex2f((*itt)->x_, (*itt)->y_);
+            glVertex2f(((*itt)->x_*scale)+xOffset, ((*itt)->y_*scale)+yOffset);
         glEnd();
 
         /*out << "Position of vehicle #"
@@ -586,4 +589,40 @@ std::vector<RoadSegment>& MyGLWidget::GetAllRoads()
 std::list<Vehicle*>& MyGLWidget::GetAllVehicles()
 {
     return SimulationData::getInstance().getVehicles();
+}
+
+void MyGLWidget::UpdateScale(float s)
+{
+    scale = s;
+}
+
+void MyGLWidget::UpdateXOffset(float x)
+{
+    xOffset = x;
+}
+
+void MyGLWidget::UpdateYOffset(float y)
+{
+    yOffset = y;
+}
+
+void MyGLWidget::UpdateOffset(int which)
+{
+    switch(which)
+    {
+    case 8:
+        yOffset+=0.1;
+        break;
+    case 2:
+        yOffset-=0.1;
+        break;
+    case 4:
+        xOffset-=0.1;
+        break;
+    case 6:
+        xOffset+=0.1;
+        break;
+    default:
+        break;
+    }
 }

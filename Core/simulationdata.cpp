@@ -1,9 +1,13 @@
+#include <algorithm>
 #include "simulationdata.h"
 #include "TLight.h"
 
 SimulationData::SimulationData()
     : allNodes_(std::vector<Node*>())
-{}
+{
+    accepted_road_types_.push_back("residential");
+    accepted_road_types_.push_back("secondary");
+}
 
 SimulationData& SimulationData::getInstance()
 {
@@ -39,6 +43,11 @@ Node& SimulationData::getNode(simulation_traits::node_id_type id)
 RoadSegment& SimulationData::getRoad(simulation_traits::road_id_type id)
 {
     return allRoads_[id];
+}
+
+bool SimulationData::accepted_road(std::string road_type)
+{
+    return std::find(accepted_road_types_.begin(), accepted_road_types_.end(), road_type) != accepted_road_types_.end();
 }
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource)

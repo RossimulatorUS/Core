@@ -61,12 +61,24 @@ private slots:
     void on_m_boutonSimulation4_clicked();
 
     void on_pushButton_clicked();
-
     void onRoadListWidgetClicked(QTreeWidgetItem *, int);
 
     void on_m_boutonBlockRoad_clicked();
 
     void on_m_boutonUnblockRoad_clicked();
+    void on_currentScale_textChanged(const QString &arg1);
+
+    void on_xOffset_textChanged(const QString &arg1);
+
+    void on_yOffset_textChanged(const QString &arg1);
+
+    void on_offsetUp_clicked();
+
+    void on_offsetRight_clicked();
+
+    void on_offsetDown_clicked();
+
+    void on_offsetLeft_clicked();
 
 private:
     Ui::Window *ui;

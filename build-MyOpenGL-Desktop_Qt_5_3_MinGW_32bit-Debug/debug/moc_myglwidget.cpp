@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MyGLWidget_t {
-    QByteArrayData data[13];
-    char stringdata[155];
+    QByteArrayData data[21];
+    char stringdata[220];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,16 +38,25 @@ QT_MOC_LITERAL(5, 60, 17),
 QT_MOC_LITERAL(6, 78, 11),
 QT_MOC_LITERAL(7, 90, 11),
 QT_MOC_LITERAL(8, 102, 4),
-QT_MOC_LITERAL(9, 107, 23),
-QT_MOC_LITERAL(10, 131, 16),
-QT_MOC_LITERAL(11, 148, 4),
-QT_MOC_LITERAL(12, 153, 1)
+QT_MOC_LITERAL(9, 107, 11),
+QT_MOC_LITERAL(10, 119, 1),
+QT_MOC_LITERAL(11, 121, 13),
+QT_MOC_LITERAL(12, 135, 1),
+QT_MOC_LITERAL(13, 137, 13),
+QT_MOC_LITERAL(14, 151, 1),
+QT_MOC_LITERAL(15, 153, 12),
+QT_MOC_LITERAL(16, 166, 5),
+QT_MOC_LITERAL(17, 172, 23),
+QT_MOC_LITERAL(18, 196, 16),
+QT_MOC_LITERAL(19, 213, 4),
+QT_MOC_LITERAL(20, 218, 1)
     },
     "MyGLWidget\0DrawRoadPressed\0\0DrawNodePressed\0"
     "DrawLanePressed\0DrawSourcePressed\0"
-    "ClearWidget\0clearWidget\0draw\0"
-    "onRoadListWidgetClicked\0QTreeWidgetItem*\0"
-    "item\0i"
+    "ClearWidget\0clearWidget\0draw\0UpdateScale\0"
+    "s\0UpdateXOffset\0x\0UpdateYOffset\0y\0"
+    "UpdateOffset\0which\0onRoadListWidgetClicked\0"
+    "QTreeWidgetItem*\0item\0i"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +66,7 @@ static const uint qt_meta_data_MyGLWidget[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,14 +74,18 @@ static const uint qt_meta_data_MyGLWidget[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x0a /* Public */,
-       3,    0,   55,    2, 0x0a /* Public */,
-       4,    0,   56,    2, 0x0a /* Public */,
-       5,    0,   57,    2, 0x0a /* Public */,
-       6,    0,   58,    2, 0x0a /* Public */,
-       7,    0,   59,    2, 0x0a /* Public */,
-       8,    0,   60,    2, 0x0a /* Public */,
-       9,    2,   61,    2, 0x0a /* Public */,
+       1,    0,   74,    2, 0x0a /* Public */,
+       3,    0,   75,    2, 0x0a /* Public */,
+       4,    0,   76,    2, 0x0a /* Public */,
+       5,    0,   77,    2, 0x0a /* Public */,
+       6,    0,   78,    2, 0x0a /* Public */,
+       7,    0,   79,    2, 0x0a /* Public */,
+       8,    0,   80,    2, 0x0a /* Public */,
+       9,    1,   81,    2, 0x0a /* Public */,
+      11,    1,   84,    2, 0x0a /* Public */,
+      13,    1,   87,    2, 0x0a /* Public */,
+      15,    1,   90,    2, 0x0a /* Public */,
+      17,    2,   93,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -82,7 +95,11 @@ static const uint qt_meta_data_MyGLWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 10, QMetaType::Int,   11,   12,
+    QMetaType::Void, QMetaType::Float,   10,
+    QMetaType::Void, QMetaType::Float,   12,
+    QMetaType::Void, QMetaType::Float,   14,
+    QMetaType::Void, QMetaType::Int,   16,
+    QMetaType::Void, 0x80000000 | 18, QMetaType::Int,   19,   20,
 
        0        // eod
 };
@@ -99,7 +116,11 @@ void MyGLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->ClearWidget(); break;
         case 5: _t->clearWidget(); break;
         case 6: _t->draw(); break;
-        case 7: _t->onRoadListWidgetClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 7: _t->UpdateScale((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 8: _t->UpdateXOffset((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 9: _t->UpdateYOffset((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 10: _t->UpdateOffset((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->onRoadListWidgetClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -130,13 +151,13 @@ int MyGLWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 8;
+        _id -= 12;
     }
     return _id;
 }

@@ -48,6 +48,10 @@ public slots:
     void ClearWidget();
     void clearWidget();
     void draw();
+    void UpdateScale(float s);
+    void UpdateXOffset(float x);
+    void UpdateYOffset(float y);
+    void UpdateOffset(int which);
 
     void onRoadListWidgetClicked(QTreeWidgetItem *item, int i);
 
@@ -79,6 +83,8 @@ private:
     bool isDrawSourcePressed_;
     bool isLaneSelected_;
     bool isRoadSelected_;
+
+    float scale,xOffset,yOffset;
 
     void AddRoad(Node*, Node*);
     RoadSegment AddRoad(node_id_type, node_id_type, std::string name);

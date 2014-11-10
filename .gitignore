@@ -6,7 +6,7 @@ build-MyOpenGL-Desktop_Qt_5_3_MSVC2013_OpenGL_64bit-Debug/Makefile
 *.user
 *.o
 *.exe
-build-MyOpenGL-Desktop_Qt_5_3_MinGW_32bit-Debug/Makefile
+build-MyOpenGL-Desktop_Qt_5_3_MinGW_32bit-Debug/*
 build-MyOpenGL-Qt_5_3_for_Windows_Runtime_64bit-Debug/Makefile
 Core/MyOpenGL.pro
 Core/MyOpenGL.pro.user
