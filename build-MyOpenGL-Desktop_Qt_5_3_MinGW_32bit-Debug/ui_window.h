@@ -36,7 +36,7 @@ public:
     QPushButton *m_boutonSimulation1;
     QPushButton *m_boutonStartSimulation;
     QFrame *line;
-    QTabWidget *m_tabSimulation;
+    QTabWidget *Display;
     QWidget *tab;
     QPushButton *m_boutonDrawSource;
     QGroupBox *m_groupBoxTypeNoeud;
@@ -57,7 +57,24 @@ public:
     QCheckBox *m_checkboxOneWay;
     QSpinBox *m_spinBoxNombreDeVoies;
     QWidget *tab_3;
+    QWidget *tab_4;
+    QLineEdit *currentScale;
+    QLabel *label_4;
+    QLineEdit *xOffset;
+    QLineEdit *yOffset;
+    QLabel *label_5;
+    QLabel *label_6;
+    QPushButton *offsetRight;
+    QPushButton *offsetDown;
+    QPushButton *offsetUp;
+    QPushButton *offsetLeft;
     QLabel *m_labelTimer;
+    QGroupBox *groupBox;
+    QLineEdit *m_lineEditNorth;
+    QLineEdit *m_lineEditEast;
+    QLineEdit *m_lineEditWest;
+    QLineEdit *m_lineEditSouth;
+    QPushButton *pushButton;
 
     void setupUi(QWidget *Window)
     {
@@ -66,6 +83,7 @@ public:
         Window->resize(996, 675);
         myGLWidget = new MyGLWidget(Window);
         myGLWidget->setObjectName(QStringLiteral("myGLWidget"));
+        myGLWidget->setEnabled(true);
         myGLWidget->setGeometry(QRect(90, 10, 891, 511));
         m_boutonSimulation4 = new QPushButton(Window);
         m_boutonSimulation4->setObjectName(QStringLiteral("m_boutonSimulation4"));
@@ -81,9 +99,9 @@ public:
         line->setGeometry(QRect(0, 80, 91, 20));
         line->setFrameShape(QFrame::HLine);
         line->setFrameShadow(QFrame::Sunken);
-        m_tabSimulation = new QTabWidget(Window);
-        m_tabSimulation->setObjectName(QStringLiteral("m_tabSimulation"));
-        m_tabSimulation->setGeometry(QRect(0, 530, 1001, 151));
+        Display = new QTabWidget(Window);
+        Display->setObjectName(QStringLiteral("Display"));
+        Display->setGeometry(QRect(0, 530, 1001, 151));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         m_boutonDrawSource = new QPushButton(tab);
@@ -127,7 +145,7 @@ public:
         m_lineEditTauxExponentielle = new QLineEdit(m_groupBoxDistribution);
         m_lineEditTauxExponentielle->setObjectName(QStringLiteral("m_lineEditTauxExponentielle"));
         m_lineEditTauxExponentielle->setGeometry(QRect(120, 80, 113, 20));
-        m_tabSimulation->addTab(tab, QString());
+        Display->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QStringLiteral("tab_2"));
         m_boutonDrawRoad = new QPushButton(tab_2);
@@ -144,13 +162,64 @@ public:
         m_spinBoxNombreDeVoies->setGeometry(QRect(100, 10, 42, 22));
         m_spinBoxNombreDeVoies->setMinimum(1);
         m_spinBoxNombreDeVoies->setMaximum(5);
-        m_tabSimulation->addTab(tab_2, QString());
+        Display->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QStringLiteral("tab_3"));
-        m_tabSimulation->addTab(tab_3, QString());
+        Display->addTab(tab_3, QString());
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QStringLiteral("tab_4"));
+        currentScale = new QLineEdit(tab_4);
+        currentScale->setObjectName(QStringLiteral("currentScale"));
+        currentScale->setGeometry(QRect(90, 10, 113, 20));
+        label_4 = new QLabel(tab_4);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(10, 10, 71, 16));
+        xOffset = new QLineEdit(tab_4);
+        xOffset->setObjectName(QStringLiteral("xOffset"));
+        xOffset->setGeometry(QRect(90, 40, 113, 20));
+        yOffset = new QLineEdit(tab_4);
+        yOffset->setObjectName(QStringLiteral("yOffset"));
+        yOffset->setGeometry(QRect(90, 70, 113, 20));
+        label_5 = new QLabel(tab_4);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(10, 40, 71, 16));
+        label_6 = new QLabel(tab_4);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(10, 70, 71, 16));
+        offsetRight = new QPushButton(tab_4);
+        offsetRight->setObjectName(QStringLiteral("offsetRight"));
+        offsetRight->setGeometry(QRect(930, 30, 61, 51));
+        offsetDown = new QPushButton(tab_4);
+        offsetDown->setObjectName(QStringLiteral("offsetDown"));
+        offsetDown->setGeometry(QRect(870, 60, 61, 51));
+        offsetUp = new QPushButton(tab_4);
+        offsetUp->setObjectName(QStringLiteral("offsetUp"));
+        offsetUp->setGeometry(QRect(870, 10, 61, 51));
+        offsetLeft = new QPushButton(tab_4);
+        offsetLeft->setObjectName(QStringLiteral("offsetLeft"));
+        offsetLeft->setGeometry(QRect(810, 30, 61, 51));
+        Display->addTab(tab_4, QString());
         m_labelTimer = new QLabel(Window);
         m_labelTimer->setObjectName(QStringLiteral("m_labelTimer"));
         m_labelTimer->setGeometry(QRect(10, 510, 71, 16));
+        groupBox = new QGroupBox(Window);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setGeometry(QRect(0, 170, 91, 201));
+        m_lineEditNorth = new QLineEdit(groupBox);
+        m_lineEditNorth->setObjectName(QStringLiteral("m_lineEditNorth"));
+        m_lineEditNorth->setGeometry(QRect(20, 30, 51, 20));
+        m_lineEditEast = new QLineEdit(groupBox);
+        m_lineEditEast->setObjectName(QStringLiteral("m_lineEditEast"));
+        m_lineEditEast->setGeometry(QRect(40, 60, 51, 20));
+        m_lineEditWest = new QLineEdit(groupBox);
+        m_lineEditWest->setObjectName(QStringLiteral("m_lineEditWest"));
+        m_lineEditWest->setGeometry(QRect(0, 90, 51, 20));
+        m_lineEditSouth = new QLineEdit(groupBox);
+        m_lineEditSouth->setObjectName(QStringLiteral("m_lineEditSouth"));
+        m_lineEditSouth->setGeometry(QRect(20, 120, 51, 20));
+        pushButton = new QPushButton(groupBox);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(10, 160, 75, 23));
 
         retranslateUi(Window);
         QObject::connect(m_boutonSimulation1, SIGNAL(pressed()), myGLWidget, SLOT(CreateSimulation1()));
@@ -159,7 +228,7 @@ public:
         QObject::connect(m_boutonDrawRoad, SIGNAL(pressed()), myGLWidget, SLOT(DrawRoadPressed()));
         QObject::connect(m_boutonDrawSource, SIGNAL(pressed()), myGLWidget, SLOT(DrawSourcePressed()));
 
-        m_tabSimulation->setCurrentIndex(0);
+        Display->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(Window);
@@ -185,13 +254,33 @@ public:
         label->setText(QApplication::translate("Window", "Taux : ", 0));
         m_radioButtonExponentielle->setText(QApplication::translate("Window", "Exponentielle", 0));
         m_lineEditTauxExponentielle->setText(QApplication::translate("Window", "1.5", 0));
-        m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab), QApplication::translate("Window", "Noeud", 0));
+        Display->setTabText(Display->indexOf(tab), QApplication::translate("Window", "Noeud", 0));
         m_boutonDrawRoad->setText(QApplication::translate("Window", "Draw Road", 0));
         label_3->setText(QApplication::translate("Window", "Nombre de voies :", 0));
         m_checkboxOneWay->setText(QApplication::translate("Window", "One way", 0));
-        m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab_2), QApplication::translate("Window", "Route", 0));
-        m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab_3), QApplication::translate("Window", "Statistiques", 0));
+        Display->setTabText(Display->indexOf(tab_2), QApplication::translate("Window", "Route", 0));
+        Display->setTabText(Display->indexOf(tab_3), QApplication::translate("Window", "Statistiques", 0));
+        currentScale->setText(QApplication::translate("Window", "1.0", 0));
+        currentScale->setPlaceholderText(QString());
+        label_4->setText(QApplication::translate("Window", "Current scale:", 0));
+        xOffset->setText(QApplication::translate("Window", "0.0", 0));
+        xOffset->setPlaceholderText(QString());
+        yOffset->setText(QApplication::translate("Window", "0.0", 0));
+        yOffset->setPlaceholderText(QString());
+        label_5->setText(QApplication::translate("Window", "X offset:", 0));
+        label_6->setText(QApplication::translate("Window", "Y offset:", 0));
+        offsetRight->setText(QApplication::translate("Window", "RIGHT", 0));
+        offsetDown->setText(QApplication::translate("Window", "DOWN", 0));
+        offsetUp->setText(QApplication::translate("Window", "UP", 0));
+        offsetLeft->setText(QApplication::translate("Window", "LEFT", 0));
+        Display->setTabText(Display->indexOf(tab_4), QApplication::translate("Window", "Page", 0));
         m_labelTimer->setText(QApplication::translate("Window", "TextLabel", 0));
+        groupBox->setTitle(QApplication::translate("Window", "Importation", 0));
+        m_lineEditNorth->setText(QApplication::translate("Window", "45.3825079", 0));
+        m_lineEditEast->setText(QApplication::translate("Window", "-71.9212199", 0));
+        m_lineEditWest->setText(QApplication::translate("Window", "-71.9330645", 0));
+        m_lineEditSouth->setText(QApplication::translate("Window", "45.3758762", 0));
+        pushButton->setText(QApplication::translate("Window", "Import", 0));
     } // retranslateUi
 
 };

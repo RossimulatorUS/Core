@@ -374,7 +374,7 @@ void MyGLWidget::draw()
     }
 
     //draw nodes
-    glPointSize(25.0f*scale);
+    glPointSize(20.0f*std::min(1.0f,scale));
     auto allNodes = GetAllNodes();
     for(unsigned int i = 0; i < allNodes.size(); ++i)
     {
