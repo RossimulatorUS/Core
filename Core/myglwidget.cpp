@@ -487,7 +487,7 @@ void MyGLWidget::draw()
             glLineWidth(3);
             glTranslatef(0,0,-9);
             if (isLaneSelected_ && allLanes[j]->getLaneId() == atoi(selectedLaneItem_->text(0).toLocal8Bit().constData()) &&
-                    selectedLaneItem_->parent()->text(0).toLocal8Bit().constData() == allRoads[i].getRoadName())
+                    selectedLaneItem_->parent()->text(0).toLocal8Bit().constData() == allRoads[j].getRoadName())
                 glColor4f(0,0.75f,0, 0.75f);
             else
                 glColor4f(0.75f,0,0, 0.75f);
@@ -495,17 +495,15 @@ void MyGLWidget::draw()
             glBegin(GL_LINES);
                 //glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
                 //glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
-                glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X1), allLanes[j]->getLineFormula().getLaneCoordinate(Y1));
-                glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X2), allLanes[j]->getLineFormula().getLaneCoordinate(Y2));
-                glVertex2f((allLanes[i]->getLineFormula().getLaneCoordinate(X1)*scale)+xOffset, (allLanes[i]->getLineFormula().getLaneCoordinate(Y1)*scale)+yOffset);
-                glVertex2f((allLanes[i]->getLineFormula().getLaneCoordinate(X2)*scale)+xOffset, (allLanes[i]->getLineFormula().getLaneCoordinate(Y2)*scale)+yOffset);
+                glVertex2f((allLanes[j]->getLineFormula().getLaneCoordinate(X1)*scale)+xOffset, (allLanes[j]->getLineFormula().getLaneCoordinate(Y1)*scale)+yOffset);
+                glVertex2f((allLanes[j]->getLineFormula().getLaneCoordinate(X2)*scale)+xOffset, (allLanes[j]->getLineFormula().getLaneCoordinate(Y2)*scale)+yOffset);
             glEnd();
             out << "Number of cars on lane : " << allLanes[j]->getNumberOfVehicle() << "\n";
         }
     }
 
     //draw nodes
-    glPointSize(25.0f*scale);
+    glPointSize(20.0f*std::min(1.0f,scale));
     auto allNodes = GetAllNodes();
     for(unsigned int i = 0; i < allNodes.size(); ++i)
     {

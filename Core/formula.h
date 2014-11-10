@@ -26,7 +26,6 @@ class Formula
     float directionY_;
 
     float controlPoints[8];
-
     float laneCoordinates[4];
 
     float calculatePythagorus(float a, float b);
