@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>996</width>
+    <width>1175</width>
     <height>675</height>
    </rect>
   </property>
@@ -83,12 +83,12 @@
     <rect>
      <x>0</x>
      <y>530</y>
-     <width>1001</width>
+     <width>981</width>
      <height>151</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -97,10 +97,10 @@
     <widget class="QPushButton" name="m_boutonDrawSource">
      <property name="geometry">
       <rect>
-       <x>840</x>
+       <x>830</x>
        <y>-10</y>
-       <width>161</width>
-       <height>131</height>
+       <width>151</width>
+       <height>141</height>
       </rect>
      </property>
      <property name="text">
@@ -280,10 +280,10 @@
     <widget class="QPushButton" name="m_boutonDrawRoad">
      <property name="geometry">
       <rect>
-       <x>870</x>
-       <y>0</y>
-       <width>121</width>
-       <height>111</height>
+       <x>830</x>
+       <y>-10</y>
+       <width>151</width>
+       <height>141</height>
       </rect>
      </property>
      <property name="text">
@@ -430,6 +430,57 @@
     </property>
    </widget>
   </widget>
+  <widget class="QTreeWidget" name="m_treeWidget">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>10</y>
+     <width>181</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <column>
+    <property name="text">
+     <string>Simulation content</string>
+    </property>
+   </column>
+  </widget>
+  <widget class="QTextEdit" name="m_statsTextEdit">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>290</y>
+     <width>181</width>
+     <height>231</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_boutonBlockRoad">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>240</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Block road</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="m_boutonUnblockRoad">
+   <property name="geometry">
+    <rect>
+     <x>990</x>
+     <y>200</y>
+     <width>181</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Unblock road</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -450,6 +501,12 @@
     <slot>ResetPressed()</slot>
     <slot>DrawLanePressed()</slot>
     <slot>DrawSourcePressed()</slot>
+    <slot>CreateSimulation1()</slot>
+    <slot>CreateSimulation2()</slot>
+    <slot>CreateSimulation3()</slot>
+    <slot>CreateSimulation4()</slot>
+    <slot>CreateSimulation5()</slot>
+    <slot>BlockRoadPressed()</slot>
    </slots>
   </customwidget>
  </customwidgets>

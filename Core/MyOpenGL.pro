@@ -26,17 +26,17 @@ SOURCES += main.cpp \
     simulationdata.cpp \
     analyser.cpp \
     distributor.cpp \
-    StopSign.cpp \
     formula.cpp \
     execution_history.cpp \
     node.cpp \
-    road.cpp \
     signaler.cpp \
     vehicle.cpp \
     vehiclethread.cpp \
     lane.cpp \
     map_fetcher.cpp \
-    lib/pugixml/pugixml.cpp
+    lib/pugixml/pugixml.cpp \
+    TLight.cpp \
+    road_segment.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -46,8 +46,6 @@ HEADERS  += window.h \
     dvutility.h \
     simulationdata.h \
     simulationtraits.h \
-    intersection.h \
-    StopSign.h \
     analyser.h \
     distributor.h \
     autolock.h \
@@ -64,6 +62,7 @@ HEADERS  += window.h \
     map_way.h \
     lib/pugixml/pugiconfig.hpp \
     lib/pugixml/pugixml.hpp \
-    road_segment.h
+    road_segment.h \
+    TLight.h
 
 FORMS    += window.ui

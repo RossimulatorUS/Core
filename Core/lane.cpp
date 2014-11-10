@@ -5,13 +5,15 @@
 #include <iostream>
 
 
-Lane::Lane(Node& start, Node& end, road_id_type parent, int laneNumber)
+Lane::Lane(Node& start, Node& end, road_id_type parent, int laneNumber, int laneId)
     :start_(start), end_(end), parent_(parent)
 {
 
     //vehicleProgressionOrder = std::map<float, Vehicle*>();
     vehicles = std::list<Vehicle*>();
     nbChar = 0;
+    nbCharTotal = 0;
+    laneId_ = laneId;
 
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
 
@@ -25,11 +27,22 @@ void Lane::addVehicleToLane(Vehicle* vehicle)
     //vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(vehicle->getProgress(), vehicle));
     vehicles.insert(vehicles.end(),vehicle);
     ++nbChar;
+    ++nbCharTotal;
 }
 
 int Lane::getNumberOfVehicle()
 {
     return nbChar;
+}
+
+int Lane::getTotalNumberOfVehicle()
+{
+    return nbCharTotal;
+}
+
+int Lane::getLaneId()
+{
+    return laneId_;
 }
 
 void Lane::removeVehicleFromLane(Vehicle* v)
@@ -97,5 +110,9 @@ simulation_traits::road_id_type Lane::getRoadId()
 void Lane::laneUnblocked(node_id_type nodeID)
 {
     if((vehicles.begin() != vehicles.end()) && (nodeID == end_.GetId()))
+    {
+
         vehicles.front()->intersectionGo();
+    }
+
 }

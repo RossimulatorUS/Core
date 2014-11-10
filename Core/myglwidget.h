@@ -22,6 +22,9 @@ public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
+
+    void BlockRoad();
+    void UnBlockRoad();
 signals:
 
 public slots:
@@ -46,6 +49,8 @@ public slots:
     void clearWidget();
     void draw();
 
+    void onRoadListWidgetClicked(QTreeWidgetItem *item, int i);
+
 signals:
 
 private:
@@ -62,13 +67,21 @@ private:
     node_id_type clickPressedNode;
     node_id_type FindAssociatedNode(Node noeud);
 
+    QTreeWidgetItem* selectedRoadItem_;
+    QTreeWidgetItem* selectedLaneItem_;
+
+    RoadSegment selectedRoad_;
+    Lane *selectedLane;
+
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;
     bool isDrawLanePressed_;
     bool isDrawSourcePressed_;
+    bool isLaneSelected_;
+    bool isRoadSelected_;
 
     void AddRoad(Node*, Node*);
-    void AddRoad(node_id_type, node_id_type);
+    RoadSegment AddRoad(node_id_type, node_id_type, std::string name);
     void DrawSource(float *worldCoords);
     void DrawSource(float x, float y);
     void DrawNode(float *worldCoords);

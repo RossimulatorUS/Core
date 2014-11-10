@@ -68,7 +68,7 @@ public:
     Node& getStartNode();
     Node& getEndNode();
     RoadSegment& getCurrentRoad();
-    Lane* getCurrentLane();
+    Lane *getCurrentLane();
 
     float getProgress();
     float getSpeed();
@@ -85,7 +85,7 @@ public:
     bool process();
     void intersectionGo();
     bool isOnLastStretch();
-    void addToLane();
+    bool addToLane();
 };
 
 float distance(float x1, float y1, float x2, float y2);

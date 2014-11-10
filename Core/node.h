@@ -55,11 +55,15 @@ protected:
     std::set<road_id_type> waitingRoadIndex_;
     std::map<node_id_type, road_id_type> neighbours_;
     std::map<node_id_type, node_id_type> nextHopForDestination_;
+    std::map<node_id_type, node_id_type> OriginalnextHopForDestination_;
     std::map<node_id_type, road_cost_type> costs_;
+    std::map<node_id_type, road_cost_type> originalCosts_;
     std::queue<DVMessage> pendingDVMessages_;
 
     bool receiveDVMessage(DVMessage);
     void sendDVMessageToNeighbours();
+
+    bool isNodeBlocked_;
 
     int currentWaitingVehicleIndex;
 
@@ -92,6 +96,7 @@ public:
     void addNeighbour(node_id_type, road_id_type);
     void addLanes(road_id_type connection);
     void printDVResults();
+    void resetCosts();
 
     node_id_type getNextStep(node_id_type destination);
     road_id_type getNextRoad(node_id_type destination);
@@ -103,6 +108,10 @@ public:
     void addToWaitingVehicles(Vehicle*);
     void addToWaitingRoads(road_id_type id);
     virtual void processWaitingVehicles();
+
+    bool isNodeBlocked();
+    void setIsNodeBlocked(bool isRoadBlocked);
+    void updateCost(node_id_type, road_cost_type);
 };
 
 #endif // POINT_H

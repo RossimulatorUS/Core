@@ -54,9 +54,16 @@ void Vehicle::resetLane()
     y_ = currentLane_->getLineFormula().getLaneCoordinate(Y1);
 }
 
-void Vehicle::addToLane()
+bool Vehicle::addToLane()
 {
+    if (currentLane_->getStartNode().isNodeBlocked() && currentLane_->getEndNode().isNodeBlocked())
+    {
+        qDebug() << "BLOCKED";
+        return false;
+    }
+
     currentLane_->addVehicleToLane(this);
+    return true;
 }
 
 void Vehicle::printNodeCoordinates(Node start, Node end)
@@ -272,13 +279,31 @@ void Vehicle::switchRoad()
     //std::cout<<"SWITCHING"<<std::endl;
     resetVehicleSpeed();
 
+    //qDebug() << "---------------------------------------------------------";
+    //qDebug() << "Actual road before switch " << getCurrentRoad().getRoadID();
     startNode_ = getNextStep().GetId();
+    //qDebug() << "Next step : " << startNode_;
 
     currentRoad_ = chose_road(startNode_, endNode_);
 
+    //qDebug() << "Actual road after switch " << currentRoad_;
+
+    //qDebug() << "start Node {" << getStartNode().x() << "," << getStartNode().y() << "}" << " with id : " << getStartNode().GetId();
+    //qDebug() << "ROAD end Node {" << getCurrentRoad().getStartNode().x() << "," << getCurrentRoad().getStartNode().y() << "}" << " with id : " << getCurrentRoad().getStartNode().GetId();
+    //qDebug() << "Destination Node {" << getEndNode().x() << "," << getEndNode().y() << "}" << " with id : " << getEndNode().GetId();
+
     currentLane_->removeVehicleFromLane(this);
-    currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
+
+    //currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
+
+    //usefull when blocking roads
+    if (startNode_ == getCurrentRoad().getStartNode().GetId())
+        currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getCurrentRoad().getEndNode());
+    else
+        currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getCurrentRoad().getStartNode());
+
     currentLane_->addVehicleToLane(this);
+    //qDebug() << "Found a lane";
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();

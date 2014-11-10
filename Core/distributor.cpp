@@ -38,13 +38,14 @@ void Distributor::init()
     is_initialised_ = true;
     //Historique_dexecution::temps temps_initial;
 
+
     while(!terminate_)
     {
         // Attendre prochain tic
         if(*execute_)
         {
             *execute_ = false;
-
+            auto nodes = SimulationData::getInstance().getNodes();
             std::for_each(nodes_.begin(), nodes_.end(), [&](Node* node){
 
                 // Si le noeud est pret, ajouter un vehicule sur le reseau
@@ -53,6 +54,17 @@ void Distributor::init()
                     Vehicle* v = node->create_vehicle();
 
                     Lane* entry = v->getCurrentLane();
+
+                    /*if (SimulationData::getInstance().getRoad(entry->getRoadId()).isBlocked_)
+                    {
+                        qDebug() << "Road blocked";
+                    }*/
+
+                    /*if (node->isNodeBlocked())
+                    {
+                        qDebug() << "Returning node " << entry->getStartNode().GetId();
+                        return;
+                    }*/
 
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
 
@@ -64,9 +76,11 @@ void Distributor::init()
                     }
                     else
                     {
-                        all_vehicles_->push_back(v);
-                        threads_->at(chose_thread())->add_vehicle(v);
-                        v->addToLane();
+                        if (v->addToLane())
+                        {
+                            all_vehicles_->push_back(v);
+                            threads_->at(chose_thread())->add_vehicle(v);
+                        }
                     }
                 }
             });

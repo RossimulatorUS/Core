@@ -5,11 +5,11 @@
 #include "map_fetcher.h"
 #include <iostream>
 
-
 int main(int argc, char **argv)
 {
+    std::cout<<"IN MAIN"<<std::endl;
     QApplication app(argc, argv);
-    //std::cout<<"A"<<std::endl;
+
     Window window;
 
     window.setWindowTitle("RossimulatorUS");

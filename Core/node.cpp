@@ -42,6 +42,7 @@ Node::Node(GLfloat x, GLfloat y)
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_= false;
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
@@ -60,6 +61,7 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_ = false;
 }
 
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
@@ -79,6 +81,7 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_ = false;
 }
 
 
@@ -198,9 +201,12 @@ bool Node::receiveDVMessage(DVMessage message)
             costs_[destination] = DV_INFINITY;
         }
 
+        //qDebug() << "Costs for node " << id_ << " to destination " << destination << " = " << costs_[destination] << "Origin of the message is : " << message.origin();
+
         auto newCost = itt->second + costs_[message.origin()];
         if(newCost < costs_[destination])
         {
+            //qDebug() << "NEW COST HAD BEEN FOUND = " << newCost;
             costs_[destination] = newCost;
             nextHopForDestination_[destination] = message.origin();
             routingHasChanged = true;
@@ -224,6 +230,8 @@ void Node::addNeighbour(node_id_type neighbour, road_id_type connection)
     neighbours_[neighbour] = connection;
     nextHopForDestination_[neighbour] = neighbour;
     costs_[neighbour] = getRoad(connection).cost();
+    originalCosts_ = costs_;
+    OriginalnextHopForDestination_ = nextHopForDestination_;
 }
 
 void Node::addLanes(road_id_type connection)
@@ -242,6 +250,13 @@ void Node::printDVResults()
         qDebug() << "To " << getNode(itt->first).id_ << " through " << getNode(itt->second).id_ << " which costs " << costs_[itt->first];
     }
     qDebug() << endl;
+}
+
+void Node::resetCosts()
+{
+    Autolock av(mtx);
+    costs_ = originalCosts_;
+    nextHopForDestination_ = OriginalnextHopForDestination_;
 }
 
 Node::node_id_type Node::getNextStep(node_id_type destination)
@@ -282,7 +297,6 @@ void Node::processWaitingVehicles()
 
     if(waitingRoads_.size()>0)
     {
-
         //std::cout<<waitingRoads_.size()<<std::endl;
         road_id_type rID = waitingRoads_.front();
         RoadSegment& r = SimulationData::getInstance().getRoad(rID);
@@ -292,7 +306,6 @@ void Node::processWaitingVehicles()
         waitingRoads_.pop();
         waitingRoadIndex_.erase(rID);
     }
-
 }
 
 void Node::addToWaitingRoads(road_id_type id)
@@ -301,4 +314,20 @@ void Node::addToWaitingRoads(road_id_type id)
 
     if(waitingRoadIndex_.find(id) == waitingRoadIndex_.end())
         waitingRoads_.push(id);
+}
+
+bool Node::isNodeBlocked()
+{
+    return isNodeBlocked_;
+}
+
+void Node::setIsNodeBlocked(bool isRoadBlocked)
+{
+    isNodeBlocked_ = isRoadBlocked;
+}
+
+void Node::updateCost(Node::node_id_type neighbour, Node::road_cost_type connection)
+{
+    costs_[neighbour] = connection;
+    qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost 2 neighbour : " << costs_[neighbour] << " Road : " << connection;
 }

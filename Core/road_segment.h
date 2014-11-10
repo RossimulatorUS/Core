@@ -25,20 +25,27 @@ public:
     using road_cost_type = typename simulation_traits::road_cost_type;
 
 private:
+    std::string roadName_;
+
     vector<Lane*> lanes_;
 
     Formula lineFormula;
+
+    int actualNumberOfCar;
+    int totalNumberOfCar;
     
     bool isReadyToCreate_;
     bool isLeftToRight_;
     bool isOneWay_;
 
 public:
-    RoadSegment(node_id_type startID, node_id_type EndID, bool isOneWay, int laneNumber);
+    RoadSegment(node_id_type startID, node_id_type EndID, bool isOneWay, int laneNumber, std::string name);
     RoadSegment();
 
     node_id_type startID_;
     node_id_type endID_;
+
+    std::string getRoadName();
 
     road_id_type roadID_;
 
@@ -50,13 +57,21 @@ public:
     bool isParallel(Node startRoad, Node endRoad, Node startClick, Node endClick);
     bool isLeftToRight(Node node1, Node node2);
     bool isLeftToRight();
+    bool isBlocked_;
+
+    void BlockRoad();
+    void UnBlockRoad();
+
+    int GetActualNumberOfCar();
+    int GetTotalNumberOfCar();
+    road_cost_type cost_;
 
     Lane* findAssociatedLane(Node, Node);
 
     Formula& getLineFormula();
     road_cost_type cost();
 
-    void addLane(Node&, Node&, int laneNumber);
+    void addLane(Node&, Node&, int laneNumber, int laneId);
     void allLanesUnblocked(node_id_type nodeID);
 
     std::vector<Lane*>& getLanes();

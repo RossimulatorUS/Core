@@ -15,6 +15,12 @@ MyGLWidget::MyGLWidget(QWidget *parent)
     isDrawLanePressed_ = false;
     isDrawSourcePressed_ = false;
 
+    selectedLaneItem_ = new QTreeWidgetItem();
+    selectedRoadItem_ = new QTreeWidgetItem();
+
+    isLaneSelected_ = false;
+    isRoadSelected_ = false;
+
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
 }
@@ -22,6 +28,34 @@ MyGLWidget::MyGLWidget(QWidget *parent)
 MyGLWidget::~MyGLWidget()
 {
 
+}
+
+void MyGLWidget::BlockRoad()
+{
+    auto allNodes = GetAllNodes();
+    for (auto itt = allNodes.begin(); itt != allNodes.end(); ++itt)
+    {
+        (*itt)->resetCosts();
+    }
+
+    auto road = SimulationData::getInstance().getRoad(selectedRoad_.getRoadID());
+    qDebug() << "Blocking road " << road.getRoadID();
+    road.BlockRoad();
+    road.isBlocked_ = true;
+}
+
+void MyGLWidget::UnBlockRoad()
+{
+    auto allNodes = GetAllNodes();
+    for (auto itt = allNodes.begin(); itt != allNodes.end(); ++itt)
+    {
+        (*itt)->resetCosts();
+    }
+
+    auto road = SimulationData::getInstance().getRoad(selectedRoad_.getRoadID());
+    qDebug() << "UnBlocking road " << road.getRoadID();
+    road.UnBlockRoad();
+    road.isBlocked_ = false;
 }
 
 void MyGLWidget::initializeGL()
@@ -134,12 +168,16 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
 
 void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 {
+    auto window = static_cast<Window*>(parent());
+
     Node node = Node(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
     if (clickPressedNode != associatedNode && clickPressedNode != 66666 && associatedNode != 66666)
     {
-        AddRoad(clickPressedNode, associatedNode);
+        std::string name = "JACYNTHE";
+        auto newRoad = AddRoad(clickPressedNode, associatedNode, name);
+        window->addNameToListWidget(newRoad);
     }
 }
 
@@ -235,7 +273,7 @@ void MyGLWidget::DrawNode(float x, float y)
     SimulationData::getInstance().addNode(x,y, false);
 }
 
-void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
+RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)
 {
     auto window = static_cast<Window*>(parent());
 
@@ -243,24 +281,107 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto numberOfLane = window->getNumberofLane();
 
     //allRoads_.push_back(Route(a, b));
-    RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane);
+    RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane, name);
     auto roadId = SimulationData::getInstance().addRoad(newRoad);
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
     SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
 
-    //qDebug()<<"WTF";
     auto& r0 = SimulationData::getInstance().getRoad(roadId);
+
+    int cpt = 0;
 
     for(int i = 1; i <= numberOfLane; ++i)
     {
-        r0.addLane(r0.getStartNode(), r0.getEndNode(), i);
+        r0.addLane(r0.getStartNode(), r0.getEndNode(), i, cpt);
+        ++cpt;
 
         if (!isOneWay)
-            r0.addLane(r0.getEndNode(), r0.getStartNode(), i);
+        {
+            r0.addLane(r0.getEndNode(), r0.getStartNode(), i, cpt);
+            ++cpt;
+        }
     }
 
     SimulationData::getInstance().getNode(a).addLanes(roadId);
     SimulationData::getInstance().getNode(b).addLanes(roadId);
+
+    return r0;
+}
+
+void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
+{
+    RoadSegment selectedRoad;
+    //Lane *selectedLane;
+    auto window = static_cast<Window*>(parent());
+
+    if (item->text(0) == window->getRootItem()->text(0))
+    {
+        //Just clicked on root element do nothing
+        return;
+    }
+
+    //The selected item is a road because our parent is Road
+    else if (item->parent()->text(0) == window->getRootItem()->text(0))
+    {
+        selectedRoadItem_ = item;
+        isRoadSelected_ = true;
+        isLaneSelected_ = false;
+        selectedLaneItem_ = new QTreeWidgetItem();
+
+        auto allRoads = GetAllRoads();
+        for (int i = 0; i < allRoads.size(); ++i)
+        {
+            if (allRoads[i].getRoadName() == selectedRoadItem_->text(0).toLocal8Bit().constData())
+            {
+                selectedRoad = allRoads[i];
+                qDebug() << allRoads[i].isBlocked_;
+                /*if (selectedRoad.isBlocked_)
+                {
+                    window->hideBlockRoadButton();
+                }
+                else
+                {
+                    window->showBlockRoadButton();
+                }*/
+            }
+        }
+        selectedRoad_ = selectedRoad;
+        window->setStats(window->Stats::Roads, selectedRoad, 0);
+
+
+    }
+    //clicked on a lane
+    else
+    {
+        isRoadSelected_ = false;
+        isLaneSelected_ = true;
+
+        selectedLaneItem_ = item;
+        selectedRoadItem_ = new QTreeWidgetItem();
+
+        QString road = item->parent()->text(0);
+        std::string parentRoad = road.toLocal8Bit().constData();
+        auto allRoads = GetAllRoads();
+
+        for (int i = 0; i < allRoads.size(); ++i)
+        {
+            if (allRoads[i].getRoadName() == parentRoad)
+            {
+                std::vector<Lane*> allLanes = allRoads[i].getLanes();
+                int laneNumber = atoi(selectedLaneItem_->text(0).toLocal8Bit().constData());
+                for (int i = 0; i < allLanes.size(); ++i)
+                {
+                    //qDebug() << laneNumber;
+                    if (allLanes[i]->getLaneId() == laneNumber)
+                    {
+                        selectedLane = allLanes[i];
+                    }
+                }
+            }
+            this->selectedLane = selectedLane;
+            window->setStats(window->Stats::Lanes, selectedRoad, selectedLane);
+        }
+    }
 }
 
 void MyGLWidget::DrawSource(float *worldCoords)
@@ -344,7 +465,11 @@ void MyGLWidget::draw()
         glLoadIdentity();
         glTranslatef(0,0,-10);
         //qglColor(Qt::red);
-        glColor4f(1,0,0,0.5f);
+        if (isRoadSelected_ && allRoads[i].getRoadName() == selectedRoadItem_->text(0).toLocal8Bit().constData())
+            glColor4f(0,1,0,0.5f);
+        else
+            glColor4f(1,0,0,0.5f);
+
         glBegin(GL_QUADS);
             glVertex2f(allRoads[i].getLineFormula().getControlPoint(X1), allRoads[i].getLineFormula().getControlPoint(Y1));
             glVertex2f(allRoads[i].getLineFormula().getControlPoint(X2), allRoads[i].getLineFormula().getControlPoint(Y2));
@@ -355,20 +480,24 @@ void MyGLWidget::draw()
         //Drawing lanes
         std::vector<Lane*> allLanes = allRoads.at(i).getLanes();
         //for (auto itt = allLanes.begin(); itt != allLanes.end(); ++i)
-        for (unsigned int i = 0; i < allLanes.size(); ++i)
+        for (unsigned int j = 0; j < allLanes.size(); ++j)
         {
             glLoadIdentity();
             glLineWidth(3);
             glTranslatef(0,0,-9);
-            glColor4f(0.75f,0,0, 0.75f);
+            if (isLaneSelected_ && allLanes[j]->getLaneId() == atoi(selectedLaneItem_->text(0).toLocal8Bit().constData()) &&
+                    selectedLaneItem_->parent()->text(0).toLocal8Bit().constData() == allRoads[i].getRoadName())
+                glColor4f(0,0.75f,0, 0.75f);
+            else
+                glColor4f(0.75f,0,0, 0.75f);
             //qglColor(Qt::blue);
             glBegin(GL_LINES);
                 //glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
                 //glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
-                glVertex2f(allLanes[i]->getLineFormula().getLaneCoordinate(X1), allLanes[i]->getLineFormula().getLaneCoordinate(Y1));
-                glVertex2f(allLanes[i]->getLineFormula().getLaneCoordinate(X2), allLanes[i]->getLineFormula().getLaneCoordinate(Y2));
+                glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X1), allLanes[j]->getLineFormula().getLaneCoordinate(Y1));
+                glVertex2f(allLanes[j]->getLineFormula().getLaneCoordinate(X2), allLanes[j]->getLineFormula().getLaneCoordinate(Y2));
             glEnd();
-            out << "Number of cars on lane : " << allLanes[i]->getNumberOfVehicle() << "\n";
+            out << "Number of cars on lane : " << allLanes[j]->getNumberOfVehicle() << "\n";
         }
     }
 
@@ -398,10 +527,11 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0,0,-8);
+        if ((*itt)->isOnLastStretch())
         //if((*itt)->getPositionInLane() < 5)
+            qglColor(Qt::yellow);
+        else
             qglColor(Qt::blue);
-        //else
-        //    qglColor(Qt::green);
 
         /*if ((*itt)->isCarBehind())
         {

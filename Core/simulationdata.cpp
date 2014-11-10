@@ -43,18 +43,20 @@ RoadSegment& SimulationData::getRoad(simulation_traits::road_id_type id)
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource)
 {
-    //allNodes_.emplace_back(x, y, allNodes_.size(), isSource);
+    //Use emplace back
+    allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource));
     //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource));
-    allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource));
+    //allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource));
 
     return allNodes_.size()-1;
 }
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo)
 {
-    //allNodes_.emplace_back(x, y, allNodes_.size(), isSource, distributionInfo);
+    //-----> use emplace back <-------
+    allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
     //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource, distributionInfo));
-    allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
+    //allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
 
     return allNodes_.size()-1;
 }

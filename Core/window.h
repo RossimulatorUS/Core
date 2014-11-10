@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QString>
-
+#include <QtWidgets>
 #include "cortex.h"
 #include "simulationtraits.h"
 
@@ -16,6 +16,8 @@ class Window : public QWidget
     Q_OBJECT
 
 public:
+    enum class Stats {Roads, Lanes};
+
     explicit Window(QWidget *parent = 0);
     ~Window();
 
@@ -33,6 +35,17 @@ public:
 
     bool isOneWay();
 
+    void setRoadNameListWidget(vector<RoadSegment> roadNames);
+    void addNameToListWidget(RoadSegment roadName);
+    void setStats(Stats type, RoadSegment road, Lane *lane);
+
+    void connectListWidget();
+    void hideBlockRoadButton();
+    void showBlockRoadButton();
+
+    QTreeWidgetItem *getRootItem() const;
+    void setRootItem(QTreeWidgetItem *rootItem);
+
     int getCurrentTabIndex();
     int getNumberofLane();
 
@@ -49,8 +62,23 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void onRoadListWidgetClicked(QTreeWidgetItem *, int);
+
+    void on_m_boutonBlockRoad_clicked();
+
+    void on_m_boutonUnblockRoad_clicked();
+
 private:
     Ui::Window *ui;
+    QTreeWidgetItem* rootItem_;
+    QTreeWidgetItem* selectedItem_;
+
+    void addTreeRoot(QString name);
+
+    QTreeWidgetItem *addTreeChild(QTreeWidgetItem *parent, QString name);
+
+    void setTextEditRoad(RoadSegment road);
+    void setTextEditLane(Lane *lane);
 };
 
 #endif // WINDOW_H

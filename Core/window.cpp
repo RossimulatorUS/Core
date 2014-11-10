@@ -12,6 +12,13 @@ Window::Window(QWidget *parent) :
     ui(new Ui::Window)
 {
     ui->setupUi(this);
+
+    //Add the root nodes
+    addTreeRoot("Roads");
+    //addTreeRoot("Lanes");
+    //addTreeRoot("Nodes");
+
+    //showBlockRoadButton();
 }
 
 Window::~Window()
@@ -82,6 +89,23 @@ void Window::keyPressEvent(QKeyEvent *e)
         QWidget::keyPressEvent(e);
 }
 
+void Window::addTreeRoot(QString name)
+{
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->m_treeWidget);
+    rootItem_ = treeItem;
+    treeItem->setText(0, name);
+}
+
+QTreeWidgetItem *Window::getRootItem()const
+{
+    return rootItem_;
+}
+
+void Window::setRootItem(QTreeWidgetItem *rootItem)
+{
+    rootItem_ = rootItem;
+}
+
 // Beginning the simulation
 void Window::on_m_boutonStartSimulation_clicked()
 {
@@ -92,6 +116,10 @@ void Window::on_m_boutonStartSimulation_clicked()
         std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
+            if ((*itt)->isNodeBlocked())
+            {
+                qDebug() << "wtf is going on";
+            }
             (*itt)->startDV();
         }
         while(dvEnCours)
@@ -133,13 +161,34 @@ void Window::on_m_boutonStartSimulation_clicked()
 
 }
 
+void Window::connectListWidget()
+{
+    connect(ui->m_treeWidget, SIGNAL(itemClicked(QTreeWidgetItem *, int)),
+            this, SLOT(onRoadListWidgetClicked(QTreeWidgetItem *, int)));
+}
+
+void Window::hideBlockRoadButton()
+{
+    ui->m_boutonBlockRoad->setVisible(false);
+    ui->m_boutonUnblockRoad->setVisible(true);
+}
+
+void Window::showBlockRoadButton()
+{
+    ui->m_boutonBlockRoad->setVisible(true);
+    ui->m_boutonUnblockRoad->setVisible(false);
+}
+
 void Window::on_m_boutonSimulation1_clicked()
 {
     ui->myGLWidget->clearWidget();
 
     ui->myGLWidget->DrawSource(0.0f,1.6f);
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
-    ui->myGLWidget->AddRoad(0, 1);
+    auto road = ui->myGLWidget->AddRoad(0, 1, "Pas cool");
+
+    connectListWidget();
+    setRoadNameListWidget(SimulationData::getInstance().getRoads());
 
     ui->myGLWidget->updateGL();
 }
@@ -154,10 +203,13 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
 
     ui->myGLWidget->DrawNode(0.0f,0.0f);
-    ui->myGLWidget->AddRoad(0, 4);
-    ui->myGLWidget->AddRoad(1, 4);
-    ui->myGLWidget->AddRoad(2, 4);
-    ui->myGLWidget->AddRoad(3, 4);
+    auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
+    auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
+    auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
+    auto road4 = ui->myGLWidget->AddRoad(3, 4, "T LAITE");
+
+    connectListWidget();
+    setRoadNameListWidget(SimulationData::getInstance().getRoads());
 
     ui->myGLWidget->updateGL();
 }
@@ -172,4 +224,154 @@ void Window::on_pushButton_clicked()
                        ui->m_lineEditEast->text().toDouble());
     map.fetch();
     map.print();
+}
+
+void Window::onRoadListWidgetClicked(QTreeWidgetItem *item, int i)
+{
+    ui->myGLWidget->onRoadListWidgetClicked(item, i);
+
+    selectedItem_ = item;
+
+}
+
+QTreeWidgetItem* Window::addTreeChild(QTreeWidgetItem *parent, QString name)
+{
+    QTreeWidgetItem *treeItem = new QTreeWidgetItem();
+    treeItem->setText(0, name);
+    parent->addChild(treeItem);
+    return treeItem;
+}
+
+void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
+{
+    for (int i = 0; i < roadNames.size(); ++i)
+    {
+        QString qstr = QString::fromStdString(roadNames[i].getRoadName());
+        auto roadTreeItem = addTreeChild(rootItem_, qstr);
+        for(int i = 0; i < roadNames[i].getLanes().size(); ++i)
+        {
+            char buffer [30];
+            std::string tempName = itoa(i, buffer, 10);
+            QString laneName = QString::fromStdString(tempName);
+            auto item = addTreeChild(roadTreeItem, laneName);
+        }
+    }
+}
+
+void Window::addNameToListWidget(RoadSegment roadName)
+{
+    QString qstr = QString::fromStdString(roadName.getRoadName());
+    auto roadTreeItem = addTreeChild(rootItem_, qstr);
+    for(int i = 0; i < roadName.getLanes().size(); ++i)
+    {
+        char buffer [30];
+        std::string tempName = itoa(i, buffer, 10);
+        QString laneName = QString::fromStdString(tempName);
+        auto item = addTreeChild(roadTreeItem, laneName);
+    }
+}
+
+void Window::setStats(Stats type, RoadSegment road, Lane *lane)
+{
+    if (type == Stats::Roads)
+        setTextEditRoad(road);
+    else if (type == Stats::Lanes)
+        setTextEditLane(lane);
+}
+
+void Window::setTextEditRoad(RoadSegment road)
+{
+    auto textEdit = ui->m_statsTextEdit;
+
+    char buffer [30];
+    std::string tempName = itoa(road.GetActualNumberOfCar(), buffer, 10);
+    QString actualNumberOfCar = QString::fromStdString(tempName);
+
+    char buffer2 [30];
+    std::string tempName2 = itoa(road.GetTotalNumberOfCar(), buffer2, 10);
+    QString totalNumberOfCar = QString::fromStdString(tempName2);
+
+    QString output = "Number of car on road : " + actualNumberOfCar + '\n' +
+                     "Total number of car : " + totalNumberOfCar + '\n' +
+                     "Average elapsed time on road : TODO" + '\n';
+
+    QString qstr = QString::fromStdString(road.getRoadName());
+    textEdit->setText(output);
+}
+
+void Window::setTextEditLane(Lane *lane)
+{
+    auto textEdit = ui->m_statsTextEdit;
+
+    char buffer [30];
+    std::string tempName = itoa(lane->getNumberOfVehicle(), buffer, 10);
+    QString actualNumberOfCar = QString::fromStdString(tempName);
+
+    char buffer2 [30];
+    std::string tempName2 = itoa(lane->getTotalNumberOfVehicle(), buffer2, 10);
+    QString totalNumberOfCar = QString::fromStdString(tempName2);
+
+    QString output = "Number of car on lane : " + actualNumberOfCar + '\n' +
+                     "Total number of car : " + totalNumberOfCar + '\n' +
+                     "Average elapsed time on road : TODO" + '\n';
+
+    //QString qstr = QString::fromStdString(lane.getRoadName());
+    textEdit->setText(output);
+}
+
+void Window::on_m_boutonBlockRoad_clicked()
+{
+    bool dvEnCours = true;
+
+    ui->myGLWidget->BlockRoad();
+
+    std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+    {
+        (*itt)->startDV();
+    }
+    while(dvEnCours)
+    {
+        dvEnCours = false;
+        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+        {
+            dvEnCours |= (*itt)->processDVMessages();
+        }
+    }
+
+    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+    {
+        (*itt)->printDVResults();
+    }
+
+    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::FDiagPattern));
+    //Qt::BrushStyle::NoBrush
+}
+
+void Window::on_m_boutonUnblockRoad_clicked()
+{
+    bool dvEnCours = true;
+
+    ui->myGLWidget->UnBlockRoad();
+
+    std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+    {
+        (*itt)->startDV();
+    }
+    while(dvEnCours)
+    {
+        dvEnCours = false;
+        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+        {
+            dvEnCours |= (*itt)->processDVMessages();
+        }
+    }
+
+    for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
+    {
+        (*itt)->printDVResults();
+    }
+
+    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));
 }

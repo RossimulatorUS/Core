@@ -44,15 +44,23 @@ Lane* RoadSegment::findAssociatedLane(Node start, Node end)
 {
     QTime time = QTime::currentTime();
     srand((uint)time.msec());
+    int cpt = 0;
 
     while(true) //TODO: (maybe) this should return the lane with the least cars
     {
         auto randLaneNumber = (rand() % (lanes_.size()) + 0);
 
+        //qDebug() << "Lanes get start node = " << lanes_[randLaneNumber]->getStartNode().GetId() << "Lanes get end node = " << lanes_[randLaneNumber]->getEndNode().GetId() << cpt;
+
         if (isInSameDirection(lanes_[randLaneNumber]->getStartNode(), lanes_[randLaneNumber]->getEndNode(), start, end))
         {
             return lanes_[randLaneNumber];
         }
+
+        if (cpt > 10)
+            qDebug() << "Perte de temps";
+
+        ++cpt;
     }
 
     /*for (unsigned int i = 0; i < lanes_.size(); ++i)
@@ -66,12 +74,17 @@ Lane* RoadSegment::findAssociatedLane(Node start, Node end)
     return 0;
 }
 
-RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber)
+RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber, std::string name)
     :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>())
 {
     isOneWay_ = isOneWay;
     isLeftToRight_ = isLeftToRight(getStartNode(), getEndNode());
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
+    actualNumberOfCar = 0;
+    totalNumberOfCar = 0;
+    cost_ = lineFormula.getLength();
+    roadName_ = name;
+    isBlocked_ = false;
 }
 
 RoadSegment::RoadSegment()
@@ -88,9 +101,9 @@ RoadSegment::road_cost_type RoadSegment::cost()
     return lineFormula.getLength();
 }
 
-void RoadSegment::addLane(Node& node1, Node& node2, int laneNumber) //could remove node1 and node2
+void RoadSegment::addLane(Node& node1, Node& node2, int laneNumber, int laneId) //could remove node1 and node2
 {
-    Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber); //and replace them with getStartNode(), getEndNode()
+    Lane* lane = new Lane(node1, node2, getRoadID(), laneNumber, laneId); //and replace them with getStartNode(), getEndNode()
     lanes_.push_back(lane);
 }
 
@@ -110,4 +123,51 @@ void RoadSegment::allLanesUnblocked(node_id_type nodeID)
     {
         lanes_[i]->laneUnblocked(nodeID);
     }
+}
+
+std::string RoadSegment::getRoadName()
+{
+    return roadName_;
+}
+
+void RoadSegment::BlockRoad()
+{
+    getStartNode().setIsNodeBlocked(true);
+    getEndNode().setIsNodeBlocked(true);
+    isBlocked_ = true;
+    cost_ = 999999;
+    //qDebug() << "Blocking road : startNode = " << getStartNode().GetId() << " end node = " << getEndNode().GetId();
+    getStartNode().updateCost(getEndNode().GetId(), cost_);
+    getEndNode().updateCost(getStartNode().GetId(), cost_);
+}
+
+void RoadSegment::UnBlockRoad()
+{
+    getStartNode().setIsNodeBlocked(false);
+    getEndNode().setIsNodeBlocked(false);
+    isBlocked_ = false;
+    cost_ = lineFormula.getLength();
+    //qDebug() << "Blocking road : startNode = " << getStartNode().GetId() << " end node = " << getEndNode().GetId();
+    getStartNode().updateCost(getEndNode().GetId(), cost_);
+    getEndNode().updateCost(getStartNode().GetId(), cost_);
+}
+
+int RoadSegment::GetActualNumberOfCar()
+{
+    auto allLanes = getLanes();
+    for (auto itt = allLanes.begin(); itt != allLanes.end(); ++itt)
+    {
+        actualNumberOfCar += (*itt)->getNumberOfVehicle();
+    }
+    return actualNumberOfCar;
+}
+
+int RoadSegment::GetTotalNumberOfCar()
+{
+    auto allLanes = getLanes();
+    for (auto itt = allLanes.begin(); itt != allLanes.end(); ++itt)
+    {
+        totalNumberOfCar += (*itt)->getTotalNumberOfVehicle();
+    }
+    return totalNumberOfCar;
 }

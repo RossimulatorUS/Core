@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MyGLWidget_t {
-    QByteArrayData data[10];
-    char stringdata[142];
+    QByteArrayData data[13];
+    char stringdata[155];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,21 +30,24 @@ struct qt_meta_stringdata_MyGLWidget_t {
 static const qt_meta_stringdata_MyGLWidget_t qt_meta_stringdata_MyGLWidget = {
     {
 QT_MOC_LITERAL(0, 0, 10),
-QT_MOC_LITERAL(1, 11, 17),
-QT_MOC_LITERAL(2, 29, 0),
-QT_MOC_LITERAL(3, 30, 17),
-QT_MOC_LITERAL(4, 48, 15),
-QT_MOC_LITERAL(5, 64, 15),
-QT_MOC_LITERAL(6, 80, 15),
-QT_MOC_LITERAL(7, 96, 15),
-QT_MOC_LITERAL(8, 112, 17),
-QT_MOC_LITERAL(9, 130, 11)
+QT_MOC_LITERAL(1, 11, 15),
+QT_MOC_LITERAL(2, 27, 0),
+QT_MOC_LITERAL(3, 28, 15),
+QT_MOC_LITERAL(4, 44, 15),
+QT_MOC_LITERAL(5, 60, 17),
+QT_MOC_LITERAL(6, 78, 11),
+QT_MOC_LITERAL(7, 90, 11),
+QT_MOC_LITERAL(8, 102, 4),
+QT_MOC_LITERAL(9, 107, 23),
+QT_MOC_LITERAL(10, 131, 16),
+QT_MOC_LITERAL(11, 148, 4),
+QT_MOC_LITERAL(12, 153, 1)
     },
-    "MyGLWidget\0CreateSimulation1\0\0"
-    "CreateSimulation4\0StartSimulation\0"
-    "DrawRoadPressed\0DrawNodePressed\0"
+    "MyGLWidget\0DrawRoadPressed\0\0DrawNodePressed\0"
     "DrawLanePressed\0DrawSourcePressed\0"
-    "ClearWidget"
+    "ClearWidget\0clearWidget\0draw\0"
+    "onRoadListWidgetClicked\0QTreeWidgetItem*\0"
+    "item\0i"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,7 +72,7 @@ static const uint qt_meta_data_MyGLWidget[] = {
        6,    0,   58,    2, 0x0a /* Public */,
        7,    0,   59,    2, 0x0a /* Public */,
        8,    0,   60,    2, 0x0a /* Public */,
-       9,    0,   61,    2, 0x0a /* Public */,
+       9,    2,   61,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,7 +82,7 @@ static const uint qt_meta_data_MyGLWidget[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 10, QMetaType::Int,   11,   12,
 
        0        // eod
 };
@@ -89,18 +92,17 @@ void MyGLWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     if (_c == QMetaObject::InvokeMetaMethod) {
         MyGLWidget *_t = static_cast<MyGLWidget *>(_o);
         switch (_id) {
-        case 0: _t->CreateSimulation1(); break;
-        case 1: _t->CreateSimulation4(); break;
-        case 2: _t->StartSimulation(); break;
-        case 3: _t->DrawRoadPressed(); break;
-        case 4: _t->DrawNodePressed(); break;
-        case 5: _t->DrawLanePressed(); break;
-        case 6: _t->DrawSourcePressed(); break;
-        case 7: _t->ClearWidget(); break;
+        case 0: _t->DrawRoadPressed(); break;
+        case 1: _t->DrawNodePressed(); break;
+        case 2: _t->DrawLanePressed(); break;
+        case 3: _t->DrawSourcePressed(); break;
+        case 4: _t->ClearWidget(); break;
+        case 5: _t->clearWidget(); break;
+        case 6: _t->draw(); break;
+        case 7: _t->onRoadListWidgetClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject MyGLWidget::staticMetaObject = {

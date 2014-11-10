@@ -24,6 +24,7 @@ TLight::TLight(GLfloat x, GLfloat y):lightDelay(0), currentLight(0)
 
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_ = false;
 }
 
 TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource):lightDelay(0), currentLight(0)
@@ -45,6 +46,7 @@ TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource):lightDelay(
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_ = false;
 }
 
 TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo):lightDelay(0), currentLight(0)
@@ -67,6 +69,7 @@ TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, Distributio
     // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
+    isNodeBlocked_ = false;
 }
 
 void TLight::processWaitingVehicles()

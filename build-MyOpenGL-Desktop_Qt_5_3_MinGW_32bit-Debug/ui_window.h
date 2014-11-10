@@ -23,6 +23,8 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSpinBox>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 #include <myglwidget.h>
 
@@ -58,14 +60,25 @@ public:
     QSpinBox *m_spinBoxNombreDeVoies;
     QWidget *tab_3;
     QLabel *m_labelTimer;
+    QGroupBox *groupBox;
+    QLineEdit *m_lineEditNorth;
+    QLineEdit *m_lineEditEast;
+    QLineEdit *m_lineEditWest;
+    QLineEdit *m_lineEditSouth;
+    QPushButton *pushButton;
+    QTreeWidget *m_treeWidget;
+    QTextEdit *m_statsTextEdit;
+    QPushButton *m_boutonBlockRoad;
+    QPushButton *m_boutonUnblockRoad;
 
     void setupUi(QWidget *Window)
     {
         if (Window->objectName().isEmpty())
             Window->setObjectName(QStringLiteral("Window"));
-        Window->resize(996, 675);
+        Window->resize(1175, 675);
         myGLWidget = new MyGLWidget(Window);
         myGLWidget->setObjectName(QStringLiteral("myGLWidget"));
+        myGLWidget->setEnabled(true);
         myGLWidget->setGeometry(QRect(90, 10, 891, 511));
         m_boutonSimulation4 = new QPushButton(Window);
         m_boutonSimulation4->setObjectName(QStringLiteral("m_boutonSimulation4"));
@@ -83,12 +96,12 @@ public:
         line->setFrameShadow(QFrame::Sunken);
         m_tabSimulation = new QTabWidget(Window);
         m_tabSimulation->setObjectName(QStringLiteral("m_tabSimulation"));
-        m_tabSimulation->setGeometry(QRect(0, 530, 1001, 151));
+        m_tabSimulation->setGeometry(QRect(0, 530, 981, 151));
         tab = new QWidget();
         tab->setObjectName(QStringLiteral("tab"));
         m_boutonDrawSource = new QPushButton(tab);
         m_boutonDrawSource->setObjectName(QStringLiteral("m_boutonDrawSource"));
-        m_boutonDrawSource->setGeometry(QRect(840, -10, 161, 131));
+        m_boutonDrawSource->setGeometry(QRect(830, -10, 151, 141));
         m_groupBoxTypeNoeud = new QGroupBox(tab);
         m_groupBoxTypeNoeud->setObjectName(QStringLiteral("m_groupBoxTypeNoeud"));
         m_groupBoxTypeNoeud->setGeometry(QRect(10, 10, 151, 91));
@@ -132,7 +145,7 @@ public:
         tab_2->setObjectName(QStringLiteral("tab_2"));
         m_boutonDrawRoad = new QPushButton(tab_2);
         m_boutonDrawRoad->setObjectName(QStringLiteral("m_boutonDrawRoad"));
-        m_boutonDrawRoad->setGeometry(QRect(870, 0, 121, 111));
+        m_boutonDrawRoad->setGeometry(QRect(830, -10, 151, 141));
         label_3 = new QLabel(tab_2);
         label_3->setObjectName(QStringLiteral("label_3"));
         label_3->setGeometry(QRect(10, 10, 91, 16));
@@ -151,6 +164,36 @@ public:
         m_labelTimer = new QLabel(Window);
         m_labelTimer->setObjectName(QStringLiteral("m_labelTimer"));
         m_labelTimer->setGeometry(QRect(10, 510, 71, 16));
+        groupBox = new QGroupBox(Window);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox->setGeometry(QRect(0, 170, 91, 201));
+        m_lineEditNorth = new QLineEdit(groupBox);
+        m_lineEditNorth->setObjectName(QStringLiteral("m_lineEditNorth"));
+        m_lineEditNorth->setGeometry(QRect(20, 30, 51, 20));
+        m_lineEditEast = new QLineEdit(groupBox);
+        m_lineEditEast->setObjectName(QStringLiteral("m_lineEditEast"));
+        m_lineEditEast->setGeometry(QRect(40, 60, 51, 20));
+        m_lineEditWest = new QLineEdit(groupBox);
+        m_lineEditWest->setObjectName(QStringLiteral("m_lineEditWest"));
+        m_lineEditWest->setGeometry(QRect(0, 90, 51, 20));
+        m_lineEditSouth = new QLineEdit(groupBox);
+        m_lineEditSouth->setObjectName(QStringLiteral("m_lineEditSouth"));
+        m_lineEditSouth->setGeometry(QRect(20, 120, 51, 20));
+        pushButton = new QPushButton(groupBox);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(10, 160, 75, 23));
+        m_treeWidget = new QTreeWidget(Window);
+        m_treeWidget->setObjectName(QStringLiteral("m_treeWidget"));
+        m_treeWidget->setGeometry(QRect(990, 10, 181, 271));
+        m_statsTextEdit = new QTextEdit(Window);
+        m_statsTextEdit->setObjectName(QStringLiteral("m_statsTextEdit"));
+        m_statsTextEdit->setGeometry(QRect(990, 290, 181, 231));
+        m_boutonBlockRoad = new QPushButton(Window);
+        m_boutonBlockRoad->setObjectName(QStringLiteral("m_boutonBlockRoad"));
+        m_boutonBlockRoad->setGeometry(QRect(990, 240, 181, 41));
+        m_boutonUnblockRoad = new QPushButton(Window);
+        m_boutonUnblockRoad->setObjectName(QStringLiteral("m_boutonUnblockRoad"));
+        m_boutonUnblockRoad->setGeometry(QRect(990, 200, 181, 41));
 
         retranslateUi(Window);
         QObject::connect(m_boutonSimulation1, SIGNAL(pressed()), myGLWidget, SLOT(CreateSimulation1()));
@@ -159,7 +202,7 @@ public:
         QObject::connect(m_boutonDrawRoad, SIGNAL(pressed()), myGLWidget, SLOT(DrawRoadPressed()));
         QObject::connect(m_boutonDrawSource, SIGNAL(pressed()), myGLWidget, SLOT(DrawSourcePressed()));
 
-        m_tabSimulation->setCurrentIndex(0);
+        m_tabSimulation->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(Window);
@@ -192,6 +235,16 @@ public:
         m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab_2), QApplication::translate("Window", "Route", 0));
         m_tabSimulation->setTabText(m_tabSimulation->indexOf(tab_3), QApplication::translate("Window", "Statistiques", 0));
         m_labelTimer->setText(QApplication::translate("Window", "TextLabel", 0));
+        groupBox->setTitle(QApplication::translate("Window", "Importation", 0));
+        m_lineEditNorth->setText(QApplication::translate("Window", "45.3825079", 0));
+        m_lineEditEast->setText(QApplication::translate("Window", "-71.9212199", 0));
+        m_lineEditWest->setText(QApplication::translate("Window", "-71.9330645", 0));
+        m_lineEditSouth->setText(QApplication::translate("Window", "45.3758762", 0));
+        pushButton->setText(QApplication::translate("Window", "Import", 0));
+        QTreeWidgetItem *___qtreewidgetitem = m_treeWidget->headerItem();
+        ___qtreewidgetitem->setText(0, QApplication::translate("Window", "Simulation content", 0));
+        m_boutonBlockRoad->setText(QApplication::translate("Window", "Block road", 0));
+        m_boutonUnblockRoad->setText(QApplication::translate("Window", "Unblock road", 0));
     } // retranslateUi
 
 };

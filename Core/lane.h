@@ -21,6 +21,8 @@ private:
     Node& end_;
 
     int nbChar;
+    int nbCharTotal;
+    int laneId_;
 
     std::list<Vehicle*> vehicles;
 
@@ -29,7 +31,7 @@ private:
     Formula lineFormula;
 public:
     Lane();
-    Lane(Node&, Node&, road_id_type parent, int laneNumber);
+    Lane(Node&, Node&, road_id_type parent, int laneNumber, int laneId);
 
     Node& getStartNode();
     Node& getEndNode();
@@ -41,6 +43,8 @@ public:
     void laneUnblocked(node_id_type nodeID);
 
     int getNumberOfVehicle();
+    int getTotalNumberOfVehicle();
+    int getLaneId();
 
     bool getVehicleInFront(Vehicle* v, float* x, float* y);
     float getLastVehiclePos();
