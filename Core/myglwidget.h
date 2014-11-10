@@ -77,8 +77,10 @@ private:
     void AddRoad(node_id_type, node_id_type);
     void DrawSource(float *worldCoords);
     void DrawSource(float x, float y);
+    void DrawSource(float x, float y, node_id_type id);
     void DrawNode(float *worldCoords);
     void DrawNode(float x, float y);
+    void DrawNode(float x, float y, node_id_type id);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 

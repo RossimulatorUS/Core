@@ -232,8 +232,12 @@ void MyGLWidget::DrawNode(float *worldCoords)
 
 void MyGLWidget::DrawNode(float x, float y)
 {
-    //allNodes_.emplace_back(x,y, allNodes_.size());//le vecteur crée lui-même le noeud en le plaçant
     SimulationData::getInstance().addNode(x,y, false);
+}
+
+void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id)
+{
+    SimulationData::getInstance().addNode(x,y, false, id);
 }
 
 void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
@@ -284,6 +288,23 @@ void MyGLWidget::DrawSource(float x, float y)
     distribution.exponentialAmount = window->getExponentialAmount();
 
     SimulationData::getInstance().addNode(x,y, true, distribution);
+}
+
+void MyGLWidget::DrawSource(float x, float y, node_id_type id)
+{
+    auto window = static_cast<Window*>(parent());
+
+    auto distribution = Node::DistributionInfo();
+
+    distribution.isBernouilli = window->isBernouilliChecked();
+    distribution.isUniform = window->isUniformChecked();
+    distribution.isExponential = window->isExponentialChecked();
+
+    distribution.bernouilliAmount = window->getBernouilliAmount();
+    distribution.uniformAmount = window->getUniformAmount();
+    distribution.exponentialAmount = window->getExponentialAmount();
+
+    SimulationData::getInstance().addNode(x,y, true, distribution, id);
 }
 
 void MyGLWidget::ClearWidget()

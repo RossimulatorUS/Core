@@ -52,18 +52,28 @@ bool SimulationData::accepted_road(std::string road_type)
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource)
 {
-    //allNodes_.emplace_back(x, y, allNodes_.size(), isSource);
-    //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource));
     allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource));
+
+    return allNodes_.size()-1;
+}
+
+SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, node_id_type id)
+{
+    allNodes_.push_back(new TLight(x,y, id, isSource));
 
     return allNodes_.size()-1;
 }
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo)
 {
-    //allNodes_.emplace_back(x, y, allNodes_.size(), isSource, distributionInfo);
-    //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource, distributionInfo));
     allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
+
+    return allNodes_.size()-1;
+}
+
+SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id)
+{
+    allNodes_.push_back(new TLight(x,y, id, isSource, distributionInfo));
 
     return allNodes_.size()-1;
 }

@@ -36,7 +36,9 @@ public:
     bool accepted_road(std::string);
 
     node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
+    node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id);
     node_id_type addNode(GLfloat, GLfloat, bool isSource);
+    node_id_type addNode(GLfloat, GLfloat, bool isSource, node_id_type id);
     road_id_type addRoad(RoadSegment);
 
     void removeVehicle(Vehicle*);
