@@ -89,7 +89,7 @@ private:
     void AddRoad(Node*, Node*);
     RoadSegment AddRoad(node_id_type, node_id_type, std::string name);
     void DrawSource(float *worldCoords);
-    void DrawSource(float x, float y);
+    void DrawSource(float x, float y, node_id_type id = 0);
     void DrawNode(float *worldCoords);
     void DrawNode(float x, float y);
     void DrawRoadMousePressed(float *worldCoords);

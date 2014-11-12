@@ -35,10 +35,11 @@ public:
     RoadSegment& getRoad(simulation_traits::road_id_type);
     bool accepted_road(std::string);
 
-    node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo);
+    node_id_type addNode(GLfloat, GLfloat, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id = 0);
     node_id_type addNode(GLfloat, GLfloat, bool isSource);
     road_id_type addRoad(RoadSegment);
 
+    void print_nodes();
     void removeVehicle(Vehicle*);
     void addVehicle(Vehicle*);
     void resetAllData();

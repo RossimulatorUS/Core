@@ -260,11 +260,13 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
         double longitude = (it->second.longitude() - east) / largeur_carte;
         double lattitude = (it->second.lattitude() - south) / hauteur_carte;
 
-        ui->myGLWidget->DrawSource(longitude, lattitude);
+        ui->myGLWidget->DrawSource(longitude, lattitude, it->first);
     }
 
     std::cout << "adding roads\n" << std::flush;
     // Create road class that takes a vector<road_segment>
+
+    SimulationData::getInstance().print_nodes();
 
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();

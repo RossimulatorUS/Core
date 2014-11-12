@@ -66,7 +66,6 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
 {
-    // Pourquoi pas avant?
     id_ = id;
     last_creation_=Execution_history::time(0);
     isNodeBlocked_ = false;

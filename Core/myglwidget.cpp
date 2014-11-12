@@ -390,7 +390,7 @@ void MyGLWidget::DrawSource(float *worldCoords)
     DrawSource(worldCoords[0], worldCoords[1]);
 }
 
-void MyGLWidget::DrawSource(float x, float y)
+void MyGLWidget::DrawSource(float x, float y, node_id_type id)
 {
     auto window = static_cast<Window*>(parent());
 
@@ -404,7 +404,7 @@ void MyGLWidget::DrawSource(float x, float y)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution);
+    id == 0 ? SimulationData::getInstance().addNode(x,y, true, distribution) : SimulationData::getInstance().addNode(x,y, true, distribution, id);
 }
 
 void MyGLWidget::ClearWidget()

@@ -1,4 +1,6 @@
 #include <algorithm>
+#include <iostream>
+
 #include "simulationdata.h"
 #include "TLight.h"
 
@@ -60,13 +62,9 @@ SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool 
     return allNodes_.size()-1;
 }
 
-SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo)
+SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id)
 {
-    //-----> use emplace back <-------
-    allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
-    //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource, distributionInfo));
-    //allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo));
-
+    id == 0 ? allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo)) : allNodes_.emplace_back(new TLight(x,y, id, isSource, distributionInfo));
     return allNodes_.size()-1;
 }
 
@@ -90,4 +88,13 @@ void SimulationData::resetAllData()
         delete *vehicle;
     }
     allVehicles_.clear();
+}
+
+void SimulationData::print_nodes()
+{
+
+    for(auto it = allNodes_.begin(); it != allNodes_.end(); ++it)
+    {
+        std::cout << (*it)->GetId() << std::endl;
+    }
 }
