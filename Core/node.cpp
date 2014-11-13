@@ -10,6 +10,7 @@
 #include "simulationdata.h"
 #include "vehicle.h"
 #include "autolock.h"
+#include "utils.h"
 
 std::mutex Node::mtx;
 
@@ -29,7 +30,7 @@ Node::Node(GLfloat x, GLfloat y)
       waitingRoadIndex_(std::set<road_id_type>())
 {
     //est_du_fonction_ = std::bind ( distribution_, generateur_ );
-    last_creation_=Execution_history::time(0);
+    last_creation_= exec_time(0);
     isNodeBlocked_= false;
 }
 
@@ -48,7 +49,7 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       waitingRoadIndex_(std::set<road_id_type>())
 {
     id_ = id;
-    last_creation_=Execution_history::time(0);
+    last_creation_= exec_time(0);
     isNodeBlocked_ = false;
 }
 
@@ -76,12 +77,12 @@ bool Node::is_source()
 bool Node::is_due()
 {
     static std::default_random_engine generateur((unsigned int)time(0));
-    auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(Execution_history::get_time()-last_creation_).count();
+    auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(get_time() - last_creation_).count();
     if (distributionInfo_.isBernouilli)
     {
         if(is_source() && bernouilli_distribution_(generateur)&& timeSinceLastCreation > 250)
         {
-            last_creation_ = Execution_history::get_time();
+            last_creation_ = get_time();
             return true;
         }
 
@@ -92,7 +93,7 @@ bool Node::is_due()
         auto delay = distributionInfo_.uniformAmount.toInt(&ok, 10);
         if(is_source() &&timeSinceLastCreation > delay)
         {
-            last_creation_ = Execution_history::get_time();
+            last_creation_ = get_time();
             return true;
         }
         return false;
@@ -101,7 +102,7 @@ bool Node::is_due()
     {
         if(is_source() && exponential_distribution_(generateur)&& timeSinceLastCreation > 250)
         {
-            last_creation_ = Execution_history::get_time();
+            last_creation_ = get_time();
             return true;
         }
 

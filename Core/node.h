@@ -11,7 +11,6 @@
 #include <set>
 
 #include "dvutility.h"
-#include "execution_history.h"
 #include "simulationtraits.h"
 
 class Vehicle;
@@ -20,6 +19,9 @@ class Lane;
 
 class Node
 {
+protected:
+    using exec_time = std::chrono::milliseconds;
+
 public:
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
@@ -48,7 +50,7 @@ protected:
     static std::mutex mtx;
 
     node_id_type id_;
-    Execution_history::time last_creation_;
+    exec_time last_creation_;
 
     std::map<Lane*, std::vector<Vehicle*>> waitingVehicles_;
     std::queue<road_id_type> waitingRoads_;

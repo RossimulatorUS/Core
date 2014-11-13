@@ -1,7 +1,3 @@
-#include <QDebug>
-
-#include <string>
-#include <thread>
 #include "cortex.h"
 
 Cortex::Cortex(std::vector<Node*> nodes, std::list<Vehicle*>* vehicles)

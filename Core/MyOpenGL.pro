@@ -27,7 +27,6 @@ SOURCES += main.cpp \
     analyser.cpp \
     distributor.cpp \
     formula.cpp \
-    execution_history.cpp \
     node.cpp \
     signaler.cpp \
     vehicle.cpp \
@@ -52,7 +51,6 @@ HEADERS  += window.h \
     distributor.h \
     autolock.h \
     node.h \
-    execution_history.h \
     formula.h \
     signaler.h \
     vehicle.h \
