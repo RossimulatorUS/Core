@@ -10,14 +10,12 @@ void Analyser::init()
 {
     while(!terminate_)
     {
-        std::chrono::milliseconds timespan(50);
-
-        for(int i = 0; i < 5 ; ++i)
-        {
-            cortex_->distributor_execution_ = true;
-            std::for_each(cortex_->mover_execution_.begin(), cortex_->mover_execution_.end(), [&](volatile bool& b){b = true;});
-            std::this_thread::sleep_for(timespan);
-        }
+        cortex_->distributor_execution_ = true;
         cortex_->signaler_execution_ = true;
+
+        std::for_each(cortex_->mover_execution_.begin(), cortex_->mover_execution_.end(), [&](volatile bool& b){b = true;});
+
+        // System tic control
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }

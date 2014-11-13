@@ -33,25 +33,6 @@ Node::Node(GLfloat x, GLfloat y)
     isNodeBlocked_= false;
 }
 
-Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
-    : x_(x), y_(y), is_source_(isSource),
-      neighbours_(std::map<node_id_type, road_id_type>()),
-      nextHopForDestination_(std::map<node_id_type, node_id_type>()),
-      costs_(std::map<node_id_type, road_cost_type>()),
-      pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
-      currentWaitingVehicleIndex(0),
-      bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0)),
-      waitingRoads_(std::queue<road_id_type>()),
-      waitingRoadIndex_(std::set<road_id_type>())
-{
-    // Pourquoi pas avant?
-    id_ = id;
-    last_creation_=Execution_history::time(0);
-    isNodeBlocked_ = false;
-}
-
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
     : x_(x), y_(y), is_source_(isSource), distributionInfo_(distributionInfo),
       neighbours_(std::map<node_id_type, road_id_type>()),
@@ -90,12 +71,10 @@ Node::node_id_type Node::GetId()
 bool Node::is_source()
 {
     return is_source_;
-    //return neighbours_.size() == 1;
 }
 
 bool Node::is_due()
 {
-    //static auto derniere_creation = Historique_dexecution::get_time();//for some reason, mettre ça en variable de classe marchait pas, ça valait toujours 0
     static std::default_random_engine generateur((unsigned int)time(0));
     auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(Execution_history::get_time()-last_creation_).count();
     if (distributionInfo_.isBernouilli)
@@ -284,12 +263,9 @@ void Node::processWaitingVehicles()
 
     if(waitingRoads_.size()>0)
     {
-        //std::cout<<waitingRoads_.size()<<std::endl;
         road_id_type rID = waitingRoads_.front();
         RoadSegment& r = SimulationData::getInstance().getRoad(rID);
-       // std::cout<<"GAH2"<<std::endl;
         r.allLanesUnblocked(id_);
-        //std::cout<<"GAH3"<<std::endl;
         waitingRoads_.pop();
         waitingRoadIndex_.erase(rID);
     }
@@ -316,5 +292,5 @@ void Node::setIsNodeBlocked(bool isRoadBlocked)
 void Node::updateCost(Node::node_id_type neighbour, Node::road_cost_type connection)
 {
     costs_[neighbour] = connection;
-    qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost 2 neighbour : " << costs_[neighbour] << " Road : " << connection;
+    qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost to neighbour : " << costs_[neighbour] << " Road : " << connection;
 }

@@ -1,14 +1,14 @@
 #ifndef DISTRIBUTOR_H
 #define DISTRIBUTOR_H
 
-#include <atomic>
+#include <list>
+#include <map>
 #include <vector>
 
-#include "execution_history.h"
 #include "module.h"
+#include "road_segment.h"
 #include "vehicle.h"
 #include "vehiclethread.h"
-#include "road_segment.h"
 
 class Distributor : public Module
 {
@@ -25,9 +25,6 @@ class Distributor : public Module
 
     // Threads du cortex qui sont utilisables pour calcul des deplacements
     std::vector<VehicleThread*>* threads_;
-
-    // Controle du temps d'execution
-    Execution_history history_;
 
     void init();
 

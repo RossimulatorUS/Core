@@ -3,32 +3,6 @@
 ----------------------- DRAWING ROAD & LANES ----------------------------------
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 0
 Number of cars on lane : 0
 Number of cars on lane : 0
@@ -59,7 +33,17 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -69,17 +53,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 0
-Number of cars on lane : 0
 Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 0
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -89,7 +63,17 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -99,9 +83,9 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 2
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -109,9 +93,9 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 2
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -119,9 +103,9 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
 Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 2
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
@@ -129,7 +113,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 0
+Number of cars on lane : 1
 Number of cars on lane : 0
 Number of cars on lane : 2
 Number of cars on lane : 0
@@ -180,6 +164,86 @@ Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+Number of cars on lane : 0
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 3
 Number of cars on lane : 0
@@ -189,7 +253,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 3
 Number of cars on lane : 0
@@ -199,7 +263,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 3
 Number of cars on lane : 0
@@ -209,7 +273,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 3
 Number of cars on lane : 0
@@ -219,37 +283,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 0
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
@@ -259,7 +293,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
@@ -269,7 +303,7 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
@@ -279,267 +313,257 @@ Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 1
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 1
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
 Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 0
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
 Number of cars on lane : 1
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 1
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 3
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 3
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 3
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 0
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 5
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 5
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 5
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
+Number of cars on lane : 5
 Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 6
 Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
 Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 1
+Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
-Number of cars on lane : 0
 Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 1
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 1
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 6
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
 Number of cars on lane : 0
 Number of cars on lane : 6
 Number of cars on lane : 0
@@ -549,57 +573,97 @@ Number of cars on lane : 2
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
 Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
 Number of cars on lane : 0
 Number of cars on lane : 7
 Number of cars on lane : 0
 Number of cars on lane : 2
 Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 7
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 3
 Number of cars on lane : 0
-Number of cars on lane : 7
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 7
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 7
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
+Number of cars on lane : 6
 Number of cars on lane : 0
 Number of cars on lane : 7
 Number of cars on lane : 0
@@ -609,19 +673,9 @@ Number of cars on lane : 3
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
+Number of cars on lane : 6
 Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 2
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
+Number of cars on lane : 7
 Number of cars on lane : 0
 Number of cars on lane : 2
 Number of cars on lane : 0
@@ -629,279 +683,149 @@ Number of cars on lane : 3
 Number of cars on lane : 0
 ----------------------- DRAWING VEHICULE ----------------------------------
 ----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 2
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
 Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 3
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
 Number of cars on lane : 0
 Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 3
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 8
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
-Number of cars on lane : 0
-Number of cars on lane : 4
-Number of cars on lane : 0
-Number of cars on lane : 5
-Number of cars on lane : 0
------------------------ DRAWING VEHICULE ----------------------------------
------------------------ DRAWING ROAD & LANES ----------------------------------
-Number of cars on lane : 5
-Number of cars on lane : 0
-Number of cars on lane : 9
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
@@ -911,7 +835,7 @@ Number of cars on lane : 0
 ----------------------- DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 6
 Number of cars on lane : 0
-Number of cars on lane : 9
+Number of cars on lane : 8
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
@@ -921,10 +845,1120 @@ Number of cars on lane : 0
 ----------------------- DRAWING ROAD & LANES ----------------------------------
 Number of cars on lane : 6
 Number of cars on lane : 0
-Number of cars on lane : 9
+Number of cars on lane : 8
 Number of cars on lane : 0
 Number of cars on lane : 4
 Number of cars on lane : 0
 Number of cars on lane : 5
 Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 4
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 0
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 5
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 11
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 0
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 1
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 2
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 6
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 2
+Number of cars on lane : 10
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 1
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 0
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 6
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 6
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 6
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 8
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 8
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 11
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 1
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 7
+Number of cars on lane : 3
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 3
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 3
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 10
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 3
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 9
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 7
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 8
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 2
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 7
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 7
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 7
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 7
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 8
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 2
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 4
+Number of cars on lane : 8
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
+----------------------- DRAWING VEHICULE ----------------------------------
+----------------------- DRAWING ROAD & LANES ----------------------------------
+Number of cars on lane : 7
+Number of cars on lane : 4
+Number of cars on lane : 9
+Number of cars on lane : 3
+Number of cars on lane : 9
+Number of cars on lane : 6
+Number of cars on lane : 6
+Number of cars on lane : 3
 ----------------------- DRAWING VEHICULE ----------------------------------
