@@ -1,9 +1,9 @@
 #include <QtWidgets>
 #include <iostream>
-#include <cmath>
 
 #include "window.h"
 #include "ui_window.h"
+#include "utils.h"
 
 #include "simulationdata.h"
 #include "map_fetcher.h"
@@ -332,9 +332,7 @@ void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
         auto roadTreeItem = addTreeChild(rootItem_, qstr);
         for(int i = 0; i < roadNames[i].getLanes().size(); ++i)
         {
-            char buffer [30];
-            std::string tempName = itoa(i, buffer, 10);
-            QString laneName = QString::fromStdString(tempName);
+            QString laneName = QString::fromStdString(stringify(i));
             auto item = addTreeChild(roadTreeItem, laneName);
         }
     }
@@ -346,9 +344,7 @@ void Window::addNameToListWidget(RoadSegment roadName)
     auto roadTreeItem = addTreeChild(rootItem_, qstr);
     for(int i = 0; i < roadName.getLanes().size(); ++i)
     {
-        char buffer [30];
-        std::string tempName = itoa(i, buffer, 10);
-        QString laneName = QString::fromStdString(tempName);
+        QString laneName = QString::fromStdString(stringify(i));
         auto item = addTreeChild(roadTreeItem, laneName);
     }
 }
@@ -365,13 +361,8 @@ void Window::setTextEditRoad(RoadSegment road)
 {
     auto textEdit = ui->m_statsTextEdit;
 
-    char buffer [30];
-    std::string tempName = itoa(road.GetActualNumberOfCar(), buffer, 10);
-    QString actualNumberOfCar = QString::fromStdString(tempName);
-
-    char buffer2 [30];
-    std::string tempName2 = itoa(road.GetTotalNumberOfCar(), buffer2, 10);
-    QString totalNumberOfCar = QString::fromStdString(tempName2);
+    QString actualNumberOfCar = QString::fromStdString(stringify(road.GetActualNumberOfCar()));
+    QString totalNumberOfCar = QString::fromStdString(stringify(road.GetTotalNumberOfCar()));
 
     QString output = "Number of car on road : " + actualNumberOfCar + '\n' +
                      "Total number of car : " + totalNumberOfCar + '\n' +
@@ -385,13 +376,8 @@ void Window::setTextEditLane(Lane *lane)
 {
     auto textEdit = ui->m_statsTextEdit;
 
-    char buffer [30];
-    std::string tempName = itoa(lane->getNumberOfVehicle(), buffer, 10);
-    QString actualNumberOfCar = QString::fromStdString(tempName);
-
-    char buffer2 [30];
-    std::string tempName2 = itoa(lane->getTotalNumberOfVehicle(), buffer2, 10);
-    QString totalNumberOfCar = QString::fromStdString(tempName2);
+    QString actualNumberOfCar = QString::fromStdString(stringify(lane->getNumberOfVehicle()));
+    QString totalNumberOfCar = QString::fromStdString(stringify(lane->getTotalNumberOfVehicle()));
 
     QString output = "Number of car on lane : " + actualNumberOfCar + '\n' +
                      "Total number of car : " + totalNumberOfCar + '\n' +

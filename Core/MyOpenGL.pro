@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     lib/pugixml/pugixml.cpp \
     TLight.cpp \
     road_segment.cpp \
-    road.cpp
+    road.cpp \
+    utils.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
