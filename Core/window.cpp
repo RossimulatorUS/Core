@@ -20,6 +20,9 @@ Window::Window(QWidget *parent) :
     //addTreeRoot("Nodes");
 
     //showBlockRoadButton();
+    ui->m_treeWidget->setEnabled(false);
+    ui->m_boutonBlockRoad->setEnabled(false);
+    ui->m_boutonUnblockRoad->setEnabled(false);
 }
 
 Window::~Window()
@@ -89,21 +92,17 @@ void Window::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Escape:
             close();
             break;
-        case Qt::Key_J:
-        case Qt::Key_Up:
-            std::cout << "up\n";
+        case Qt::Key_W:
+            ui->myGLWidget->UpdateOffset(8);
             break;
-        case Qt::Key_K:
-        case Qt::Key_Down:
-            std::cout << "down\n";
+        case Qt::Key_A:
+            ui->myGLWidget->UpdateOffset(4);
             break;
-        case Qt::Key_H:
-        case Qt::Key_Left:
-            std::cout << "left\n";
+        case Qt::Key_S:
+            ui->myGLWidget->UpdateOffset(2);
             break;
-        case Qt::Key_L:
-        case Qt::Key_Right:
-            std::cout << "right\n";
+        case Qt::Key_D:
+            ui->myGLWidget->UpdateOffset(6);
             break;
         default:
             QWidget::keyPressEvent(e);
@@ -133,15 +132,19 @@ void Window::on_m_boutonStartSimulation_clicked()
 {
     if(ui->m_boutonStartSimulation->text() == "Start")
     {
+        ui->m_boutonSimulation1->setEnabled(false);
+        ui->m_boutonSimulation4->setEnabled(false);
+        ui->Display->setEnabled(false);
+        ui->m_treeWidget->setEnabled(true);
+        ui->m_boutonBlockRoad->setEnabled(true);
+        ui->m_boutonUnblockRoad->setEnabled(true);
+        ui->m_groupBoxImportation->setEnabled(false);
+
         bool dvEnCours = true;
 
         std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            if ((*itt)->isNodeBlocked())
-            {
-                qDebug() << "wtf is going on";
-            }
             (*itt)->startDV();
         }
         while(dvEnCours)
@@ -170,6 +173,14 @@ void Window::on_m_boutonStartSimulation_clicked()
     // Terminate the simulation
     else
     {
+        ui->m_boutonSimulation1->setEnabled(true);
+        ui->m_boutonSimulation4->setEnabled(true);
+        ui->Display->setEnabled(true);
+        ui->m_treeWidget->setEnabled(false);
+        ui->m_boutonBlockRoad->setEnabled(false);
+        ui->m_boutonUnblockRoad->setEnabled(false);
+        ui->m_groupBoxImportation->setEnabled(true);
+
         timer->stop();
         cortex->terminate();
         delete cortex;
@@ -218,6 +229,7 @@ void Window::on_m_boutonSimulation1_clicked()
 void Window::on_m_boutonSimulation4_clicked()
 {
     ui->myGLWidget->clearWidget();
+    //ui->m_treeWidget->clear();
 
     ui->myGLWidget->DrawSource(0.0f,1.6f);
     ui->myGLWidget->DrawSource(1.6f,0.0f);
@@ -272,48 +284,17 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     ui->myGLWidget->updateGL();
 }
 
-
-void Window::on_currentScale_textChanged(const QString &arg1)
+void Window::wheelEvent(QWheelEvent *event)
 {
-    ui->myGLWidget->UpdateScale(arg1.toFloat());
-}
-
-void Window::on_xOffset_textChanged(const QString &arg1)
-{
-    ui->myGLWidget->UpdateXOffset(arg1.toFloat());
-}
-
-void Window::on_yOffset_textChanged(const QString &arg1)
-{
-    ui->myGLWidget->UpdateYOffset(arg1.toFloat());
-}
-
-void Window::on_offsetUp_clicked()
-{
-    ui->myGLWidget->UpdateOffset(8);
-}
-
-void Window::on_offsetRight_clicked()
-{
-    ui->myGLWidget->UpdateOffset(6);
-}
-
-void Window::on_offsetDown_clicked()
-{
-    ui->myGLWidget->UpdateOffset(2);
-}
-
-void Window::on_offsetLeft_clicked()
-{
-    ui->myGLWidget->UpdateOffset(4);
+    int delta = event->delta();
+    float scale = (float)delta/1000;
+    ui->myGLWidget->UpdateScale(scale);
 }
 
 void Window::onRoadListWidgetClicked(QTreeWidgetItem *item, int i)
 {
     ui->myGLWidget->onRoadListWidgetClicked(item, i);
-
     selectedItem_ = item;
-
 }
 
 QTreeWidgetItem* Window::addTreeChild(QTreeWidgetItem *parent, QString name)

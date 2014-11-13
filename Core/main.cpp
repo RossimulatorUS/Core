@@ -7,7 +7,6 @@
 
 int main(int argc, char **argv)
 {
-    std::cout<<"IN MAIN"<<std::endl;
     QApplication app(argc, argv);
 
     Window window;

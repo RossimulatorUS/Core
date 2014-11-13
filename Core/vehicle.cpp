@@ -275,14 +275,40 @@ void Vehicle::evaluateProgress()
 
 void Vehicle::switchRoad()
 {
+    Autolock av(mtx);
     //readyToSwitch = false;
     //std::cout<<"SWITCHING"<<std::endl;
-    resetVehicleSpeed();
+    //resetVehicleSpeed();
 
     //qDebug() << "---------------------------------------------------------";
     //qDebug() << "Actual road before switch " << getCurrentRoad().getRoadID();
+    //qDebug() << "Start node before switch " << startNode_;
+    //qDebug() << "End node before switch " << endNode_;
+
+    //auto oldStartNode = startNode_;
+
     startNode_ = getNextStep().GetId();
-    //qDebug() << "Next step : " << startNode_;
+
+    auto node = SimulationData::getInstance().getNode(startNode_);
+    auto nextHop = node.nextHopForDestination();
+
+    //for (auto itt = nextHop.begin(); itt != nextHop.end(); ++itt)
+    //{
+        //qDebug() << "All the shits in nextHop " << (*itt).first << "," << (*itt).second;
+    //}
+    //qDebug() << "Next step after switch : " << startNode_;
+    //qDebug() << "End node after switch : " << endNode_;
+
+    //qDebug() << "Start node = " << startNode_;
+    //qDebug() << "End node = " << endNode_;
+
+    if (startNode_ == endNode_)
+    {
+        //PATCH
+        currentLane_->removeVehicleFromLane(this);
+        qDebug() << "THIS IS HAPPENING";
+        return;
+    }
 
     currentRoad_ = chose_road(startNode_, endNode_);
 
@@ -294,16 +320,15 @@ void Vehicle::switchRoad()
 
     currentLane_->removeVehicleFromLane(this);
 
-    //currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
+    currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getNextStep());
 
     //usefull when blocking roads
-    if (startNode_ == getCurrentRoad().getStartNode().GetId())
+    /*if (startNode_ == getCurrentRoad().getStartNode().GetId())
         currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getCurrentRoad().getEndNode());
     else
-        currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getCurrentRoad().getStartNode());
+        currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getCurrentRoad().getStartNode());*/
 
     currentLane_->addVehicleToLane(this);
-    //qDebug() << "Found a lane";
 
     xVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationX();
     yVariation_ = actualSpeed_ * currentLane_->getLineFormula().getVariationY();
@@ -337,15 +362,39 @@ GLfloat Vehicle::getImmediateY()
 
 Node& Vehicle::getNextStep()
 {
-    auto start = SimulationData::getInstance().getNode(startNode_);
-    auto endID = SimulationData::getInstance().getNode(endNode_).GetId();
-    auto idNextStep = start.getNextStep(endID);
-    return SimulationData::getInstance().getNode(idNextStep);
+    try
+    {
+        auto start = SimulationData::getInstance().getNode(startNode_);
+        auto endID = SimulationData::getInstance().getNode(endNode_).GetId();
+
+        if (start.GetId() == endID)
+        {
+            qDebug() << "GOTTA STOP IN DEBUG MODE";
+            //return SimulationData::getInstance().getNode(endNode_);
+        }
+
+        auto idNextStep = start.getNextStep(endID);
+        return SimulationData::getInstance().getNode(idNextStep);
+    }
+    catch(...)
+    {
+        qDebug() << "Exception";
+    }
+
 }
 
 // Algorithme important
 ///Depart est le noeud actuel ; arrivee est la destination finale
 Vehicle::road_id_type Vehicle::chose_road(node_id_type start, node_id_type end)
 {
-    return SimulationData::getInstance().getNode(start).getNextRoad(end);
+    try
+    {
+        return SimulationData::getInstance().getNode(start).getNextRoad(end);
+    }
+    catch (...)
+    {
+        qDebug() << "EXCEPTION";
+    }
+
+
 }

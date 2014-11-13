@@ -108,6 +108,8 @@ public:
     bool isNodeBlocked();
     void setIsNodeBlocked(bool isRoadBlocked);
     void updateCost(node_id_type, road_cost_type);
+    std::map<node_id_type, node_id_type> nextHopForDestination();
+    void setNextHopForDestination(const std::map<node_id_type, node_id_type> &nextHopForDestination);
 };
 
 #endif // POINT_H

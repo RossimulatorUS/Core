@@ -591,7 +591,7 @@ std::list<Vehicle*>& MyGLWidget::GetAllVehicles()
 
 void MyGLWidget::UpdateScale(float s)
 {
-    scale = s;
+    scale += s;
 }
 
 void MyGLWidget::UpdateXOffset(float x)

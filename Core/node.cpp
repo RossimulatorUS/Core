@@ -147,6 +147,8 @@ Vehicle *Node::create_vehicle()
 
 void Node::startDV()
 {
+    originalCosts_ = costs_;
+    OriginalnextHopForDestination_ = nextHopForDestination_;
     sendDVMessageToNeighbours();
 }
 
@@ -233,7 +235,6 @@ void Node::printDVResults()
     qDebug() << "PATHS FOR NODE " << + id_;
     for(auto itt = nextHopForDestination_.begin() ; itt != nextHopForDestination_.end() ; ++itt)
     {
-
         qDebug() << "To " << getNode(itt->first).id_ << " through " << getNode(itt->second).id_ << " which costs " << costs_[itt->first];
     }
     qDebug() << endl;
@@ -241,7 +242,6 @@ void Node::printDVResults()
 
 void Node::resetCosts()
 {
-    Autolock av(mtx);
     costs_ = originalCosts_;
     nextHopForDestination_ = OriginalnextHopForDestination_;
 }
@@ -253,7 +253,18 @@ Node::node_id_type Node::getNextStep(node_id_type destination)
 
 Node::road_id_type Node::getNextRoad(node_id_type destination)
 {
-    return neighbours_.at(getNextStep(destination));
+    //qDebug() << "---------------------------------------------------------------------";
+    //qDebug() << "Neighbours for node : " << id_ << " Going to : " << destination;
+    for(auto itt = neighbours_.begin(); itt != neighbours_.end(); ++itt)
+    {
+        //qDebug() << (*itt).first;
+    }
+
+    auto value = neighbours_.at(getNextStep(destination));
+    //qDebug() << "Value has been found = " << value;
+    //qDebug() << "---------------------------------------------------------------------";
+
+    return value;
 }
 
 Node &Node::getNode(node_id_type id)
@@ -317,4 +328,14 @@ void Node::updateCost(Node::node_id_type neighbour, Node::road_cost_type connect
 {
     costs_[neighbour] = connection;
     qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost 2 neighbour : " << costs_[neighbour] << " Road : " << connection;
+}
+
+std::map<Node::node_id_type, Node::node_id_type> Node::nextHopForDestination()
+{
+    return nextHopForDestination_;
+}
+
+void Node::setNextHopForDestination(const std::map<Node::node_id_type, Node::node_id_type> &nextHopForDestination)
+{
+    nextHopForDestination_ = nextHopForDestination;
 }
