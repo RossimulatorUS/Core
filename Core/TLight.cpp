@@ -1,11 +1,9 @@
-#include "TLight.h"
-#include "vehicle.h"
 #include "autolock.h"
 #include "simulationdata.h"
-#include <iostream>
+#include "TLight.h"
+#include "vehicle.h"
 
 std::mutex TLight::mtx;
-
 
 TLight::TLight(GLfloat x, GLfloat y):lightDelay(0), currentLight(0)
 {
@@ -22,7 +20,6 @@ TLight::TLight(GLfloat x, GLfloat y):lightDelay(0), currentLight(0)
     waitingRoadIndex_ = std::set<road_id_type>();
     parallelRoads = std::map<road_id_type,road_id_type>();
 
-    //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_= exec_time(0);
     isNodeBlocked_ = false;
 }
@@ -107,7 +104,6 @@ void TLight::processWaitingVehicles()
 
                 if((it2->second != it3->second) && r.isParallel(r.getStartNode(),r.getEndNode(),otherRoad.getStartNode(),otherRoad.getEndNode()))
                 {
-                    //std::cout<<"matching "<<r.getRoadID()<<" with "<<otherRoad.getRoadID()<<" on node "<<GetId()<<std::endl;
                     inFront = it3->second;
                     break;
                 }
@@ -121,12 +117,9 @@ void TLight::processWaitingVehicles()
 
     std::set<road_id_type>::iterator it = waitingRoadIndex_.begin();
 
-    //std::cout<<waitingRoadIndex_.size()<<std::endl;
-
     while(it != waitingRoadIndex_.end())
     {
         RoadSegment& r = SimulationData::getInstance().getRoad(*it);
-        //std::cout<<id_<<" "<<r.getRoadID()<<std::endl;
         r.allLanesUnblocked(id_);
         it++;
     }

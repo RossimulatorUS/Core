@@ -8,23 +8,17 @@
 Lane::Lane(Node& start, Node& end, road_id_type parent, int laneNumber, int laneId)
     :start_(start), end_(end), parent_(parent)
 {
-
-    //vehicleProgressionOrder = std::map<float, Vehicle*>();
     vehicles = std::list<Vehicle*>();
     nbChar = 0;
     nbCharTotal = 0;
     laneId_ = laneId;
 
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
-
-    //start_ = Node( lineFormula.getLaneCoordinate(X1),  lineFormula.getLaneCoordinate(Y1));
-    //end_ = Node( lineFormula.getLaneCoordinate(X2),  lineFormula.getLaneCoordinate(Y2));
 }
 
 void Lane::addVehicleToLane(Vehicle* vehicle)
 {
     Autolock av(mtx);
-    //vehicleProgressionOrder.insert(std::pair<float, Vehicle*>(vehicle->getProgress(), vehicle));
     vehicles.insert(vehicles.end(),vehicle);
     ++nbChar;
     ++nbCharTotal;

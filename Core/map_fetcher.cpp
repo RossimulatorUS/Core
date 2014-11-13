@@ -67,8 +67,6 @@ void map_fetcher::parse_response()
                          atol(inode.attribute("id").value()),
                          map_node(atof(inode.attribute("lon").value()),
                               atof(inode.attribute("lat").value()))));
-        //std::cout << atof(inode.attribute("lon").value()) << std::endl;
-        //std::cout << (--(nodes.end()))->second.longitude() << std::endl;
     }
 
 

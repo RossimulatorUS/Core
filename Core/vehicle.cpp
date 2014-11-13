@@ -15,11 +15,7 @@ const float Vehicle::decelerationRate_ = 2*Vehicle::accelerationRate_;
 
 unsigned int Vehicle::id_to_date_ = 0;
 
-Vehicle::Vehicle()
-{
-    // Retouner id et incrementer ensuite
-    //id_ = id_to_date_++;
-}
+Vehicle::Vehicle(){}
 
 Vehicle::Vehicle(node_id_type start, node_id_type end)
     :startNode_(start),
@@ -35,7 +31,6 @@ Vehicle::Vehicle(node_id_type start, node_id_type end)
     Autolock av(mtx);
 
     currentLane_ = getCurrentRoad().findAssociatedLane(getStartNode(), getEndNode());
-    //currentLane_->addVehicleToLane(this);
 
     // Retouner id et incrementer ensuite
     id_ = id_to_date_++;

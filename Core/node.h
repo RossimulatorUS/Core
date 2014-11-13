@@ -6,26 +6,25 @@
 #include <map>
 #include <mutex>
 #include <queue>
-#include <stack>
-#include <queue>
+#include <random>
 #include <set>
 
 #include "dvutility.h"
 #include "simulationtraits.h"
 
 class Vehicle;
-class RoadSegment;    //forward declaration pour éviter un include cyclique ; include de route dans le cpp
+class RoadSegment;
 class Lane;
 
 class Node
 {
-protected:
-    using exec_time = std::chrono::milliseconds;
-
 public:
+
+    // Used types
     using node_id_type = typename simulation_traits::node_id_type;
     using road_id_type = typename simulation_traits::road_id_type;
     using road_cost_type = typename simulation_traits::road_cost_type;
+    using exec_time = std::chrono::milliseconds;
 
     struct DistributionInfo {
         bool isBernouilli;
@@ -75,6 +74,8 @@ protected:
     std::exponential_distribution<double> exponential_distribution_;
 
 public:
+
+    // Methods
     Node();
     Node(GLfloat x, GLfloat y);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);

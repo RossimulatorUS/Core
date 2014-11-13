@@ -15,7 +15,7 @@
 using std::vector;
 using std::pair;
 
-class Node;    //forward declaration
+class Node;
 
 class RoadSegment
 {

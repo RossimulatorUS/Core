@@ -326,11 +326,11 @@ QTreeWidgetItem* Window::addTreeChild(QTreeWidgetItem *parent, QString name)
 
 void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
 {
-    for (int i = 0; i < roadNames.size(); ++i)
+    for (auto i = 0; i < roadNames.size(); ++i)
     {
         QString qstr = QString::fromStdString(roadNames[i].getRoadName());
         auto roadTreeItem = addTreeChild(rootItem_, qstr);
-        for(int i = 0; i < roadNames[i].getLanes().size(); ++i)
+        for(auto i = 0; i < roadNames[i].getLanes().size(); ++i)
         {
             QString laneName = QString::fromStdString(stringify(i));
             auto item = addTreeChild(roadTreeItem, laneName);
@@ -342,7 +342,7 @@ void Window::addNameToListWidget(RoadSegment roadName)
 {
     QString qstr = QString::fromStdString(roadName.getRoadName());
     auto roadTreeItem = addTreeChild(rootItem_, qstr);
-    for(int i = 0; i < roadName.getLanes().size(); ++i)
+    for(auto i = 0; i < roadName.getLanes().size(); ++i)
     {
         QString laneName = QString::fromStdString(stringify(i));
         auto item = addTreeChild(roadTreeItem, laneName);
