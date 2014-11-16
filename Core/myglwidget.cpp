@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <QtOpenGL>
+#include <iostream>
 
 #include "myglwidget.h"
 #include "glutility.h"
@@ -247,7 +248,6 @@ void MyGLWidget::AddRoad(node_id_type a, node_id_type b)
     auto isOneWay = window->isOneWay();
     auto numberOfLane = window->getNumberofLane();
 
-    //allRoads_.push_back(Route(a, b));
     RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane);
     auto roadId = SimulationData::getInstance().addRoad(newRoad);
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
@@ -465,7 +465,7 @@ void MyGLWidget::draw()
     }
 }
 
-std::vector<Node*>& MyGLWidget::GetAllNodes()
+std::map<simulation_traits::node_id_type,Node*>& MyGLWidget::GetAllNodes()
 {
     return SimulationData::getInstance().getNodes();
 }

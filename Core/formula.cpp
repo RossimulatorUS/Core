@@ -1,24 +1,36 @@
 #include "formula.h"
 #include "qdebug.h"
 #include "simulationdata.h"
+#include <iostream>
 
 Formula::Formula(){}
 
 Formula::Formula(Node nodeA, Node nodeB, int laneNumber)
 {
+    std::cout<<"1"<<std::endl;
     a = determineSlope(nodeA.x(), nodeB.x(), nodeA.y(), nodeB.y());
+    std::cout<<"2"<<std::endl;
     b = determineB(nodeA.x(), nodeA.y());
+    std::cout<<"3"<<std::endl;
     Node tempNode = Node(nodeB.x(), nodeA.y());
+    std::cout<<"4"<<std::endl;
 
     float distanceX = calculateDistance(nodeA, tempNode);
+    std::cout<<"5"<<std::endl;
     float distanceY = calculateDistance(nodeB, tempNode);
+    std::cout<<"6"<<std::endl;
     lineLength_ = calculateDistance(nodeA, nodeB);
+    std::cout<<"7"<<std::endl;
 
     variationX_ = (distanceX / lineLength_);
+    std::cout<<"8"<<std::endl;
     variationY_ = (distanceY / lineLength_);
+    std::cout<<"9"<<std::endl;
 
     determinePerpendicular(nodeA, nodeB, laneNumber);
+    std::cout<<"0"<<std::endl;
     determineDirection(nodeA, nodeB);
+    std::cout<<"11"<<std::endl;
 }
 
 float Formula::getSlope()
@@ -43,8 +55,10 @@ GLfloat Formula::determineB(GLfloat x, GLfloat y)
 
 bool Formula::isLeftToRight(Node start, Node end)
 {
+    std::cout<<"Y"<<std::endl;
     if (start.x() < end.x())
         return true;
+    std::cout<<"X"<<std::endl;
     return false;
 }
 

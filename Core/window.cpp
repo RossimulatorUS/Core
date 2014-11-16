@@ -111,23 +111,23 @@ void Window::on_m_boutonStartSimulation_clicked()
     {
         bool dvEnCours = true;
 
-        std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            (*itt)->startDV();
+            (*itt).second->startDV();
         }
         while(dvEnCours)
         {
             dvEnCours = false;
             for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
             {
-                dvEnCours |= (*itt)->processDVMessages();
+                dvEnCours |= (*itt).second->processDVMessages();
             }
         }
 
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            (*itt)->printDVResults();
+            (*itt).second->printDVResults();
         }
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
@@ -216,9 +216,12 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     for(int i=0;i<ways.size(); ++i)
     {
         std::vector<node_id_type> path = ways[i].path;
+        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
+
         for(int j=0;j<(path.size()-1);++j)
         {
-            ui->myGLWidget->AddRoad(path[j],path[j+1]);
+            if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
+                ui->myGLWidget->AddRoad(path[j],path[j+1]);
         }
         //Road(path);
     }

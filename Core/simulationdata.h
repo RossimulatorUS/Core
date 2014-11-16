@@ -8,6 +8,7 @@
 #include "vehicle.h"
 #include "lane.h"
 #include <string>
+#include <map>
 
 class SimulationData
 {
@@ -20,14 +21,14 @@ private:
     void operator=(SimulationData const&); //DON'T IMPLEMENT
 
     SimulationData();
-    std::vector<Node*> allNodes_;
+    std::map<node_id_type,Node*> allNodes_;
     std::vector<RoadSegment> allRoads_;
     std::list<Vehicle*> allVehicles_;
     std::vector<std::string> accepted_road_types_;
 
 public:
     static SimulationData &getInstance();
-    std::vector<Node*>& getNodes();
+    std::map<node_id_type,Node*>& getNodes();
     std::vector<RoadSegment>& getRoads();
     std::list<Vehicle*>& getVehicles();
     std::list<Vehicle *> *getVehiclesPointer();

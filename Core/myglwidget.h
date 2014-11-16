@@ -11,6 +11,8 @@
 #include "simulationtraits.h"
 #include "window.h"
 
+#include <map>
+
 class MyGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -58,7 +60,7 @@ private:
     // pour test
     Vehicle* vehicule;
 
-    std::vector<Node*>& GetAllNodes();
+    std::map<node_id_type,Node*>& GetAllNodes();
     std::vector<RoadSegment>& GetAllRoads();
     std::list<Vehicle*>& GetAllVehicles();
     std::vector<Vehicle*> allVehicles_;
