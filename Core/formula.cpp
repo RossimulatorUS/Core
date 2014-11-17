@@ -1,6 +1,7 @@
 #include "formula.h"
 #include "qdebug.h"
 #include "simulationdata.h"
+#include <iostream>
 
 Formula::Formula(){}
 

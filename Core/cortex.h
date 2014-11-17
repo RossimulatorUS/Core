@@ -10,12 +10,15 @@
 #include "distributor.h"
 #include "signaler.h"
 #include "vehiclethread.h"
+#include "simulationtraits.h"
 
 class Analyser;
 
 class Cortex
 {
 friend class Analyser;
+
+    using node_id_type = typename simulation_traits::node_id_type;
 
 public:
     // COEF -> La quantite de threads physiques que nous pouvons demarrer en fonction du materiel
@@ -55,7 +58,7 @@ private:
     unsigned int opengl_fps_;
 
 public:
-    Cortex(std::vector<Node*>, std::list<Vehicle *> *);
+    Cortex(std::map<node_id_type,Node*>, std::list<Vehicle *> *);
     void execute();
     //unsigned int qte_threads_vehicule();
 

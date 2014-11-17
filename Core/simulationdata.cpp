@@ -3,12 +3,17 @@
 
 #include "simulationdata.h"
 #include "TLight.h"
+#include <iostream>
 
 SimulationData::SimulationData()
-    : allNodes_(std::vector<Node*>())
+    : allNodes_(std::map<node_id_type,Node*>())
 {
     accepted_road_types_.push_back("residential");
     accepted_road_types_.push_back("secondary");
+}
+std::vector<SimulationData::node_id_type> SimulationData::getKeys() const
+{
+    return keys;
 }
 
 SimulationData& SimulationData::getInstance()
@@ -17,7 +22,7 @@ SimulationData& SimulationData::getInstance()
     return instance;
 }
 
-std::vector<Node*>& SimulationData::getNodes()
+std::map<simulation_traits::node_id_type,Node*>& SimulationData::getNodes()
 {
     return allNodes_;
 }
@@ -39,7 +44,8 @@ std::list<Vehicle *> *SimulationData::getVehiclesPointer()
 
 Node& SimulationData::getNode(simulation_traits::node_id_type id)
 {
-    return *allNodes_[id];
+    Node* n = allNodes_.at(id);
+    return (*n);
 }
 
 RoadSegment& SimulationData::getRoad(simulation_traits::road_id_type id)
@@ -54,13 +60,33 @@ bool SimulationData::accepted_road(std::string road_type)
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource)
 {
-    allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource));
+    keys.push_back(allNodes_.size());
+    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new TLight(x,y, allNodes_.size(), isSource)));
+
+    return allNodes_.size()-1;
+}
+
+SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, node_id_type id)
+{
+    keys.push_back(id);
+    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new TLight(x,y, id, isSource)));
+
+    return allNodes_.size()-1;
+}
+
+SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo)
+{
+    keys.push_back(allNodes_.size());
+    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new TLight(x,y, allNodes_.size(), isSource, distributionInfo)));
+
     return allNodes_.size()-1;
 }
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id)
 {
-    id == 0 ? allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource, distributionInfo)) : allNodes_.emplace_back(new TLight(x,y, id, isSource, distributionInfo));
+    keys.push_back(id);
+    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new TLight(x,y, id, isSource, distributionInfo)));
+
     return allNodes_.size()-1;
 }
 
@@ -88,9 +114,8 @@ void SimulationData::resetAllData()
 
 void SimulationData::print_nodes()
 {
-
     for(auto it = allNodes_.begin(); it != allNodes_.end(); ++it)
     {
-        std::cout << (*it)->GetId() << std::endl;
+        std::cout << (*it).second->GetId() << std::endl;
     }
 }

@@ -142,23 +142,23 @@ void Window::on_m_boutonStartSimulation_clicked()
 
         bool dvEnCours = true;
 
-        std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            (*itt)->startDV();
+            (*itt).second->startDV();
         }
         while(dvEnCours)
         {
             dvEnCours = false;
             for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
             {
-                dvEnCours |= (*itt)->processDVMessages();
+                dvEnCours |= (*itt).second->processDVMessages();
             }
         }
 
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            (*itt)->printDVResults();
+            (*itt).second->printDVResults();
         }
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
@@ -258,23 +258,87 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     double north = ui->m_lineEditNorth->text().toDouble();
     double east = ui->m_lineEditEast->text().toDouble();
 
-    auto map_height = std::abs(north - south);
-    auto map_width = std::abs(east - west);
+    auto hauteur_carte = std::abs(north - south);
+    auto largeur_carte = std::abs(east - west);
 
     std::cout << "fetching\n" << std::flush;
     map_fetcher map(south, west, north, east);
     map.fetch();
 
     std::cout << "adding nodes\n" << std::flush;
-    auto nodes = map.get_nodes();
+    std::map<node_id_type, map_node> nodes = map.get_nodes();
 
     float scale = ui->m_scale->text().toDouble();
-    for(auto it = nodes.begin(); it != nodes.end(); ++it)
-    {
-        double longitude = scale * (it->second.longitude() - (it->second.longitude() < 0 ? east : west)) / map_width;
-        double lattitude = scale * (it->second.lattitude() - (it->second.lattitude() < 0 ? north : south)) / map_height;
 
-        ui->myGLWidget->DrawSource(longitude, lattitude, it->first);
+    std::vector<map_way> ways = map.get_ways();
+
+    for(int i=0;i<ways.size(); ++i)
+    {
+        std::vector<node_id_type> path = ways[i].path;
+        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
+
+        if((nodes.find(path[0]) != nodes.end()) && (nodes.find(path[1]) != nodes.end()))
+        {
+            if(allNodes.find(path[0]) == allNodes.end())
+            {
+                double longitude = scale * (nodes[path[0]].longitude() - east) / largeur_carte;
+                double lattitude = scale * (nodes[path[0]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawSource(longitude, lattitude,path[0]);
+
+            }
+            if(allNodes.find(path[1]) == allNodes.end())
+            {
+                double longitude = scale * (nodes[path[1]].longitude() - east) / largeur_carte;
+                double lattitude = scale * (nodes[path[1]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawNode(longitude, lattitude,path[1]);
+            }
+            ui->myGLWidget->AddRoad(path[0],path[1], "GERARD");
+        }
+        for(int j=1;j<(path.size()-2);++j)
+        {
+            //if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
+            if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
+            {
+                if(allNodes.find(path[j]) == allNodes.end())
+                {
+                    double longitude = scale * (nodes[path[j]].longitude() - east) / largeur_carte;
+                    double lattitude = scale * (nodes[path[j]].lattitude() - south) / hauteur_carte;
+
+                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
+
+                }
+                if(allNodes.find(path[j+1]) == allNodes.end())
+                {
+                    double longitude = scale * (nodes[path[j+1]].longitude() - east) / largeur_carte;
+                    double lattitude = scale * (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
+
+                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]);
+                }
+                ui->myGLWidget->AddRoad(path[j],path[j+1], "MATYLDE");
+            }
+        }
+        if((nodes.find(path[path.size()-2]) != nodes.end()) && (nodes.find(path[path.size()-1]) != nodes.end()))
+        {
+            if(allNodes.find(path[path.size()-2]) == allNodes.end())
+            {
+                double longitude = scale * (nodes[path[path.size()-2]].longitude() - east) / largeur_carte;
+                double lattitude = scale * (nodes[path[path.size()-2]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawNode(longitude, lattitude,path[path.size()-2]);
+
+            }
+            if(allNodes.find(path[path.size()-1]) == allNodes.end())
+            {
+                double longitude = scale * (nodes[path[path.size()-1]].longitude() - east) / largeur_carte;
+                double lattitude = scale * (nodes[path[path.size()-1]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawSource(longitude, lattitude,path[path.size()-1]);
+            }
+            ui->myGLWidget->AddRoad(path[path.size()-2],path[path.size()-1], "GERTRUDE");
+        }
+        //Road(path);
     }
 
     std::cout << "adding roads\n" << std::flush;
@@ -284,6 +348,8 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
+    std::cout<<"MAP PRINT"<<std::endl;
+    map.print();
 }
 
 void Window::wheelEvent(QWheelEvent *event)
@@ -319,6 +385,8 @@ void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
             auto item = addTreeChild(roadTreeItem, laneName);
         }
     }
+    //ui->myGLWidget->UpdateScale(arg1.toFloat());
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::addNameToListWidget(RoadSegment roadName)
@@ -330,6 +398,8 @@ void Window::addNameToListWidget(RoadSegment roadName)
         QString laneName = QString::fromStdString(stringify(i));
         auto item = addTreeChild(roadTreeItem, laneName);
     }
+    //ui->myGLWidget->UpdateXOffset(arg1.toFloat());
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::setStats(Stats type, RoadSegment road, Lane *lane)
@@ -338,6 +408,9 @@ void Window::setStats(Stats type, RoadSegment road, Lane *lane)
         setTextEditRoad(road);
     else if (type == Stats::Lanes)
         setTextEditLane(lane);
+
+    //ui->myGLWidget->UpdateYOffset(arg1.toFloat());
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::setTextEditRoad(RoadSegment road)
@@ -353,6 +426,9 @@ void Window::setTextEditRoad(RoadSegment road)
 
     QString qstr = QString::fromStdString(road.getRoadName());
     textEdit->setText(output);
+
+    //ui->myGLWidget->UpdateOffset(8);
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::setTextEditLane(Lane *lane)
@@ -368,15 +444,18 @@ void Window::setTextEditLane(Lane *lane)
 
     //QString qstr = QString::fromStdString(lane.getRoadName());
     textEdit->setText(output);
+
+    //ui->myGLWidget->UpdateOffset(6);
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::on_m_boutonBlockRoad_clicked()
 {
-    bool dvEnCours = true;
+    /*bool dvEnCours = true;
 
     ui->myGLWidget->BlockRoad();
 
-    std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+    auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
         (*itt)->startDV();
@@ -396,16 +475,19 @@ void Window::on_m_boutonBlockRoad_clicked()
     }
 
     selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::FDiagPattern));
-    //Qt::BrushStyle::NoBrush
+    //Qt::BrushStyle::NoBrush*/
+
+    //ui->myGLWidget->UpdateOffset(2);
+    //ui->myGLWidget->updateGL();
 }
 
 void Window::on_m_boutonUnblockRoad_clicked()
 {
-    bool dvEnCours = true;
+    /*bool dvEnCours = true;
 
     ui->myGLWidget->UnBlockRoad();
 
-    std::vector<Node*> allNodes = SimulationData::getInstance().getNodes();
+    auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
         (*itt)->startDV();
@@ -424,5 +506,8 @@ void Window::on_m_boutonUnblockRoad_clicked()
         (*itt)->printDVResults();
     }
 
-    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));
+    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));*/
+
+    //ui->myGLWidget->UpdateOffset(4);
+    //ui->myGLWidget->updateGL();
 }

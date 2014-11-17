@@ -11,6 +11,8 @@
 #include "simulationtraits.h"
 #include "window.h"
 
+#include <map>
+
 class MyGLWidget : public QGLWidget
 {
     Q_OBJECT
@@ -63,7 +65,7 @@ private:
     // pour test
     Vehicle* vehicule;
 
-    std::vector<Node*>& GetAllNodes();
+    std::map<node_id_type,Node*>& GetAllNodes();
     std::vector<RoadSegment>& GetAllRoads();
     std::list<Vehicle*>& GetAllVehicles();
     std::vector<Vehicle*> allVehicles_;
@@ -89,9 +91,11 @@ private:
     void AddRoad(Node*, Node*);
     RoadSegment AddRoad(node_id_type, node_id_type, std::string name);
     void DrawSource(float *worldCoords);
-    void DrawSource(float x, float y, node_id_type id = 0);
+    void DrawSource(float x, float y);
+    void DrawSource(float x, float y, node_id_type id);
     void DrawNode(float *worldCoords);
     void DrawNode(float x, float y);
+    void DrawNode(float x, float y, node_id_type id);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 

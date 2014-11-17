@@ -3,7 +3,7 @@
 #include "distributor.h"
 #include "simulationdata.h"
 
-Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::vector<Node*> nodes, std::list<Vehicle*>* all_vehicles_)
+Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::map<node_id_type,Node*> nodes, std::list<Vehicle*>* all_vehicles_)
     : all_vehicles_(all_vehicles_),
       vehicles_(std::vector<Vehicle*>()),
       threads_(threads)
@@ -20,12 +20,12 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* ex
         waitingVehicles.insert(std::pair<road_id_type,std::vector<Vehicle*>>((allRoads.at(i)).getRoadID(),std::vector<Vehicle*>()));
     }
 
-    nodes_.reserve(nodes.size() / 2);
+    //nodes_.reserve(nodes.size() / 2);
 
     // Keep only source nodes
     for(auto i(std::begin(nodes)); i != std::end(nodes); ++i)
-        if((*i)->is_source())
-            nodes_.emplace_back(*i);
+        if((*i).second->is_source())
+            nodes_.insert((*i));
 }
 
 void Distributor::init()
@@ -38,9 +38,11 @@ void Distributor::init()
         if(*execute_)
         {
             *execute_ = false;
-            std::for_each(nodes_.begin(), nodes_.end(), [&](Node* node)
-            {
-                // If node is ready, add vehicule on network
+
+            std::for_each(nodes_.begin(), nodes_.end(), [&](std::pair<node_id_type,Node*> it){
+
+                Node* node = it.second;
+                // Si le noeud est pret, ajouter un vehicule sur le reseau
                 if(node->is_due())
                 {
                     Vehicle* v = node->create_vehicle();

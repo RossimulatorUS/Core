@@ -63,7 +63,7 @@ void map_fetcher::parse_response()
     // Get all nodes
     for (pugi::xml_node inode: osm.children("node"))
     {
-        nodes.insert(std::pair<map_node::node_id, map_node>(
+        nodes.insert(std::pair<node_id_type, map_node>(
                          atol(inode.attribute("id").value()),
                          map_node(atof(inode.attribute("lon").value()),
                               atof(inode.attribute("lat").value()))));
@@ -75,12 +75,12 @@ void map_fetcher::parse_response()
     {
         bool add_way(false);
 
-        std::vector<map_node::node_id> way_nodes;
+        std::vector<node_id_type> way_nodes;
         std::map<std::string, std::string> way_attributes;
 
         for (pugi::xml_node nd: inode.children("nd"))
         {
-            way_nodes.push_back(map_node::node_id(atof(nd.attribute("ref").value())));
+            way_nodes.push_back(node_id_type(atof(nd.attribute("ref").value())));
         }
 
         for (pugi::xml_node tag: inode.children("tag"))
@@ -124,7 +124,7 @@ void map_fetcher::print()
         for(auto itt = it->path.begin(); itt != it->path.end(); ++itt)
         {
             auto node = nodes.find(*itt)->second;
-            cout << *itt << "(" << node.longitude() << "," << node.lattitude() << " -> ";
+            cout << *itt << " -> ";
         }
         cout << "end" << endl << "Attributes ::\n";
         for(auto itt = it->attributes.begin(); itt != it->attributes.end(); ++itt)
@@ -139,7 +139,7 @@ std::vector<map_way> map_fetcher::get_ways()
     return ways;
 }
 
-std::map<map_node::node_id, map_node> map_fetcher::get_nodes()
+std::map<map_fetcher::node_id_type, map_node> map_fetcher::get_nodes()
 {
     return nodes;
 }

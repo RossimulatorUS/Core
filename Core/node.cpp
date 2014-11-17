@@ -119,7 +119,8 @@ Vehicle *Node::create_vehicle()
     //TODO vérifier si il y a un chemin qui se rend
     do
     {
-        end_id = distribution(generator);
+        end_id = SimulationData::getInstance().getKeys()[distribution(generator)];
+        //end_id = distribution(generator);
     }while(end_id == this->id_);
 
     return new Vehicle(this->id_, end_id);

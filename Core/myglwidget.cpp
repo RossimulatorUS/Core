@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include <QtOpenGL>
+#include <iostream>
 
 #include "myglwidget.h"
 #include "glutility.h"
@@ -36,7 +37,7 @@ void MyGLWidget::BlockRoad()
     auto allNodes = GetAllNodes();
     for (auto itt = allNodes.begin(); itt != allNodes.end(); ++itt)
     {
-        (*itt)->resetCosts();
+        (*itt).second->resetCosts();
     }
 
     auto road = SimulationData::getInstance().getRoad(selectedRoad_.getRoadID());
@@ -50,7 +51,7 @@ void MyGLWidget::UnBlockRoad()
     auto allNodes = GetAllNodes();
     for (auto itt = allNodes.begin(); itt != allNodes.end(); ++itt)
     {
-        (*itt)->resetCosts();
+        (*itt).second->resetCosts();
     }
 
     auto road = SimulationData::getInstance().getRoad(selectedRoad_.getRoadID());
@@ -193,16 +194,16 @@ void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
 {
     auto allNodes = GetAllNodes();
-    for (unsigned int i = 0; i < allNodes.size(); ++i)
+    for (auto it = allNodes.begin(); it != allNodes.end(); ++it)
     {
-        float ErrorXPos = allNodes[i]->x() + ClickErrorTollerence;
-        float ErrorXNeg = allNodes[i]->x() - ClickErrorTollerence;
-        float ErrorYPos = allNodes[i]->y() + ClickErrorTollerence;
-        float ErrorYNeg = allNodes[i]->y() - ClickErrorTollerence;
+        float ErrorXPos = it->second->x() + ClickErrorTollerence;
+        float ErrorXNeg = it->second->x() - ClickErrorTollerence;
+        float ErrorYPos = it->second->y() + ClickErrorTollerence;
+        float ErrorYNeg = it->second->y() - ClickErrorTollerence;
 
         if ((noeud.x() > ErrorXNeg && noeud.x() < ErrorXPos) &&
             (noeud.y() > ErrorYNeg && noeud.y() < ErrorYPos))
-            return allNodes[i]->GetId();
+            return it->second->GetId();
     }
     return 66666;   //kinda lame
 }
@@ -270,8 +271,12 @@ void MyGLWidget::DrawNode(float *worldCoords)
 
 void MyGLWidget::DrawNode(float x, float y)
 {
-    //allNodes_.emplace_back(x,y, allNodes_.size());//le vecteur crée lui-même le noeud en le plaçant
     SimulationData::getInstance().addNode(x,y, false);
+}
+
+void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id)
+{
+    SimulationData::getInstance().addNode(x,y, false, id);
 }
 
 RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)
@@ -281,7 +286,6 @@ RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name
     auto isOneWay = window->isOneWay();
     auto numberOfLane = window->getNumberofLane();
 
-    //allRoads_.push_back(Route(a, b));
     RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane, name);
     auto roadId = SimulationData::getInstance().addRoad(newRoad);
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
@@ -379,6 +383,23 @@ void MyGLWidget::DrawSource(float *worldCoords)
     DrawSource(worldCoords[0], worldCoords[1]);
 }
 
+void MyGLWidget::DrawSource(float x, float y)
+{
+    auto window = static_cast<Window*>(parent());
+
+    auto distribution = Node::DistributionInfo();
+
+    distribution.isBernouilli = window->isBernouilliChecked();
+    distribution.isUniform = window->isUniformChecked();
+    distribution.isExponential = window->isExponentialChecked();
+
+    distribution.bernouilliAmount = window->getBernouilliAmount();
+    distribution.uniformAmount = window->getUniformAmount();
+    distribution.exponentialAmount = window->getExponentialAmount();
+
+    SimulationData::getInstance().addNode(x,y, true, distribution);
+}
+
 void MyGLWidget::DrawSource(float x, float y, node_id_type id)
 {
     auto window = static_cast<Window*>(parent());
@@ -393,7 +414,7 @@ void MyGLWidget::DrawSource(float x, float y, node_id_type id)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    id == 0 ? SimulationData::getInstance().addNode(x,y, true, distribution) : SimulationData::getInstance().addNode(x,y, true, distribution, id);
+    SimulationData::getInstance().addNode(x,y, true, distribution, id);
 }
 
 void MyGLWidget::ClearWidget()
@@ -492,16 +513,16 @@ void MyGLWidget::draw()
     //draw nodes
     glPointSize(20.0f*std::min(1.0f,scale));
     auto allNodes = GetAllNodes();
-    for(unsigned int i = 0; i < allNodes.size(); ++i)
+    for(auto it = allNodes.begin(); it!= allNodes.end(); ++it)
     {
         glLoadIdentity();
         glTranslatef(0, 0, -9);
-        if(allNodes[i]->is_source())
+        if(it->second->is_source())
             qglColor(Qt::red);
         else
             glColor3f(0.9f,0.3f,0.1f);
         glBegin(GL_POINTS);
-            glVertex2f((allNodes[i]->x()*scale)+xOffset,(allNodes[i]->y()*scale)+yOffset);
+            glVertex2f((it->second->x()*scale)+xOffset,(it->second->y()*scale)+yOffset);
         glEnd();
     }
 
@@ -528,7 +549,7 @@ void MyGLWidget::draw()
     }
 }
 
-std::vector<Node*>& MyGLWidget::GetAllNodes()
+std::map<simulation_traits::node_id_type,Node*>& MyGLWidget::GetAllNodes()
 {
     return SimulationData::getInstance().getNodes();
 }

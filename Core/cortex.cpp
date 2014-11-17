@@ -1,6 +1,6 @@
 #include "cortex.h"
 
-Cortex::Cortex(std::vector<Node*> nodes, std::list<Vehicle*>* vehicles)
+Cortex::Cortex(std::map<node_id_type,Node*> nodes, std::list<Vehicle*>* vehicles)
     : distributor_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),

@@ -14,10 +14,10 @@ void Signaler::init()
         if(*execute_)
         {
             *execute_ = false;
-            std::vector<Node*>& nodes = SimulationData::getInstance().getNodes();
+            std::map<simulation_traits::node_id_type,Node*>& nodes = SimulationData::getInstance().getNodes();
             for(auto itt = nodes.begin(); itt != nodes.end() ; ++itt)
             {
-                (*itt)->processWaitingVehicles();
+                (*itt).second->processWaitingVehicles();
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
