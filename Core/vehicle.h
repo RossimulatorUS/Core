@@ -1,7 +1,7 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-#include <QGLWidget>
+//#include <QGLWidget>
 
 #include "node.h"
 #include "road_segment.h"

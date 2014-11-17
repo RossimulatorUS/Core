@@ -312,7 +312,6 @@ RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name
 void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
 {
     RoadSegment selectedRoad;
-    //Lane *selectedLane;
     auto window = static_cast<Window*>(parent());
 
     if (item->text(0) == window->getRootItem()->text(0))
@@ -330,20 +329,12 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
         selectedLaneItem_ = new QTreeWidgetItem();
 
         auto allRoads = GetAllRoads();
-        for (int i = 0; i < allRoads.size(); ++i)
+        for (auto i = 0; i < allRoads.size(); ++i)
         {
             if (allRoads[i].getRoadName() == selectedRoadItem_->text(0).toLocal8Bit().constData())
             {
                 selectedRoad = allRoads[i];
                 qDebug() << allRoads[i].isBlocked_;
-                /*if (selectedRoad.isBlocked_)
-                {
-                    window->hideBlockRoadButton();
-                }
-                else
-                {
-                    window->showBlockRoadButton();
-                }*/
             }
         }
         selectedRoad_ = selectedRoad;
@@ -351,8 +342,7 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
 
 
     }
-    //clicked on a lane
-    else
+    else //clicked on a lane
     {
         isRoadSelected_ = false;
         isLaneSelected_ = true;
@@ -364,15 +354,14 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
         std::string parentRoad = road.toLocal8Bit().constData();
         auto allRoads = GetAllRoads();
 
-        for (int i = 0; i < allRoads.size(); ++i)
+        for (auto i = 0; i < allRoads.size(); ++i)
         {
             if (allRoads[i].getRoadName() == parentRoad)
             {
                 std::vector<Lane*> allLanes = allRoads[i].getLanes();
                 int laneNumber = atoi(selectedLaneItem_->text(0).toLocal8Bit().constData());
-                for (int i = 0; i < allLanes.size(); ++i)
+                for (auto i = 0; i < allLanes.size(); ++i)
                 {
-                    //qDebug() << laneNumber;
                     if (allLanes[i]->getLaneId() == laneNumber)
                     {
                         selectedLane = allLanes[i];
@@ -493,8 +482,6 @@ void MyGLWidget::draw()
                 glColor4f(0.75f,0,0, 0.75f);
             //qglColor(Qt::blue);
             glBegin(GL_LINES);
-                //glVertex2f(allLanes[i]->getStartNode().x(), allLanes[i]->getStartNode().y());
-                //glVertex2f(allLanes[i]->getEndNode().x(), allLanes[i]->getEndNode().y());
                 glVertex2f((allLanes[j]->getLineFormula().getLaneCoordinate(X1)*scale)+xOffset, (allLanes[j]->getLineFormula().getLaneCoordinate(Y1)*scale)+yOffset);
                 glVertex2f((allLanes[j]->getLineFormula().getLaneCoordinate(X2)*scale)+xOffset, (allLanes[j]->getLineFormula().getLaneCoordinate(Y2)*scale)+yOffset);
             glEnd();
@@ -529,47 +516,14 @@ void MyGLWidget::draw()
         glLoadIdentity();
         glTranslatef(0,0,-8);
         if ((*itt)->isOnLastStretch())
-        //if((*itt)->getPositionInLane() < 5)
             qglColor(Qt::yellow);
         else
             qglColor(Qt::blue);
-
-        /*if ((*itt)->isCarBehind())
-        {
-            out << " car in back : yep ";
-            vehicleBehind = (*itt)->getVehicleBehind();
-            out << " vehicle behind id" << vehicleBehind->id();
-        }
-        else
-            out << " car in back : nop ";
-
-        if ((*itt)->isCarInFront())
-        {
-            out << " car in front : yep ";
-            vehicleInFront = (*itt)->getVehicleInFront();
-            out << " vehicle behind id" << vehicleInFront->id();
-        }
-        else
-        {
-            out << " car in front : nop ";
-        }
-
-        /*if((*itt)->isOnLastStretch())
-            qglColor(Qt::yellow );
-        else
-            qglColor(Qt::green);*/
 
         glBegin(GL_POINTS);
             glVertex2f(((*itt)->x_*scale)+xOffset, ((*itt)->y_*scale)+yOffset);
         glEnd();
 
-        /*out << "Position of vehicle #"
-            << (*itt)->id()
-            << " : "
-            << "x = " << (*itt)->x_
-            << " y = " << (*itt)->y_
-            << " car position : " << (*itt)->getPositionInLane()
-            <<"\n";*/
         ++i;
     }
 }

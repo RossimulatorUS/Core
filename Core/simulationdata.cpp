@@ -54,11 +54,7 @@ bool SimulationData::accepted_road(std::string road_type)
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource)
 {
-    //Use emplace back
     allNodes_.emplace_back(new TLight(x,y, allNodes_.size(), isSource));
-    //allNodes_.push_back(new Node(x,y, allNodes_.size(), isSource));
-    //allNodes_.push_back(new TLight(x,y, allNodes_.size(), isSource));
-
     return allNodes_.size()-1;
 }
 

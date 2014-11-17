@@ -1,7 +1,6 @@
 #ifndef FORMULE_H
 #define FORMULE_H
 
-#include <QGLWidget>
 #include "node.h"
 
 enum{

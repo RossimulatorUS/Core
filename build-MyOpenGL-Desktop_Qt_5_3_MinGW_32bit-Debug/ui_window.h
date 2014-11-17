@@ -247,6 +247,8 @@ public:
         QObject::connect(m_boutonDrawSource, SIGNAL(pressed()), myGLWidget, SLOT(DrawSourcePressed()));
 
         Display->setCurrentIndex(1);
+
+
         QMetaObject::connectSlotsByName(Window);
     } // setupUi
 

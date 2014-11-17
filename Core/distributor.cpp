@@ -1,17 +1,13 @@
-#include <QDebug>
-
 #include <algorithm>
 
-#include "cortex.h"
 #include "distributor.h"
 #include "simulationdata.h"
-#include <iostream>
 
 Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* execute, std::vector<Node*> nodes, std::list<Vehicle*>* all_vehicles_)
     : all_vehicles_(all_vehicles_),
+      vehicles_(std::vector<Vehicle*>()),
       threads_(threads)
 {
-    vehicles_ = std::vector<Vehicle*>();
     execute_ = execute;
     execution_ = std::thread(&Distributor::init, this);
 
@@ -26,53 +22,34 @@ Distributor::Distributor(std::vector<VehicleThread*>* threads, volatile bool* ex
 
     nodes_.reserve(nodes.size() / 2);
 
-    // On garde seulement les noeuds qui sont des sources
+    // Keep only source nodes
     for(auto i(std::begin(nodes)); i != std::end(nodes); ++i)
         if((*i)->is_source())
-            nodes_.push_back((*i));
-            //nodes_.emplace_back(*i);
+            nodes_.emplace_back(*i);
 }
 
 void Distributor::init()
 {
     is_initialised_ = true;
-    //Historique_dexecution::temps temps_initial;
-
 
     while(!terminate_)
     {
-        // Attendre prochain tic
+        // Wait for next tic (from analyser)
         if(*execute_)
         {
             *execute_ = false;
-            auto nodes = SimulationData::getInstance().getNodes();
-            std::for_each(nodes_.begin(), nodes_.end(), [&](Node* node){
-
-                // Si le noeud est pret, ajouter un vehicule sur le reseau
+            std::for_each(nodes_.begin(), nodes_.end(), [&](Node* node)
+            {
+                // If node is ready, add vehicule on network
                 if(node->is_due())
                 {
                     Vehicle* v = node->create_vehicle();
-
                     Lane* entry = v->getCurrentLane();
 
-                    /*if (SimulationData::getInstance().getRoad(entry->getRoadId()).isBlocked_)
-                    {
-                        qDebug() << "Road blocked";
-                    }*/
-
-                    /*if (node->isNodeBlocked())
-                    {
-                        qDebug() << "Returning node " << entry->getStartNode().GetId();
-                        return;
-                    }*/
-
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
-
                     if(lastProgression < 0.03f)
                     {
-                        //Road parentRoad = SimulationData::getInstance().getRoad(entry->getRoadId());
                         waitingVehicles[entry->getRoadId()].push_back(v);
-                        //std::cout<<entry->getRoadId()<<" "<<waitingVehicles[entry->getRoadId()].size()<<" "<<lastProgression<<std::endl;
                     }
                     else
                     {
@@ -91,7 +68,6 @@ void Distributor::init()
     }
 }
 
-// ALGORITHME IMPORTANT
 unsigned int Distributor::chose_thread()
 {
     // Retourne l'iterateur du thread le moins occupe - le debut du vector, donc sa position

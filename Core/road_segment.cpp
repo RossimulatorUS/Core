@@ -63,14 +63,6 @@ Lane* RoadSegment::findAssociatedLane(Node start, Node end)
         ++cpt;
     }
 
-    /*for (unsigned int i = 0; i < lanes_.size(); ++i)
-    {
-        if (IsInSameDirection(lanes_[i].getNodeDepart(), lanes_[i].getNodeArrivee(), depart, arrivee))
-        {
-            //qDebug() << "voie.size = " << lanes_.size() << " " << i;
-            return lanes_[i];
-        }
-    }*/
     return 0;
 }
 

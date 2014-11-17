@@ -1,7 +1,6 @@
 #ifndef VEHICULETHREAD_H
 #define VEHICULETHREAD_H
 
-#include <thread>
 #include <vector>
 
 #include "module.h"
@@ -9,7 +8,6 @@
 
 class VehicleThread : public Module
 {
-    // Materiel
     std::list<Vehicle*> vehicles_;
     std::list<Vehicle*> toDelete;
     std::thread execution_;

@@ -27,7 +27,6 @@ SOURCES += main.cpp \
     analyser.cpp \
     distributor.cpp \
     formula.cpp \
-    execution_history.cpp \
     node.cpp \
     signaler.cpp \
     vehicle.cpp \
@@ -37,7 +36,8 @@ SOURCES += main.cpp \
     lib/pugixml/pugixml.cpp \
     TLight.cpp \
     road_segment.cpp \
-    road.cpp
+    road.cpp \
+    utils.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -51,7 +51,6 @@ HEADERS  += window.h \
     distributor.h \
     autolock.h \
     node.h \
-    execution_history.h \
     formula.h \
     signaler.h \
     vehicle.h \
