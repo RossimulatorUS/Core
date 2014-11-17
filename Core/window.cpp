@@ -170,16 +170,20 @@ void Window::on_m_boutonSimulation4_clicked()
 {
     ui->myGLWidget->clearWidget();
 
-    ui->myGLWidget->DrawSource(0.0f,1.6f);
-    ui->myGLWidget->DrawSource(1.6f,0.0f);
-    ui->myGLWidget->DrawSource(-1.6f,0.0f);
-    ui->myGLWidget->DrawSource(0.0f,-1.6f);
+    ui->myGLWidget->DrawSource(0.0f,1.6f,156454);
+    ui->myGLWidget->DrawSource(1.6f,0.0f,156798798);
+    ui->myGLWidget->DrawSource(-1.6f,0.0f,68756157);
+    ui->myGLWidget->DrawSource(0.0f,-1.6f,64789784516);
 
-    ui->myGLWidget->DrawNode(0.0f,0.0f);
-    ui->myGLWidget->AddRoad(0, 4);
+    ui->myGLWidget->DrawNode(0.0f,0.0f,5555);
+    ui->myGLWidget->AddRoad(156454, 5555);
+    ui->myGLWidget->AddRoad(156798798, 5555);
+    ui->myGLWidget->AddRoad(68756157, 5555);
+    ui->myGLWidget->AddRoad(64789784516, 5555);
+    /*ui->myGLWidget->AddRoad(0, 4);
     ui->myGLWidget->AddRoad(1, 4);
     ui->myGLWidget->AddRoad(2, 4);
-    ui->myGLWidget->AddRoad(3, 4);
+    ui->myGLWidget->AddRoad(3, 4);*/
 
     ui->myGLWidget->updateGL();
 }
@@ -202,14 +206,14 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     map.fetch();
 
     std::cout << "adding nodes\n" << std::flush;
-    auto nodes = map.get_nodes();
-    for(auto it = nodes.begin(); it != nodes.end(); ++it)
+    std::map<node_id_type, map_node> nodes = map.get_nodes();
+    /*for(auto it = nodes.begin(); it != nodes.end(); ++it)
     {
         double longitude = (it->second.longitude() - east) / largeur_carte;
         double lattitude = (it->second.lattitude() - south) / hauteur_carte;
 
         ui->myGLWidget->DrawSource(longitude, lattitude,it->first);
-    }
+    }*/
 
     std::vector<map_way> ways = map.get_ways();
 
@@ -220,8 +224,25 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
         for(int j=0;j<(path.size()-1);++j)
         {
-            if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
+            //if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
+            if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
+            {
+                if(allNodes.find(path[j]) == allNodes.end())
+                {
+                    double longitude = (nodes[path[j]].longitude() - east) / largeur_carte;
+                    double lattitude = (nodes[path[j]].lattitude() - south) / hauteur_carte;
+
+                    ui->myGLWidget->DrawSource(longitude, lattitude,path[j]);
+                }
+                if(allNodes.find(path[j+1]) == allNodes.end())
+                {
+                    double longitude = (nodes[path[j+1]].longitude() - east) / largeur_carte;
+                    double lattitude = (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
+
+                    ui->myGLWidget->DrawSource(longitude, lattitude,path[j+1]);
+                }
                 ui->myGLWidget->AddRoad(path[j],path[j+1]);
+            }
         }
         //Road(path);
     }
@@ -231,7 +252,9 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
-    map.print();
+    std::cout<<"MAP PRINT"<<std::endl;
+    map.print_response();
+
 }
 
 

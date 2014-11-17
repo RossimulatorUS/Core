@@ -397,16 +397,16 @@ void MyGLWidget::draw()
     //draw nodes
     glPointSize(20.0f*std::min(1.0f,scale));
     auto allNodes = GetAllNodes();
-    for(unsigned int i = 0; i < allNodes.size(); ++i)
+    for(auto it = allNodes.begin(); it!= allNodes.end(); ++it)
     {
         glLoadIdentity();
         glTranslatef(0, 0, -9);
-        if(allNodes[i]->is_source())
+        if(it->second->is_source())
             qglColor(Qt::red);
         else
             glColor3f(0.9f,0.3f,0.1f);
         glBegin(GL_POINTS);
-            glVertex2f((allNodes[i]->x()*scale)+xOffset,(allNodes[i]->y()*scale)+yOffset);
+            glVertex2f((it->second->x()*scale)+xOffset,(it->second->y()*scale)+yOffset);
         glEnd();
     }
 

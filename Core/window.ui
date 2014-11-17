@@ -518,7 +518,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>45.3825079</string>
+     <string>45.40423</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="m_lineEditEast">
@@ -531,7 +531,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>-71.9212199</string>
+     <string>-71.87092</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="m_lineEditWest">
@@ -544,7 +544,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>-71.9330645</string>
+     <string>-71.87387</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="m_lineEditSouth">
@@ -557,7 +557,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>45.3758762</string>
+     <string>45.40328</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
