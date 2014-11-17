@@ -222,7 +222,26 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
         std::vector<node_id_type> path = ways[i].path;
         std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
 
-        for(int j=0;j<(path.size()-1);++j)
+        if((nodes.find(path[0]) != nodes.end()) && (nodes.find(path[1]) != nodes.end()))
+        {
+            if(allNodes.find(path[0]) == allNodes.end())
+            {
+                double longitude = (nodes[path[0]].longitude() - east) / largeur_carte;
+                double lattitude = (nodes[path[0]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawSource(longitude, lattitude,path[0]);
+
+            }
+            if(allNodes.find(path[1]) == allNodes.end())
+            {
+                double longitude = (nodes[path[1]].longitude() - east) / largeur_carte;
+                double lattitude = (nodes[path[1]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawNode(longitude, lattitude,path[1]);
+            }
+            ui->myGLWidget->AddRoad(path[0],path[1]);
+        }
+        for(int j=1;j<(path.size()-2);++j)
         {
             //if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
             if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
@@ -232,17 +251,37 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
                     double longitude = (nodes[path[j]].longitude() - east) / largeur_carte;
                     double lattitude = (nodes[path[j]].lattitude() - south) / hauteur_carte;
 
-                    ui->myGLWidget->DrawSource(longitude, lattitude,path[j]);
+                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
+
                 }
                 if(allNodes.find(path[j+1]) == allNodes.end())
                 {
                     double longitude = (nodes[path[j+1]].longitude() - east) / largeur_carte;
                     double lattitude = (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
 
-                    ui->myGLWidget->DrawSource(longitude, lattitude,path[j+1]);
+                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]);
                 }
                 ui->myGLWidget->AddRoad(path[j],path[j+1]);
             }
+        }
+        if((nodes.find(path[path.size()-2]) != nodes.end()) && (nodes.find(path[path.size()-1]) != nodes.end()))
+        {
+            if(allNodes.find(path[path.size()-2]) == allNodes.end())
+            {
+                double longitude = (nodes[path[path.size()-2]].longitude() - east) / largeur_carte;
+                double lattitude = (nodes[path[path.size()-2]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawNode(longitude, lattitude,path[path.size()-2]);
+
+            }
+            if(allNodes.find(path[path.size()-1]) == allNodes.end())
+            {
+                double longitude = (nodes[path[path.size()-1]].longitude() - east) / largeur_carte;
+                double lattitude = (nodes[path[path.size()-1]].lattitude() - south) / hauteur_carte;
+
+                ui->myGLWidget->DrawSource(longitude, lattitude,path[path.size()-1]);
+            }
+            ui->myGLWidget->AddRoad(path[path.size()-2],path[path.size()-1]);
         }
         //Road(path);
     }
@@ -253,42 +292,48 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
     std::cout<<"MAP PRINT"<<std::endl;
-    map.print_response();
+    map.print();
 
 }
-
 
 void Window::on_currentScale_textChanged(const QString &arg1)
 {
     ui->myGLWidget->UpdateScale(arg1.toFloat());
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_xOffset_textChanged(const QString &arg1)
 {
     ui->myGLWidget->UpdateXOffset(arg1.toFloat());
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_yOffset_textChanged(const QString &arg1)
 {
     ui->myGLWidget->UpdateYOffset(arg1.toFloat());
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_offsetUp_clicked()
 {
     ui->myGLWidget->UpdateOffset(8);
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_offsetRight_clicked()
 {
     ui->myGLWidget->UpdateOffset(6);
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_offsetDown_clicked()
 {
     ui->myGLWidget->UpdateOffset(2);
+    ui->myGLWidget->updateGL();
 }
 
 void Window::on_offsetLeft_clicked()
 {
     ui->myGLWidget->UpdateOffset(4);
+    ui->myGLWidget->updateGL();
 }

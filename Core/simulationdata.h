@@ -25,6 +25,7 @@ private:
     std::vector<RoadSegment> allRoads_;
     std::list<Vehicle*> allVehicles_;
     std::vector<std::string> accepted_road_types_;
+    std::vector<node_id_type> keys;
 
 public:
     static SimulationData &getInstance();
@@ -45,6 +46,7 @@ public:
     void removeVehicle(Vehicle*);
     void addVehicle(Vehicle*);
     void resetAllData();
+    std::vector<node_id_type> getKeys() const;
 };
 
 #endif // SIMULATIONDATA_H

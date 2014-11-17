@@ -156,16 +156,16 @@ void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
 {
     auto allNodes = GetAllNodes();
-    for (unsigned int i = 0; i < allNodes.size(); ++i)
+    for (auto it = allNodes.begin(); it != allNodes.end(); ++it)
     {
-        float ErrorXPos = allNodes[i]->x() + ClickErrorTollerence;
-        float ErrorXNeg = allNodes[i]->x() - ClickErrorTollerence;
-        float ErrorYPos = allNodes[i]->y() + ClickErrorTollerence;
-        float ErrorYNeg = allNodes[i]->y() - ClickErrorTollerence;
+        float ErrorXPos = it->second->x() + ClickErrorTollerence;
+        float ErrorXNeg = it->second->x() - ClickErrorTollerence;
+        float ErrorYPos = it->second->y() + ClickErrorTollerence;
+        float ErrorYNeg = it->second->y() - ClickErrorTollerence;
 
         if ((noeud.x() > ErrorXNeg && noeud.x() < ErrorXPos) &&
             (noeud.y() > ErrorYNeg && noeud.y() < ErrorYPos))
-            return allNodes[i]->GetId();
+            return it->second->GetId();
     }
     return 66666;   //kinda lame
 }
