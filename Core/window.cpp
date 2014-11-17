@@ -258,8 +258,8 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     double north = ui->m_lineEditNorth->text().toDouble();
     double east = ui->m_lineEditEast->text().toDouble();
 
-    auto hauteur_carte = std::abs(north - south);
-    auto largeur_carte = std::abs(east - west);
+    auto map_height = std::abs(north - south);
+    auto map_width = std::abs(east - west);
 
     std::cout << "fetching\n" << std::flush;
     map_fetcher map(south, west, north, east);
@@ -267,10 +267,12 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "adding nodes\n" << std::flush;
     auto nodes = map.get_nodes();
+
+    float scale = ui->m_scale->text().toDouble();
     for(auto it = nodes.begin(); it != nodes.end(); ++it)
     {
-        double longitude = (it->second.longitude() - east) / largeur_carte;
-        double lattitude = (it->second.lattitude() - south) / hauteur_carte;
+        double longitude = scale * (it->second.longitude() - (it->second.longitude() < 0 ? east : west)) / map_width;
+        double lattitude = scale * (it->second.lattitude() - (it->second.lattitude() < 0 ? north : south)) / map_height;
 
         ui->myGLWidget->DrawSource(longitude, lattitude, it->first);
     }
