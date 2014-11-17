@@ -271,12 +271,12 @@ void MyGLWidget::DrawNode(float *worldCoords)
 
 void MyGLWidget::DrawNode(float x, float y)
 {
-    SimulationData::getInstance().addNode(x,y, false);
+    SimulationData::getInstance().addNode(x,y, false,0);
 }
 
 void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id)
 {
-    SimulationData::getInstance().addNode(x,y, false, id);
+    SimulationData::getInstance().addNode(x,y, false, id,0);
 }
 
 RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)

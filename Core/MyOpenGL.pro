@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     TLight.cpp \
     road_segment.cpp \
     road.cpp \
-    utils.cpp
+    utils.cpp \
+    StopSign.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -64,6 +65,7 @@ HEADERS  += window.h \
     lib/pugixml/pugixml.hpp \
     road_segment.h \
     TLight.h \
-    road.h
+    road.h \
+    StopSign.h
 
 FORMS    += window.ui

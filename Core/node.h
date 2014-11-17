@@ -78,6 +78,7 @@ public:
     // Methods
     Node();
     Node(GLfloat x, GLfloat y);
+    Node(GLfloat x, GLfloat y, node_id_type id, bool isSource);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
 
     bool is_source();

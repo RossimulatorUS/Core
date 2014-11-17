@@ -34,6 +34,24 @@ Node::Node(GLfloat x, GLfloat y)
     isNodeBlocked_= false;
 }
 
+Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
+    : x_(x), y_(y), is_source_(isSource),
+      neighbours_(std::map<node_id_type, road_id_type>()),
+      nextHopForDestination_(std::map<node_id_type, node_id_type>()),
+      costs_(std::map<node_id_type, road_cost_type>()),
+      pendingDVMessages_(std::queue<DVMessage>()),
+      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
+      currentWaitingVehicleIndex(0),
+      bernouilli_distribution_(std::bernoulli_distribution(0.2)),
+      generator_((unsigned int)time(0)),
+      waitingRoads_(std::queue<road_id_type>()),
+      waitingRoadIndex_(std::set<road_id_type>())
+{
+    id_ = id;
+    last_creation_= exec_time(0);
+    isNodeBlocked_ = false;
+}
+
 Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
     : x_(x), y_(y), is_source_(isSource), distributionInfo_(distributionInfo),
       neighbours_(std::map<node_id_type, road_id_type>()),
@@ -274,7 +292,7 @@ void Node::processWaitingVehicles()
 {
     Autolock av(mtx);
 
-    if(waitingRoads_.size()>0)
+    while(waitingRoads_.size()>0)
     {
         road_id_type rID = waitingRoads_.front();
         RoadSegment& r = SimulationData::getInstance().getRoad(rID);
