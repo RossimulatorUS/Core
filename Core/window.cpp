@@ -229,7 +229,6 @@ void Window::on_m_boutonSimulation1_clicked()
 void Window::on_m_boutonSimulation4_clicked()
 {
     ui->myGLWidget->clearWidget();
-    //ui->m_treeWidget->clear();
 
     ui->myGLWidget->DrawSource(0.0f,1.6f);
     ui->myGLWidget->DrawSource(1.6f,0.0f);
@@ -258,6 +257,8 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     double north = ui->m_lineEditNorth->text().toDouble();
     double east = ui->m_lineEditEast->text().toDouble();
 
+    float scale = ui->m_scale->text().toDouble();
+
     auto hauteur_carte = std::abs(north - south);
     auto largeur_carte = std::abs(east - west);
 
@@ -268,35 +269,14 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     std::cout << "adding nodes\n" << std::flush;
     std::map<node_id_type, map_node> nodes = map.get_nodes();
 
-    float scale = ui->m_scale->text().toDouble();
-
+    std::cout << "adding roads\n" << std::flush;
     std::vector<map_way> ways = map.get_ways();
-
     for(int i=0;i<ways.size(); ++i)
     {
         std::vector<node_id_type> path = ways[i].path;
         std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
 
-        if((nodes.find(path[0]) != nodes.end()) && (nodes.find(path[1]) != nodes.end()))
-        {
-            if(allNodes.find(path[0]) == allNodes.end())
-            {
-                double longitude = scale * (nodes[path[0]].longitude() - east) / largeur_carte;
-                double lattitude = scale * (nodes[path[0]].lattitude() - south) / hauteur_carte;
-
-                ui->myGLWidget->DrawSource(longitude, lattitude,path[0]);
-
-            }
-            if(allNodes.find(path[1]) == allNodes.end())
-            {
-                double longitude = scale * (nodes[path[1]].longitude() - east) / largeur_carte;
-                double lattitude = scale * (nodes[path[1]].lattitude() - south) / hauteur_carte;
-
-                ui->myGLWidget->DrawNode(longitude, lattitude,path[1]);
-            }
-            ui->myGLWidget->AddRoad(path[0],path[1], "GERARD");
-        }
-        for(int j=1;j<(path.size()-2);++j)
+        for(auto j = 0; j < (path.size() - 1); ++j)
         {
             //if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
             if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
@@ -306,50 +286,25 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
                     double longitude = scale * (nodes[path[j]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j]].lattitude() - south) / hauteur_carte;
 
-                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
-
+                    (j == 0) ? ui->myGLWidget->DrawSource(longitude, lattitude,path[j]) : ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
                 }
                 if(allNodes.find(path[j+1]) == allNodes.end())
                 {
                     double longitude = scale * (nodes[path[j+1]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
 
-                    ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]);
+                    (j == (path.size() - 1)) ? ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]) : ui->myGLWidget->DrawSource(longitude, lattitude,path[j+1]);
                 }
                 ui->myGLWidget->AddRoad(path[j],path[j+1], "MATYLDE");
             }
         }
-        if((nodes.find(path[path.size()-2]) != nodes.end()) && (nodes.find(path[path.size()-1]) != nodes.end()))
-        {
-            if(allNodes.find(path[path.size()-2]) == allNodes.end())
-            {
-                double longitude = scale * (nodes[path[path.size()-2]].longitude() - east) / largeur_carte;
-                double lattitude = scale * (nodes[path[path.size()-2]].lattitude() - south) / hauteur_carte;
 
-                ui->myGLWidget->DrawNode(longitude, lattitude,path[path.size()-2]);
-
-            }
-            if(allNodes.find(path[path.size()-1]) == allNodes.end())
-            {
-                double longitude = scale * (nodes[path[path.size()-1]].longitude() - east) / largeur_carte;
-                double lattitude = scale * (nodes[path[path.size()-1]].lattitude() - south) / hauteur_carte;
-
-                ui->myGLWidget->DrawSource(longitude, lattitude,path[path.size()-1]);
-            }
-            ui->myGLWidget->AddRoad(path[path.size()-2],path[path.size()-1], "GERTRUDE");
-        }
+        // Create road in the system
         //Road(path);
     }
 
-    std::cout << "adding roads\n" << std::flush;
-    // Create road class that takes a vector<road_segment>
-
-    SimulationData::getInstance().print_nodes();
-
     std::cout << "updating gl\n" << std::flush;
     ui->myGLWidget->updateGL();
-    std::cout<<"MAP PRINT"<<std::endl;
-    map.print();
 }
 
 void Window::wheelEvent(QWheelEvent *event)
