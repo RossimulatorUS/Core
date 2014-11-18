@@ -4,7 +4,8 @@ Cortex::Cortex(std::map<node_id_type,Node*> nodes, std::list<Vehicle*>* vehicles
     : distributor_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
-      opengl_fps_(60)
+      opengl_fps_(60),
+      simulation_fps_(60)
 {
     vehicles_ = vehicles;
     vehicle_threads_ = new std::vector<VehicleThread*>();
@@ -70,4 +71,9 @@ void Cortex::terminate()
 unsigned int Cortex::opengl_fps() const
 {
     return opengl_fps_;
+}
+
+unsigned int Cortex::simulation_fps() const
+{
+    return simulation_fps_;
 }

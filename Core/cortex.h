@@ -56,6 +56,7 @@ private:
 
     // Delais simulation
     unsigned int opengl_fps_;
+    unsigned int simulation_fps_;
 
 public:
     Cortex(std::map<node_id_type,Node*>, std::list<Vehicle *> *);
@@ -63,6 +64,7 @@ public:
     //unsigned int qte_threads_vehicule();
 
     unsigned int opengl_fps() const;
+    unsigned int simulation_fps() const;
     void terminate();
 };
 
