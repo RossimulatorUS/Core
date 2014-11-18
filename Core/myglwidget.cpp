@@ -342,7 +342,7 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
             }
         }
         selectedRoad_ = selectedRoad;
-        window->setStats(window->Stats::Roads, selectedRoad, 0);
+        window->setStats(Window::Stats::Roads, selectedRoad, 0);
 
 
     }
@@ -373,7 +373,7 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
                 }
             }
             this->selectedLane = selectedLane;
-            window->setStats(window->Stats::Lanes, selectedRoad, selectedLane);
+            window->setStats(Window::Stats::Lanes, selectedRoad, selectedLane);
         }
     }
 }
