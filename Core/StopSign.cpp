@@ -70,7 +70,7 @@ void StopSign::processWaitingVehicles()
 {
     Autolock av(mtx);
 
-    if(waitingRoads_.size()>0)
+    if(waitingRoads_.size())
     {
         road_id_type rID = waitingRoads_.front();
         RoadSegment& r = SimulationData::getInstance().getRoad(rID);
