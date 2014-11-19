@@ -58,14 +58,17 @@ private:
     unsigned int opengl_fps_;
     unsigned int simulation_fps_;
 
+    bool paused_;
+
 public:
     Cortex(std::map<node_id_type,Node*>, std::list<Vehicle *> *);
-    void execute();
-    //unsigned int qte_threads_vehicule();
 
     unsigned int opengl_fps() const;
     unsigned int simulation_fps() const;
     void terminate();
+
+    void pause();
+    void play();
 };
 
 #endif // CORTEX_H
