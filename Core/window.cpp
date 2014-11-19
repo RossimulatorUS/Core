@@ -235,7 +235,7 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->DrawSource(-1.6f,0.0f);
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
 
-    ui->myGLWidget->DrawNode(0.0f,0.0f);
+    ui->myGLWidget->DrawNode(0.0f,0.0f,2);
     auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
     auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
     auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
@@ -357,6 +357,26 @@ void Window::addNameToListWidget(RoadSegment roadName)
     //ui->myGLWidget->updateGL();
 }
 
+bool Window::isDrawNodeChecked()
+{
+    ui->m_radioButtonSource->isChecked();
+}
+
+bool Window::isDrawRoadChecked()
+{
+    ui->m_boutonDrawRoad->isChecked();
+}
+
+bool Window::isStopSignChecked()
+{
+    ui->StopSign->isChecked();
+}
+
+bool Window::isTrafficLightChecked()
+{
+    ui->TrafficLight->isChecked();
+}
+
 void Window::setStats(Stats type, RoadSegment road, Lane *lane)
 {
     if (type == Stats::Roads)
@@ -375,8 +395,11 @@ void Window::setTextEditRoad(RoadSegment road)
     QString actualNumberOfCar = QString::fromStdString(stringify(road.GetActualNumberOfCar()));
     QString totalNumberOfCar = QString::fromStdString(stringify(road.GetTotalNumberOfCar()));
 
+    QString waitingCars = QString::fromStdString(stringify(road.getWaitingCars()));
+
     QString output = "Number of car on road : " + actualNumberOfCar + '\n' +
                      "Total number of car : " + totalNumberOfCar + '\n' +
+                     "Number of unspawned cars: " + waitingCars + '\n' +
                      "Average elapsed time on road : TODO" + '\n';
 
     QString qstr = QString::fromStdString(road.getRoadName());
@@ -465,4 +488,19 @@ void Window::on_m_boutonUnblockRoad_clicked()
 
     //ui->myGLWidget->UpdateOffset(4);
     //ui->myGLWidget->updateGL();
+}
+
+void Window::on_noIntersection_clicked()
+{
+    ui->myGLWidget->setNodeType(0);
+}
+
+void Window::on_StopSign_clicked()
+{
+    ui->myGLWidget->setNodeType(1);
+}
+
+void Window::on_TrafficLight_clicked()
+{
+    ui->myGLWidget->setNodeType(2);
 }

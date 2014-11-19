@@ -47,11 +47,14 @@ void Distributor::init()
                 {
                     Vehicle* v = node->create_vehicle();
                     Lane* entry = v->getCurrentLane();
+                    auto roadID = entry->getRoadId();
 
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
-                    if(lastProgression < 0.03f)
+                    std::cout << lastProgression << std::endl;
+                    if(lastProgression < 0.12f)
                     {
-                        waitingVehicles[entry->getRoadId()].push_back(v);
+                        waitingVehicles[roadID].push_back(v);
+                        SimulationData::getInstance().getRoad(roadID).setNumberWaitingCars(waitingVehicles[roadID].size());
                     }
                     else
                     {

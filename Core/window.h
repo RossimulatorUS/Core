@@ -32,6 +32,10 @@ public:
     bool isExponentialChecked();
     bool isIntersectionChecked();
     bool isSourceChecked();
+    bool isDrawNodeChecked();
+    bool isDrawRoadChecked();
+    bool isStopSignChecked();
+    bool isTrafficLightChecked();
 
     bool isOneWay();
 
@@ -67,6 +71,12 @@ private slots:
     void on_m_boutonUnblockRoad_clicked();
 
     void wheelEvent(QWheelEvent *event);
+
+    void on_noIntersection_clicked();
+
+    void on_StopSign_clicked();
+
+    void on_TrafficLight_clicked();
 
 private:
     Ui::Window *ui;

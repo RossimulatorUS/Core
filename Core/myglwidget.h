@@ -54,6 +54,7 @@ public slots:
     void UpdateXOffset(float x);
     void UpdateYOffset(float y);
     void UpdateOffset(int which);
+    void setNodeType(int what);
 
     void onRoadListWidgetClicked(QTreeWidgetItem *item, int i);
 
@@ -86,16 +87,18 @@ private:
     bool isLaneSelected_;
     bool isRoadSelected_;
 
+    int nodeType;
+
     float scale,xOffset,yOffset;
 
     void AddRoad(Node*, Node*);
     RoadSegment AddRoad(node_id_type, node_id_type, std::string name);
-    void DrawSource(float *worldCoords);
-    void DrawSource(float x, float y);
-    void DrawSource(float x, float y, node_id_type id);
-    void DrawNode(float *worldCoords);
-    void DrawNode(float x, float y);
-    void DrawNode(float x, float y, node_id_type id);
+    void DrawSource(float *worldCoords, int type=0);
+    void DrawSource(float x, float y, int type=0);
+    void DrawSource(float x, float y, node_id_type id, int type=0);
+    void DrawNode(float *worldCoords, int type=0);
+    void DrawNode(float x, float y, int type=0);
+    void DrawNode(float x, float y, node_id_type id, int type=0);
     void DrawRoadMousePressed(float *worldCoords);
     void DrawRoadMouseReleased(float *worldCoords);
 

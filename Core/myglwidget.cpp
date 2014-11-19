@@ -6,6 +6,7 @@
 #include "glutility.h"
 #include "simulationdata.h"
 
+
 MyGLWidget::MyGLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent), file("Vehicule data.txt"),
       scale(1.0f),xOffset(0.0f),yOffset(0.0f)
@@ -124,13 +125,13 @@ void MyGLWidget::mousePressEvent(QMouseEvent *event)
     auto window = static_cast<Window*>(parent());
 
     if (window->isIntersectionChecked() && window->getCurrentTabIndex() == 0)
-        DrawNode(worldCoords);
+        DrawNode(worldCoords, nodeType);
     else if (isDrawRoadPressed_ && window->getCurrentTabIndex() == 1)
         DrawRoadMousePressed(worldCoords);
     /*else if (isDrawLanePressed_)
         DrawLaneMousePressed(worldCoords);*/
     else if (window->isSourceChecked())
-        DrawSource(worldCoords);
+        DrawSource(worldCoords, nodeType);
     else
     {
         //other things later (perturbation stats)
@@ -263,20 +264,20 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
     return returnValue; //si aucune route trouvé faire de quoi de brillant this is not brillant
 }*/
 
-void MyGLWidget::DrawNode(float *worldCoords)
+void MyGLWidget::DrawNode(float *worldCoords, int type)
 {
     //Ajouter un noeud pour le draw
-    DrawNode(worldCoords[0], worldCoords[1]);
+    DrawNode(worldCoords[0], worldCoords[1], type);
 }
 
-void MyGLWidget::DrawNode(float x, float y)
+void MyGLWidget::DrawNode(float x, float y, int type)
 {
-    SimulationData::getInstance().addNode(x,y, false,0);
+    SimulationData::getInstance().addNode(x,y, false, type);
 }
 
-void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id)
+void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id, int type)
 {
-    SimulationData::getInstance().addNode(x,y, false, id,0);
+    SimulationData::getInstance().addNode(x,y, false, id, type);
 }
 
 RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)
@@ -378,12 +379,12 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
     }
 }
 
-void MyGLWidget::DrawSource(float *worldCoords)
+void MyGLWidget::DrawSource(float *worldCoords, int type)
 {
-    DrawSource(worldCoords[0], worldCoords[1]);
+    DrawSource(worldCoords[0], worldCoords[1], type);
 }
 
-void MyGLWidget::DrawSource(float x, float y)
+void MyGLWidget::DrawSource(float x, float y, int type)
 {
     auto window = static_cast<Window*>(parent());
 
@@ -397,10 +398,10 @@ void MyGLWidget::DrawSource(float x, float y)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution);
+    SimulationData::getInstance().addNode(x,y, true, distribution, type);
 }
 
-void MyGLWidget::DrawSource(float x, float y, node_id_type id)
+void MyGLWidget::DrawSource(float x, float y, node_id_type id, int type)
 {
     auto window = static_cast<Window*>(parent());
 
@@ -414,7 +415,7 @@ void MyGLWidget::DrawSource(float x, float y, node_id_type id)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution, id);
+    SimulationData::getInstance().addNode(x,y, true, distribution, id, type);
 }
 
 void MyGLWidget::ClearWidget()
@@ -598,4 +599,9 @@ void MyGLWidget::UpdateOffset(int which)
     default:
         break;
     }
+}
+
+void MyGLWidget::setNodeType(int what)
+{
+    nodeType = what;
 }

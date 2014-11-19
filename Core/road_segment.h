@@ -33,6 +33,7 @@ private:
 
     int actualNumberOfCar;
     int totalNumberOfCar;
+    int numberWaitingCars;
     
     bool isReadyToCreate_;
     bool isLeftToRight_;
@@ -44,6 +45,9 @@ public:
 
     node_id_type startID_;
     node_id_type endID_;
+
+    void setNumberWaitingCars(int howMany);
+    int getWaitingCars();
 
     std::string getRoadName();
 

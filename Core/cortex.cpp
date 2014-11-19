@@ -5,7 +5,7 @@ Cortex::Cortex(std::map<node_id_type,Node*> nodes, std::list<Vehicle*>* vehicles
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
       opengl_fps_(60),
-      simulation_fps_(60)
+      simulation_fps_(30)
 {
     vehicles_ = vehicles;
     vehicle_threads_ = new std::vector<VehicleThread*>();

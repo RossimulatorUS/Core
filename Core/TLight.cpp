@@ -76,7 +76,7 @@ void TLight::processWaitingVehicles()
     --lightDelay;
     if(lightDelay<0)
     {
-        lightDelay = 20;
+        lightDelay = 60;
         currentLight = (currentLight+1) % neighbours_.size();
         std::map<node_id_type,road_id_type>::iterator it1 = neighbours_.begin();
 

@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <iostream>
 
 #include "module.h"
 #include "road_segment.h"

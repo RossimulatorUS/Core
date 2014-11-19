@@ -83,6 +83,16 @@ RoadSegment::RoadSegment()
     :isReadyToCreate_(false)
 {}
 
+void RoadSegment::setNumberWaitingCars(int howMany)
+{
+    numberWaitingCars = howMany;
+}
+
+int RoadSegment::getWaitingCars()
+{
+    return numberWaitingCars;
+}
+
 Formula& RoadSegment::getLineFormula()
 {
     return lineFormula;

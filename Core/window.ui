@@ -152,9 +152,9 @@
     <widget class="QGroupBox" name="m_groupBoxDistribution">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>370</x>
        <y>10</y>
-       <width>631</width>
+       <width>251</width>
        <height>101</height>
       </rect>
      </property>
@@ -272,6 +272,64 @@
       </property>
      </widget>
     </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>10</y>
+       <width>181</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Behaviour at Node</string>
+     </property>
+     <widget class="QRadioButton" name="noIntersection">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>No Intersection</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="StopSign">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>40</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop Sign</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="TrafficLight">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>82</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Traffic Light</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -280,9 +338,9 @@
     <widget class="QPushButton" name="m_boutonDrawRoad">
      <property name="geometry">
       <rect>
-       <x>950</x>
+       <x>870</x>
        <y>-10</y>
-       <width>151</width>
+       <width>161</width>
        <height>141</height>
       </rect>
      </property>
@@ -519,8 +577,8 @@
    <slot>DrawSourcePressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>832</x>
-     <y>542</y>
+     <x>882</x>
+     <y>642</y>
     </hint>
     <hint type="destinationlabel">
      <x>151</x>
@@ -535,8 +593,8 @@
    <slot>DrawRoadPressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>952</x>
-     <y>542</y>
+     <x>954</x>
+     <y>642</y>
     </hint>
     <hint type="destinationlabel">
      <x>162</x>
