@@ -17,6 +17,35 @@ std::vector<SimulationData::node_id_type> SimulationData::getKeys() const
     return keys;
 }
 
+void SimulationData::runDv(bool print_results)
+{
+    bool dvEnCours = true;
+
+    // Start DV
+    for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+    {
+        (*itt).second->startDV();
+    }
+
+    // Wait for all messages to be completed
+    while(dvEnCours)
+    {
+        dvEnCours = false;
+        for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+        {
+            dvEnCours |= (*itt).second->processDVMessages();
+        }
+    }
+
+    if(print_results)
+    {
+        for(auto itt = allNodes_.begin() ; itt != allNodes_.end() ; ++itt)
+        {
+            (*itt).second->printDVResults();
+        }
+    }
+}
+
 SimulationData& SimulationData::getInstance()
 {
     static SimulationData instance = SimulationData();

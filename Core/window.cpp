@@ -140,7 +140,8 @@ void Window::on_m_boutonStartSimulation_clicked()
         ui->m_boutonUnblockRoad->setEnabled(true);
         ui->m_groupBoxImportation->setEnabled(false);
 
-        bool dvEnCours = true;
+        SimulationData::getInstance().runDv(true);
+        /*bool dvEnCours = true;
 
         std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
@@ -159,7 +160,7 @@ void Window::on_m_boutonStartSimulation_clicked()
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
             (*itt).second->printDVResults();
-        }
+        }*/
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
 
