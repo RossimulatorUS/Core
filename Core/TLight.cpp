@@ -80,7 +80,7 @@ void TLight::processWaitingVehicles()
         currentLight = (currentLight+1) % neighbours_.size();
         std::map<node_id_type,road_id_type>::iterator it1 = neighbours_.begin();
 
-        for(int i =0;i<currentLight;++i)
+        for(int i =0;i<currentLight;i++)
             ++it1;
 
         waitingRoadIndex_.clear();
@@ -107,7 +107,7 @@ void TLight::processWaitingVehicles()
                     inFront = it3->second;
                     break;
                 }
-                ++it3;
+                it3++;
             }
             parallelRoads[it1->second] = inFront;
             if(it2->second != inFront)
@@ -121,7 +121,7 @@ void TLight::processWaitingVehicles()
     {
         RoadSegment& r = SimulationData::getInstance().getRoad(*it);
         r.allLanesUnblocked(id_);
-        ++it;
+        it++;
     }
 
 }
