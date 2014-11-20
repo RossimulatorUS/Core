@@ -171,7 +171,10 @@ SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool 
     return allNodes_.size()-1;
 }
 
-SimulationData::node_id_type SimulationData::add_node(GLfloat x, GLfloat y, simulation_traits::intersection law, node_id_type id)
+SimulationData::node_id_type SimulationData::add_intersection(GLfloat x,
+                                                              GLfloat y,
+                                                              simulation_traits::intersection law,
+                                                              node_id_type id)
 {
     // When Nodes are created manually
     if (id == 0) id = allNodes_.size();
@@ -181,13 +184,18 @@ SimulationData::node_id_type SimulationData::add_node(GLfloat x, GLfloat y, simu
     return allNodes_.size()-1;
 }
 
-SimulationData::node_id_type SimulationData::add_source(GLfloat x, GLfloat y, Node::DistributionInfo dist, simulation_traits::intersection law, node_id_type id)
+SimulationData::node_id_type SimulationData::add_source(GLfloat x,
+                                                        GLfloat y,
+                                                        simulation_traits::intersection intersection_type,
+                                                        simulation_traits::law law,
+                                                        double law_coefficient,
+                                                        node_id_type id)
 {
     // When Nodes are created manually
     if (id == 0) id = allNodes_.size();
     keys.push_back(id);
 
-    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id, new Node(x, y, law, dist, id)));
+    allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id, new Node(x, y, intersection_type, law, law_coefficient, id)));
     return allNodes_.size()-1;
 }
 

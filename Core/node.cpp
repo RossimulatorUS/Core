@@ -87,7 +87,7 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     set_intersection_function(intersection_type);
 }
 
-Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_type, DistributionInfo dist, node_id_type id) :
+Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_type, simulation_traits::law dist, double coefficient, node_id_type id) :
     x_(x), y_(y), is_source_(true),
     neighbours_(std::map<node_id_type, road_id_type>()),
     nextHopForDestination_(std::map<node_id_type, node_id_type>()),

@@ -46,14 +46,15 @@ public:
     node_id_type addNode(GLfloat, GLfloat, bool isSource, int type = 1);
     node_id_type addNode(GLfloat, GLfloat, bool isSource, node_id_type id, int type = 1);
 
-    node_id_type add_node(GLfloat,
+    node_id_type add_intersection(GLfloat,
                           GLfloat,
                           simulation_traits::intersection,
                           node_id_type = 0);
     node_id_type add_source(GLfloat,
                             GLfloat,
-                            Node::DistributionInfo,
                             simulation_traits::intersection,
+                            simulation_traits::law,
+                            double,
                             node_id_type = 0);
 
     road_id_type addRoad(RoadSegment);

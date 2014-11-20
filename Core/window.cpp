@@ -76,17 +76,23 @@ int Window::getNumberofLane()
     return ui->m_spinBoxNombreDeVoies->value();
 }
 
-void Window::drawNode()
+void Window::drawNode(GLfloat x, GLfloat y)
 {
     update_actual_node_model();
 
     if(actual_node_model.is_source)
     {
-        //SimulationData::getInstance().add_source();
+        SimulationData::getInstance().add_source(x,
+                                                 y,
+                                                 actual_node_model.intersection_type,
+                                                 actual_node_model.distribution_law,
+                                                 actual_node_model.law_coefficient);
     }
     else
     {
-        //SimulationData::getInstance().add_node();
+        SimulationData::getInstance().add_intersection(x,
+                                                       y,
+                                                       actual_node_model.intersection_type);
     }
 }
 

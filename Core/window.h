@@ -72,7 +72,7 @@ public:
     Cortex* cortex;
     QTimer* timer;
 
-    void drawNode();
+    void drawNode(GLfloat x, GLfloat y);
 
 protected:
     void keyPressEvent(QKeyEvent *event);
