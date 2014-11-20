@@ -68,7 +68,21 @@ bool Formula::isInSameDirection(Node startRoad, Node endRoad, Node startClick, N
 
 bool Formula::isParallel(Node startRoad, Node endRoad, Node startClick, Node endClick)
 {
-    float x1 = startRoad.x()-endRoad.x();
+    float x1 = std::abs(startRoad.x()-endRoad.x());
+    float x2 = std::abs(startClick.x()-endClick.x());
+    float y1 = std::abs(startRoad.y()-endRoad.y());
+    float y2 = std::abs(startClick.y()-endClick.y());
+    if((x1>y1) && (x2>y2))
+    {
+        return true;
+    }
+    else if((y1>x1) && (y2>x2))
+    {
+             return true;
+    }
+
+    //WIP
+    /*float x1 = startRoad.x()-endRoad.x();
     float x2 = startClick.x()-endClick.x();
     float y1 = startRoad.y()-endRoad.y();
     float y2 = startClick.y()-endClick.y();
@@ -77,8 +91,10 @@ bool Formula::isParallel(Node startRoad, Node endRoad, Node startClick, Node end
     float det = x1*y2 - y1*x2;
     float angle = std::atan2(det,dot); //degree ou rad???
 
-    if((angle<190 && angle>170) || angle<10 || angle>350)
-        return true;
+    std::cout<<angle<<std::endl;
+
+    if((angle<3.2f && angle>3.1f) || angle<0.06f || angle>6.2f)
+        return true;*/
 
     return false;
 }
