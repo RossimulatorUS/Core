@@ -27,6 +27,9 @@ private:
     std::vector<std::string> accepted_road_types_;
     std::vector<node_id_type> keys;
 
+    unsigned int opengl_fps_;
+    unsigned int simulation_fps_;
+
 public:
     static SimulationData &getInstance();
     std::map<node_id_type,Node*>& getNodes();
@@ -51,6 +54,10 @@ public:
     std::vector<node_id_type> getKeys() const;
 
     void runDv(bool print_results);
+
+    unsigned int opengl_fps();
+    unsigned int simulation_fps();
+
 };
 
 #endif // SIMULATIONDATA_H

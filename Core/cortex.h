@@ -1,8 +1,6 @@
 #ifndef CORTEX_H
 #define CORTEX_H
 
-#include <atomic>
-#include <thread>
 #include <vector>
 #include <list>
 
@@ -10,6 +8,7 @@
 #include "distributor.h"
 #include "signaler.h"
 #include "vehiclethread.h"
+
 #include "simulationtraits.h"
 
 class Analyser;
@@ -54,21 +53,18 @@ private:
     // Vehicules se deplacant dans le reseau routier
     std::list<Vehicle*>* vehicles_;
 
-    // Delais simulation
-    unsigned int opengl_fps_;
+    // Status
     unsigned int simulation_fps_;
-
     bool paused_;
 
 public:
-    Cortex(std::map<node_id_type,Node*>, std::list<Vehicle *> *);
+    Cortex();
 
-    unsigned int opengl_fps() const;
     unsigned int simulation_fps() const;
     void terminate();
 
     void pause();
-    void play();
+    void unpause();
 };
 
 #endif // CORTEX_H

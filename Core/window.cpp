@@ -147,12 +147,12 @@ void Window::on_m_boutonStartSimulation_clicked()
 
         SimulationData::getInstance().runDv(true);
 
-        cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
+        cortex = new Cortex();
 
         // OpenGL refresh
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), ui->myGLWidget, SLOT(updateGL()));
-        timer->start(cortex->opengl_fps()); // OpenGl_FPS in simulation_data
+        timer->start(SimulationData::getInstance().opengl_fps());
 
         ui->m_boutonStartSimulation->setText("End");
     }
@@ -177,7 +177,6 @@ void Window::on_m_boutonStartSimulation_clicked()
 
         ui->m_boutonStartSimulation->setText("Start");
     }
-
 }
 
 void Window::connectListWidget()

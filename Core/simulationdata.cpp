@@ -7,7 +7,9 @@
 #include <iostream>
 
 SimulationData::SimulationData()
-    : allNodes_(std::map<node_id_type,Node*>())
+    : allNodes_(std::map<node_id_type,Node*>()),
+      opengl_fps_(60),
+      simulation_fps_(30)
 {
     accepted_road_types_.push_back("residential");
     accepted_road_types_.push_back("secondary");
@@ -197,4 +199,14 @@ void SimulationData::print_nodes()
     {
         std::cout << (*it).second->GetId() << std::endl;
     }
+}
+
+unsigned int SimulationData::opengl_fps()
+{
+    return opengl_fps_;
+}
+
+unsigned int SimulationData::simulation_fps()
+{
+    return simulation_fps_;
 }

@@ -1,21 +1,25 @@
 #include "cortex.h"
 
-Cortex::Cortex(std::map<node_id_type,Node*> nodes, std::list<Vehicle*>* vehicles)
+#include "simulationdata.h"
+
+Cortex::Cortex()
     : distributor_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
-      opengl_fps_(60),
       simulation_fps_(30),
       paused_(false)
 {
-    vehicles_ = vehicles;
+    vehicles_ = SimulationData::getInstance().getVehiclesPointer();
     vehicle_threads_ = new std::vector<VehicleThread*>();
 
     load_information();
     reserve_ressources();
 
     analyst_ = new Analyser(this);
-    distributor_ = new Distributor(vehicle_threads_, &distributor_execution_, nodes, vehicles_);
+    distributor_ = new Distributor(vehicle_threads_,
+                                   &distributor_execution_,
+                                   SimulationData::getInstance().getNodes(),
+                                   vehicles_);
     signaler_ = new Signaler(&signaler_execution_);
 }
 
@@ -54,8 +58,6 @@ void Cortex::add_thread()
 
 void Cortex::terminate()
 {
-    // Save simulation state?
-
     // terminer threads
     analyst_->terminate();
     distributor_->terminate();
@@ -69,11 +71,6 @@ void Cortex::terminate()
     delete vehicle_threads_;
 }
 
-unsigned int Cortex::opengl_fps() const
-{
-    return opengl_fps_;
-}
-
 unsigned int Cortex::simulation_fps() const
 {
     return simulation_fps_;
@@ -84,7 +81,7 @@ void Cortex::pause()
     paused_ = true;
 }
 
-void Cortex::play()
+void Cortex::unpause()
 {
     paused_ = false;
 }
