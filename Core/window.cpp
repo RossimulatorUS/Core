@@ -27,6 +27,8 @@ Window::Window(QWidget *parent) :
     disable(ui->m_treeWidget);
     disable(ui->m_boutonBlockRoad);
     disable(ui->m_boutonUnblockRoad);
+
+    update_actual_node_model();
 }
 
 Window::~Window()
@@ -72,6 +74,20 @@ bool Window::isExponentialChecked()
 int Window::getNumberofLane()
 {
     return ui->m_spinBoxNombreDeVoies->value();
+}
+
+void Window::drawNode()
+{
+    update_actual_node_model();
+
+    if(actual_node_model.is_source)
+    {
+        //SimulationData::getInstance().add_source();
+    }
+    else
+    {
+        //SimulationData::getInstance().add_node();
+    }
 }
 
 bool Window::isIntersectionChecked()
@@ -417,6 +433,34 @@ bool Window::is_checked(QAbstractButton* widget)
 QString Window::get_text(QLineEdit* widget)
 {
     widget->text();
+}
+
+void Window::update_actual_node_model()
+{
+    actual_node_model.is_source = isSourceChecked();
+
+    if(isBernouilliChecked())
+    {
+        actual_node_model.distribution_law = simulation_traits::BERNOUILLI;
+        actual_node_model.law_coefficient = getBernouilliAmount().toDouble();
+    }
+    else if(isUniformChecked())
+    {
+        actual_node_model.distribution_law = simulation_traits::UNIFORM;
+        actual_node_model.law_coefficient = getUniformAmount().toDouble();
+    }
+    else if(isExponentialChecked())
+    {
+        actual_node_model.distribution_law = simulation_traits::EXPONENTIAL;
+        actual_node_model.law_coefficient = getExponentialAmount().toDouble();
+    }
+
+    if(isStopSignChecked())
+        actual_node_model.intersection_type = simulation_traits::STOPSIGN;
+    else if(isTrafficLightChecked())
+        actual_node_model.intersection_type = simulation_traits::TLIGHT;
+    else
+        actual_node_model.intersection_type = simulation_traits::GO;
 }
 
 void Window::on_m_boutonBlockRoad_clicked()

@@ -71,6 +71,52 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
     isNodeBlocked_ = false;
 }
 
+Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_type, node_id_type id) :
+
+    x_(x), y_(y), is_source_(false),
+    neighbours_(std::map<node_id_type, road_id_type>()),
+    nextHopForDestination_(std::map<node_id_type, node_id_type>()),
+    costs_(std::map<node_id_type, road_cost_type>()),
+    pendingDVMessages_(std::queue<DVMessage>()),
+    waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
+    currentWaitingVehicleIndex(0),
+    waitingRoads_(std::queue<road_id_type>()),
+    waitingRoadIndex_(std::set<road_id_type>()),
+    id_(id)
+{
+    set_intersection_function(intersection_type);
+}
+
+Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_type, DistributionInfo dist, node_id_type id) :
+    x_(x), y_(y), is_source_(true),
+    neighbours_(std::map<node_id_type, road_id_type>()),
+    nextHopForDestination_(std::map<node_id_type, node_id_type>()),
+    costs_(std::map<node_id_type, road_cost_type>()),
+    pendingDVMessages_(std::queue<DVMessage>()),
+    waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
+    currentWaitingVehicleIndex(0),
+    waitingRoads_(std::queue<road_id_type>()),
+    waitingRoadIndex_(std::set<road_id_type>()),
+    id_(id)
+{
+    set_intersection_function(intersection_type);
+}
+
+void Node::set_intersection_function(simulation_traits::intersection intersection_type)
+{
+    switch(intersection_type){
+        case simulation_traits::STOPSIGN :
+            process_function = &Node::processWaitingVehicles;
+            break;
+        case simulation_traits::TLIGHT :
+            process_function = &Node::processWaitingVehicles;
+            break;
+        default:
+            process_function = &Node::processWaitingVehicles;
+            break;
+    }
+}
+
 
 GLfloat Node::x() const
 {

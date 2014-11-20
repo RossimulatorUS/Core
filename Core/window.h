@@ -21,6 +21,16 @@ class Window : public QWidget
     Q_OBJECT
 
 public:
+    struct selected_node_type{
+        simulation_traits::intersection intersection_type;
+
+        bool is_source;
+        simulation_traits::law distribution_law;
+        double law_coefficient;
+    };
+
+    selected_node_type actual_node_model;
+
     enum class Stats {Roads, Lanes};
 
     explicit Window(QWidget *parent = 0);
@@ -62,6 +72,8 @@ public:
     Cortex* cortex;
     QTimer* timer;
 
+    void drawNode();
+
 protected:
     void keyPressEvent(QKeyEvent *event);
 
@@ -102,6 +114,8 @@ private:
     bool is_checked(QAbstractButton*);
     QString get_text(QAbstractButton*);
     QString get_text(QLineEdit*);
+
+    void update_actual_node_model();
 };
 
 #endif // WINDOW_H

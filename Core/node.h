@@ -75,11 +75,17 @@ protected:
 
 public:
 
-    // Methods
     Node();
     Node(GLfloat x, GLfloat y);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource);
     Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
+
+    // New constructors
+    Node(GLfloat x, GLfloat y, simulation_traits::intersection, node_id_type); // Intersection
+    Node(GLfloat x, GLfloat y, simulation_traits::intersection, DistributionInfo, node_id_type); // Source
+
+    void (Node::*process_function)(); // Function pointer, not a function
+    void set_intersection_function(simulation_traits::intersection);
 
     bool is_source();
     bool is_due();
