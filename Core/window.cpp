@@ -1,12 +1,16 @@
 #include <QtWidgets>
+#include <QAbstractButton>
+
 #include <iostream>
 
 #include "window.h"
 #include "ui_window.h"
+
+#include "map_fetcher.h"
 #include "utils.h"
 
 #include "simulationdata.h"
-#include "map_fetcher.h"
+#include "simulationstatus.h"
 
 Window::Window(QWidget *parent) :
     QWidget(parent),
@@ -20,9 +24,9 @@ Window::Window(QWidget *parent) :
     //addTreeRoot("Nodes");
 
     //showBlockRoadButton();
-    ui->m_treeWidget->setEnabled(false);
-    ui->m_boutonBlockRoad->setEnabled(false);
-    ui->m_boutonUnblockRoad->setEnabled(false);
+    disable(ui->m_treeWidget);
+    disable(ui->m_boutonBlockRoad);
+    disable(ui->m_boutonUnblockRoad);
 }
 
 Window::~Window()
@@ -52,7 +56,7 @@ bool Window::isBernouilliChecked()
 
 bool Window::isOneWay()
 {
-    return ui->m_checkboxOneWay->isChecked();
+    return ui->m_isOneWay->isChecked();
 }
 
 bool Window::isUniformChecked()
@@ -132,55 +136,36 @@ void Window::on_m_boutonStartSimulation_clicked()
 {
     if(ui->m_boutonStartSimulation->text() == "Start")
     {
-        ui->m_boutonSimulation1->setEnabled(false);
-        ui->m_boutonSimulation4->setEnabled(false);
-        ui->Display->setEnabled(false);
-        ui->m_treeWidget->setEnabled(true);
-        ui->m_boutonBlockRoad->setEnabled(true);
-        ui->m_boutonUnblockRoad->setEnabled(true);
-        ui->m_groupBoxImportation->setEnabled(false);
+        // Put in function
+        disable(ui->m_boutonSimulation1);
+        disable(ui->m_boutonSimulation4);
+        disable(ui->Display);
+        enable(ui->m_treeWidget);
+        enable(ui->m_boutonBlockRoad);
+        enable(ui->m_boutonUnblockRoad);
+        disable(ui->m_groupBoxImportation);
 
         SimulationData::getInstance().runDv(true);
-        /*bool dvEnCours = true;
-
-        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
-        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-        {
-            (*itt).second->startDV();
-        }
-        while(dvEnCours)
-        {
-            dvEnCours = false;
-            for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-            {
-                dvEnCours |= (*itt).second->processDVMessages();
-            }
-        }
-
-        for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
-        {
-            (*itt).second->printDVResults();
-        }*/
 
         cortex = new Cortex(SimulationData::getInstance().getNodes(), SimulationData::getInstance().getVehiclesPointer());
 
         // OpenGL refresh
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), ui->myGLWidget, SLOT(updateGL()));
-        timer->start(cortex->opengl_fps());
+        timer->start(cortex->opengl_fps()); // OpenGl_FPS in simulation_data
 
         ui->m_boutonStartSimulation->setText("End");
     }
     // Terminate the simulation
     else
     {
-        ui->m_boutonSimulation1->setEnabled(true);
-        ui->m_boutonSimulation4->setEnabled(true);
-        ui->Display->setEnabled(true);
-        ui->m_treeWidget->setEnabled(false);
-        ui->m_boutonBlockRoad->setEnabled(false);
-        ui->m_boutonUnblockRoad->setEnabled(false);
-        ui->m_groupBoxImportation->setEnabled(true);
+        enable(ui->m_boutonSimulation1);
+        enable(ui->m_boutonSimulation4);
+        enable(ui->Display);
+        disable(ui->m_treeWidget);
+        disable(ui->m_boutonBlockRoad);
+        disable(ui->m_boutonUnblockRoad);
+        enable(ui->m_groupBoxImportation);
 
         timer->stop();
         cortex->terminate();
@@ -236,7 +221,7 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->DrawSource(-1.6f,0.0f);
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
 
-    ui->myGLWidget->DrawNode(0.0f,0.0f,2);
+    ui->myGLWidget->DrawNode(0.0f,0.0f,1);
     auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
     auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
     auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
@@ -253,10 +238,10 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     std::cout << "initialising\n" << std::flush;
     ui->myGLWidget->clearWidget();
 
-    double south = ui->m_lineEditSouth->text().toDouble();
-    double west = ui->m_lineEditWest->text().toDouble();
-    double north = ui->m_lineEditNorth->text().toDouble();
-    double east = ui->m_lineEditEast->text().toDouble();
+    double south = get_text(ui->m_lineEditSouth).toDouble();
+    double west = get_text(ui->m_lineEditWest).toDouble();
+    double north = get_text(ui->m_lineEditNorth).toDouble();
+    double east = get_text(ui->m_lineEditEast).toDouble();
 
     float scale = ui->m_scale->text().toDouble();
 
@@ -341,8 +326,6 @@ void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
             auto item = addTreeChild(roadTreeItem, laneName);
         }
     }
-    //ui->myGLWidget->UpdateScale(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::addNameToListWidget(RoadSegment roadName)
@@ -354,8 +337,6 @@ void Window::addNameToListWidget(RoadSegment roadName)
         QString laneName = QString::fromStdString(stringify(i));
         auto item = addTreeChild(roadTreeItem, laneName);
     }
-    //ui->myGLWidget->UpdateXOffset(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
 }
 
 bool Window::isDrawNodeChecked()
@@ -384,9 +365,6 @@ void Window::setStats(Stats type, RoadSegment road, Lane *lane)
         setTextEditRoad(road);
     else if (type == Stats::Lanes)
         setTextEditLane(lane);
-
-    //ui->myGLWidget->UpdateYOffset(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::setTextEditRoad(RoadSegment road)
@@ -405,9 +383,6 @@ void Window::setTextEditRoad(RoadSegment road)
 
     QString qstr = QString::fromStdString(road.getRoadName());
     textEdit->setText(output);
-
-    //ui->myGLWidget->UpdateOffset(8);
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::setTextEditLane(Lane *lane)
@@ -423,9 +398,26 @@ void Window::setTextEditLane(Lane *lane)
 
     //QString qstr = QString::fromStdString(lane.getRoadName());
     textEdit->setText(output);
+}
 
-    //ui->myGLWidget->UpdateOffset(6);
-    //ui->myGLWidget->updateGL();
+void Window::enable(QWidget* widget)
+{
+    widget->setEnabled(true);
+}
+
+void Window::disable(QWidget* widget)
+{
+    widget->setEnabled(false);
+}
+
+bool Window::is_checked(QAbstractButton* widget)
+{
+    widget->isChecked();
+}
+
+QString Window::get_text(QLineEdit* widget)
+{
+    widget->text();
 }
 
 void Window::on_m_boutonBlockRoad_clicked()

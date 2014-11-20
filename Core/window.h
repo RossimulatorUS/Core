@@ -3,9 +3,14 @@
 
 #include <QWidget>
 #include <QString>
+
 #include <QtWidgets>
+#include <QAbstractButton>
+
 #include "cortex.h"
 #include "simulationtraits.h"
+
+#include "simulationstatus.h"
 
 namespace Ui {
 class Window;
@@ -53,6 +58,7 @@ public:
     int getCurrentTabIndex();
     int getNumberofLane();
 
+    SimulationStatus simulation_status;
     Cortex* cortex;
     QTimer* timer;
 
@@ -89,6 +95,13 @@ private:
 
     void setTextEditRoad(RoadSegment road);
     void setTextEditLane(Lane *lane);
+
+    // Utils
+    void enable(QWidget*);
+    void disable(QWidget*);
+    bool is_checked(QAbstractButton*);
+    QString get_text(QAbstractButton*);
+    QString get_text(QLineEdit*);
 };
 
 #endif // WINDOW_H

@@ -88,7 +88,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -361,7 +361,7 @@
       <string>Nombre de voies :</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="m_checkboxOneWay">
+    <widget class="QCheckBox" name="m_isOneWay">
      <property name="geometry">
       <rect>
        <x>10</x>

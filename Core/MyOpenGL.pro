@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     road_segment.cpp \
     road.cpp \
     utils.cpp \
-    StopSign.cpp
+    StopSign.cpp \
+    simulationstatus.cpp
 
 HEADERS  += window.h \
     myglwidget.h \
@@ -66,6 +67,7 @@ HEADERS  += window.h \
     road_segment.h \
     TLight.h \
     road.h \
-    StopSign.h
+    StopSign.h \
+    simulationstatus.h
 
 FORMS    += window.ui
