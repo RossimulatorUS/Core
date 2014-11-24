@@ -272,12 +272,16 @@ void MyGLWidget::DrawNode(float *worldCoords, int type)
 
 void MyGLWidget::DrawNode(float x, float y, int type)
 {
-    SimulationData::getInstance().addNode(x,y, false, type);
+    auto window = static_cast<Window*>(parent());
+    window->drawNode(x,y);
+    //SimulationData::getInstance().addNode(x,y, false, type);
 }
 
 void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id, int type)
 {
-    SimulationData::getInstance().addNode(x,y, false, id, type);
+    auto window = static_cast<Window*>(parent());
+    window->drawNode(x,y);
+    //SimulationData::getInstance().addNode(x,y, false, id, type);
 }
 
 RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)
@@ -387,8 +391,9 @@ void MyGLWidget::DrawSource(float *worldCoords, int type)
 void MyGLWidget::DrawSource(float x, float y, int type)
 {
     auto window = static_cast<Window*>(parent());
+    window->drawNode(x,y);
 
-    auto distribution = Node::DistributionInfo();
+    /*auto distribution = Node::DistributionInfo();
 
     distribution.isBernouilli = window->isBernouilliChecked();
     distribution.isUniform = window->isUniformChecked();
@@ -398,14 +403,15 @@ void MyGLWidget::DrawSource(float x, float y, int type)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution, type);
+    SimulationData::getInstance().addNode(x,y, true, distribution, type);*/
 }
 
 void MyGLWidget::DrawSource(float x, float y, node_id_type id, int type)
 {
-    auto window = static_cast<Window*>(parent());
 
-    auto distribution = Node::DistributionInfo();
+    auto window = static_cast<Window*>(parent());
+    window->drawNode(x,y);
+    /*auto distribution = Node::DistributionInfo();
 
     distribution.isBernouilli = window->isBernouilliChecked();
     distribution.isUniform = window->isUniformChecked();
@@ -415,7 +421,7 @@ void MyGLWidget::DrawSource(float x, float y, node_id_type id, int type)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution, id, type);
+    SimulationData::getInstance().addNode(x,y, true, distribution, id, type);*/
 }
 
 void MyGLWidget::ClearWidget()

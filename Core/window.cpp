@@ -237,10 +237,14 @@ void Window::on_m_boutonSimulation4_clicked()
 {
     ui->myGLWidget->clearWidget();
 
-    ui->myGLWidget->DrawSource(0.0f,1.6f);
+    /*ui->myGLWidget->DrawSource(0.0f,1.6f);
     ui->myGLWidget->DrawSource(1.6f,0.0f);
     ui->myGLWidget->DrawSource(-1.6f,0.0f);
-    ui->myGLWidget->DrawSource(0.0f,-1.6f);
+    ui->myGLWidget->DrawSource(0.0f,-1.6f);*/
+    drawNode(0.0, 1.6);
+    drawNode(1.6, 0.0);
+    drawNode(-1.6, 0.0);
+    drawNode(0.0, -1.6);
 
     ui->myGLWidget->DrawNode(0.0f,0.0f,1);
     auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
@@ -293,14 +297,16 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
                     double longitude = scale * (nodes[path[j]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j]].lattitude() - south) / hauteur_carte;
 
-                    (j == 0) ? ui->myGLWidget->DrawSource(longitude, lattitude,path[j]) : ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
+                    (j == 0) ? SimulationData::getInstance().add_source(longitude, lattitude, simulation_traits::STOPSIGN, simulation_traits::BERNOUILLI, 0.08, path[j])
+                             : SimulationData::getInstance().add_intersection(longitude, lattitude, simulation_traits::STOPSIGN, path[j]);
                 }
                 if(allNodes.find(path[j+1]) == allNodes.end())
                 {
                     double longitude = scale * (nodes[path[j+1]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
 
-                    (j == (path.size() - 1)) ? ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]) : ui->myGLWidget->DrawSource(longitude, lattitude,path[j+1]);
+                    (j == (path.size() - 1)) ? SimulationData::getInstance().add_intersection(longitude, lattitude, simulation_traits::STOPSIGN, path[j+1])
+                                             : SimulationData::getInstance().add_source(longitude, lattitude, simulation_traits::STOPSIGN, simulation_traits::BERNOUILLI, 0.08, path[j+1]);
                 }
                 ui->myGLWidget->AddRoad(path[j],path[j+1], "MATYLDE");
             }
