@@ -67,7 +67,7 @@ Lane* RoadSegment::findAssociatedLane(Node start, Node end)
 }
 
 RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber, std::string name)
-    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>())
+    :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>()),numberWaitingCars(0)
 {
     isOneWay_ = isOneWay;
     isLeftToRight_ = isLeftToRight(getStartNode(), getEndNode());

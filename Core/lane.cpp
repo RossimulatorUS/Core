@@ -75,7 +75,7 @@ float Lane::getLastVehiclePos()
     if(vehicles.end()!=vehicles.begin())
     {
         it--;
-        tmp = distance((*it)->x_,(*it)->y_,start_.x(),start_.y());
+        tmp = distance((*it)->x_,(*it)->y_,getLineFormula().getLaneCoordinate(X1),getLineFormula().getLaneCoordinate(Y1));
     }
 
     return tmp;
