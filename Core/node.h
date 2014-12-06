@@ -72,6 +72,8 @@ protected:
     std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
     std::exponential_distribution<double> exponential_distribution_;
+    simulation_traits::law loi_distribution;
+    unsigned int uniform_coefficient;
 
 public:
 

@@ -100,6 +100,23 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     id_(id)
 {
     set_intersection_function(intersection_type);
+    switch (dist)
+    {
+        case simulation_traits::BERNOUILLI :
+            bernouilli_distribution_ = std::bernoulli_distribution(coefficient);
+            loi_distribution = simulation_traits::BERNOUILLI;
+            break;
+
+        case simulation_traits::EXPONENTIAL :
+            exponential_distribution_ = std::exponential_distribution<double>(coefficient);
+            loi_distribution = simulation_traits::EXPONENTIAL;
+            break;
+
+        case simulation_traits::UNIFORM :
+            uniform_coefficient = (unsigned int)coefficient;
+            loi_distribution = simulation_traits::UNIFORM;
+            break;
+    }
 }
 
 void Node::set_intersection_function(simulation_traits::intersection intersection_type)
@@ -142,35 +159,34 @@ bool Node::is_due()
 {
     static std::default_random_engine generateur((unsigned int)time(0));
     auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(get_time() - last_creation_).count();
-    if (distributionInfo_.isBernouilli)
-    {
-        if(is_source() && bernouilli_distribution_(generateur)&& timeSinceLastCreation > 250)
-        {
-            last_creation_ = get_time();
-            return true;
-        }
 
-        return false;
-    }
-    else if (distributionInfo_.isUniform)
+    switch(loi_distribution)
     {
-        auto delay = distributionInfo_.uniformAmount.toInt(&ok, 10);
-        if(is_source() &&timeSinceLastCreation > delay)
-        {
-            last_creation_ = get_time();
-            return true;
-        }
-        return false;
-    }
-    else if (distributionInfo_.isExponential)
-    {
-        if(is_source() && exponential_distribution_(generateur)&& timeSinceLastCreation > 250)
-        {
-            last_creation_ = get_time();
-            return true;
-        }
+        case simulation_traits::BERNOUILLI :
+            if(bernouilli_distribution_(generateur) && timeSinceLastCreation > 250)
+            {
+                last_creation_ = get_time();
+                return true;
+            }
+            return false;
+            break;
 
-        return false;
+        case simulation_traits::UNIFORM :
+            if(timeSinceLastCreation > uniform_coefficient)
+            {
+                last_creation_ = get_time();
+                return true;
+            }
+            return false;
+            break;
+        case simulation_traits::EXPONENTIAL :
+            if(exponential_distribution_(generateur) && timeSinceLastCreation > 250)
+            {
+                last_creation_ = get_time();
+                return true;
+            }
+            return false;
+            break;
     }
 }
 
@@ -184,7 +200,6 @@ Vehicle *Node::create_vehicle()
     do
     {
         end_id = SimulationData::getInstance().getKeys()[distribution(generator)];
-        //end_id = distribution(generator);
     }while(end_id == this->id_);
 
     return new Vehicle(this->id_, end_id);

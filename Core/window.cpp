@@ -289,7 +289,6 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
         for(auto j = 0; j < (path.size() - 1); ++j)
         {
-            //if((allNodes.find(path[j]) != allNodes.end()) && (allNodes.find(path[j+1]) != allNodes.end()))
             if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
             {
                 if(allNodes.find(path[j]) == allNodes.end())
