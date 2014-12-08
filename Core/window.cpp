@@ -344,11 +344,7 @@ void Window::addNameToListWidget(RoadSegment roadName)
 
 void Window::addNameToListWidget(node_id_type id)
 {
-    qDebug() << "addNameToListWidget with id = " << id;
-    char buffer [100];
-    itoa(id,buffer,10);
-
-    QString qstr = QString::fromStdString(buffer);
+    QString qstr = QString::fromStdString(stringify(id));
     auto nodeTreeItem = addTreeChild(rootItem_[1], qstr);
 }
 

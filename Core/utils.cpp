@@ -56,6 +56,13 @@ string stringify(int x)
     return ss.str();
 }
 
+string stringify(simulation_traits::node_id_type x)
+{
+    std::ostringstream ss;
+    ss << x;
+    return ss.str();
+}
+
 std::chrono::milliseconds get_time()
 {
     return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch());
