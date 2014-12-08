@@ -15,14 +15,15 @@ Window::Window(QWidget *parent) :
     ui->setupUi(this);
 
     //Add the root nodes
+
     addTreeRoot("Roads");
+    addTreeRoot("Nodes");
     //addTreeRoot("Lanes");
-    //addTreeRoot("Nodes");
 
     //showBlockRoadButton();
-    ui->m_treeWidget->setEnabled(false);
-    ui->m_boutonBlockRoad->setEnabled(false);
-    ui->m_boutonUnblockRoad->setEnabled(false);
+    //ui->m_treeWidget->setEnabled(false);
+    //ui->m_boutonBlockRoad->setEnabled(false);
+    //ui->m_boutonUnblockRoad->setEnabled(false);
 }
 
 Window::~Window()
@@ -45,14 +46,16 @@ QString Window::getExponentialAmount()
     return ui->m_lineEditTauxExponentielle->text();
 }
 
+std::string Window::getRoadName()
+{
+    QString name = ui->m_editTextRoadName->text();
+    std::string text = name.toLocal8Bit().constData();
+    return text;
+}
+
 bool Window::isBernouilliChecked()
 {
     return ui->m_radioButtonBernouilli->isChecked();
-}
-
-bool Window::isOneWay()
-{
-    return ui->m_checkboxOneWay->isChecked();
 }
 
 bool Window::isUniformChecked()
@@ -87,6 +90,7 @@ int Window::getCurrentTabIndex()
 
 void Window::keyPressEvent(QKeyEvent *e)
 {
+    qDebug() << e->key();
     switch(e->key())
     {
         case Qt::Key_Escape:
@@ -113,16 +117,16 @@ void Window::keyPressEvent(QKeyEvent *e)
 void Window::addTreeRoot(QString name)
 {
     QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->m_treeWidget);
-    rootItem_ = treeItem;
+    rootItem_.push_back(treeItem);
     treeItem->setText(0, name);
 }
 
-QTreeWidgetItem *Window::getRootItem()const
+std::vector<QTreeWidgetItem *> Window::getRootItem()const
 {
     return rootItem_;
 }
 
-void Window::setRootItem(QTreeWidgetItem *rootItem)
+void Window::setRootItem(std::vector<QTreeWidgetItem *> rootItem)
 {
     rootItem_ = rootItem;
 }
@@ -130,15 +134,17 @@ void Window::setRootItem(QTreeWidgetItem *rootItem)
 // Beginning the simulation
 void Window::on_m_boutonStartSimulation_clicked()
 {
+    connectListWidget();
+
     if(ui->m_boutonStartSimulation->text() == "Start")
     {
-        ui->m_boutonSimulation1->setEnabled(false);
+        /*ui->m_boutonSimulation1->setEnabled(false);
         ui->m_boutonSimulation4->setEnabled(false);
         ui->Display->setEnabled(false);
         ui->m_treeWidget->setEnabled(true);
         ui->m_boutonBlockRoad->setEnabled(true);
         ui->m_boutonUnblockRoad->setEnabled(true);
-        ui->m_groupBoxImportation->setEnabled(false);
+        ui->m_groupBoxImportation->setEnabled(false);*/
 
         SimulationData::getInstance().runDv(true);
         /*bool dvEnCours = true;
@@ -174,13 +180,13 @@ void Window::on_m_boutonStartSimulation_clicked()
     // Terminate the simulation
     else
     {
-        ui->m_boutonSimulation1->setEnabled(true);
+        /*ui->m_boutonSimulation1->setEnabled(true);
         ui->m_boutonSimulation4->setEnabled(true);
         ui->Display->setEnabled(true);
         ui->m_treeWidget->setEnabled(false);
         ui->m_boutonBlockRoad->setEnabled(false);
         ui->m_boutonUnblockRoad->setEnabled(false);
-        ui->m_groupBoxImportation->setEnabled(true);
+        ui->m_groupBoxImportation->setEnabled(true);*/
 
         timer->stop();
         cortex->terminate();
@@ -221,9 +227,6 @@ void Window::on_m_boutonSimulation1_clicked()
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
     auto road = ui->myGLWidget->AddRoad(0, 1, "Pas cool");
 
-    connectListWidget();
-    setRoadNameListWidget(SimulationData::getInstance().getRoads());
-
     ui->myGLWidget->updateGL();
 }
 
@@ -241,9 +244,6 @@ void Window::on_m_boutonSimulation4_clicked()
     auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
     auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
     auto road4 = ui->myGLWidget->AddRoad(3, 4, "T LAITE");
-
-    connectListWidget();
-    setRoadNameListWidget(SimulationData::getInstance().getRoads());
 
     ui->myGLWidget->updateGL();
 }
@@ -275,7 +275,7 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     for(int i=0;i<ways.size(); ++i)
     {
         std::vector<node_id_type> path = ways[i].path;
-        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
+        std::map<node_id_type,Node*>& allNodes = SimulationData::getInstance().getNodes();
 
         for(auto j = 0; j < (path.size() - 1); ++j)
         {
@@ -287,16 +287,18 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
                     double longitude = scale * (nodes[path[j]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j]].lattitude() - south) / hauteur_carte;
 
+                    qDebug() << "FIRST IF id = " << path[j];
                     (j == 0) ? ui->myGLWidget->DrawSource(longitude, lattitude,path[j]) : ui->myGLWidget->DrawNode(longitude, lattitude,path[j]);
                 }
                 if(allNodes.find(path[j+1]) == allNodes.end())
                 {
+                    qDebug() << "SECOND IF = " << path[j+1];
                     double longitude = scale * (nodes[path[j+1]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
 
                     (j == (path.size() - 1)) ? ui->myGLWidget->DrawNode(longitude, lattitude,path[j+1]) : ui->myGLWidget->DrawSource(longitude, lattitude,path[j+1]);
                 }
-                ui->myGLWidget->AddRoad(path[j],path[j+1], "MATYLDE");
+                ui->myGLWidget->AddRoad(path[j],path[j+1], ways[i].attributes["name"]);
             }
         }
 
@@ -329,33 +331,25 @@ QTreeWidgetItem* Window::addTreeChild(QTreeWidgetItem *parent, QString name)
     return treeItem;
 }
 
-void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
-{
-    for (auto i = 0; i < roadNames.size(); ++i)
-    {
-        QString qstr = QString::fromStdString(roadNames[i].getRoadName());
-        auto roadTreeItem = addTreeChild(rootItem_, qstr);
-        for(auto i = 0; i < roadNames[i].getLanes().size(); ++i)
-        {
-            QString laneName = QString::fromStdString(stringify(i));
-            auto item = addTreeChild(roadTreeItem, laneName);
-        }
-    }
-    //ui->myGLWidget->UpdateScale(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
-}
-
 void Window::addNameToListWidget(RoadSegment roadName)
 {
     QString qstr = QString::fromStdString(roadName.getRoadName());
-    auto roadTreeItem = addTreeChild(rootItem_, qstr);
+    auto roadTreeItem = addTreeChild(rootItem_[0], qstr);
     for(auto i = 0; i < roadName.getLanes().size(); ++i)
     {
         QString laneName = QString::fromStdString(stringify(i));
         auto item = addTreeChild(roadTreeItem, laneName);
     }
-    //ui->myGLWidget->UpdateXOffset(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
+}
+
+void Window::addNameToListWidget(node_id_type id)
+{
+    qDebug() << "addNameToListWidget with id = " << id;
+    char buffer [100];
+    itoa(id,buffer,10);
+
+    QString qstr = QString::fromStdString(buffer);
+    auto nodeTreeItem = addTreeChild(rootItem_[1], qstr);
 }
 
 bool Window::isDrawNodeChecked()
@@ -384,9 +378,33 @@ void Window::setStats(Stats type, RoadSegment road, Lane *lane)
         setTextEditRoad(road);
     else if (type == Stats::Lanes)
         setTextEditLane(lane);
+}
 
-    //ui->myGLWidget->UpdateYOffset(arg1.toFloat());
-    //ui->myGLWidget->updateGL();
+void Window::setCurrentTab(Window::TabWidget type, Node &selectedNode)
+{
+    ui->Display->setCurrentIndex((int)type);
+    Node::DistributionInfo nodeDistribution = selectedNode.getDistributionInfo();
+
+    ui->m_lineEditTauxBernouilli->setText(nodeDistribution.bernouilliAmount);
+    ui->m_lineEditTauxExponentielle->setText(nodeDistribution.exponentialAmount);
+    ui->m_lineEditTauxUniforme->setText(nodeDistribution.uniformAmount);
+
+    if (nodeDistribution.isBernouilli)
+        ui->m_radioButtonBernouilli->setChecked(true);
+    else if (nodeDistribution.isExponential)
+        ui->m_radioButtonExponentielle->setChecked(true);
+    else if (nodeDistribution.isUniform)
+        ui->m_radioButtonUniforme->setChecked(true);
+}
+
+void Window::setCurrentTab(Window::TabWidget type, RoadSegment &selectedRoad)
+{
+    ui->Display->setCurrentIndex((int)type);
+
+    QString roadName = QString::fromStdString(selectedRoad.getRoadName());
+
+    ui->m_editTextRoadName->setText(roadName);
+    ui->m_spinBoxNombreDeVoies->setValue(selectedRoad.GetNumberOfLanes());
 }
 
 void Window::setTextEditRoad(RoadSegment road)
@@ -405,9 +423,6 @@ void Window::setTextEditRoad(RoadSegment road)
 
     QString qstr = QString::fromStdString(road.getRoadName());
     textEdit->setText(output);
-
-    //ui->myGLWidget->UpdateOffset(8);
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::setTextEditLane(Lane *lane)
@@ -430,65 +445,58 @@ void Window::setTextEditLane(Lane *lane)
 
 void Window::on_m_boutonBlockRoad_clicked()
 {
-    /*bool dvEnCours = true;
+    bool dvEnCours = true;
 
     ui->myGLWidget->BlockRoad();
 
     auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->startDV();
+        (*itt).second->startDV();
     }
     while(dvEnCours)
     {
         dvEnCours = false;
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            dvEnCours |= (*itt)->processDVMessages();
+            dvEnCours |= (*itt).second->processDVMessages();
         }
     }
 
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->printDVResults();
+        (*itt).second->printDVResults();
     }
 
     selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::FDiagPattern));
-    //Qt::BrushStyle::NoBrush*/
-
-    //ui->myGLWidget->UpdateOffset(2);
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::on_m_boutonUnblockRoad_clicked()
 {
-    /*bool dvEnCours = true;
+    bool dvEnCours = true;
 
     ui->myGLWidget->UnBlockRoad();
 
     auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->startDV();
+        (*itt).second->startDV();
     }
     while(dvEnCours)
     {
         dvEnCours = false;
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            dvEnCours |= (*itt)->processDVMessages();
+            dvEnCours |= (*itt).second->processDVMessages();
         }
     }
 
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->printDVResults();
+        (*itt).second->printDVResults();
     }
 
-    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));*/
-
-    //ui->myGLWidget->UpdateOffset(4);
-    //ui->myGLWidget->updateGL();
+    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));
 }
 
 void Window::on_noIntersection_clicked()
@@ -504,4 +512,35 @@ void Window::on_StopSign_clicked()
 void Window::on_TrafficLight_clicked()
 {
     ui->myGLWidget->setNodeType(2);
+}
+
+void Window::on_m_boutonDrawSource_clicked()
+{
+    ui->myGLWidget->isDrawNodePressed_ = true;
+    ui->myGLWidget->isDrawRoadPressed_ = false;
+    ui->myGLWidget->isDrawLanePressed_ = false;
+    ui->myGLWidget->isDrawSourcePressed_ = false;
+}
+
+void Window::on_m_boutonDrawRoad_clicked()
+{
+    ui->myGLWidget->isDrawNodePressed_ = false;
+    ui->myGLWidget->isDrawRoadPressed_ = true;
+    ui->myGLWidget->isDrawLanePressed_ = false;
+    ui->myGLWidget->isDrawSourcePressed_ = false;
+}
+
+void Window::on_m_boutonUpdateDistribution_clicked()
+{
+    if (ui->myGLWidget->selectedNode() < 0)
+        return;
+
+    Node& selectedNode = SimulationData::getInstance().getNode(ui->myGLWidget->selectedNode());
+
+    if (ui->m_radioButtonBernouilli->isChecked())
+        selectedNode.setBernouilliAmount(ui->m_lineEditTauxBernouilli->text().toDouble());
+    else if (ui->m_radioButtonExponentielle->isChecked())
+        selectedNode.setExponentialAmount(ui->m_lineEditTauxExponentielle->text().toDouble());
+    else if (ui->m_radioButtonUniforme->isChecked())
+        selectedNode.setUniformAmount(ui->m_lineEditTauxUniforme->text().toDouble());
 }

@@ -100,6 +100,8 @@ public:
     node_id_type getNextStep(node_id_type destination);
     road_id_type getNextRoad(node_id_type destination);
 
+    DistributionInfo getDistributionInfo();
+
     Node& getNode(node_id_type);
     RoadSegment& getRoad(road_id_type);
     std::vector<Vehicle*>& getWaitingVehicles(Lane*);
@@ -110,6 +112,9 @@ public:
 
     bool isNodeBlocked();
     void setIsNodeBlocked(bool isRoadBlocked);
+    void setBernouilliAmount(double value);
+    void setUniformAmount(double value);
+    void setExponentialAmount(double value);
     void updateCost(node_id_type, road_cost_type);
     std::map<node_id_type, node_id_type> nextHopForDestination();
     void setNextHopForDestination(const std::map<node_id_type, node_id_type> &nextHopForDestination);

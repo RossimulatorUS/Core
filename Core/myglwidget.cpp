@@ -20,6 +20,7 @@ MyGLWidget::MyGLWidget(QWidget *parent)
 
     selectedLaneItem_ = new QTreeWidgetItem();
     selectedRoadItem_ = new QTreeWidgetItem();
+    selectedNode_ = -1;
 
     isLaneSelected_ = false;
     isRoadSelected_ = false;
@@ -35,11 +36,11 @@ MyGLWidget::~MyGLWidget()
 
 void MyGLWidget::BlockRoad()
 {
-    auto allNodes = GetAllNodes();
+    /*auto allNodes = GetAllNodes();
     for (auto itt = allNodes.begin(); itt != allNodes.end(); ++itt)
     {
         (*itt).second->resetCosts();
-    }
+    }*/
 
     auto road = SimulationData::getInstance().getRoad(selectedRoad_.getRoadID());
     qDebug() << "Blocking road " << road.getRoadID();
@@ -124,14 +125,20 @@ void MyGLWidget::mousePressEvent(QMouseEvent *event)
 
     auto window = static_cast<Window*>(parent());
 
-    if (window->isIntersectionChecked() && window->getCurrentTabIndex() == 0)
+    if (window->isIntersectionChecked() && window->getCurrentTabIndex() == (int)Window::TabWidget::Node)
+    {
         DrawNode(worldCoords, nodeType);
-    else if (isDrawRoadPressed_ && window->getCurrentTabIndex() == 1)
+    }
+    else if (window->getCurrentTabIndex() == (int)Window::TabWidget::Road)
+    {
         DrawRoadMousePressed(worldCoords);
+    }
     /*else if (isDrawLanePressed_)
         DrawLaneMousePressed(worldCoords);*/
-    else if (window->isSourceChecked())
+    else if (window->isSourceChecked() && window->getCurrentTabIndex() == (int)Window::TabWidget::Node)
+    {
         DrawSource(worldCoords, nodeType);
+    }
     else
     {
         //other things later (perturbation stats)
@@ -172,15 +179,18 @@ void MyGLWidget::mouseReleaseEvent(QMouseEvent *event)
 void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
 {
     auto window = static_cast<Window*>(parent());
+    std::string roadNameValue = window->getRoadName();
+
+    if (roadNameValue == "")
+        return;
 
     Node node = Node(worldCoords[0], worldCoords[1]);
     node_id_type associatedNode = FindAssociatedNode(node);
 
+
     if (clickPressedNode != associatedNode && clickPressedNode != 66666 && associatedNode != 66666)
     {
-        std::string name = "JACYNTHE";
-        auto newRoad = AddRoad(clickPressedNode, associatedNode, name);
-        window->addNameToListWidget(newRoad);
+        auto newRoad = AddRoad(clickPressedNode, associatedNode, roadNameValue);
     }
 }
 
@@ -208,6 +218,17 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
     }
     return 66666;   //kinda lame
 }
+
+MyGLWidget::node_id_type MyGLWidget::selectedNode() const
+{
+    return selectedNode_;
+}
+
+void MyGLWidget::setSelectedNode(const node_id_type &selectedNode)
+{
+    selectedNode_ = selectedNode;
+}
+
 
 /*Road& MyGLWidget::FindAssociatedRoad(Node noeud1, Node noeud2, Node &outNoeudDepart, Node &outNoeudArrivee, bool &isInverted)
 {
@@ -272,22 +293,25 @@ void MyGLWidget::DrawNode(float *worldCoords, int type)
 
 void MyGLWidget::DrawNode(float x, float y, int type)
 {
-    SimulationData::getInstance().addNode(x,y, false, type);
+    auto window = static_cast<Window*>(parent());
+    qDebug() << "DrawNode with no id";
+    window->addNameToListWidget(SimulationData::getInstance().addNode(x,y, false, type));
 }
 
 void MyGLWidget::DrawNode(float x, float y, simulation_traits::node_id_type id, int type)
 {
+    auto window = static_cast<Window*>(parent());
+    qDebug() << "DrawNode with id = " << id;
     SimulationData::getInstance().addNode(x,y, false, id, type);
+    window->addNameToListWidget(id);
 }
 
 RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name)
 {
     auto window = static_cast<Window*>(parent());
-
-    auto isOneWay = window->isOneWay();
     auto numberOfLane = window->getNumberofLane();
 
-    RoadSegment newRoad = RoadSegment(a, b, isOneWay, numberOfLane, name);
+    RoadSegment newRoad = RoadSegment(a, b, numberOfLane, name);
     auto roadId = SimulationData::getInstance().addRoad(newRoad);
     SimulationData::getInstance().getNode(a).addNeighbour(b, roadId);
     SimulationData::getInstance().getNode(b).addNeighbour(a, roadId);
@@ -301,15 +325,14 @@ RoadSegment MyGLWidget::AddRoad(node_id_type a, node_id_type b, std::string name
         r0.addLane(r0.getStartNode(), r0.getEndNode(), i, cpt);
         ++cpt;
 
-        if (!isOneWay)
-        {
-            r0.addLane(r0.getEndNode(), r0.getStartNode(), i, cpt);
-            ++cpt;
-        }
+        r0.addLane(r0.getEndNode(), r0.getStartNode(), i, cpt);
+        ++cpt;
     }
 
     SimulationData::getInstance().getNode(a).addLanes(roadId);
     SimulationData::getInstance().getNode(b).addLanes(roadId);
+
+    window->addNameToListWidget(r0);
 
     return r0;
 }
@@ -319,15 +342,17 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
     RoadSegment selectedRoad;
     auto window = static_cast<Window*>(parent());
 
-    if (item->text(0) == window->getRootItem()->text(0))
+    if (item->text(0) == (window->getRootItem()).at(0)->text(0) ||
+        item->text(0) == (window->getRootItem()).at(1)->text(0))
     {
         //Just clicked on root element do nothing
         return;
     }
 
     //The selected item is a road because our parent is Road
-    else if (item->parent()->text(0) == window->getRootItem()->text(0))
+    else if (item->parent()->text(0) == (window->getRootItem()).at(0)->text(0))
     {
+        selectedNode_ = -1;
         selectedRoadItem_ = item;
         isRoadSelected_ = true;
         isLaneSelected_ = false;
@@ -344,14 +369,30 @@ void MyGLWidget::onRoadListWidgetClicked(QTreeWidgetItem* item, int i)
         }
         selectedRoad_ = selectedRoad;
         window->setStats(Window::Stats::Roads, selectedRoad, 0);
+        window->setCurrentTab(Window::TabWidget::Road, selectedRoad_);
 
+    }
+    //The selected item is a Node because our parent is Node
+    else if (item->parent()->text(0) == (window->getRootItem()).at(1)->text(0))
+    {
+        isRoadSelected_ = false;
+        isLaneSelected_ = false;
 
+        QString qNodeId = item->text(0);
+        const char* sNodeId = qNodeId.toLocal8Bit().constData();
+
+        selectedNode_ = atoi(sNodeId);
+        selectedLaneItem_ = new QTreeWidgetItem();
+        selectedRoadItem_ = new QTreeWidgetItem();
+
+        window->setCurrentTab(Window::TabWidget::Node, SimulationData::getInstance().getNode(selectedNode_));
     }
     else //clicked on a lane
     {
         isRoadSelected_ = false;
         isLaneSelected_ = true;
 
+        selectedNode_ = -1;
         selectedLaneItem_ = item;
         selectedRoadItem_ = new QTreeWidgetItem();
 
@@ -398,7 +439,8 @@ void MyGLWidget::DrawSource(float x, float y, int type)
     distribution.uniformAmount = window->getUniformAmount();
     distribution.exponentialAmount = window->getExponentialAmount();
 
-    SimulationData::getInstance().addNode(x,y, true, distribution, type);
+    //qDebug() << "Drawing source with no id";
+    window->addNameToListWidget(SimulationData::getInstance().addNode(x,y, true, distribution, type));
 }
 
 void MyGLWidget::DrawSource(float x, float y, node_id_type id, int type)
@@ -416,6 +458,8 @@ void MyGLWidget::DrawSource(float x, float y, node_id_type id, int type)
     distribution.exponentialAmount = window->getExponentialAmount();
 
     SimulationData::getInstance().addNode(x,y, true, distribution, id, type);
+    //qDebug() << "Drawing source with id = " << id;
+    window->addNameToListWidget(id);
 }
 
 void MyGLWidget::ClearWidget()
@@ -434,6 +478,7 @@ void MyGLWidget::DrawNodePressed()
 
 void MyGLWidget::DrawRoadPressed()
 {
+    qDebug() << "Pressing button";
     isDrawRoadPressed_ = true;
     isDrawNodePressed_ = false;
     isDrawLanePressed_ = false;
@@ -498,7 +543,7 @@ void MyGLWidget::draw()
             glLineWidth(3);
             glTranslatef(0,0,-9);
             if (isLaneSelected_ && allLanes[j]->getLaneId() == atoi(selectedLaneItem_->text(0).toLocal8Bit().constData()) &&
-                    selectedLaneItem_->parent()->text(0).toLocal8Bit().constData() == allRoads[j].getRoadName())
+                    selectedLaneItem_->parent()->text(0).toLocal8Bit().constData() == allRoads[i].getRoadName())
                 glColor4f(0,0.75f,0, 0.75f);
             else
                 glColor4f(0.75f,0,0, 0.75f);
@@ -518,7 +563,10 @@ void MyGLWidget::draw()
     {
         glLoadIdentity();
         glTranslatef(0, 0, -9);
-        if(it->second->is_source())
+
+        if (selectedNode_ != -1 && it->second->GetId() == selectedNode_)
+            qglColor(Qt::green);
+        else if(it->second->is_source())
             qglColor(Qt::red);
         else
             glColor3f(0.9f,0.3f,0.1f);

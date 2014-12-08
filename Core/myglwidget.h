@@ -27,6 +27,9 @@ public:
 
     void BlockRoad();
     void UnBlockRoad();
+    node_id_type selectedNode() const;
+    void setSelectedNode(const node_id_type &selectedNode);
+
 signals:
 
 public slots:
@@ -79,6 +82,7 @@ private:
 
     RoadSegment selectedRoad_;
     Lane *selectedLane;
+    node_id_type selectedNode_;
 
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;

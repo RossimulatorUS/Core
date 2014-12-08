@@ -17,6 +17,7 @@ class Window : public QWidget
 
 public:
     enum class Stats {Roads, Lanes};
+    enum class TabWidget {Node = 0, Road = 1};
 
     explicit Window(QWidget *parent = 0);
     ~Window();
@@ -26,6 +27,7 @@ public:
     QString getBernouilliAmount();
     QString getUniformAmount();
     QString getExponentialAmount();
+    std::string getRoadName();
 
     bool isBernouilliChecked();
     bool isUniformChecked();
@@ -37,18 +39,18 @@ public:
     bool isStopSignChecked();
     bool isTrafficLightChecked();
 
-    bool isOneWay();
-
-    void setRoadNameListWidget(vector<RoadSegment> roadNames);
+    void addNameToListWidget(node_id_type id);
     void addNameToListWidget(RoadSegment roadName);
     void setStats(Stats type, RoadSegment road, Lane *lane);
+    void setCurrentTab(TabWidget type, Node &selectedNode);
+    void setCurrentTab(Window::TabWidget type, RoadSegment &selectedRoad);
 
     void connectListWidget();
     void hideBlockRoadButton();
     void showBlockRoadButton();
 
-    QTreeWidgetItem *getRootItem() const;
-    void setRootItem(QTreeWidgetItem *rootItem);
+    std::vector<QTreeWidgetItem*> getRootItem() const;
+    void setRootItem(std::vector<QTreeWidgetItem*> rootItem);
 
     int getCurrentTabIndex();
     int getNumberofLane();
@@ -78,9 +80,15 @@ private slots:
 
     void on_TrafficLight_clicked();
 
+    void on_m_boutonDrawSource_clicked();
+
+    void on_m_boutonDrawRoad_clicked();
+
+    void on_m_boutonUpdateDistribution_clicked();
+
 private:
     Ui::Window *ui;
-    QTreeWidgetItem* rootItem_;
+    std::vector<QTreeWidgetItem*> rootItem_;
     QTreeWidgetItem* selectedItem_;
 
     void addTreeRoot(QString name);

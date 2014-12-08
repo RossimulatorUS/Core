@@ -125,7 +125,7 @@ SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool 
         break;
     }
 
-    return allNodes_.size()-1;
+    return id;
 }
 
 SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, int type)

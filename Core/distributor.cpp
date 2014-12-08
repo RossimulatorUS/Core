@@ -50,7 +50,6 @@ void Distributor::init()
                     auto roadID = entry->getRoadId();
 
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
-                    std::cout << lastProgression << std::endl;
                     if(lastProgression < 0.12f)
                     {
                         waitingVehicles[roadID].push_back(v);
