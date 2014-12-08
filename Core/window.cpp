@@ -273,6 +273,7 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     auto hauteur_carte = std::abs(north - south);
     auto largeur_carte = std::abs(east - west);
 
+
     std::cout << "fetching\n" << std::flush;
     map_fetcher map(south, west, north, east);
     map.fetch();
@@ -438,12 +439,12 @@ void Window::disable(QWidget* widget)
 
 bool Window::is_checked(QAbstractButton* widget)
 {
-    widget->isChecked();
+    return widget->isChecked();
 }
 
 QString Window::get_text(QLineEdit* widget)
 {
-    widget->text();
+    return widget->text();
 }
 
 void Window::update_actual_node_model()
