@@ -75,9 +75,9 @@ bool Formula::isParallel(Node startRoad, Node endRoad, Node startClick, Node end
 
     float dot = x1*x2 + y1*y2;
     float det = x1*y2 - y1*x2;
-    float angle = std::atan2(det,dot); //degree ou rad???
+    float angle = std::abs(std::atan2(det,dot));
 
-    if((angle<190 && angle>170) || angle<10 || angle>350)
+    if((angle<3.2f && angle>3.1f) || (angle<0.06f && angle>0.0f) || (angle>6.2f && angle<6.4f))
         return true;
 
     return false;

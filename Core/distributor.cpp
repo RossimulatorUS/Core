@@ -39,6 +39,32 @@ void Distributor::init()
         {
             *execute_ = false;
 
+            //Try to spawn unspawned vehicles
+            for(std::map<road_id_type,std::vector<Vehicle*>>::iterator it = waitingVehicles.begin();
+                it != waitingVehicles.end(); it++)
+            {
+                std::vector<Vehicle*>* vV = &(it->second);
+                if(vV->size() > 0)
+                {
+                    Vehicle* v = vV->back();
+                    v->resetLane();
+                    Lane* entry = v->getCurrentLane();
+                    float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
+
+                    if(lastProgression > 0.12f)
+                    {
+                        if (v->addToLane())
+                        {
+                            auto roadID = it->first;
+                            all_vehicles_->push_back(v);
+                            threads_->at(chose_thread())->add_vehicle(v);
+                            vV->pop_back();
+                            SimulationData::getInstance().getRoad(roadID).setNumberWaitingCars(vV->size());
+                        }
+                    }
+                }
+            }
+
             std::for_each(nodes_.begin(), nodes_.end(), [&](std::pair<node_id_type,Node*> it){
 
                 Node* node = it.second;
@@ -50,6 +76,10 @@ void Distributor::init()
                     auto roadID = entry->getRoadId();
 
                     float lastProgression = std::min(100.0f,entry->getLastVehiclePos());
+<<<<<<< HEAD
+=======
+
+>>>>>>> bf4cdb3f5a51cae3903cb083f5e3edb675d3ad87
                     if(lastProgression < 0.12f)
                     {
                         waitingVehicles[roadID].push_back(v);
