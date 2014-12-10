@@ -16,9 +16,9 @@ std::mutex Node::mtx;
 
 std::default_random_engine Node::generator_((unsigned int)time(0));
 
-Node::Node(){}
+Node::Node(){} // Should be deleted
 
-Node::Node(GLfloat x, GLfloat y)
+Node::Node(GLfloat x, GLfloat y) // Should be deleted
     : x_(x), y_(y),
       neighbours_(std::map<node_id_type, road_id_type>()),
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
@@ -127,8 +127,8 @@ bool Node::is_due()
 
 Vehicle *Node::create_vehicle()
 {
-    //static std::default_random_engine generator;
-    static std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::getInstance().getNodes().size() - 1);
+    static std::uniform_int_distribution<simulation_traits::node_id_type>
+            distribution(0, SimulationData::getInstance().getNodes().size() - 1);
     simulation_traits::node_id_type end_id;
 
     //TODO vérifier si il y a un chemin qui se rend
