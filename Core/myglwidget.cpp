@@ -184,25 +184,21 @@ void MyGLWidget::DrawRoadMouseReleased(float *worldCoords)
     if (roadNameValue == "")
         return;
 
-    Node node = Node(worldCoords[0], worldCoords[1]);
-    node_id_type associatedNode = FindAssociatedNode(node);
-
+    node_id_type associatedNode = FindAssociatedNode(worldCoords[0], worldCoords[1]);
 
     if (clickPressedNode != associatedNode && clickPressedNode != 66666 && associatedNode != 66666)
     {
-        auto newRoad = AddRoad(clickPressedNode, associatedNode, roadNameValue);
+        AddRoad(clickPressedNode, associatedNode, roadNameValue);
     }
 }
 
 void MyGLWidget::DrawRoadMousePressed(float *worldCoords)
 {
-    Node node = Node(worldCoords[0], worldCoords[1]);
-    node_id_type associatedNode = FindAssociatedNode(node);
-
+    node_id_type associatedNode = FindAssociatedNode(worldCoords[0], worldCoords[1]);
     clickPressedNode = associatedNode;
 }
 
-MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
+MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(float x, float y)
 {
     auto allNodes = GetAllNodes();
     for (auto it = allNodes.begin(); it != allNodes.end(); ++it)
@@ -212,8 +208,7 @@ MyGLWidget::node_id_type MyGLWidget::FindAssociatedNode(Node noeud)
         float ErrorYPos = it->second->y() + ClickErrorTollerence;
         float ErrorYNeg = it->second->y() - ClickErrorTollerence;
 
-        if ((noeud.x() > ErrorXNeg && noeud.x() < ErrorXPos) &&
-            (noeud.y() > ErrorYNeg && noeud.y() < ErrorYPos))
+        if ((x > ErrorXNeg && x < ErrorXPos) && (y > ErrorYNeg && y < ErrorYPos))
             return it->second->GetId();
     }
     return 66666;   //kinda lame

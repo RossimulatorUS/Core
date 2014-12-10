@@ -75,7 +75,7 @@ private:
     std::vector<Vehicle*> allVehicles_;
 
     node_id_type clickPressedNode;
-    node_id_type FindAssociatedNode(Node noeud);
+    node_id_type FindAssociatedNode(float x, float y);
 
     QTreeWidgetItem* selectedRoadItem_;
     QTreeWidgetItem* selectedLaneItem_;

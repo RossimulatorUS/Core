@@ -239,7 +239,7 @@ void Window::on_m_boutonSimulation4_clicked()
     ui->myGLWidget->DrawSource(-1.6f,0.0f);
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
 
-    ui->myGLWidget->DrawNode(0.0f,0.0f,2);
+    ui->myGLWidget->DrawNode(0.0f,0.0f,1);
     auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
     auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
     auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
@@ -266,6 +266,9 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     std::cout << "fetching\n" << std::flush;
     map_fetcher map(south, west, north, east);
     map.fetch();
+    //map.print_response();
+    //map.print();
+    //return;
 
     std::cout << "adding nodes\n" << std::flush;
     std::map<node_id_type, map_node> nodes = map.get_nodes();

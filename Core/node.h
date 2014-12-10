@@ -69,7 +69,7 @@ protected:
     int currentWaitingVehicleIndex;
 
     // Utilises pour la generation des voitures
-    std::default_random_engine generator_;
+    static std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
     std::exponential_distribution<double> exponential_distribution_;
 

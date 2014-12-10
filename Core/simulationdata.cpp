@@ -12,6 +12,7 @@ SimulationData::SimulationData()
     accepted_road_types_.push_back("residential");
     accepted_road_types_.push_back("secondary");
 }
+
 std::vector<SimulationData::node_id_type> SimulationData::getKeys() const
 {
     return keys;

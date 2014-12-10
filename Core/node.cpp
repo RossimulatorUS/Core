@@ -14,6 +14,8 @@
 
 std::mutex Node::mtx;
 
+std::default_random_engine Node::generator_((unsigned int)time(0));
+
 Node::Node(){}
 
 Node::Node(GLfloat x, GLfloat y)
@@ -25,11 +27,9 @@ Node::Node(GLfloat x, GLfloat y)
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0)),
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
 {
-    //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_= exec_time(0);
     isNodeBlocked_= false;
 }
@@ -43,7 +43,6 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(std::bernoulli_distribution(0.2)),
-      generator_((unsigned int)time(0)),
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
 {
@@ -62,7 +61,6 @@ Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInf
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
       exponential_distribution_(distributionInfo.exponentialAmount.toDouble(&ok)),
-      generator_((unsigned int)time(0)),
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
 {
@@ -94,11 +92,10 @@ bool Node::is_source()
 
 bool Node::is_due()
 {
-    static std::default_random_engine generateur((unsigned int)time(0));
     auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(get_time() - last_creation_).count();
     if (distributionInfo_.isBernouilli)
     {
-        if(is_source() && bernouilli_distribution_(generateur)&& timeSinceLastCreation > 250)
+        if(is_source() && bernouilli_distribution_(generator_)&& timeSinceLastCreation > 250)
         {
             last_creation_ = get_time();
             return true;
@@ -118,7 +115,7 @@ bool Node::is_due()
     }
     else if (distributionInfo_.isExponential)
     {
-        if(is_source() && exponential_distribution_(generateur)&& timeSinceLastCreation > 250)
+        if(is_source() && exponential_distribution_(generator_)&& timeSinceLastCreation > 250)
         {
             last_creation_ = get_time();
             return true;
@@ -130,15 +127,14 @@ bool Node::is_due()
 
 Vehicle *Node::create_vehicle()
 {
-    static std::default_random_engine generator;
+    //static std::default_random_engine generator;
     static std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::getInstance().getNodes().size() - 1);
     simulation_traits::node_id_type end_id;
 
     //TODO vérifier si il y a un chemin qui se rend
     do
     {
-        end_id = SimulationData::getInstance().getKeys()[distribution(generator)];
-        //end_id = distribution(generator);
+        end_id = SimulationData::getInstance().getKeys()[distribution(generator_)];
     }while(end_id == this->id_);
 
     return new Vehicle(this->id_, end_id);
