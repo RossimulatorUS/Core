@@ -14,6 +14,7 @@ SimulationData::SimulationData()
     accepted_road_types_.push_back("residential");
     accepted_road_types_.push_back("secondary");
 }
+
 std::vector<SimulationData::node_id_type> SimulationData::getKeys() const
 {
     return keys;
@@ -90,87 +91,6 @@ bool SimulationData::accepted_road(std::string road_type)
     return std::find(accepted_road_types_.begin(), accepted_road_types_.end(), road_type) != accepted_road_types_.end();
 }
 
-SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, int type)
-{
-    keys.push_back(allNodes_.size());
-
-    switch(type)
-    {
-    case 0:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new Node(x,y, allNodes_.size(), isSource)));
-        break;
-    case 1:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new StopSign(x,y, allNodes_.size(), isSource)));
-        break;
-    case 2:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new TLight(x,y, allNodes_.size(), isSource)));
-        break;
-    }
-
-    return allNodes_.size()-1;
-}
-
-SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, node_id_type id, int type)
-{
-    keys.push_back(id);
-
-    switch(type)
-    {
-    case 0:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new Node(x,y, id, isSource)));
-        break;
-    case 1:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new StopSign(x,y, id, isSource)));
-        break;
-    case 2:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new TLight(x,y, id, isSource)));
-        break;
-    }
-
-    return allNodes_.size()-1;
-}
-
-SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, int type)
-{
-    keys.push_back(allNodes_.size());
-
-    switch(type)
-    {
-    case 0:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new Node(x,y, allNodes_.size(), isSource, distributionInfo)));
-        break;
-    case 1:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new StopSign(x,y, allNodes_.size(), isSource, distributionInfo)));
-        break;
-    case 2:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(allNodes_.size(),new TLight(x,y, allNodes_.size(), isSource, distributionInfo)));
-        break;
-    }
-
-    return allNodes_.size()-1;
-}
-
-SimulationData::node_id_type SimulationData::addNode(GLfloat x, GLfloat y, bool isSource, Node::DistributionInfo distributionInfo, node_id_type id, int type)
-{
-    keys.push_back(id);
-
-    switch(type)
-    {
-    case 0:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new Node(x,y, id, isSource, distributionInfo)));
-        break;
-    case 1:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new StopSign(x,y, id, isSource, distributionInfo)));
-        break;
-    case 2:
-        allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new TLight(x,y, id, isSource, distributionInfo)));
-        break;
-    }
-    //allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id,new TLight(x,y, id, isSource, distributionInfo)));
-
-    return allNodes_.size()-1;
-}
-
 SimulationData::node_id_type SimulationData::add_intersection(GLfloat x,
                                                               GLfloat y,
                                                               simulation_traits::intersection law,
@@ -181,7 +101,7 @@ SimulationData::node_id_type SimulationData::add_intersection(GLfloat x,
     keys.push_back(id);
 
     allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id, new Node(x, y, law, id)));
-    return allNodes_.size()-1;
+    return id;
 }
 
 SimulationData::node_id_type SimulationData::add_source(GLfloat x,
@@ -196,7 +116,7 @@ SimulationData::node_id_type SimulationData::add_source(GLfloat x,
     keys.push_back(id);
 
     allNodes_.insert(std::pair<simulation_traits::node_id_type,Node*>(id, new Node(x, y, intersection_type, law, law_coefficient, id)));
-    return allNodes_.size()-1;
+    return id;
 }
 
 SimulationData::road_id_type SimulationData::addRoad(RoadSegment r)

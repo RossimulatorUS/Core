@@ -27,6 +27,9 @@ public:
 
     void BlockRoad();
     void UnBlockRoad();
+    node_id_type selectedNode() const;
+    void setSelectedNode(const node_id_type &selectedNode);
+
 signals:
 
 public slots:
@@ -72,13 +75,14 @@ private:
     std::vector<Vehicle*> allVehicles_;
 
     node_id_type clickPressedNode;
-    node_id_type FindAssociatedNode(Node noeud);
+    node_id_type FindAssociatedNode(float x, float y);
 
     QTreeWidgetItem* selectedRoadItem_;
     QTreeWidgetItem* selectedLaneItem_;
 
     RoadSegment selectedRoad_;
     Lane *selectedLane;
+    node_id_type selectedNode_;
 
     bool isDrawNodePressed_;
     bool isDrawRoadPressed_;

@@ -14,9 +14,11 @@
 
 std::mutex Node::mtx;
 
-Node::Node(){}
+std::default_random_engine Node::generator_((unsigned int)time(0));
 
-Node::Node(GLfloat x, GLfloat y)
+Node::Node(){} // Should be deleted
+
+Node::Node(GLfloat x, GLfloat y) // Should be deleted
     : x_(x), y_(y),
       neighbours_(std::map<node_id_type, road_id_type>()),
       nextHopForDestination_(std::map<node_id_type, node_id_type>()),
@@ -25,50 +27,11 @@ Node::Node(GLfloat x, GLfloat y)
       waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
       currentWaitingVehicleIndex(0),
       bernouilli_distribution_(0.2),
-      generator_((unsigned int)time(0)),
       waitingRoads_(std::queue<road_id_type>()),
       waitingRoadIndex_(std::set<road_id_type>())
 {
-    //est_du_fonction_ = std::bind ( distribution_, generateur_ );
     last_creation_= exec_time(0);
     isNodeBlocked_= false;
-}
-
-Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource)
-    : x_(x), y_(y), is_source_(isSource),
-      neighbours_(std::map<node_id_type, road_id_type>()),
-      nextHopForDestination_(std::map<node_id_type, node_id_type>()),
-      costs_(std::map<node_id_type, road_cost_type>()),
-      pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
-      currentWaitingVehicleIndex(0),
-      bernouilli_distribution_(std::bernoulli_distribution(0.2)),
-      generator_((unsigned int)time(0)),
-      waitingRoads_(std::queue<road_id_type>()),
-      waitingRoadIndex_(std::set<road_id_type>())
-{
-    id_ = id;
-    last_creation_= exec_time(0);
-    isNodeBlocked_ = false;
-}
-
-Node::Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
-    : x_(x), y_(y), is_source_(isSource), distributionInfo_(distributionInfo),
-      neighbours_(std::map<node_id_type, road_id_type>()),
-      nextHopForDestination_(std::map<node_id_type, node_id_type>()),
-      costs_(std::map<node_id_type, road_cost_type>()),
-      pendingDVMessages_(std::queue<DVMessage>()),
-      waitingVehicles_(std::map<Lane*, std::vector<Vehicle*>>()),
-      currentWaitingVehicleIndex(0),
-      bernouilli_distribution_(distributionInfo.bernouilliAmount.toDouble(&ok)),
-      exponential_distribution_(distributionInfo.exponentialAmount.toDouble(&ok)),
-      generator_((unsigned int)time(0)),
-      waitingRoads_(std::queue<road_id_type>()),
-      waitingRoadIndex_(std::set<road_id_type>())
-{
-    id_ = id;
-    last_creation_= exec_time(0);
-    isNodeBlocked_ = false;
 }
 
 Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_type, node_id_type id) :
@@ -157,13 +120,12 @@ bool Node::is_source()
 
 bool Node::is_due()
 {
-    static std::default_random_engine generateur((unsigned int)time(0));
     auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(get_time() - last_creation_).count();
 
     switch(loi_distribution)
     {
         case simulation_traits::BERNOUILLI :
-            if(bernouilli_distribution_(generateur) && timeSinceLastCreation > 250)
+            if(bernouilli_distribution_(generator_) && timeSinceLastCreation > 250)
             {
                 last_creation_ = get_time();
                 return true;
@@ -179,8 +141,9 @@ bool Node::is_due()
             }
             return false;
             break;
+
         case simulation_traits::EXPONENTIAL :
-            if(exponential_distribution_(generateur) && timeSinceLastCreation > 250)
+            if(exponential_distribution_(generator_) && timeSinceLastCreation > 250)
             {
                 last_creation_ = get_time();
                 return true;
@@ -192,14 +155,14 @@ bool Node::is_due()
 
 Vehicle *Node::create_vehicle()
 {
-    static std::default_random_engine generator;
-    static std::uniform_int_distribution<simulation_traits::node_id_type> distribution(0, SimulationData::getInstance().getNodes().size() - 1);
+    static std::uniform_int_distribution<simulation_traits::node_id_type>
+            distribution(0, SimulationData::getInstance().getNodes().size() - 1);
     simulation_traits::node_id_type end_id;
 
     //TODO vérifier si il y a un chemin qui se rend
     do
     {
-        end_id = SimulationData::getInstance().getKeys()[distribution(generator)];
+        end_id = SimulationData::getInstance().getKeys()[distribution(generator_)];
     }while(end_id == this->id_);
 
     return new Vehicle(this->id_, end_id);
@@ -327,6 +290,11 @@ Node::road_id_type Node::getNextRoad(node_id_type destination)
     return value;
 }
 
+/*Node::DistributionInfo Node::getDistributionInfo()
+{
+    return distributionInfo_;
+}*/
+
 Node &Node::getNode(node_id_type id)
 {
     return SimulationData::getInstance().getNode(id);
@@ -381,10 +349,41 @@ void Node::setIsNodeBlocked(bool isRoadBlocked)
     isNodeBlocked_ = isRoadBlocked;
 }
 
+/*void Node::setBernouilliAmount(double value)
+{
+    distributionInfo_.isBernouilli = true;
+    distributionInfo_.isExponential = false;
+    distributionInfo_.isUniform = false;
+    distributionInfo_.bernouilliAmount = QString::fromStdString(stringify(value));
+    bernouilli_distribution_=std::bernoulli_distribution(distributionInfo_.bernouilliAmount.toDouble(&ok));
+}
+
+void Node::setUniformAmount(double value)
+{
+    distributionInfo_.isBernouilli = false;
+    distributionInfo_.isExponential = false;
+    distributionInfo_.isUniform = true;
+    distributionInfo_.uniformAmount = QString::fromStdString(stringify(value));
+}
+
+void Node::setExponentialAmount(double value)
+{
+    distributionInfo_.isBernouilli = false;
+    distributionInfo_.isExponential = true;
+    distributionInfo_.isUniform = false;
+    distributionInfo_.exponentialAmount = QString::fromStdString(stringify(value));
+    exponential_distribution_ = std::exponential_distribution<double>(distributionInfo_.exponentialAmount.toDouble(&ok));
+}*/
+
 void Node::updateCost(Node::node_id_type neighbour, Node::road_cost_type connection)
 {
+    Autolock av(mtx);
+    //neighbours_.erase(neighbour);
+    //nextHopForDestination_.erase(neighbour);
+    //costs_.erase(neighbour);
+
     costs_[neighbour] = connection;
-    qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost to neighbour : " << costs_[neighbour] << " Road : " << connection;
+    //qDebug() << "Node " << id_ << " Neighbour : " << neighbour << "cost to neighbour : " << costs_[neighbour] << " Road : " << connection;
 }
 
 std::map<Node::node_id_type, Node::node_id_type> Node::nextHopForDestination()

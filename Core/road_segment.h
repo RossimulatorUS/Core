@@ -37,10 +37,9 @@ private:
     
     bool isReadyToCreate_;
     bool isLeftToRight_;
-    bool isOneWay_;
 
 public:
-    RoadSegment(node_id_type startID, node_id_type EndID, bool isOneWay, int laneNumber, std::string name);
+    RoadSegment(node_id_type startID, node_id_type EndID, int laneNumber, std::string name);
     RoadSegment();
 
     node_id_type startID_;
@@ -68,6 +67,7 @@ public:
 
     int GetActualNumberOfCar();
     int GetTotalNumberOfCar();
+    int GetNumberOfLanes();
     road_cost_type cost_;
 
     Lane* findAssociatedLane(Node, Node);

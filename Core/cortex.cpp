@@ -6,7 +6,7 @@ Cortex::Cortex()
     : distributor_execution_(false),
       mover_execution_(std::list<volatile bool>()),
       signaler_execution_(false),
-      simulation_fps_(30),
+      simulation_fps_(60),
       paused_(false)
 {
     vehicles_ = SimulationData::getInstance().getVehiclesPointer();

@@ -66,10 +66,9 @@ Lane* RoadSegment::findAssociatedLane(Node start, Node end)
     return 0;
 }
 
-RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, bool isOneWay, int laneNumber, std::string name)
+RoadSegment::RoadSegment(node_id_type startID, node_id_type endID, int laneNumber, std::string name)
     :startID_(startID), endID_(endID), isReadyToCreate_(true), lanes_(std::vector<Lane*>())
 {
-    isOneWay_ = isOneWay;
     isLeftToRight_ = isLeftToRight(getStartNode(), getEndNode());
     lineFormula = Formula(getStartNode(), getEndNode(), laneNumber);
     actualNumberOfCar = 0;
@@ -138,6 +137,8 @@ void RoadSegment::BlockRoad()
     getEndNode().setIsNodeBlocked(true);
     isBlocked_ = true;
     cost_ = 999999;
+
+
     //qDebug() << "Blocking road : startNode = " << getStartNode().GetId() << " end node = " << getEndNode().GetId();
     getStartNode().updateCost(getEndNode().GetId(), cost_);
     getEndNode().updateCost(getStartNode().GetId(), cost_);
@@ -172,4 +173,9 @@ int RoadSegment::GetTotalNumberOfCar()
         totalNumberOfCar += (*itt)->getTotalNumberOfVehicle();
     }
     return totalNumberOfCar;
+}
+
+int RoadSegment::GetNumberOfLanes()
+{
+    return lanes_.size();
 }

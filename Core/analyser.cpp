@@ -17,7 +17,7 @@ void Analyser::init() // Tic control system
 
             std::for_each(cortex_->mover_execution_.begin(), cortex_->mover_execution_.end(), [&](volatile bool& b){b = true;});
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000 / cortex_->simulation_fps()));
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000 / cortex_->simulation_fps()));
         }
     }
 }

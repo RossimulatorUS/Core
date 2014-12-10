@@ -19,11 +19,13 @@ Window::Window(QWidget *parent) :
     ui->setupUi(this);
 
     //Add the root nodes
+
     addTreeRoot("Roads");
+    addTreeRoot("Nodes");
     //addTreeRoot("Lanes");
-    //addTreeRoot("Nodes");
 
     //showBlockRoadButton();
+
     disable(ui->m_treeWidget);
     disable(ui->m_boutonBlockRoad);
     disable(ui->m_boutonUnblockRoad);
@@ -36,39 +38,11 @@ Window::~Window()
     delete ui;
 }
 
-QString Window::getBernouilliAmount()
+std::string Window::getRoadName()
 {
-    return ui->m_lineEditTauxBernouilli->text();
-}
-
-QString Window::getUniformAmount()
-{
-    return ui->m_lineEditTauxUniforme->text();
-}
-
-QString Window::getExponentialAmount()
-{
-    return ui->m_lineEditTauxExponentielle->text();
-}
-
-bool Window::isBernouilliChecked()
-{
-    return ui->m_radioButtonBernouilli->isChecked();
-}
-
-bool Window::isOneWay()
-{
-    return ui->m_isOneWay->isChecked();
-}
-
-bool Window::isUniformChecked()
-{
-    return ui->m_radioButtonUniforme->isChecked();
-}
-
-bool Window::isExponentialChecked()
-{
-    return ui->m_radioButtonExponentielle->isChecked();
+    QString name = ui->m_editTextRoadName->text();
+    std::string text = name.toLocal8Bit().constData();
+    return text;
 }
 
 int Window::getNumberofLane()
@@ -76,34 +50,24 @@ int Window::getNumberofLane()
     return ui->m_spinBoxNombreDeVoies->value();
 }
 
-void Window::drawNode(GLfloat x, GLfloat y)
+simulation_traits::node_id_type Window::drawNode(GLfloat x, GLfloat y)
 {
     update_actual_node_model();
 
     if(actual_node_model.is_source)
     {
-        SimulationData::getInstance().add_source(x,
-                                                 y,
-                                                 actual_node_model.intersection_type,
-                                                 actual_node_model.distribution_law,
-                                                 actual_node_model.law_coefficient);
+        return SimulationData::getInstance().add_source(x,
+                                                        y,
+                                                        actual_node_model.intersection_type,
+                                                        actual_node_model.distribution_law,
+                                                        actual_node_model.law_coefficient);
     }
     else
     {
-        SimulationData::getInstance().add_intersection(x,
-                                                       y,
-                                                       actual_node_model.intersection_type);
+        return SimulationData::getInstance().add_intersection(x,
+                                                              y,
+                                                              actual_node_model.intersection_type);
     }
-}
-
-bool Window::isIntersectionChecked()
-{
-    return ui->m_radioButtonIntersection->isChecked();
-}
-
-bool Window::isSourceChecked()
-{
-    return ui->m_radioButtonSource->isChecked();
 }
 
 int Window::getCurrentTabIndex()
@@ -113,6 +77,7 @@ int Window::getCurrentTabIndex()
 
 void Window::keyPressEvent(QKeyEvent *e)
 {
+    qDebug() << e->key();
     switch(e->key())
     {
         case Qt::Key_Escape:
@@ -139,16 +104,16 @@ void Window::keyPressEvent(QKeyEvent *e)
 void Window::addTreeRoot(QString name)
 {
     QTreeWidgetItem *treeItem = new QTreeWidgetItem(ui->m_treeWidget);
-    rootItem_ = treeItem;
+    rootItem_.push_back(treeItem);
     treeItem->setText(0, name);
 }
 
-QTreeWidgetItem *Window::getRootItem()const
+std::vector<QTreeWidgetItem *> Window::getRootItem()const
 {
     return rootItem_;
 }
 
-void Window::setRootItem(QTreeWidgetItem *rootItem)
+void Window::setRootItem(std::vector<QTreeWidgetItem *> rootItem)
 {
     rootItem_ = rootItem;
 }
@@ -156,6 +121,8 @@ void Window::setRootItem(QTreeWidgetItem *rootItem)
 // Beginning the simulation
 void Window::on_m_boutonStartSimulation_clicked()
 {
+    connectListWidget();
+
     if(ui->m_boutonStartSimulation->text() == "Start")
     {
         // Put in function
@@ -227,9 +194,6 @@ void Window::on_m_boutonSimulation1_clicked()
     ui->myGLWidget->DrawSource(0.0f,-1.6f);
     auto road = ui->myGLWidget->AddRoad(0, 1, "Pas cool");
 
-    connectListWidget();
-    setRoadNameListWidget(SimulationData::getInstance().getRoads());
-
     ui->myGLWidget->updateGL();
 }
 
@@ -252,9 +216,6 @@ void Window::on_m_boutonSimulation4_clicked()
     auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
     auto road4 = ui->myGLWidget->AddRoad(3, 4, "T LAITE");
 
-    connectListWidget();
-    setRoadNameListWidget(SimulationData::getInstance().getRoads());
-
     ui->myGLWidget->updateGL();
 }
 
@@ -273,7 +234,6 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
     auto hauteur_carte = std::abs(north - south);
     auto largeur_carte = std::abs(east - west);
 
-
     std::cout << "fetching\n" << std::flush;
     map_fetcher map(south, west, north, east);
     map.fetch();
@@ -283,12 +243,12 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
 
     std::cout << "adding roads\n" << std::flush;
     std::vector<map_way> ways = map.get_ways();
-    for(int i=0;i<ways.size(); ++i)
+    for(size_t i=0; i < ways.size(); ++i)
     {
         std::vector<node_id_type> path = ways[i].path;
-        std::map<node_id_type,Node*> allNodes = SimulationData::getInstance().getNodes();
+        std::map<node_id_type,Node*>& allNodes = SimulationData::getInstance().getNodes();
 
-        for(auto j = 0; j < (path.size() - 1); ++j)
+        for(size_t j = 0; j < (path.size() - 1); ++j)
         {
             if((nodes.find(path[j]) != nodes.end()) && (nodes.find(path[j+1]) != nodes.end()))
             {
@@ -297,18 +257,20 @@ void Window::on_pushButton_clicked() // Works only for north western quadran
                     double longitude = scale * (nodes[path[j]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j]].lattitude() - south) / hauteur_carte;
 
+                    // TODO : Check coefficients
                     (j == 0) ? SimulationData::getInstance().add_source(longitude, lattitude, simulation_traits::STOPSIGN, simulation_traits::BERNOUILLI, 0.08, path[j])
                              : SimulationData::getInstance().add_intersection(longitude, lattitude, simulation_traits::STOPSIGN, path[j]);
                 }
                 if(allNodes.find(path[j+1]) == allNodes.end())
                 {
+                    qDebug() << "SECOND IF = " << path[j+1];
                     double longitude = scale * (nodes[path[j+1]].longitude() - east) / largeur_carte;
                     double lattitude = scale * (nodes[path[j+1]].lattitude() - south) / hauteur_carte;
 
                     (j == (path.size() - 1)) ? SimulationData::getInstance().add_intersection(longitude, lattitude, simulation_traits::STOPSIGN, path[j+1])
                                              : SimulationData::getInstance().add_source(longitude, lattitude, simulation_traits::STOPSIGN, simulation_traits::BERNOUILLI, 0.08, path[j+1]);
                 }
-                ui->myGLWidget->AddRoad(path[j],path[j+1], "MATYLDE");
+                ui->myGLWidget->AddRoad(path[j],path[j+1], ways[i].attributes["name"]);
             }
         }
 
@@ -343,47 +305,32 @@ QTreeWidgetItem* Window::addTreeChild(QTreeWidgetItem *parent, QString name)
 
 void Window::setRoadNameListWidget(vector<RoadSegment> roadNames)
 {
-    for (auto i = 0; i < roadNames.size(); ++i)
+    for (size_t i = 0; i < roadNames.size(); ++i)
     {
-        QString qstr = QString::fromStdString(roadNames[i].getRoadName());
-        auto roadTreeItem = addTreeChild(rootItem_, qstr);
-        for(auto i = 0; i < roadNames[i].getLanes().size(); ++i)
+        auto roadTreeItem = addTreeChild(rootItem_[0], QString::fromStdString(roadNames[i].getRoadName()));
+        for(size_t i = 0; i < roadNames[i].getLanes().size(); ++i)
         {
             QString laneName = QString::fromStdString(stringify(i));
-            auto item = addTreeChild(roadTreeItem, laneName);
+            addTreeChild(roadTreeItem, laneName);
         }
     }
 }
 
 void Window::addNameToListWidget(RoadSegment roadName)
 {
-    QString qstr = QString::fromStdString(roadName.getRoadName());
-    auto roadTreeItem = addTreeChild(rootItem_, qstr);
-    for(auto i = 0; i < roadName.getLanes().size(); ++i)
+    auto roadTreeItem = addTreeChild(rootItem_[0], QString::fromStdString(roadName.getRoadName()));
+    for(size_t i = 0; i < roadName.getLanes().size(); ++i)
     {
         QString laneName = QString::fromStdString(stringify(i));
-        auto item = addTreeChild(roadTreeItem, laneName);
+        addTreeChild(roadTreeItem, laneName);
     }
+
 }
 
-bool Window::isDrawNodeChecked()
+void Window::addNameToListWidget(node_id_type id)
 {
-    ui->m_radioButtonSource->isChecked();
-}
-
-bool Window::isDrawRoadChecked()
-{
-    ui->m_boutonDrawRoad->isChecked();
-}
-
-bool Window::isStopSignChecked()
-{
-    ui->StopSign->isChecked();
-}
-
-bool Window::isTrafficLightChecked()
-{
-    ui->TrafficLight->isChecked();
+    QString qstr = QString::fromStdString(stringify(id));
+    addTreeChild(rootItem_[1], qstr);
 }
 
 void Window::setStats(Stats type, RoadSegment road, Lane *lane)
@@ -392,6 +339,29 @@ void Window::setStats(Stats type, RoadSegment road, Lane *lane)
         setTextEditRoad(road);
     else if (type == Stats::Lanes)
         setTextEditLane(lane);
+
+}
+
+void Window::setCurrentTab(Window::TabWidget type, Node &selectedNode)
+{
+    ui->Display->setCurrentIndex((int)type);
+    //Node::DistributionInfo nodeDistribution = selectedNode.getDistributionInfo();
+
+    // TODO get node info and set good values
+    ui->is_source->setChecked(true);
+    ui->distribution_law->setCurrentIndex(0);
+    ui->law_coefficient->setText(0);
+    ui->intersection_behavior->setCurrentIndex(0);
+}
+
+void Window::setCurrentTab(Window::TabWidget type, RoadSegment &selectedRoad)
+{
+    ui->Display->setCurrentIndex((int)type);
+
+    QString roadName = QString::fromStdString(selectedRoad.getRoadName());
+
+    ui->m_editTextRoadName->setText(roadName);
+    ui->m_spinBoxNombreDeVoies->setValue(selectedRoad.GetNumberOfLanes());
 }
 
 void Window::setTextEditRoad(RoadSegment road)
@@ -449,93 +419,78 @@ QString Window::get_text(QLineEdit* widget)
 
 void Window::update_actual_node_model()
 {
-    actual_node_model.is_source = isSourceChecked();
+    actual_node_model.is_source = ui->is_source->isChecked();
+    actual_node_model.law_coefficient = ui->law_coefficient->text().toDouble();
 
-    if(isBernouilliChecked())
+    switch(ui->distribution_law->currentIndex())
     {
-        actual_node_model.distribution_law = simulation_traits::BERNOUILLI;
-        actual_node_model.law_coefficient = getBernouilliAmount().toDouble();
-    }
-    else if(isUniformChecked())
-    {
-        actual_node_model.distribution_law = simulation_traits::UNIFORM;
-        actual_node_model.law_coefficient = getUniformAmount().toDouble();
-    }
-    else if(isExponentialChecked())
-    {
-        actual_node_model.distribution_law = simulation_traits::EXPONENTIAL;
-        actual_node_model.law_coefficient = getExponentialAmount().toDouble();
+        case 0 : actual_node_model.distribution_law = simulation_traits::UNIFORM; break;
+        case 1 : actual_node_model.distribution_law = simulation_traits::BERNOUILLI; break;
+        case 2 : actual_node_model.distribution_law = simulation_traits::EXPONENTIAL; break;
     }
 
-    if(isStopSignChecked())
-        actual_node_model.intersection_type = simulation_traits::STOPSIGN;
-    else if(isTrafficLightChecked())
-        actual_node_model.intersection_type = simulation_traits::TLIGHT;
-    else
-        actual_node_model.intersection_type = simulation_traits::GO;
+    switch(ui->intersection_behavior->currentIndex())
+    {
+        case 0 : actual_node_model.intersection_type = simulation_traits::GO; break;
+        case 1 : actual_node_model.intersection_type = simulation_traits::STOPSIGN; break;
+        case 2 : actual_node_model.intersection_type = simulation_traits::TLIGHT; break;
+    }
 }
 
 void Window::on_m_boutonBlockRoad_clicked()
 {
-    /*bool dvEnCours = true;
+    bool dvEnCours = true;
 
     ui->myGLWidget->BlockRoad();
 
     auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->startDV();
+        (*itt).second->startDV();
     }
     while(dvEnCours)
     {
         dvEnCours = false;
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            dvEnCours |= (*itt)->processDVMessages();
+            dvEnCours |= (*itt).second->processDVMessages();
         }
     }
 
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->printDVResults();
+        (*itt).second->printDVResults();
     }
 
     selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::FDiagPattern));
-    //Qt::BrushStyle::NoBrush*/
-
-    //ui->myGLWidget->UpdateOffset(2);
-    //ui->myGLWidget->updateGL();
 }
 
 void Window::on_m_boutonUnblockRoad_clicked()
 {
-    /*bool dvEnCours = true;
+    bool dvEnCours = true;
 
     ui->myGLWidget->UnBlockRoad();
 
     auto allNodes = SimulationData::getInstance().getNodes();
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->startDV();
+        (*itt).second->startDV();
     }
     while(dvEnCours)
     {
         dvEnCours = false;
         for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
         {
-            dvEnCours |= (*itt)->processDVMessages();
+            dvEnCours |= (*itt).second->processDVMessages();
         }
     }
 
     for(auto itt = allNodes.begin() ; itt != allNodes.end() ; ++itt)
     {
-        (*itt)->printDVResults();
+        (*itt).second->printDVResults();
     }
 
-    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));*/
-
-    //ui->myGLWidget->UpdateOffset(4);
-    //ui->myGLWidget->updateGL();
+    selectedItem_->setBackground(0, QBrush(QColor(1,0,0), Qt::BrushStyle::NoBrush));
 }
 
 void Window::on_noIntersection_clicked()
@@ -551,4 +506,36 @@ void Window::on_StopSign_clicked()
 void Window::on_TrafficLight_clicked()
 {
     ui->myGLWidget->setNodeType(2);
+}
+
+void Window::on_m_boutonDrawSource_clicked()
+{
+    ui->myGLWidget->isDrawNodePressed_ = true;
+    ui->myGLWidget->isDrawRoadPressed_ = false;
+    ui->myGLWidget->isDrawLanePressed_ = false;
+    ui->myGLWidget->isDrawSourcePressed_ = false;
+}
+
+void Window::on_m_boutonDrawRoad_clicked()
+{
+    ui->myGLWidget->isDrawNodePressed_ = false;
+    ui->myGLWidget->isDrawRoadPressed_ = true;
+    ui->myGLWidget->isDrawLanePressed_ = false;
+    ui->myGLWidget->isDrawSourcePressed_ = false;
+}
+
+void Window::on_m_boutonUpdateDistribution_clicked()
+{
+    if (ui->myGLWidget->selectedNode() < 0)
+        return;
+
+    // TODO give to option to update
+    /*Node& selectedNode = SimulationData::getInstance().getNode(ui->myGLWidget->selectedNode());
+
+    if (ui->m_radioButtonBernouilli->isChecked())
+        selectedNode.setBernouilliAmount(ui->m_lineEditTauxBernouilli->text().toDouble());
+    else if (ui->m_radioButtonExponentielle->isChecked())
+        selectedNode.setExponentialAmount(ui->m_lineEditTauxExponentielle->text().toDouble());
+    else if (ui->m_radioButtonUniforme->isChecked())
+        selectedNode.setUniformAmount(ui->m_lineEditTauxUniforme->text().toDouble());*/
 }

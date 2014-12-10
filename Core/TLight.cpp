@@ -46,12 +46,12 @@ TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource):lightDelay(
     isNodeBlocked_ = false;
 }
 
-TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo):lightDelay(0), currentLight(0)
+/*TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo):lightDelay(0), currentLight(0)
 {
     x_=x;
     y_=y;
     is_source_=isSource;
-    distributionInfo_=distributionInfo;
+    //distributionInfo_=distributionInfo;
     neighbours_=std::map<node_id_type, road_id_type>();
     nextHopForDestination_=std::map<node_id_type, node_id_type>();
     costs_=std::map<node_id_type, road_cost_type>();
@@ -67,7 +67,7 @@ TLight::TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, Distributio
     id_ = id;
     last_creation_= exec_time(0);
     isNodeBlocked_ = false;
-}
+}*/
 
 void TLight::processWaitingVehicles()
 {

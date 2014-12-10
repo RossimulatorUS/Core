@@ -41,7 +41,7 @@ protected:
     bool is_source_;
     bool is_due_;
 
-    DistributionInfo distributionInfo_;
+    //DistributionInfo distributionInfo_;
 
     GLfloat x_;
     GLfloat y_;
@@ -69,7 +69,7 @@ protected:
     int currentWaitingVehicleIndex;
 
     // Utilises pour la generation des voitures
-    std::default_random_engine generator_;
+    static std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
     std::exponential_distribution<double> exponential_distribution_;
     simulation_traits::law loi_distribution;
@@ -79,8 +79,6 @@ public:
 
     Node();
     Node(GLfloat x, GLfloat y);
-    Node(GLfloat x, GLfloat y, node_id_type id, bool isSource);
-    Node(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
 
     // New constructors
     Node(GLfloat x, GLfloat y, simulation_traits::intersection, node_id_type); // Intersection
@@ -108,6 +106,8 @@ public:
     node_id_type getNextStep(node_id_type destination);
     road_id_type getNextRoad(node_id_type destination);
 
+    DistributionInfo getDistributionInfo();
+
     Node& getNode(node_id_type);
     RoadSegment& getRoad(road_id_type);
     std::vector<Vehicle*>& getWaitingVehicles(Lane*);
@@ -118,6 +118,9 @@ public:
 
     bool isNodeBlocked();
     void setIsNodeBlocked(bool isRoadBlocked);
+    void setBernouilliAmount(double value);
+    void setUniformAmount(double value);
+    void setExponentialAmount(double value);
     void updateCost(node_id_type, road_cost_type);
     std::map<node_id_type, node_id_type> nextHopForDestination();
     void setNextHopForDestination(const std::map<node_id_type, node_id_type> &nextHopForDestination);
