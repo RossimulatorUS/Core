@@ -190,9 +190,9 @@ void Window::on_m_boutonSimulation1_clicked()
 {
     ui->myGLWidget->clearWidget();
 
-    ui->myGLWidget->DrawSource(0.0f,1.6f);
-    ui->myGLWidget->DrawSource(0.0f,-1.6f);
-    auto road = ui->myGLWidget->AddRoad(0, 1, "Pas cool");
+    drawNode(0.0f, 1.6f);
+    drawNode(0.0f, -1.6f);
+    ui->myGLWidget->AddRoad(0, 1, "Pas cool");
 
     ui->myGLWidget->updateGL();
 }
@@ -201,15 +201,11 @@ void Window::on_m_boutonSimulation4_clicked()
 {
     ui->myGLWidget->clearWidget();
 
-    /*ui->myGLWidget->DrawSource(0.0f,1.6f);
-    ui->myGLWidget->DrawSource(1.6f,0.0f);
-    ui->myGLWidget->DrawSource(-1.6f,0.0f);
-    ui->myGLWidget->DrawSource(0.0f,-1.6f);*/
     drawNode(0.0, 1.6);
     drawNode(1.6, 0.0);
     drawNode(-1.6, 0.0);
     drawNode(0.0, -1.6);
-    ui->myGLWidget->DrawNode(0.0f,0.0f,1);
+    drawNode(0.0f, 0.0f);
 
     ui->myGLWidget->AddRoad(0, 4, "Thibault");
     ui->myGLWidget->AddRoad(1, 4, "Bertrand");
@@ -415,6 +411,7 @@ QString Window::get_text(QLineEdit* widget)
     return widget->text();
 }
 
+// Should be integrated to simulation status
 void Window::update_actual_node_model()
 {
     actual_node_model.is_source = ui->is_source->isChecked();

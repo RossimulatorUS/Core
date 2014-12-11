@@ -64,6 +64,10 @@ protected:
     simulation_traits::intersection intersection_behavior_;
     double law_coefficient_;
 
+    // Trafic Light
+    std::map<road_id_type,road_id_type> parallelRoads;
+    int lightDelay, currentLight;
+
 public:
 
     Node();
@@ -102,7 +106,8 @@ public:
 
     void addToWaitingVehicles(Vehicle*);
     void addToWaitingRoads(road_id_type id);
-    virtual void StopSignProcessing();
+    void StopSignProcessing();
+    void TraficLightProcessing();
 
     bool isNodeBlocked();
     void setIsNodeBlocked(bool isRoadBlocked);

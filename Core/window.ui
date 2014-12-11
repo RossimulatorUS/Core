@@ -100,7 +100,7 @@
     <widget class="QGroupBox" name="m_groupBoxDistribution">
      <property name="geometry">
       <rect>
-       <x>370</x>
+       <x>180</x>
        <y>10</y>
        <width>251</width>
        <height>101</height>
@@ -180,7 +180,7 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>10</x>
        <y>10</y>
        <width>181</width>
        <height>91</height>
@@ -238,7 +238,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>91</width>
+       <width>131</width>
        <height>16</height>
       </rect>
      </property>
@@ -249,7 +249,7 @@
     <widget class="QSpinBox" name="m_spinBoxNombreDeVoies">
      <property name="geometry">
       <rect>
-       <x>100</x>
+       <x>140</x>
        <y>10</y>
        <width>42</width>
        <height>22</height>

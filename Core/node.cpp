@@ -45,7 +45,9 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     currentWaitingVehicleIndex(0),
     waitingRoads_(std::queue<road_id_type>()),
     waitingRoadIndex_(std::set<road_id_type>()),
-    id_(id)
+    id_(id),
+    lightDelay(0),
+    currentLight(0)
 {
     set_intersection_function(intersection_type);
 }
@@ -61,7 +63,9 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     waitingRoads_(std::queue<road_id_type>()),
     waitingRoadIndex_(std::set<road_id_type>()),
     law_coefficient_(coefficient),
-    id_(id)
+    id_(id),
+    lightDelay(0),
+    currentLight(0)
 {
     set_intersection_function(intersection_type);
     switch (dist)
@@ -91,7 +95,7 @@ void Node::set_intersection_function(simulation_traits::intersection intersectio
         case simulation_traits::STOPSIGN :
             process_function = &Node::StopSignProcessing; break;
         case simulation_traits::TLIGHT :
-            process_function = &Node::StopSignProcessing; break;
+            process_function = &Node::TraficLightProcessing; break;
     }
     intersection_behavior_ = intersection_type;
 }
@@ -376,4 +380,61 @@ std::map<Node::node_id_type, Node::node_id_type> Node::nextHopForDestination()
 void Node::setNextHopForDestination(const std::map<Node::node_id_type, Node::node_id_type> &nextHopForDestination)
 {
     nextHopForDestination_ = nextHopForDestination;
+}
+
+void Node::TraficLightProcessing()
+{
+    Autolock av(mtx);
+
+    --lightDelay;
+    if(lightDelay<0)
+    {
+        lightDelay = 60;
+        currentLight = (currentLight+1) % neighbours_.size();
+        std::map<node_id_type,road_id_type>::iterator it1 = neighbours_.begin();
+
+        for(int i =0;i<currentLight;++i)
+            ++it1;
+
+        waitingRoadIndex_.clear();
+        waitingRoadIndex_.insert(it1->second);
+
+        std::map<road_id_type,road_id_type>::iterator it2 = parallelRoads.find(it1->second);
+        if(it2!=parallelRoads.end())
+        {
+            if(it2->first != it2->second)
+                waitingRoadIndex_.insert(it2->second);
+        }
+        else
+        {
+            RoadSegment& r = SimulationData::getInstance().getRoad(it2->second);
+            road_id_type inFront = it2->second;
+            std::map<node_id_type,road_id_type>::iterator it3 = neighbours_.begin();
+
+            while(it3 !=neighbours_.end())
+            {
+                RoadSegment& otherRoad = SimulationData::getInstance().getRoad(it3->second);
+
+                if((it2->second != it3->second) && r.isParallel(r.getStartNode(),r.getEndNode(),otherRoad.getStartNode(),otherRoad.getEndNode()))
+                {
+                    inFront = it3->second;
+                    break;
+                }
+                ++it3;
+            }
+            parallelRoads[it1->second] = inFront;
+            if(it2->second != inFront)
+                waitingRoadIndex_.insert(inFront);
+        }
+    }
+
+    std::set<road_id_type>::iterator it = waitingRoadIndex_.begin();
+
+    while(it != waitingRoadIndex_.end())
+    {
+        RoadSegment& r = SimulationData::getInstance().getRoad(*it);
+        r.allLanesUnblocked(id_);
+        ++it;
+    }
+
 }

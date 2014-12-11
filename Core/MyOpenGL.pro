@@ -34,11 +34,9 @@ SOURCES += main.cpp \
     lane.cpp \
     map_fetcher.cpp \
     lib/pugixml/pugixml.cpp \
-    TLight.cpp \
     road_segment.cpp \
     road.cpp \
     utils.cpp \
-    StopSign.cpp \
     simulationstatus.cpp \
     simulationtraits.cpp
 
@@ -66,9 +64,7 @@ HEADERS  += window.h \
     lib/pugixml/pugiconfig.hpp \
     lib/pugixml/pugixml.hpp \
     road_segment.h \
-    TLight.h \
     road.h \
-    StopSign.h \
     simulationstatus.h
 
 FORMS    += window.ui
