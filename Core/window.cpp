@@ -209,12 +209,12 @@ void Window::on_m_boutonSimulation4_clicked()
     drawNode(1.6, 0.0);
     drawNode(-1.6, 0.0);
     drawNode(0.0, -1.6);
-
     ui->myGLWidget->DrawNode(0.0f,0.0f,1);
-    auto road1 = ui->myGLWidget->AddRoad(0, 4, "Thibault");
-    auto road2 = ui->myGLWidget->AddRoad(1, 4, "Bertrand");
-    auto road3 = ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
-    auto road4 = ui->myGLWidget->AddRoad(3, 4, "T LAITE");
+
+    ui->myGLWidget->AddRoad(0, 4, "Thibault");
+    ui->myGLWidget->AddRoad(1, 4, "Bertrand");
+    ui->myGLWidget->AddRoad(2, 4, "Thibodeau");
+    ui->myGLWidget->AddRoad(3, 4, "T LAITE");
 
     ui->myGLWidget->updateGL();
 }
@@ -345,13 +345,11 @@ void Window::setStats(Stats type, RoadSegment road, Lane *lane)
 void Window::setCurrentTab(Window::TabWidget type, Node &selectedNode)
 {
     ui->Display->setCurrentIndex((int)type);
-    //Node::DistributionInfo nodeDistribution = selectedNode.getDistributionInfo();
 
-    // TODO get node info and set good values
-    ui->is_source->setChecked(true);
-    ui->distribution_law->setCurrentIndex(0);
-    ui->law_coefficient->setText(0);
-    ui->intersection_behavior->setCurrentIndex(0);
+    ui->is_source->setChecked(selectedNode.is_source());
+    ui->distribution_law->setCurrentIndex(law_to_comboboxindex(selectedNode.loi_distribution()));
+    ui->law_coefficient->setText(QString::fromStdString(stringify(selectedNode.law_coefficient())));
+    ui->intersection_behavior->setCurrentIndex(intersectionbehavior_to_comboboxindex(selectedNode.intersection_behavior()));
 }
 
 void Window::setCurrentTab(Window::TabWidget type, RoadSegment &selectedRoad)
@@ -420,7 +418,7 @@ QString Window::get_text(QLineEdit* widget)
 void Window::update_actual_node_model()
 {
     actual_node_model.is_source = ui->is_source->isChecked();
-    actual_node_model.law_coefficient = ui->law_coefficient->text().toDouble();
+    actual_node_model.law_coefficient = (actual_node_model.is_source ? ui->law_coefficient->text().toDouble() : 0);
 
     switch(ui->distribution_law->currentIndex())
     {

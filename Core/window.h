@@ -106,8 +106,6 @@ private slots:
 
     void on_m_boutonUpdateDistribution_clicked();
 
-    void on_distribution_law_activated(const QString &arg1);
-
 private:
     Ui::Window *ui;
     std::vector<QTreeWidgetItem*> rootItem_;

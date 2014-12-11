@@ -26,22 +26,10 @@ public:
     using road_cost_type = typename simulation_traits::road_cost_type;
     using exec_time = std::chrono::milliseconds;
 
-    struct DistributionInfo {
-        bool isBernouilli;
-        bool isUniform;
-        bool isExponential;
-
-        QString bernouilliAmount;
-        QString uniformAmount;
-        QString exponentialAmount;
-    };
-
 protected:
     bool ok;
     bool is_source_;
     bool is_due_;
-
-    //DistributionInfo distributionInfo_;
 
     GLfloat x_;
     GLfloat y_;
@@ -72,8 +60,9 @@ protected:
     static std::default_random_engine generator_;
     std::bernoulli_distribution bernouilli_distribution_;
     std::exponential_distribution<double> exponential_distribution_;
-    simulation_traits::law loi_distribution;
-    unsigned int uniform_coefficient;
+    simulation_traits::law loi_distribution_;
+    simulation_traits::intersection intersection_behavior_;
+    double law_coefficient_;
 
 public:
 
@@ -89,6 +78,7 @@ public:
 
     bool is_source();
     bool is_due();
+    double law_coefficient();
     Vehicle* create_vehicle();
 
     GLfloat x() const;
@@ -106,15 +96,13 @@ public:
     node_id_type getNextStep(node_id_type destination);
     road_id_type getNextRoad(node_id_type destination);
 
-    DistributionInfo getDistributionInfo();
-
     Node& getNode(node_id_type);
     RoadSegment& getRoad(road_id_type);
     std::vector<Vehicle*>& getWaitingVehicles(Lane*);
 
     void addToWaitingVehicles(Vehicle*);
     void addToWaitingRoads(road_id_type id);
-    virtual void processWaitingVehicles();
+    virtual void StopSignProcessing();
 
     bool isNodeBlocked();
     void setIsNodeBlocked(bool isRoadBlocked);
@@ -124,6 +112,8 @@ public:
     void updateCost(node_id_type, road_cost_type);
     std::map<node_id_type, node_id_type> nextHopForDestination();
     void setNextHopForDestination(const std::map<node_id_type, node_id_type> &nextHopForDestination);
+    simulation_traits::law loi_distribution() const;
+    simulation_traits::intersection intersection_behavior() const;
 };
 
 #endif // POINT_H

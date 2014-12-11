@@ -5,7 +5,7 @@
 
 std::mutex StopSign::mtx;
 
-StopSign::StopSign(GLfloat x, GLfloat y)
+/*StopSign::StopSign(GLfloat x, GLfloat y)
 {
     x_=x;
     y_=y;
@@ -44,7 +44,7 @@ StopSign::StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource)
     isNodeBlocked_ = false;
 }
 
-/*StopSign::StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
+StopSign::StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo)
 {
     x_=x;
     y_=y;
@@ -64,7 +64,7 @@ StopSign::StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource)
     id_ = id;
     last_creation_= exec_time(0);
     isNodeBlocked_ = false;
-}*/
+}
 
 void StopSign::processWaitingVehicles()
 {
@@ -80,3 +80,4 @@ void StopSign::processWaitingVehicles()
     }
 }
 
+*/

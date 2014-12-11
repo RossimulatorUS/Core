@@ -10,4 +10,9 @@ struct simulation_traits{
     enum intersection {GO, STOPSIGN, TLIGHT};
 };
 
+int law_to_comboboxindex(simulation_traits::law law);
+simulation_traits::law comboboxindex_to_law(int index);
+int intersectionbehavior_to_comboboxindex(simulation_traits::intersection behavior);
+simulation_traits::intersection comboboxindex_to_intersectionbehavior(int index);
+
 #endif // SIMULATIONTRAITS_H

@@ -20,7 +20,7 @@ public:
     TLight(){}
     TLight(GLfloat x, GLfloat y);
     TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource);
-    TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
+    //TLight(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
 
     void processWaitingVehicles();
 };

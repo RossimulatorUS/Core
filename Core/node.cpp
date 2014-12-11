@@ -60,6 +60,7 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     currentWaitingVehicleIndex(0),
     waitingRoads_(std::queue<road_id_type>()),
     waitingRoadIndex_(std::set<road_id_type>()),
+    law_coefficient_(coefficient),
     id_(id)
 {
     set_intersection_function(intersection_type);
@@ -67,17 +68,17 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
     {
         case simulation_traits::BERNOUILLI :
             bernouilli_distribution_ = std::bernoulli_distribution(coefficient);
-            loi_distribution = simulation_traits::BERNOUILLI;
+            loi_distribution_ = simulation_traits::BERNOUILLI;
             break;
 
         case simulation_traits::EXPONENTIAL :
             exponential_distribution_ = std::exponential_distribution<double>(coefficient);
-            loi_distribution = simulation_traits::EXPONENTIAL;
+            loi_distribution_ = simulation_traits::EXPONENTIAL;
             break;
 
         case simulation_traits::UNIFORM :
-            uniform_coefficient = (unsigned int)coefficient;
-            loi_distribution = simulation_traits::UNIFORM;
+            law_coefficient_ = (unsigned int)coefficient;
+            loi_distribution_ = simulation_traits::UNIFORM;
             break;
     }
 }
@@ -86,15 +87,16 @@ void Node::set_intersection_function(simulation_traits::intersection intersectio
 {
     switch(intersection_type){
         case simulation_traits::STOPSIGN :
-            process_function = &Node::processWaitingVehicles;
+            process_function = &Node::StopSignProcessing;
             break;
         case simulation_traits::TLIGHT :
-            process_function = &Node::processWaitingVehicles;
+            process_function = &Node::StopSignProcessing;
             break;
         default:
-            process_function = &Node::processWaitingVehicles;
+            process_function = &Node::StopSignProcessing;
             break;
     }
+    intersection_behavior_ = intersection_type;
 }
 
 
@@ -122,7 +124,7 @@ bool Node::is_due()
 {
     auto timeSinceLastCreation = std::chrono::duration_cast<std::chrono::milliseconds>(get_time() - last_creation_).count();
 
-    switch(loi_distribution)
+    switch(loi_distribution_)
     {
         case simulation_traits::BERNOUILLI :
             if(bernouilli_distribution_(generator_) && timeSinceLastCreation > 250)
@@ -134,7 +136,7 @@ bool Node::is_due()
             break;
 
         case simulation_traits::UNIFORM :
-            if(timeSinceLastCreation > uniform_coefficient)
+            if(timeSinceLastCreation > law_coefficient_)
             {
                 last_creation_ = get_time();
                 return true;
@@ -151,6 +153,11 @@ bool Node::is_due()
             return false;
             break;
     }
+}
+
+double Node::law_coefficient()
+{
+    return law_coefficient_;
 }
 
 Vehicle *Node::create_vehicle()
@@ -236,6 +243,15 @@ void Node::sendDVMessageToNeighbours()
         getNode(itt->first).pendingDVMessages_.push(message);
     }
 }
+simulation_traits::intersection Node::intersection_behavior() const
+{
+    return intersection_behavior_;
+}
+
+simulation_traits::law Node::loi_distribution() const
+{
+    return loi_distribution_;
+}
 
 void Node::addNeighbour(node_id_type neighbour, road_id_type connection)
 {
@@ -317,7 +333,7 @@ void Node::addToWaitingVehicles(Vehicle * v)
 }
 
 //renvoie le véhicule auquel donner le go, ou NULL si aucun véhicule n'attend
-void Node::processWaitingVehicles()
+void Node::StopSignProcessing()
 {
     Autolock av(mtx);
 

@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     road.cpp \
     utils.cpp \
     StopSign.cpp \
-    simulationstatus.cpp
+    simulationstatus.cpp \
+    simulationtraits.cpp
 
 HEADERS  += window.h \
     myglwidget.h \

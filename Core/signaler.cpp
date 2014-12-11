@@ -17,7 +17,8 @@ void Signaler::init()
             std::map<simulation_traits::node_id_type,Node*>& nodes = SimulationData::getInstance().getNodes();
             for(auto itt = nodes.begin(); itt != nodes.end() ; ++itt)
             {
-                (*itt).second->processWaitingVehicles();
+                auto node = *(itt->second);
+                (node.*process_function)();
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1));

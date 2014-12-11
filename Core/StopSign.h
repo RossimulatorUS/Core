@@ -14,11 +14,11 @@ class StopSign: public Node
     static std::mutex mtx;
 public:
     StopSign(){}
-    StopSign(GLfloat x, GLfloat y);
-    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource);
-    StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
+    //StopSign(GLfloat x, GLfloat y);
+    //StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource);
+    //StopSign(GLfloat x, GLfloat y, node_id_type id, bool isSource, DistributionInfo distributionInfo);
 
-    void processWaitingVehicles();
+    //void processWaitingVehicles();
 };
 
 #endif // STOPSIGN_H
