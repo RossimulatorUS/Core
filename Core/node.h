@@ -73,7 +73,7 @@ public:
     Node(GLfloat x, GLfloat y, simulation_traits::intersection, node_id_type); // Intersection
     Node(GLfloat x, GLfloat y, simulation_traits::intersection, simulation_traits::law, double, node_id_type); // Source
 
-    void (Node::*process_function)(); // Function pointer, not a function
+    void (Node::*process_function)();
     void set_intersection_function(simulation_traits::intersection);
 
     bool is_source();

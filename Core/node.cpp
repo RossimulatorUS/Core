@@ -86,15 +86,12 @@ Node::Node(GLfloat x, GLfloat y, simulation_traits::intersection intersection_ty
 void Node::set_intersection_function(simulation_traits::intersection intersection_type)
 {
     switch(intersection_type){
+        case simulation_traits::GO :
+            process_function = &Node::StopSignProcessing; break;
         case simulation_traits::STOPSIGN :
-            process_function = &Node::StopSignProcessing;
-            break;
+            process_function = &Node::StopSignProcessing; break;
         case simulation_traits::TLIGHT :
-            process_function = &Node::StopSignProcessing;
-            break;
-        default:
-            process_function = &Node::StopSignProcessing;
-            break;
+            process_function = &Node::StopSignProcessing; break;
     }
     intersection_behavior_ = intersection_type;
 }
@@ -306,11 +303,6 @@ Node::road_id_type Node::getNextRoad(node_id_type destination)
     return value;
 }
 
-/*Node::DistributionInfo Node::getDistributionInfo()
-{
-    return distributionInfo_;
-}*/
-
 Node &Node::getNode(node_id_type id)
 {
     return SimulationData::getInstance().getNode(id);
@@ -364,32 +356,6 @@ void Node::setIsNodeBlocked(bool isRoadBlocked)
 {
     isNodeBlocked_ = isRoadBlocked;
 }
-
-/*void Node::setBernouilliAmount(double value)
-{
-    distributionInfo_.isBernouilli = true;
-    distributionInfo_.isExponential = false;
-    distributionInfo_.isUniform = false;
-    distributionInfo_.bernouilliAmount = QString::fromStdString(stringify(value));
-    bernouilli_distribution_=std::bernoulli_distribution(distributionInfo_.bernouilliAmount.toDouble(&ok));
-}
-
-void Node::setUniformAmount(double value)
-{
-    distributionInfo_.isBernouilli = false;
-    distributionInfo_.isExponential = false;
-    distributionInfo_.isUniform = true;
-    distributionInfo_.uniformAmount = QString::fromStdString(stringify(value));
-}
-
-void Node::setExponentialAmount(double value)
-{
-    distributionInfo_.isBernouilli = false;
-    distributionInfo_.isExponential = true;
-    distributionInfo_.isUniform = false;
-    distributionInfo_.exponentialAmount = QString::fromStdString(stringify(value));
-    exponential_distribution_ = std::exponential_distribution<double>(distributionInfo_.exponentialAmount.toDouble(&ok));
-}*/
 
 void Node::updateCost(Node::node_id_type neighbour, Node::road_cost_type connection)
 {

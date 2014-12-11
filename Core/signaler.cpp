@@ -15,10 +15,11 @@ void Signaler::init()
         {
             *execute_ = false;
             std::map<simulation_traits::node_id_type,Node*>& nodes = SimulationData::getInstance().getNodes();
-            for(auto itt = nodes.begin(); itt != nodes.end() ; ++itt)
+            for(auto itt = nodes.begin(); itt != nodes.end(); ++itt)
             {
-                auto node = *(itt->second);
-                (node.*process_function)();
+                // Quite complicated syntax -- keep it on two lines
+                Node* node = itt->second;
+                (node->*(node->process_function))();
             }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
