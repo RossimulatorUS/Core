@@ -1,10 +1,10 @@
 Core
 ====
 
-Noyau du RossimulatorUS
+#Noyau du Rossimulatorus
 
-TODO:
-  SimulationStatus qui peut intéragir avec le cortex
-  3D
-  Courbes B-Spline
+#TODO:
+  - SimulationStatus qui peut intéragir avec le cortex
+  - 3D
+  - Courbes B-Spline
   
